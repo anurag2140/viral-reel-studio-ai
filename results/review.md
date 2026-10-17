@@ -1,15 +1,13 @@
-Experiment review, 2026-10-17 19:37 UTC (`node ig.mjs review`), from the report of 2026-10-17 19:36 UTC.
+Experiment review, 2026-10-17 20:51 UTC (`node ig.mjs review`), from the report of 2026-10-17 19:40 UTC.
 Rules: a try is read at 3 days; 2 passes put an experiment in the playbook (a boost, a format share or a default, never a must), 2 fails retire it for 90 days (then one re-test); proven entries are re-checked every 60 days or 20 reels; formats fill at most 50% of the reels.
 
 NEXT REEL #14: TOOL lane; a bet slot (the playbook guides it); the ENGLISH slot (offer English and Hindi). Every idea list has one wild card that fits no proven format and no queued experiment.
-
-No change to the workflow today.
 
 ASK AFTER DELIVERY (one reel only): #10 "AI ने PPT को perfect बोला, boss ने दस गलतियाँ निकाल दीं" (posted 2026-10-15 22:47, 2.1 days old): screenshots of its retention graph and its "Profile activity" (follows and profile visits from this reel). Skip rate, watch time and rates come from the API.
 
 | Open experiment | Status | Tries and readings | Decision |
 |---|---|---|---|
-| E1 Visible magic | running | #12: waiting (0.2 days old, read at 3 days) | WAITING |
+| E1 Visible magic | running | #12: waiting (0.3 days old, read at 3 days) | WAITING |
 | E2 Funny | queued | - | QUEUED |
 | E3 Short loop | queued | - | QUEUED |
 | E4 Quiz | queued | - | QUEUED |
