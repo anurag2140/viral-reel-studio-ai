@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Look C: Clean UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hind:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #F4F4F2; font-family: "Hind"; font-weight: 700; color: #14151A; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script type="module">
+// Look C, "Clean UI": a light product-demo look. Soft cards that act the story out as an
+// interface (a chat, an editor, a browser), a pointer that clicks, a caption with a moving marker.
+import { backOut, bump, clamp, clean, cubicOut, el, expoOut, lerp, pageCrop, pointer, prog, setup, start } from '../lib.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const vo = await (await fetch('vo.json')).json();
+const { dur, S, T } = build(vo);
+const SHOT = '/films/napkin-ai/shots/home.jpg';
+await setup(['700 100px "Hind"', '500 40px "Hind"'], [SHOT]);
+const U = [];
+const INK = '#14151A';
+const BLUE = '#2F5BFF';
+const GREY = '#E9EBEF';
+const CARD = 'background:#fff;border-radius:44px;box-shadow:0 36px 90px rgba(20,21,26,.13),0 4px 14px rgba(20,21,26,.06)';
+
+el('div', `position:absolute;left:66px;top:170px;font:700 32px/1 "Hind";letter-spacing:.12em;color:${BLUE};border:3px solid ${BLUE};padding:15px 22px 11px;border-radius:999px`, stage, 'AI TOOL');
+
+// ---------- caption: the whole sentence is on screen, a blue marker follows the voice ----------
+const capBox = el('div', 'position:absolute;left:0;top:262px;width:1080px;height:470px;overflow:hidden', stage);
+const caption = (words, rows, size, t0, t1) => {
+  const c = el('div', `position:absolute;left:66px;top:34px;width:948px;font-size:${size}px;line-height:1.24;z-index:0`, capBox);
+  const mark = el('div', `position:absolute;left:0;top:0;background:${BLUE};border-radius:22px;z-index:-1`, c);
+  const spans = rows.map((ix) => {
+    const row = el('div', 'white-space:nowrap', c);
+    return ix.map((i) => ({ e: el('span', 'display:inline-block;padding:0 .13em;margin-right:.06em', row, words[i].word), t: words[i].t }));
+  }).flat();
+  const rect = (x) => [x.e.offsetLeft, x.e.offsetTop + x.e.offsetHeight * 0.06, x.e.offsetWidth, x.e.offsetHeight * 0.86];
+  U.push((t) => {
+    const a = t0 == null ? 1 : expoOut(prog(t, t0 - 0.12, 0.4));
+    const b = t1 == null ? 0 : prog(t, t1 - 0.22, 0.2) ** 2;
+    c.style.visibility = (t0 != null && t < t0 - 0.12) || b >= 1 ? 'hidden' : 'visible';
+    c.style.transform = `translateY(${(1 - a) * 480 - b * 480}px)`;
+    let i = 0;
+    while (i < spans.length - 1 && t >= spans[i + 1].t - 0.04) i++;
+    const from = rect(spans[Math.max(0, i - 1)]);
+    const to = rect(spans[i]);
+    const p = i === 0 ? 1 : expoOut(prog(t, spans[i].t - 0.04, 0.2));
+    const r = from.map((v, n) => lerp(v, to[n], p));
+    mark.style.transform = `translate(${r[0]}px,${r[1]}px)`;
+    mark.style.width = `${r[2]}px`;
+    mark.style.height = `${r[3]}px`;
+    spans.forEach((x, n) => { x.e.style.color = n === i && p > 0.5 ? '#fff' : INK; });
+  });
+};
+caption(clean(S[0].words), [[0, 1, 2], [3, 4, 5], [6, 7]], 116, null, T.s2);
+caption(clean(S[1].words), [[0, 1, 2], [3, 4, 5]], 140, T.s2, T.s3);
+caption(clean(S[2].words), [[0, 1], [2, 3]], 170, T.s3, null);
+
+// the cards move like a carousel: each one comes from the right and leaves to the left
+const move = (node, t, t0, t1) => {
+  const a = t0 == null ? 1 : expoOut(prog(t, t0 - 0.12, 0.6));
+  const b = t1 == null ? 0 : prog(t, t1 - 0.3, 0.32) ** 3;
+  node.style.visibility = (t0 != null && t < t0 - 0.12) || b >= 1 ? 'hidden' : 'visible';
+  return `translateX(${(1 - a) * 1150 - b * 1150}px) rotate(${(1 - a) * 5 - b * 5}deg)`;
+};
+const BOX = 'position:absolute;left:66px;top:744px;width:948px;height:780px';
+
+// ---------- 1. a chat with the teacher ----------
+const chat = el('div', `${BOX};${CARD};overflow:hidden`, stage);
+el('div', `height:150px;border-bottom:3px solid ${GREY};display:flex;align-items:center;gap:26px;padding:0 44px`, chat,
+  `<div style="width:92px;height:92px;border-radius:50%;background:${INK};color:#fff;font:700 46px/100px Hind;text-align:center">M</div><div><div style="font:700 48px/1.1 Hind">Ma'am</div><div style="font:500 32px/1.2 Hind;color:#19A463">online</div></div>`);
+const bubble = (text, top, mine, t0) => {
+  const b = el('div', `position:absolute;top:${top}px;${mine ? 'right:44px' : 'left:44px'};white-space:nowrap;padding:28px 40px 20px;font:600 64px/1.3 Hind;border-radius:42px;${mine ? `background:${BLUE};color:#fff;border-bottom-right-radius:10px;transform-origin:100% 100%` : `background:${GREY};border-bottom-left-radius:10px;transform-origin:0 100%`}`, chat, text);
+  U.push((t) => {
+    const p = t0 <= 0 ? 1 : prog(t, t0, 0.32);
+    b.style.visibility = p <= 0 ? 'hidden' : 'visible';
+    b.style.transform = `scale(${lerp(0.5, 1, backOut(p))})`;
+  });
+  return b;
+};
+bubble('Presentation बहुत अच्छी थी!', 186, false, 0);
+bubble('यह diagram तुमने बनाया?', 334, false, 0);
+bubble('पूरी रात लगी होगी!', 482, false, T.night - 0.3);
+const typing = bubble('<i></i><i></i><i></i>', 638, true, T.night + 0.4);
+typing.style.cssText += ';display:flex;gap:16px;padding:40px 44px';
+const dots = [...typing.children];
+dots.forEach((d) => { d.style.cssText = 'width:26px;height:26px;border-radius:50%;background:#fff;display:block'; });
+U.push((t) => {
+  chat.style.transform = move(chat, t, null, T.s2);
+  dots.forEach((d, i) => { d.style.transform = `translateY(${-14 * Math.max(0, Math.sin(t * 9 - i * 0.9))}px)`; });
+});
+
+// ---------- 2. an editor: text, one button, a diagram ----------
+const ed = el('div', `${BOX};${CARD};overflow:hidden`, stage);
+el('div', `height:96px;border-bottom:3px solid ${GREY};display:flex;align-items:center;gap:16px;padding:0 40px`, ed,
+  '<i style="width:24px;height:24px;border-radius:50%;background:#FF5F57"></i><i style="width:24px;height:24px;border-radius:50%;background:#FEBC2E"></i><i style="width:24px;height:24px;border-radius:50%;background:#28C840"></i>');
+const bars = [760, 820, 640, 790, 520].map((w, i) => el('div', `position:absolute;left:64px;top:${164 + i * 76}px;width:${w}px;height:36px;border-radius:18px;background:${i === 0 ? '#C9CDD6' : GREY};transform-origin:0 50%`, ed));
+const btn = el('div', `position:absolute;left:64px;top:596px;padding:36px 64px 28px;border-radius:32px;background:${BLUE};color:#fff;font:700 66px/1 Hind;transform-origin:50% 50%`, ed, '✦ Generate');
+// the diagram: one box on top, three under it, joined by lines
+const NODES = [['Notes', INK, 324, 150, 300], ['Idea', '#FFB020', 64, 400, 250], ['Plan', '#19C37D', 349, 400, 250], ['Result', BLUE, 634, 400, 250]];
+const nodes = NODES.map(([label, bg, x, y, w]) => el('div', `position:absolute;left:${x}px;top:${y}px;width:${w}px;height:140px;border-radius:32px;background:${bg};color:#fff;font:700 60px/150px Hind;text-align:center`, ed, label));
+const LINKS = [[468, 290, 12, 62, 'Y'], [183, 340, 582, 12, 'X'], [183, 340, 12, 60, 'Y'], [468, 340, 12, 60, 'Y'], [753, 340, 12, 60, 'Y']];
+const links = LINKS.map(([x, y, w, h, ax]) => ({ e: el('div', `position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:6px;background:${INK};transform-origin:50% 0`, ed), ax }));
+const cur = pointer(stage, INK, '#fff', 120);
+U.push((t) => {
+  ed.style.transform = move(ed, t, T.s2, T.s3);
+  const q = t - T.click;
+  const press = Math.exp(-(((q - 0.02) / 0.07) ** 2));
+  btn.style.transform = `scale(${1 - 0.08 * press})`;
+  bars.forEach((b, i) => {
+    const p = expoOut(prog(t, T.click + 0.06 + i * 0.03, 0.25));
+    b.style.transform = `scaleX(${1 - p})`;
+  });
+  nodes.forEach((n, i) => {
+    const p = prog(t, T.click + (i ? 0.34 + i * 0.07 : 0.16), 0.34);
+    n.style.visibility = p <= 0 ? 'hidden' : 'visible';
+    n.style.transform = `scale(${lerp(0.3, 1, backOut(p))})`;
+  });
+  links.forEach((l, i) => {
+    const p = expoOut(prog(t, T.click + (i ? (i === 1 ? 0.3 : 0.36) : 0.24), 0.26));
+    l.e.style.transform = `scale${l.ax}(${p})`;
+  });
+  // the pointer comes to the button, presses it, and leaves with the card
+  const a = cubicOut(prog(t, T.s2 + 0.25, 0.6));
+  const out = prog(t, T.s3 - 0.3, 0.32) ** 3;
+  cur.style.visibility = t > T.s2 + 0.2 && out < 1 ? 'visible' : 'hidden';
+  cur.style.transform = `translate(${lerp(1120, 420, a) - out * 1150}px,${lerp(1640, 1416, a)}px) scale(${1 - 0.14 * press})`;
+});
+
+// ---------- 3. the real page, in a browser ----------
+const br = el('div', `${BOX};${CARD};overflow:hidden`, stage);
+el('div', `height:96px;border-bottom:3px solid ${GREY};display:flex;align-items:center;gap:16px;padding:0 40px;font:500 38px/1 Hind;color:#5B6070`, br,
+  `<i style="width:24px;height:24px;border-radius:50%;background:#FF5F57"></i><i style="width:24px;height:24px;border-radius:50%;background:#FEBC2E"></i><i style="width:24px;height:24px;border-radius:50%;background:#28C840"></i><span style="margin-left:22px;flex:1;background:${GREY};border-radius:999px;padding:18px 34px 12px">napkin.ai</span>`);
+const view = el('div', 'position:absolute;left:0;top:99px;right:0;bottom:0;overflow:hidden', br);
+const page = pageCrop(view, SHOT, 'position:absolute;inset:0', 948);
+const SLIDE = [120, 8867, 584, 400]; // the finished diagram on the page, in image pixels
+const spot = el('div', 'position:absolute;border-radius:16px;box-shadow:0 0 0 3000px rgba(20,21,26,.55)', page.box);
+U.push((t) => {
+  br.style.transform = move(br, t, T.s3, null);
+  const scroll = lerp(8380, 8640, cubicOut(prog(t, T.s3, 1.6)));
+  page.set(scroll);
+  const x = SLIDE[0] * page.k, y = (SLIDE[1] - scroll) * page.k, w = SLIDE[2] * page.k, h = SLIDE[3] * page.k;
+  const m = expoOut(prog(t, T.name + 0.3, 0.7));
+  spot.style.visibility = m > 0 ? 'visible' : 'hidden';
+  spot.style.left = `${x - 10}px`;
+  spot.style.top = `${y - 10}px`;
+  spot.style.width = `${w + 20}px`;
+  spot.style.height = `${h + 20}px`;
+  spot.style.boxShadow = `0 0 0 3000px rgba(20,21,26,${0.55 * m})`;
+  // zoom on the diagram
+  page.box.style.transformOrigin = `${x + w / 2}px ${y + h / 2}px`;
+  page.box.style.transform = `translateY(${m * (340 - (y + h / 2))}px) scale(${lerp(1, 1.3, m)})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

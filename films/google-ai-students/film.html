@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#09 College ID है? Google का AI plan एक साल free</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #11143A; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// Two places: the college corridor (me, a friend, the ID card) and Google's own announcement
+// page, which fills the frame while the voice talks about the offer.
+import { S, backOut, bump, camera, captions, cubicOut, eio, expoOut, key, lerp, person, pointer, prog, pulse, setup, start, webpage } from '/brand/story.js';
+import { BLUE, CORAL, INK, NAVY, followCard, lights, linkLine, paperPlane, show, star, whip, whipIn, whipOut } from '/brand/scenes.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const BLOG = 'shots/blog.jpg'; // blog.google (India), the announcement, page 0 to 1500 css px, 4x
+const FACE = { dir: '/brand/face/', meta: await (await fetch('/brand/face/face.json')).json() };
+const ME = { face: FACE, skin: FACE.meta.cheek, outfit: 'hoodie' };
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"'], [BLOG, '/logo.png', ...FACE.meta.names.map((n) => `${FACE.dir}${n}.png`)]);
+const pop = (t, at) => 1 - 0.07 * at.reduce((v, a) => v + Math.max(0, bump(t - a)), 0);
+const U = [];
+const PX = 1080 / 412;
+const L = lights(svg);
+const YEL = '#FFD23F';
+const line = { stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round' };
+const chip = (parent, text, w, size, fill = YEL, ink = NAVY) => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -size * 0.75, width: w, height: size * 1.5, rx: size * 0.36, fill, ...line }, g);
+  S('text', { y: size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, text);
+  return g;
+};
+const place = (g, x, y, s = 1, r = 0) => g.setAttribute('transform', `translate(${x} ${y}) rotate(${r}) scale(${s})`);
+
+// ================= the college corridor =================
+const sC = S('g', {}, svg);
+const wC = S('g', {}, sC);
+const camC = camera(wC);
+const blurC = L.blurOf('mbCampus');
+S('rect', { x: -500, y: -500, width: 2080, height: 3000, fill: '#FFE7C4' }, wC);
+S('path', { d: 'M600,-500 L1100,-500 L820,1330 L320,1330 Z', fill: '#FFF4DE', opacity: 0.8 }, wC);
+S('rect', { x: 90, y: 320, width: 420, height: 300, rx: 16, fill: '#B9814A', ...line }, wC);
+[[120, 350, '#fff'], [300, 360, YEL], [150, 480, '#BFD0FF'], [320, 470, '#fff']].forEach(([x, y, c], i) => S('rect', { x, y, width: 150, height: 104, rx: 6, fill: c, transform: `rotate(${[-4, 3, 2, -3][i]} ${x + 75} ${y + 52})` }, wC));
+S('rect', { x: 700, y: 300, width: 300, height: 560, rx: 12, fill: '#7FA6C9', ...line }, wC);
+S('path', { d: 'M850,300 L850,860 M700,580 L1000,580', stroke: INK, 'stroke-width': 6 }, wC);
+S('rect', { x: -500, y: 1330, width: 2080, height: 1200, fill: '#F3CC98' }, wC);
+S('rect', { x: -500, y: 1318, width: 2080, height: 18, fill: '#E2B273' }, wC);
+const friend = person(wC, { kind: 'student', skin: '#D9996E', shade: '#BF8058', hair: '#2A1C1A', top: '#19A974', topShade: '#128A5E', outline: INK });
+const me = person(wC, ME);
+// my college ID, the price that is struck out, FREE
+const card = S('g', {}, wC);
+S('rect', { x: -150, y: -96, width: 300, height: 192, rx: 22, fill: '#fff', ...line }, card);
+S('path', { d: 'M-147,-40 L-147,-74 Q-147,-93 -128,-93 L128,-93 Q147,-93 147,-74 L147,-40 Z', fill: BLUE }, card);
+S('text', { y: -52, 'text-anchor': 'middle', 'font-size': 34, fill: '#fff', 'letter-spacing': 2 }, card, 'COLLEGE ID');
+S('circle', { cx: -86, cy: 26, r: 40, fill: FACE.meta.cheek, ...line }, card);
+[0, 1, 2].forEach((k) => S('rect', { x: -24, y: -10 + k * 30, width: [150, 110, 130][k], height: 14, rx: 7, fill: '#C9CEDA' }, card));
+const price = chip(wC, '₹4,000', 300, 92, '#fff');
+const strike = S('path', { d: 'M-140,22 L140,-22', fill: 'none', stroke: CORAL, 'stroke-width': 18, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1 }, price);
+const free = S('g', {}, wC);
+S('rect', { x: -180, y: -84, width: 360, height: 168, rx: 30, fill: YEL, stroke: INK, 'stroke-width': 7 }, free);
+S('text', { y: 48, 'text-anchor': 'middle', 'font-size': 136, fill: NAVY }, free, 'FREE');
+// the friend pays every month; I hit the limit
+const notes = [0, 1, 2].map(() => { const g = S('g', {}, wC); S('rect', { x: -70, y: -40, width: 140, height: 80, rx: 10, fill: '#7BC67B', ...line }, g); S('text', { y: 20, 'text-anchor': 'middle', 'font-size': 52, fill: '#1F5A2A' }, g, '₹'); return g; });
+const limit = chip(wC, 'LIMIT REACHED', 470, 58, CORAL, '#fff');
+// the two things to remember
+const clock = S('g', {}, wC);
+S('circle', { r: 110, fill: '#fff', ...line }, clock);
+S('path', { d: 'M0,0 L0,-70', stroke: INK, 'stroke-width': 12, 'stroke-linecap': 'round' }, clock);
+const hand = S('path', { d: 'M0,0 L0,-88', stroke: CORAL, 'stroke-width': 9, 'stroke-linecap': 'round' }, clock);
+const bell = S('g', {}, wC);
+S('rect', { x: -120, y: -110, width: 240, height: 220, rx: 24, fill: '#fff', ...line }, bell);
+S('path', { d: 'M-117,-60 L-117,-86 Q-117,-107 -96,-107 L96,-107 Q117,-107 117,-86 L117,-60 Z', fill: CORAL }, bell);
+S('text', { y: 60, 'text-anchor': 'middle', 'font-size': 120, fill: NAVY }, bell, '🔔');
+const myPhone = S('g', {}, wC);
+S('rect', { x: -34, y: -58, width: 68, height: 116, rx: 14, fill: NAVY, ...line }, myPhone);
+S('rect', { x: -27, y: -48, width: 54, height: 92, rx: 6, fill: '#BFD0FF' }, myPhone);
+const plane = paperPlane(wC, [660, 1230], [470, 700], [1260, 520]);
+
+U.push((t) => {
+  const A = t < T.friend + 0.02;                           // the hook
+  const B = t >= T.friend - 0.2 && t < T.turn + 0.12;      // he pays, I am stuck
+  const C = t >= T.two - 0.14;                             // two things, the link line, the ask
+  if (!show(sC, A || B || C)) return;
+  const beat = Math.sin(t * 5);
+  show(card, A);
+  show(price, A && t > T.four - 0.06);
+  show(free, A && t > T.free + 0.05);
+  show(limit, B && t > T.limit - 0.06);
+  show(clock, C && t > T.time - 0.06 && t < T.link);
+  show(bell, C && t > T.remind - 0.06 && t < T.link);
+  show(friend.g, A ? false : true);
+  show(myPhone, C && t > T.ask + 0.05);
+  plane(t, C ? T.ask + 0.4 : 1e9, T.send + 0.35);
+  notes.forEach((n, i) => {
+    const p = prog(t, T.friend + 0.5 + i * 0.5, 0.8);
+    show(n, B && p > 0 && p < 1);
+    place(n, lerp(330, 150 - i * 30, cubicOut(p)), lerp(1150, 420, cubicOut(p)), 1.1 - 0.4 * p, -20 + 140 * p);
+  });
+  if (A) {
+    whipOut(sC, blurC, t, T.friend - 0.06, -1);
+    camC(...key(t, [[0, [600, 1010, 1.14, -1]], [0.8, [560, 990, 1.04, 0], expoOut], [T.friend, [560, 985, 1.1, 0], (p) => p]]));
+    place(card, 330, 880 + 8 * Math.sin(t * 3), 1.25 * (1 + 0.06 * Math.max(0, bump(t - 0.05))), -8 + 2 * Math.sin(t * 2));
+    place(price, 330, 1110, backOut(prog(t, T.four - 0.06, 0.28)), -4);
+    strike.setAttribute('stroke-dashoffset', 1 - eio(prog(t, T.free - 0.1, 0.2)));
+    place(free, 330, 560, backOut(prog(t, T.free + 0.05, 0.3)), -8 + 2 * Math.sin(t * 5));
+    const yes = backOut(prog(t, T.free + 0.05, 0.3));
+    me.pose({
+      x: 770, y: 1630 - 30 * Math.max(0, bump(t - T.free - 0.05)), s: 1.2, tilt: 2 * Math.sin(t * 2.4),
+      face: t < T.plan ? 'talk' : t < T.free ? 'look-left' : 'grin', pop: pop(t, [T.plan, T.free]),
+      handL: [-235, -330], gripL: 'point', handR: [lerp(152, 190, yes), lerp(-62, -410, yes)], gripR: yes > 0.5 ? 'fist' : 'open',
+    });
+    return;
+  }
+  if (B) {
+    if (t < T.friend + 0.3) whipIn(sC, blurC, t, T.friend - 0.2, 1); else whip(sC, blurC, 0, 0);
+    camC(...key(t, [[T.friend - 0.2, [400, 1020, 1.25]], [T.stuck - 0.1, [380, 1010, 1.32], (p) => p], [T.stuck + 0.4, [720, 1020, 1.3]], [T.turn, [740, 1010, 1.36], (p) => p]]));
+    place(limit, 770, 800, backOut(prog(t, T.limit - 0.06, 0.26)) * (1 + 0.05 * Math.abs(Math.sin(t * 9))), -5);
+    friend.pose({ x: 320, y: 1630, s: 1.25, tilt: 5, look: [0.3, 0.7], eye: 0.8, brow: [-10, 10], browY: -2, smile: -0.6, mw: 22, handL: [-128, -70], handR: [80, -230] });
+    me.pose({ x: 770, y: 1630, s: 1.2, tilt: lerp(0, 5, prog(t, T.limit, 0.3)), face: t < T.limit ? 'neutral' : 'sad', pop: pop(t, [T.limit]), handL: [-70, -240], gripL: 'fist' });
+    return;
+  }
+  if (t < T.two + 0.3) whip(sC, blurC, 0, 0);
+  camC(...key(t, [[T.two - 0.14, [560, 1010, 1.06]], [T.link, [560, 1000, 1.14], (p) => p], [T.link + 0.45, [740, 1090, 1.42]], [T.ask - 0.05, [740, 1085, 1.46], (p) => p], [T.ask + 0.5, [600, 1010, 1.16]], [dur, [600, 1000, 1.2], (p) => p]]));
+  place(clock, 300, 620, backOut(prog(t, T.time - 0.06, 0.28)));
+  hand.setAttribute('transform', `rotate(${t * 300})`);
+  place(bell, 330, 900, backOut(prog(t, T.remind - 0.06, 0.28)) * (1 + 0.05 * Math.sin(t * 20) * (t < T.remind + 0.6 ? 1 : 0)), 6 * Math.sin(t * 24) * (t < T.remind + 0.6 ? 1 : 0));
+  friend.pose({ x: 250, y: 1640, s: 1.2, tilt: -3, look: [1, -0.1], eye: 1.1, brow: [-6, 6], browY: -10, smile: 1.3, open: t > T.link ? 0.3 : 0, mw: 28, handL: [-128, -70], handR: [130, -64] });
+  show(friend.g, t >= T.link);
+  const offer = eio(prog(t, T.link, 0.3));
+  const lift = backOut(prog(t, T.ask + 0.05, 0.35));
+  const two = backOut(prog(t, T.two + 0.1, 0.3)) * (1 - prog(t, T.link - 0.1, 0.2));
+  const h = [lerp(lerp(-152, -205, offer), -92, lift), lerp(lerp(-62, -340, offer), -250, lift)];
+  me.pose({
+    x: 800, y: 1630 - 24 * Math.max(0, bump(t - T.send)), s: 1.2, tilt: 2 * Math.sin(t * 2.4),
+    face: t < T.link ? 'talk' : t < T.comment - 0.1 ? 'talk' : t < T.send ? 'grin' : t < T.send + 0.6 ? 'wink' : 'grin', pop: pop(t, [T.time, T.paid, T.comment - 0.1, T.send, T.send + 0.6]),
+    handL: h, gripL: lift > 0.5 ? 'fist' : 'open', handR: [lerp(152, 180, two), lerp(-62, -400, two)], gripR: two > 0.5 ? 'point' : 'open',
+  });
+  place(myPhone, 800 + (h[0] - 4) * 1.2, 1630 + (h[1] - 50) * 1.2, 1.25, -8 + 3 * Math.sin(t * 5));
+});
+
+// ================= Google's announcement page =================
+const page = webpage(stage, BLOG, 1648);
+const inkLayer = S('svg', { width: 1080, height: 10, style: 'position:absolute;left:0;top:0;overflow:visible' }, page.pins);
+const loop = (cx, cy, rx, ry, rot = -2) => {
+  const e = S('ellipse', { cx: cx * PX, cy: cy * PX, rx: rx * PX, ry: ry * PX, fill: 'none', stroke: CORAL, 'stroke-width': 12, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: `rotate(${rot} ${cx * PX} ${cy * PX})` }, inkLayer);
+  return (p) => { show(e, p > 0); e.setAttribute('stroke-dashoffset', 1 - p); };
+};
+const ringFree = loop(122, 694, 62, 30);
+const ringPlus = loop(196, 1040, 190, 30, -1);
+const ringDouble = loop(288, 1076, 108, 15, -1);
+const ringGb = loop(156, 1100, 76, 15, 1);
+const ringTime = loop(206, 765, 54, 10, 0);
+U.push((t) => {
+  if (t >= T.turn - 0.3 && t < T.two + 0.24) {
+    // it rises over the corridor; the title, the banner, then the paragraph with the details
+    const y = 1920 * (1 - expoOut(prog(t, T.turn - 0.3, 0.42))) + 1920 * eio(prog(t, T.two - 0.12, 0.34));
+    const scroll = key(t, [[T.offer - 0.1, 60], [T.offer + 0.5, 420], [T.how - 0.25, 420], [T.how + 0.25, 800]]);
+    const zoom = key(t, [[T.offer + 0.5, 1], [T.plus + 0.2, 1.35], [T.how - 0.3, 1.35], [T.how, 1], [T.two, 1.06], (p) => p]);
+    page.set({ rect: [0, y, 1080, 1920], scroll: scroll * 4, zoom, fx: 300, fy: 700 });
+    ringFree(eio(prog(t, T.free2 - 0.1, 0.4)) * (t < T.how - 0.2 ? 1 : 0));
+    ringPlus(0);
+    ringDouble(eio(prog(t, T.double - 0.05, 0.4)));
+    ringGb(eio(prog(t, T.gb + 0.12, 0.4)));
+    ringTime(0);
+  } else page.hide();
+});
+
+// ================= captions, the link line, the follow card, the pointer =================
+const clean = (words) => words.map((x) => ({ ...x, word: x.word.replace(/[।,]+$/, '') }));
+U.push(captions(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1 })), { size: 80 }));
+const link = linkLine(stage, 'Google offer');
+const follow = followCard(stage);
+const tip = pointer(stage, NAVY, '#fff', 130);
+const TIP = [
+  [T.offer + 0.4, [1160, 1400]], [T.free2 - 0.05, [560, 760], cubicOut], [T.how - 0.2, [560, 760]],
+  [T.double + 0.1, [1010, 760], cubicOut], [T.gb, [1010, 760]], [T.gb + 0.4, [620, 830]], [T.two - 0.14, [620, 830]],
+  [T.comment + 0.2, [1170, 1460]], [T.post - 0.08, [935, 1250], cubicOut], [T.ask - 0.08, [935, 1250]],
+  [T.send + 0.3, [1150, 900]], [T.follow - 0.06, [900, 420]], [dur, [900, 420]],
+];
+const SHOWN = [[T.offer + 0.4, T.two - 0.14], [T.comment + 0.2, T.ask - 0.08], [T.send + 0.3, dur + 1]];
+U.push((t) => {
+  link.set(t, { link: T.link, comment: T.comment, post: T.post, away: T.ask });
+  follow.set(t, T.send + 0.2, T.follow);
+  tip.style.visibility = SHOWN.some(([a, b]) => t >= a && t < b) ? 'visible' : 'hidden';
+  const [x, y] = key(t, TIP);
+  const click = pulse(t, T.post + 0.02, 0.07) + pulse(t, T.follow + 0.02, 0.07);
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * click})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

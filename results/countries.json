@@ -1,0 +1,8 @@
+{
+  "about": "Where each reel's views come from, read by Claude from my 'Top countries' insights screenshots (the API does not give countries per reel). Used by `node ig.mjs report` for the English test (value rule of 2026-10-16). tier1 = the share of views from US, GB, CA, AU, NZ, IE, DE, NL, SE, NO, DK, CH and SG together (a lower bound: the screenshot lists only the top countries).",
+  "weight": 10,
+  "weightNote": "One tier-1 view counts as 10 other views. From my experience (2026-10-16): an English reel with 10k views can earn more than a Hindi reel with 100k on the same topic. Change it when real earnings by country exist.",
+  "defaultHindiTier1": 0.02,
+  "defaultNote": "A Hindi reel without a screenshot counts as 2% tier-1. An assumption: India was 96.6% of #07's viewers and 94.8% of #08's, and most of the rest are neighbouring countries.",
+  "reels": {}
+}

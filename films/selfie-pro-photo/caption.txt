@@ -1,0 +1,14 @@
+TITLE
+AI जुगाड़ #1: तुम्हारी hostel वाली selfie अब LinkedIn वाली professional photo
+
+DESCRIPTION
+Gemini में अपनी selfie upload करो और यह prompt लिखो, चेहरा वही रहेगा, बस blazer और studio वाली light:
+"Turn this selfie into a professional LinkedIn headshot. Keep my face exactly the same. Navy blazer, white shirt, plain grey background, soft studio light, chest up."
+फिर लिखो: "Now give me the same photo as a square profile picture and as a resume photo."
+Gemini में photo editing free है (limits के साथ, 18+)। Passport या किसी govt ID के लिए edited photo मत लगाना।
+
+इस tool का link चाहिए? Comment में कुछ भी लिख दो।
+Placement वाले दोस्त को भेजो। ऐसे और AI जुगाड़ के लिए follow करो: @vipulsingh_ai
+
+HASHTAGS
+#AIjugaad #LinkedIn #Placement #GeminiAI #AIinHindi

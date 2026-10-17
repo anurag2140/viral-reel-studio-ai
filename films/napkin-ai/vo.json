@@ -1,0 +1,96 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 16.776,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "अपने notes को diagram में बदलो, एक click में। Tool का नाम है Napkin AI।",
+      "sentences": [
+        "अपने notes को diagram में बदलो, एक click में।",
+        "Tool का नाम है Napkin AI।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 3.723,
+      "pauses": [
+        [
+          1.53,
+          1.67
+        ],
+        [
+          2.24,
+          2.53
+        ]
+      ]
+    },
+    {
+      "id": "s1",
+      "text": "पहले अपना text paste करो। Prompt लिखने की ज़रूरत नहीं।",
+      "sentences": [
+        "पहले अपना text paste करो।",
+        "Prompt लिखने की ज़रूरत नहीं।"
+      ],
+      "file": "vo/s1.wav",
+      "start": 4.063,
+      "duration": 2.56,
+      "pauses": [
+        [
+          1.24,
+          1.6
+        ]
+      ]
+    },
+    {
+      "id": "s2",
+      "text": "फिर एक button दबाओ, और visuals बन जाते हैं। जो पसंद आए, वह चुनो।",
+      "sentences": [
+        "फिर एक button दबाओ, और visuals बन जाते हैं।",
+        "जो पसंद आए, वह चुनो।"
+      ],
+      "file": "vo/s2.wav",
+      "start": 6.875,
+      "duration": 3.091,
+      "pauses": [
+        [
+          1.78,
+          2.06
+        ]
+      ]
+    },
+    {
+      "id": "s3",
+      "text": "आख़िर में PNG या PDF में export करो। यह free plan में भी होता है।",
+      "sentences": [
+        "आख़िर में PNG या PDF में export करो।",
+        "यह free plan में भी होता है।"
+      ],
+      "file": "vo/s3.wav",
+      "start": 10.313,
+      "duration": 3.646,
+      "pauses": [
+        [
+          2.27,
+          2.57
+        ]
+      ]
+    },
+    {
+      "id": "pay",
+      "text": "अगली presentation में notes नहीं, diagram दिखाओ।",
+      "sentences": [
+        "अगली presentation में notes नहीं, diagram दिखाओ।"
+      ],
+      "file": "vo/pay.wav",
+      "start": 14.063,
+      "duration": 2.614,
+      "pauses": [
+        [
+          1.63,
+          1.76
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 8.665,
+  "lines": [
+    {
+      "id": "series-pitch",
+      "text": "ये तो बस शुरुआत है। आगे सीखोगे, ChatGPT कैसे सोचता है, prompt कैसे लिखें, और AI agents क्या हैं।",
+      "sentences": [
+        "ये तो बस शुरुआत है।",
+        "आगे सीखोगे, ChatGPT कैसे सोचता है, prompt कैसे लिखें, और AI agents क्या हैं।"
+      ],
+      "file": "vo/series-pitch.wav",
+      "start": 0,
+      "duration": 6.274,
+      "pauses": [
+        [
+          1.02,
+          1.32
+        ],
+        [
+          3.56,
+          3.85
+        ],
+        [
+          4.72,
+          4.97
+        ]
+      ]
+    },
+    {
+      "id": "series-cta",
+      "text": "कोई video miss न हो, इसलिए follow करो।",
+      "sentences": [
+        "कोई video miss न हो, इसलिए follow करो।"
+      ],
+      "file": "vo/series-cta.wav",
+      "start": 6.563,
+      "duration": 2.002,
+      "pauses": [
+        [
+          1.05,
+          1.26
+        ]
+      ]
+    }
+  ]
+}

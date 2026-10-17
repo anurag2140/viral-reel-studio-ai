@@ -1,0 +1,45 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 5.685,
+  "lines": [
+    {
+      "id": "comment-pitch",
+      "text": "अगला AI topic तुम चुनो। Comment में लिखो, तुम्हें क्या समझना है।",
+      "sentences": [
+        "अगला AI topic तुम चुनो।",
+        "Comment में लिखो, तुम्हें क्या समझना है।"
+      ],
+      "file": "vo/comment-pitch.wav",
+      "start": 0,
+      "duration": 3.249,
+      "pauses": [
+        [
+          1.24,
+          1.65
+        ],
+        [
+          2.25,
+          2.38
+        ]
+      ]
+    },
+    {
+      "id": "comment-cta",
+      "text": "और वो video miss न हो, इसलिए follow कर लो।",
+      "sentences": [
+        "और वो video miss न हो, इसलिए follow कर लो।"
+      ],
+      "file": "vo/comment-cta.wav",
+      "start": 3.438,
+      "duration": 2.148,
+      "pauses": [
+        [
+          1.05,
+          1.3
+        ]
+      ]
+    }
+  ]
+}

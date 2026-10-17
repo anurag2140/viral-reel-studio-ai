@@ -1,0 +1,42 @@
+{
+  "number": 1,
+  "title": "AI vs ML vs DL vs GenAI",
+  "voice": "Orus",
+  "bpm": 96,
+  "gap": 0.2,
+  "style": "Natural conversational Hindi as spoken in India, like a friendly college senior who explains to a junior. English technical terms in Indian English. Warm, confident, lively. Medium-fast pace with a short clear pause after every sentence.",
+  "lines": [
+    {
+      "id": "hook",
+      "style": "Natural conversational Hindi as spoken in India. Punchy hook for a short video: say the four terms one by one like a quick list, with a clear short pause after each, then land the last sentence with surprise and a smile. English terms in Indian English. Fast, bright energy.",
+      "sentences": ["AI.", "ML.", "Deep Learning.", "GenAI.", "ये चारों एक चीज़ नहीं हैं।"]
+    },
+    {
+      "id": "nest",
+      "style": "Natural conversational Hindi as spoken in India. Reveal the secret: confident, a little slower, stress the words 'अंदर एक'.",
+      "sentences": ["ये एक के अंदर एक हैं।"]
+    },
+    {
+      "id": "ai",
+      "sentences": ["सबसे बड़ा घेरा है AI।", "यानी, machine जो smart काम करे।", "जैसे chess खेलने वाला computer।"]
+    },
+    {
+      "id": "ml",
+      "sentences": ["उसके अंदर है Machine Learning।", "यहाँ machine, data से खुद सीखती है।", "जैसे spam filter।"]
+    },
+    {
+      "id": "dl",
+      "sentences": ["उसके अंदर है Deep Learning।", "इसमें neural network की कई layers होती हैं।", "जैसे face unlock।"]
+    },
+    {
+      "id": "gen",
+      "style": "Natural conversational Hindi as spoken in India, like a friendly college senior. English technical terms in Indian English. Build excitement: this is the most exciting part. Lively, medium-fast, short clear pause after every sentence.",
+      "sentences": ["और सबसे अंदर है GenAI।", "यह नया content बनाता है।", "जैसे ChatGPT।"]
+    },
+    {
+      "id": "payoff",
+      "style": "Natural conversational Hindi as spoken in India. The final takeaway: slower, clear and confident, like a teacher giving the one line to remember. Short clear pause after every sentence. End with a warm, firm full stop.",
+      "sentences": ["याद रखिए।", "हर GenAI, AI है।", "पर हर AI, GenAI नहीं।"]
+    }
+  ]
+}

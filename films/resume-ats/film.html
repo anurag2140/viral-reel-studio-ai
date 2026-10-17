@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#11 पचास जगह apply किया, एक भी call नहीं</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #FFE3BF; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// Three places: my desk by day (the rejections, the trick, the call), the ATS machine that
+// eats resumes while the recruiter (Prof. Sharma) waits with an empty tray, and Resume
+// Worded's own pages, which fill the frame while the voice talks about the tool.
+import { S, backOut, bump, camera, captionsCompact, cubicOut, eio, expoOut, key, lerp, pointer, prog, pulse, setup, start, webpage } from '/brand/story.js';
+import { CORAL, INK, NAVY, desk, followCard, lights, linkLine, paperPlane, show, star, whip, whipIn, whipOut } from '/brand/scenes.js';
+import { cast } from '/brand/cast.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const HOME = 'shots/home.jpg';   // resumeworded.com, the whole page at 2x (824 wide)
+const HERO = 'shots/hero.jpg';   // the same page, 0 to 800 css px at 4x
+const FACE = { dir: '/brand/face/', meta: await (await fetch('/brand/face/face.json')).json() };
+const ME = { face: FACE, skin: FACE.meta.cheek, outfit: 'hoodie' };
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"'], [HOME, HERO, '/logo.png', ...FACE.meta.names.map((n) => `${FACE.dir}${n}.png`)]);
+const pop = (t, at) => 1 - 0.07 * at.reduce((v, a) => v + Math.max(0, bump(t - a)), 0);
+const mix = (a, b, p) => a.map((v, i) => lerp(v, b[i], p));
+const place = (g, x, y, s = 1, r = 0) => g.setAttribute('transform', `translate(${x} ${y}) rotate(${r}) scale(${s})`);
+const U = [];
+const L = lights(svg);
+const YEL = '#FFD23F';
+const GREEN = '#19C37D';
+const line = { stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+const chip = (parent, text, w, size, fill = YEL, ink = NAVY) => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -size * 0.75, width: w, height: size * 1.5, rx: size * 0.36, fill, ...line }, g);
+  S('text', { y: size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, text);
+  return g;
+};
+// a resume: a sheet with a photo square and lines
+const resume = (parent, w = 120) => {
+  const g = S('g', {}, parent);
+  const h = w * 1.3;
+  S('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 8, fill: '#fff', ...line, 'stroke-width': 4 }, g);
+  S('rect', { x: -w / 2 + 12, y: -h / 2 + 12, width: w * 0.28, height: w * 0.28, rx: 4, fill: '#C9D4F5' }, g);
+  for (let k = 0; k < 4; k++) S('rect', { x: -w / 2 + 12, y: -h / 2 + w * 0.48 + k * w * 0.16, width: w * [0.7, 0.55, 0.65, 0.4][k], height: w * 0.06, rx: 3, fill: '#C9CEDA' }, g);
+  return g;
+};
+
+// ================= my desk, by day =================
+const D = desk(svg, L, ME, { day: true });
+// the rejections fly out of the laptop: emails stamped REJECTED
+const mails = [[-330, -520, -14], [300, -600, 10], [-250, -900, 8], [330, -930, -9], [-60, -1100, 4], [60, -760, -6]].map(([dx, dy, r], i) => {
+  const g = S('g', {}, D.props);
+  S('rect', { x: -110, y: -70, width: 220, height: 140, rx: 14, fill: '#fff', ...line }, g);
+  S('path', { d: 'M-104,-62 L0,8 L104,-62', fill: 'none', stroke: '#C9CEDA', 'stroke-width': 6 }, g);
+  const st = S('g', { transform: 'rotate(-12)' }, g);
+  S('rect', { x: -96, y: -24, width: 192, height: 48, rx: 8, fill: 'none', stroke: CORAL, 'stroke-width': 6 }, st);
+  S('text', { y: 14, 'text-anchor': 'middle', 'font-size': 36, fill: CORAL, 'letter-spacing': 1 }, st, 'REJECTED');
+  return { g, dx, dy, r, i };
+});
+const applied = chip(D.props, '50 applications', 470, 56, '#fff');
+const calls = chip(D.props, '0 calls', 260, 64, CORAL, '#fff');
+const phone = S('g', {}, D.props);
+S('rect', { x: -40, y: -70, width: 80, height: 140, rx: 16, fill: NAVY, ...line }, phone);
+S('rect', { x: -32, y: -58, width: 64, height: 112, rx: 8, fill: '#BFD0FF' }, phone);
+const callBubble = chip(D.props, 'Interview call!', 440, 60, GREEN, '#fff');
+const myPhone = S('g', {}, D.props);
+S('rect', { x: -34, y: -58, width: 68, height: 116, rx: 14, fill: NAVY, ...line }, myPhone);
+S('rect', { x: -27, y: -48, width: 54, height: 92, rx: 6, fill: '#BFD0FF' }, myPhone);
+const plane = paperPlane(D.props, [330, 1090], [110, 470], [1260, 380]);
+
+U.push((t) => {
+  const A = t < T.human + 0.02;                        // the hook
+  const B = t >= T.trick - 0.2 && t < T.again + 0.02;   // "असली trick अब है"
+  const C = t >= T.call - 0.2;                          // the call, the link line, the ask
+  if (!show(D.s, A || B || C)) return;
+  D.tick(t);
+  mails.forEach((m) => show(m.g, A));
+  show(applied, A); show(calls, A);
+  show(phone, C && t < T.link);
+  show(callBubble, C && t > T.call + 0.15 && t < T.link);
+  show(myPhone, C && t > T.ask + 0.05);
+  plane(t, C ? T.ask + 0.4 : 1e9, T.send + 0.35);
+  if (A) {
+    whipOut(D.s, D.blur, t, T.human - 0.06, -1);
+    D.cam(...key(t, [[0, [540, 1000, 1.12]], [T.human, [540, 990, 1.18], (p) => p]]));
+    // on frame 0 the emails are already in the air; they keep drifting and two more arrive
+    mails.forEach((m) => {
+      const p = m.i < 4 ? 0.75 + 0.25 * eio(prog(t, 0, 0.8)) : expoOut(prog(t, 0.25 + (m.i - 4) * 0.35, 0.5));
+      show(m.g, p > 0);
+      place(m.g, 540 + m.dx * p + 10 * Math.sin(t * 2 + m.i), 1260 + m.dy * p + 12 * Math.cos(t * 1.6 + m.i), 0.6 + 0.4 * p, m.r + 4 * Math.sin(t * 1.3 + m.i));
+    });
+    place(applied, 300, 350, 1 + 0.06 * Math.max(0, bump(t - 0.6)), -4);
+    place(calls, 790, 430, (1 + 0.18 * Math.max(0, bump(t - T.noCall))) * (1 + 0.04 * Math.sin(t * 6)), 5);
+    D.kid.pose({
+      x: 540, y: 1640, s: 1.5, tilt: -4 + 2 * Math.sin(t * 2.2), hx: t > T.noCall ? 5 * Math.sin(t * 40) * Math.exp(-(t - T.noCall) * 3) : 0,
+      face: t < T.noCall ? 'worried' : 'sad', pop: pop(t, [T.noCall]),
+      handL: [-150, -560], handR: [150, -560],
+    });
+    return;
+  }
+  whip(D.s, D.blur, 0, 0);
+  if (B) {
+    if (t < T.trick + 0.3) whipIn(D.s, D.blur, t, T.trick - 0.2, 1);
+    D.cam(...key(t, [[T.trick - 0.2, [540, 1010, 1.3]], [T.again, [540, 985, 1.58], cubicOut]]));
+    const up = backOut(prog(t, T.trick + 0.35, 0.3));
+    D.kid.pose({
+      x: 540, y: 1640 - 26 * Math.max(0, bump(t - T.trick - 0.35)), s: 1.5, tilt: 2 * Math.sin(t * 2.4),
+      face: t < T.trick + 0.35 ? 'talk' : 'wink', pop: pop(t, [T.trick + 0.35]),
+      handL: [-70, -200], handR: [lerp(70, 180, up), lerp(-200, -420, up)], gripR: up > 0.5 ? 'point' : 'open',
+    });
+    return;
+  }
+  // the call: the phone rings, I jump; then the link line and the ask
+  if (t < T.call + 0.3) whipIn(D.s, D.blur, t, T.call - 0.2, 1);
+  D.cam(...key(t, [[T.call - 0.2, [540, 1010, 1.2]], [T.link, [540, 1000, 1.28], (p) => p], [dur, [540, 1000, 1.3], (p) => p]]));
+  const ring = t < T.link ? Math.sin(t * 60) * 6 * (t < T.interview + 0.6 ? 1 : 0.3) : 0;
+  place(phone, 760 + ring, 1150, 1.2, 10 + ring);
+  place(callBubble, 700, 770, backOut(prog(t, T.call + 0.15, 0.3)), -4);
+  const offer = eio(prog(t, T.link, 0.3)) * (1 - prog(t, T.ask, 0.2));
+  const lift = backOut(prog(t, T.ask + 0.05, 0.35));
+  const hand = mix([lerp(-70, -215, offer), lerp(-200, -360, offer) - 8 * offer * Math.sin(t * 6)], [-150, -335], lift);
+  D.kid.pose({
+    x: 540, y: 1640 - 40 * Math.max(0, bump(t - T.interview)) - 24 * Math.max(0, bump(t - T.send)), s: 1.5, tilt: 2 * Math.sin(t * 2.4),
+    face: t < T.interview ? 'talk' : t < T.link ? 'grin' : t < T.comment - 0.1 ? 'talk' : t < T.send ? 'grin' : t < T.send + 0.6 ? 'wink' : 'grin',
+    pop: pop(t, [T.interview, T.link, T.comment - 0.1, T.send, T.send + 0.6]),
+    handL: hand, handR: t < T.link ? [lerp(70, 150, backOut(prog(t, T.interview, 0.3))), lerp(-200, -540, backOut(prog(t, T.interview, 0.3)))] : [70, -200],
+  });
+  place(myPhone, 540 + (hand[0] - 4) * 1.5, 1640 + (hand[1] - 46) * 1.5, 1.4, -8 + 3 * Math.sin(t * 5));
+});
+
+// ================= the ATS machine and the recruiter =================
+const sM = S('g', {}, svg);
+const wM = S('g', {}, sM);
+const camM = camera(wM);
+const blurM = L.blurOf('mbAts');
+S('rect', { x: -900, y: -500, width: 2900, height: 3000, fill: '#E7EEFF' }, wM);
+S('rect', { x: -900, y: 1330, width: 2900, height: 1200, fill: '#C9D4F5' }, wM);
+S('rect', { x: -900, y: 1318, width: 2900, height: 16, fill: '#AEBBE6' }, wM);
+// the conveyor belt into the machine
+S('rect', { x: -900, y: 1010, width: 1060, height: 34, rx: 17, fill: '#3A4566', ...line }, wM);
+for (let x = -880; x < 160; x += 70) S('circle', { cx: x, cy: 1027, r: 9, fill: '#8D97B9' }, wM);
+const belt = Array.from({ length: 9 }, () => resume(wM, 96));
+// the machine
+const M = S('g', {}, wM);
+S('rect', { x: 140, y: 520, width: 470, height: 660, rx: 44, fill: '#6C7FA8', ...line }, M);
+S('rect', { x: 200, y: 560, width: 350, height: 150, rx: 22, fill: '#1F2A44', ...line }, M);
+S('text', { x: 375, y: 676, 'text-anchor': 'middle', 'font-size': 130, fill: YEL, 'letter-spacing': 8 }, M, 'ATS');
+S('rect', { x: 210, y: 740, width: 330, height: 74, rx: 37, fill: '#0F1230', ...line }, M);
+const scanBar = S('rect', { x: 0, y: 748, width: 70, height: 58, rx: 29, fill: CORAL }, M);
+S('rect', { x: 110, y: 930, width: 60, height: 120, rx: 10, fill: '#0F1230', ...line }, M);
+for (let k = 0; k < 3; k++) S('circle', { cx: 250 + k * 60, cy: 900, r: 20, fill: ['#FFB020', GREEN, CORAL][k], ...line, 'stroke-width': 4 }, M);
+S('path', { d: 'M560,1080 L700,1240 L640,1260 L520,1120 Z', fill: '#4E5E85', ...line }, M);
+const door = S('g', {}, M);
+S('rect', { x: 600, y: 760, width: 70, height: 110, rx: 10, fill: GREEN, ...line }, door);
+S('text', { x: 635, y: 830, 'text-anchor': 'middle', 'font-size': 26, fill: '#fff' }, door, 'PASS');
+// the reject bin
+const bin = S('g', {}, wM);
+S('path', { d: 'M600,1250 L860,1250 L836,1460 L624,1460 Z', fill: CORAL, ...line }, bin);
+S('text', { x: 730, y: 1380, 'text-anchor': 'middle', 'font-size': 38, fill: '#fff' }, bin, 'REJECTED');
+const flying = Array.from({ length: 4 }, () => { const g = resume(wM, 80); const x = S('path', { d: 'M-26,-26 L26,26 M26,-26 L-26,26', stroke: CORAL, 'stroke-width': 10, 'stroke-linecap': 'round' }, g); return { g, x }; });
+const stamp = chip(wM, 'REJECT', 360, 90, '#fff', CORAL);
+const atsTag = chip(wM, 'Applicant Tracking System', 640, 44, YEL);
+// the recruiter, with an empty tray
+const sharma = cast(wM, 'sharma');
+// his office desk: a wooden top seen a little from above, a drawer unit, legs, a laptop
+const deskG = S('g', { transform: 'translate(0 100)' }, wM); // top at about his chest, as if he sits behind it
+S('rect', { x: 896, y: 1366, width: 26, height: 250, rx: 6, fill: '#8C5A2E', ...line }, deskG);
+S('rect', { x: 1000, y: 1366, width: 120, height: 120, fill: '#9C6A3B', ...line }, deskG);
+S('rect', { x: 1110, y: 1366, width: 180, height: 250, rx: 6, fill: '#C99257', ...line }, deskG);
+for (const y of [1384, 1462, 1540]) {
+  S('rect', { x: 1124, y, width: 152, height: 66, rx: 8, fill: '#D9A86C', ...line, 'stroke-width': 4 }, deskG);
+  S('rect', { x: 1180, y: y + 26, width: 40, height: 12, rx: 6, fill: '#6B4423' }, deskG);
+}
+S('path', { d: 'M884,1300 L1280,1300 L1304,1340 L860,1340 Z', fill: '#E3B57A', ...line }, deskG);
+S('rect', { x: 856, y: 1338, width: 452, height: 30, rx: 8, fill: '#B9814A', ...line }, deskG);
+S('path', { d: 'M900,1312 L1060,1312', stroke: '#fff', 'stroke-width': 5, opacity: 0.35, 'stroke-linecap': 'round' }, deskG);
+const lap = S('g', { transform: 'translate(1190 1302)' }, deskG);
+S('path', { d: 'M-70,0 L-62,-96 L62,-96 L70,0 Z', fill: '#8D97B9', ...line }, lap);
+S('circle', { cx: 0, cy: -50, r: 12, fill: '#B4BCD6' }, lap);
+S('rect', { x: -84, y: -6, width: 168, height: 12, rx: 6, fill: '#6B7699', ...line, 'stroke-width': 4 }, lap);
+const pens = S('g', { transform: 'translate(1270 1300)' }, deskG);
+S('path', { d: 'M-8,-46 L-14,-80 M2,-46 L4,-84 M10,-46 L18,-76', stroke: CORAL, 'stroke-width': 6, 'stroke-linecap': 'round' }, pens);
+S('rect', { x: -20, y: -48, width: 40, height: 48, rx: 6, fill: NAVY, ...line, 'stroke-width': 4 }, pens);
+const tray = S('g', {}, wM);
+S('path', { d: 'M-115,0 L115,0 L98,56 L-98,56 Z', fill: '#DCE5FF', ...line }, tray);
+S('text', { y: 39, 'text-anchor': 'middle', 'font-size': 28, fill: NAVY, 'letter-spacing': 2 }, tray, 'RESUMES');
+// a red badge with 0 on the corner of the empty tray
+const trayTag = S('g', {}, wM);
+S('circle', { r: 32, fill: CORAL, ...line }, trayTag);
+S('text', { y: 15, 'text-anchor': 'middle', 'font-size': 44, fill: '#fff' }, trayTag, '0');
+const cup = S('g', {}, wM);
+S('rect', { x: -22, y: -30, width: 44, height: 56, rx: 8, fill: '#fff', ...line }, cup);
+S('path', { d: 'M22,-14 q20,4 0,24', fill: 'none', stroke: INK, 'stroke-width': 6 }, cup);
+U.push((t) => {
+  if (!show(sM, t >= T.human - 0.2 && t < T.turn + 0.14)) return;
+  if (t < T.human + 0.3) whipIn(sM, blurM, t, T.human - 0.2, 1); else whip(sM, blurM, 0, 0);
+  camM(...key(t, [[T.human - 0.2, [960, 1180, 1.3]], [T.filter - 0.1, [950, 1170, 1.38], (p) => p], [T.filter + 0.5, [420, 960, 1.0]], [T.ats - 0.1, [420, 950, 1.04], (p) => p], [T.ats + 0.35, [380, 760, 1.4]], [T.reject - 0.1, [390, 770, 1.44], (p) => p], [T.reject + 0.45, [520, 1030, 0.9]], [T.turn, [520, 1030, 0.94], (p) => p]]));
+  // the belt runs, the machine scans, most resumes fly into the bin
+  belt.forEach((g, i) => { const x = -900 + ((t * 230 + i * 120) % 1060); place(g, x, 960, 1, -3 + 3 * Math.sin(i)); show(g, x < 120); });
+  scanBar.setAttribute('x', 220 + (Math.sin(t * 5) * 0.5 + 0.5) * 250);
+  door.setAttribute('transform', `translate(0 ${-6 * Math.max(0, Math.sin(t * 3))})`);
+  flying.forEach((f, i) => {
+    const p = ((t * 0.9 + i * 0.25) % 1);
+    const x = lerp(600, 730, p);
+    const y = 1100 - 160 * Math.sin(p * Math.PI) + 180 * p;
+    place(f.g, x, y, 1 - 0.3 * p, 200 * p + i * 20);
+    show(f.g, t > T.filter + 0.3);
+  });
+  show(stamp, t > T.rejectWord - 0.06);
+  place(stamp, 470, 980, (t < T.rejectWord + 0.2 ? lerp(2, 1, prog(t, T.rejectWord - 0.06, 0.16) ** 2) : 1) * (1 + 0.05 * Math.max(0, bump(t - T.rejectWord - 0.1))), -10);
+  show(atsTag, t > T.atsWord - 0.05 && t < T.reject + 0.3);
+  place(atsTag, 380, 470, backOut(prog(t, T.atsWord - 0.05, 0.28)), -2);
+  // the recruiter waits: a yawn over the empty tray, then a look at the machine
+  const look = t > T.filter;
+  sharma.pose({
+    x: 980, y: 1640, s: 1.1, tilt: look ? -6 : 3 + 2 * Math.sin(t * 2),
+    face: t < T.read ? 'neutral' : t < T.filter ? 'yawn' : t < T.reject ? 'look-left' : 'sad', pop: pop(t, [T.read, T.filter]),
+    handL: [-150, -62], handR: t < T.read ? [40, -300] : [150, -62],
+  });
+  show(cup, t < T.read); // he sips, then puts it away
+  place(cup, 980 + 46 * 1.1, 1640 - 330 * 1.1, 1.1);
+  place(tray, 990, 1346);
+  place(trayTag, 1102, 1346 - 4 * Math.sin(t * 3), backOut(prog(t, T.read - 0.1, 0.3)), -3);
+});
+
+// ================= Resume Worded's pages =================
+const PX = 1080 / 412;                 // frame pixels for one css pixel
+const pHero = webpage(stage, HERO, 1648);
+const pHome = webpage(stage, HOME, 824);
+const ink = (page) => S('svg', { width: 1080, height: 10, style: 'position:absolute;left:0;top:0;overflow:visible' }, page.pins);
+const loop = (layer, cx, cy, rx, ry, rot = -3) => {
+  const e = S('ellipse', { cx: cx * PX, cy: cy * PX, rx: rx * PX, ry: ry * PX, fill: 'none', stroke: CORAL, 'stroke-width': 12, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: `rotate(${rot} ${cx * PX} ${cy * PX})` }, layer);
+  return (p) => { show(e, p > 0); e.setAttribute('stroke-dashoffset', 1 - p); };
+};
+const inkHero = ink(pHero);
+const ringName = loop(inkHero, 105, 32, 108, 22, -2);   // css px of the hero strip
+const ringDrop = loop(inkHero, 205, 513, 205, 120, -1);
+const fileCard = S('g', {}, inkHero);
+S('rect', { x: -70, y: -90, width: 140, height: 180, rx: 12, fill: '#fff', ...line }, fileCard);
+S('rect', { x: -70, y: -90, width: 140, height: 50, rx: 12, fill: CORAL }, fileCard);
+S('text', { y: -54, 'text-anchor': 'middle', 'font-size': 32, fill: '#fff' }, fileCard, 'PDF');
+for (let k = 0; k < 3; k++) S('rect', { x: -50, y: -16 + k * 30, width: [100, 80, 92][k], height: 12, rx: 6, fill: '#C9CEDA' }, fileCard);
+const inkHome = ink(pHome);
+// home.jpg is 2x: css = image px / 2
+const ringScore = loop(inkHome, 105, 1468, 48, 30, -3);
+const ringWeak = loop(inkHome, 315, 1158, 34, 16, -2);
+const ringVague = loop(inkHome, 324, 1241, 26, 16, 2);
+const ringReup = loop(inkHome, 115, 6350, 82, 14, -1);
+const rowRings = [6166, 6195, 6224].map((y) => loop(inkHome, 206, y, 128, 13, 0));
+const rise = (t, t0) => 1920 * (1 - expoOut(prog(t, t0, 0.42)));
+const drop = (t, t0) => 1920 * eio(prog(t, t0, 0.34));
+U.push((t) => {
+  // the home page: the name, then the upload box
+  if (t >= T.turn - 0.3 && t < T.score + 0.24) {
+    const y = rise(t, T.turn - 0.3);
+    const scroll = key(t, [[T.upload - 0.15, 0], [T.upload + 0.3, 250]]);
+    pHero.set({ rect: [0, y - 1920 * eio(prog(t, T.score - 0.2, 0.42)) * 0, 1080, 1920], scroll: scroll * 4, slide: lerp(260, 0, eio(prog(t, T.upload - 0.15, 0.45))), zoom: key(t, [[T.name, 1], [T.upload - 0.15, 1.08], [T.upload + 0.3, 1]]), fx: 300, fy: 300 });
+    pHero.set({ rect: [-1080 * eio(prog(t, T.score - 0.2, 0.42)), y, 1080, 1920], scroll: scroll * 4, slide: lerp(260, 0, eio(prog(t, T.upload - 0.15, 0.45))), zoom: key(t, [[T.name, 1], [T.upload - 0.15, 1.08], [T.upload + 0.3, 1]]), fx: 300, fy: 300 });
+    ringName(eio(prog(t, T.name + 0.15, 0.45)) * (1 - prog(t, T.upload - 0.2, 0.15)));
+    ringDrop(eio(prog(t, T.uploadWord + 0.3, 0.4)));
+    const f = prog(t, T.uploadWord - 0.2, 0.5);
+    show(fileCard, f > 0);
+    place(fileCard, lerp(560, 205 * PX, cubicOut(f)), lerp(1700 / 1, 513 * PX, cubicOut(f)) - 30 * Math.sin(f * Math.PI), lerp(1.2, 0.9, f), lerp(20, -4, f));
+  } else pHero.hide();
+  // the score and the weak lines; then (after the trick) the score that climbs
+  const A = t >= T.score - 0.2 && t < T.trick + 0.24;
+  const B = t >= T.again - 0.2 && t < T.call + 0.24;
+  if (A) {
+    pHome.set({ rect: [1080 * (1 - eio(prog(t, T.score - 0.2, 0.42))), drop(t, T.trick - 0.12), 1080, 1920], scroll: key(t, [[T.score + 0.3, 1860], [T.weak, 2060]]), zoom: key(t, [[T.hundred, 1], [T.weak - 0.1, 1.12], [T.weak + 0.3, 1], [T.trick, 1.04], (p) => p]), fx: 300, fy: 1150 });
+    ringScore(eio(prog(t, T.hundred - 0.05, 0.4)) * (1 - prog(t, T.weak, 0.2)));
+    ringWeak(eio(prog(t, T.weakWord - 0.05, 0.35)));
+    ringVague(eio(prog(t, T.weakWord + 0.35, 0.35)));
+    ringReup(0); rowRings.forEach((r) => r(0));
+  } else if (B) {
+    pHome.set({ rect: [1080 * (1 - eio(prog(t, T.again - 0.2, 0.42))), drop(t, T.call - 0.12), 1080, 1920], scroll: 12060, zoom: key(t, [[T.reup, 1], [T.freeAgain, 1.2], [T.climb, 1.15], [T.climb + 0.4, 1.22], [T.call, 1.26], (p) => p]), fx: 360, fy: key(t, [[T.climb, 760], [T.climb + 0.4, 330]]) });
+    ringReup(eio(prog(t, T.freeAgain - 0.1, 0.4)) * (1 - prog(t, T.climb, 0.2)));
+    rowRings.forEach((r, i) => r(eio(prog(t, T.climb + 0.1 + i * 0.3, 0.3))));
+    ringScore(0); ringWeak(0); ringVague(0);
+  } else pHome.hide();
+});
+
+// ================= captions, the link line, the follow card, the pointer =================
+const clean = (ws) => ws.map((x) => ({ ...x, word: x.word.replace(/[।,]+$/, '') }));
+U.push(captionsCompact(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1, whole: i === 0 }))));
+const link = linkLine(stage, 'resumeworded.com');
+const follow = followCard(stage);
+const tip = pointer(stage, NAVY, '#fff', 130);
+const TIP = [
+  [T.name - 0.2, [1160, 1400]], [T.name + 0.3, [560, 300], cubicOut], [T.upload - 0.1, [560, 300]], [T.uploadWord + 0.2, [620, 760], cubicOut], [T.score - 0.25, [620, 760]],
+  [T.hundred - 0.2, [1100, 1400]], [T.hundred + 0.2, [420, 760], cubicOut], [T.weakWord - 0.1, [420, 760]], [T.weakWord + 0.2, [960, 300], cubicOut], [T.trick - 0.12, [960, 300]],
+  [T.reup - 0.3, [1100, 1300]], [T.freeAgain, [520, 860], cubicOut], [T.call - 0.12, [520, 860]],
+  [T.comment + 0.2, [1170, 1460]], [T.post - 0.08, [935, 1250], cubicOut], [T.ask - 0.08, [935, 1250]],
+  [T.send + 0.3, [1150, 900]], [T.follow - 0.06, [900, 420]], [dur, [900, 420]],
+];
+const SHOWN = [[T.name - 0.2, T.trick - 0.12], [T.reup - 0.3, T.call - 0.12], [T.comment + 0.2, T.ask - 0.08], [T.send + 0.3, dur + 1]];
+U.push((t) => {
+  link.set(t, { link: T.link, comment: T.comment, post: T.post, away: T.ask });
+  follow.set(t, T.send + 0.2, T.follow);
+  tip.style.visibility = SHOWN.some(([a, b]) => t >= a && t < b) ? 'visible' : 'hidden';
+  const [x, y] = key(t, TIP);
+  const click = pulse(t, T.uploadWord + 0.25, 0.07) + pulse(t, T.post + 0.02, 0.07) + pulse(t, T.follow + 0.02, 0.07);
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * click})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

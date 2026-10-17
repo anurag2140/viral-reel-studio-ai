@@ -1,0 +1,34 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 6.186,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "Teacher को लगेगा तुमने पूरी रात मेहनत की। असल में सिर्फ़ एक click लगा। यह है Napkin AI।",
+      "sentences": [
+        "Teacher को लगेगा तुमने पूरी रात मेहनत की।",
+        "असल में सिर्फ़ एक click लगा।",
+        "यह है Napkin AI।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 6.086,
+      "pauses": [
+        [
+          2.37,
+          2.76
+        ],
+        [
+          3.72,
+          3.86
+        ],
+        [
+          4.35,
+          4.57
+        ]
+      ]
+    }
+  ]
+}

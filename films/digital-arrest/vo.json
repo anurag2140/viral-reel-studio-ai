@@ -1,0 +1,149 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 29.527,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "आंटी दस लाख रुपये भेजने ही वाली थीं। तभी तुमने phone काट दिया।",
+      "sentences": [
+        "आंटी दस लाख रुपये भेजने ही वाली थीं।",
+        "तभी तुमने phone काट दिया।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 3.915,
+      "pauses": [
+        [
+          2.4,
+          2.74
+        ]
+      ]
+    },
+    {
+      "id": "call",
+      "text": "एक video call आया था। वर्दी में एक आदमी बोला, आपके parcel में drugs मिले हैं। आप digital arrest में हैं, camera बंद मत करना।",
+      "sentences": [
+        "एक video call आया था।",
+        "वर्दी में एक आदमी बोला, आपके parcel में drugs मिले हैं।",
+        "आप digital arrest में हैं, camera बंद मत करना।"
+      ],
+      "file": "vo/call.wav",
+      "start": 4.038,
+      "duration": 6.658,
+      "pauses": [
+        [
+          0.99,
+          1.32
+        ],
+        [
+          2.54,
+          2.82
+        ],
+        [
+          4.05,
+          4.4
+        ],
+        [
+          5.6,
+          5.77
+        ]
+      ]
+    },
+    {
+      "id": "fear",
+      "text": "आंटी डर गईं। और वो यही चाहता था।",
+      "sentences": [
+        "आंटी डर गईं।",
+        "और वो यही चाहता था।"
+      ],
+      "file": "vo/fear.wav",
+      "start": 10.962,
+      "duration": 2.478,
+      "pauses": [
+        [
+          0.72,
+          1.32
+        ]
+      ]
+    },
+    {
+      "id": "truth",
+      "text": "लेकिन सच यह है। Police, CBI या कोई भी agency, video call पर arrest नहीं करती।",
+      "sentences": [
+        "लेकिन सच यह है।",
+        "Police, CBI या कोई भी agency, video call पर arrest नहीं करती।"
+      ],
+      "file": "vo/truth.wav",
+      "start": 13.558,
+      "duration": 5.366,
+      "pauses": [
+        [
+          1.19,
+          1.73
+        ],
+        [
+          3.01,
+          3.15
+        ]
+      ]
+    },
+    {
+      "id": "steps",
+      "text": "ऐसा call आए तो तीन काम करो। Phone काटो, पैसे मत भेजो, और एक नौ तीन शून्य पर call करो।",
+      "sentences": [
+        "ऐसा call आए तो तीन काम करो।",
+        "Phone काटो, पैसे मत भेजो, और एक नौ तीन शून्य पर call करो।"
+      ],
+      "file": "vo/steps.wav",
+      "start": 19.038,
+      "duration": 5.743,
+      "pauses": [
+        [
+          0.87,
+          1.01
+        ],
+        [
+          1.65,
+          1.91
+        ],
+        [
+          2.52,
+          2.88
+        ],
+        [
+          3.8,
+          3.93
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "आंटी के दस लाख बच गए।",
+      "sentences": [
+        "आंटी के दस लाख बच गए।"
+      ],
+      "file": "vo/end.wav",
+      "start": 25.096,
+      "duration": 2.127,
+      "pauses": []
+    },
+    {
+      "id": "ask",
+      "text": "यह reel अभी मम्मी-पापा को भेजो।",
+      "sentences": [
+        "यह reel अभी मम्मी-पापा को भेजो।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 27.404,
+      "duration": 2.024,
+      "pauses": [
+        [
+          0.46,
+          0.59
+        ]
+      ]
+    }
+  ]
+}

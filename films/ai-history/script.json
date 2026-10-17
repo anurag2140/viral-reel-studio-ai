@@ -1,0 +1,19 @@
+{
+  "number": 4,
+  "title": "AI का इतिहास: 1956 से 2026",
+  "voice": "Orus",
+  "bpm": 96,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friendly college senior who explains to a junior. English words in Indian English. Say years the way people say them in Hindi conversation. Warm and clear, one even tone from start to end, brisk pace with only a short breath between sentences. No acting, no exaggeration.",
+  "lines": [
+    { "id": "hook", "sentences": ["AI नया नहीं है, यह सत्तर साल पुराना है।", "और यह दो बार fail भी हुआ।"] },
+    { "id": "name", "sentences": ["1956 में इसे नाम मिला: Artificial Intelligence।", "वादा बड़ा था कि machine इंसान जैसा सोचेगी।"] },
+    { "id": "winter", "sentences": ["पर computer कमज़ोर थे और पैसा रुक गया।", "इसे AI winter कहते हैं।"] },
+    { "id": "twice", "sentences": ["ऐसा दो बार हुआ।"] },
+    { "id": "chess", "sentences": ["1997 में computer ने chess champion को हराया।"] },
+    { "id": "deep", "sentences": ["2012 में deep learning ने photos पहचानने का मुक़ाबला जीता।"] },
+    { "id": "gpt", "sentences": ["और 2022 में ChatGPT आया।"] },
+    { "id": "pay", "sentences": ["तो AI एक रात में नहीं बना।", "यह सत्तर साल की मेहनत है।"] }
+  ]
+}

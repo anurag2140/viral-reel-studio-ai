@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#02 Machine कैसे सीखती है?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #111; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: var(--paper); }
+  #paper { position: absolute; inset: -200px 0; background-image: repeating-linear-gradient(#0000 0 94px, var(--rule) 94px 97px); }
+  svg { position: absolute; left: 0; top: 0; overflow: visible; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="paper"></div>
+  <svg id="world" width="1080" height="1920"></svg>
+  <div id="caps"></div>
+</div>
+<script type="module">
+// Sticker Pop version. Hero weird image: the machine is a monster that eats photos, and the
+// pattern it finds shows in its belly.
+import { $, boot, bump, clamp, createKit, ei, eio, eo, header, lerp, mulberry32, preview, prog, sp } from '/brand/kagaz.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const brand = await boot(stage);
+const vo = await (await fetch('vo.json')).json();
+const meta = await (await fetch('script.json')).json();
+const { dur, L, T } = build(vo);
+const kit = createKit(brand);
+const { stroke, pop, txt, card, sunburst, sticker, mascot, U, PAPER, CARD, INK, RED, BLUE, PINK, YELLOW, MINT, ORANGE } = kit;
+header(stage, brand, 'AI', meta.number, meta.title);
+
+const text = (parent, x, y, str, a = {}) => {
+  const e = $('text', { x, y, 'font-family': '"Baloo 2"', 'font-weight': 800, 'font-size': 80, fill: INK, 'text-anchor': 'middle', ...a }, parent);
+  e.textContent = str;
+  return e;
+};
+const MUKTA = { 'font-family': 'Mukta', 'font-weight': 700 };
+const root = $('g', {}, document.getElementById('world'));
+
+// A scene group: hidden before tIn, flies off at tOut.
+function scene(tOut, dir = -1, tIn = -9) {
+  const g = $('g', {}, root);
+  U.push((t) => {
+    const q = ei(prog(t, tOut, 0.3));
+    g.style.display = q >= 1 || t < tIn ? 'none' : '';
+    g.setAttribute('transform', `translate(${dir * 1300 * q} ${-300 * q}) rotate(${dir * 8 * q} 540 960)`);
+  });
+  return g;
+}
+const cross = (g, r, t, w = 34) => {
+  stroke(g, [[-r, -r * 1.25], [r, r * 1.25]], { t, d: 0.12, w, color: RED, amp: 5 });
+  stroke(g, [[r, -r * 1.25], [-r, r * 1.25]], { t: t + 0.1, d: 0.12, w, color: RED, amp: 5 });
+};
+const tick = (g, x, y, s, t, w = 22) => stroke(g, [[x - 36 * s, y], [x - 8 * s, y + 30 * s], [x + 44 * s, y - 38 * s]], { t, d: 0.16, w, color: RED, amp: 2 });
+// A filled stamp that hits hard.
+function stamp(parent, x, y, rot, str, t, color, w, size = 86) {
+  const g = $('g', {}, parent);
+  $('rect', { x: -w / 2 + 10, y: -52, width: w, height: 124, rx: 14, fill: INK }, g);
+  $('rect', { x: -w / 2, y: -62, width: w, height: 124, rx: 14, fill: color, stroke: INK, 'stroke-width': 9 }, g);
+  text(g, 0, 32, str, { 'font-size': size, fill: PAPER });
+  U.push((time) => {
+    const x0 = time - t;
+    const k = x0 < 0 ? 0 : lerp(2.6, 1, eo(clamp(x0 / 0.12))) * (1 + 0.06 * bump(x0 - 0.12));
+    g.style.display = k <= 0.002 ? 'none' : '';
+    g.setAttribute('transform', `translate(${x} ${y}) rotate(${rot}) scale(${k})`);
+  });
+  return g;
+}
+
+// Cats in sticker colours. The silhouette is also the "pattern".
+const CAT = [[-54, -22], [-46, -84], [-6, -50], [6, -50], [46, -84], [54, -22], [58, 10], [40, 44], [0, 58], [-40, 44], [-58, 10], [-54, -26]];
+const EAR = [INK, PINK, BLUE, ORANGE, INK];
+const FUR = [CARD, YELLOW, CARD, MINT, CARD];
+function cat(parent, x, y, s, v = 0) {
+  const g = $('g', { transform: `translate(${x} ${y}) scale(${s})` }, parent);
+  $('path', { d: 'M-54 -22 L-46 -84 L-6 -50Z M54 -22 L46 -84 L6 -50Z', fill: EAR[v % 5], stroke: INK, 'stroke-width': 7, 'stroke-linejoin': 'round' }, g);
+  $('circle', { r: 58, fill: FUR[v % 5], stroke: INK, 'stroke-width': 7 }, g);
+  if (v % 3 === 2) $('path', { d: 'M-32 -8 q10 -12 20 0 M12 -8 q10 -12 20 0', fill: 'none', stroke: INK, 'stroke-width': 6, 'stroke-linecap': 'round' }, g);
+  else { $('circle', { cx: -22, cy: -8, r: 8, fill: INK }, g); $('circle', { cx: 22, cy: -8, r: 8, fill: INK }, g); }
+  $('path', { d: 'M-8 10 L8 10 L0 20Z', fill: PINK, stroke: INK, 'stroke-width': 3 }, g);
+  $('path', { d: 'M-30 16 L-82 6 M-30 25 L-82 32 M30 16 L82 6 M30 25 L82 32 M-13 27 q6.5 9 13 0 q6.5 9 13 0', fill: 'none', stroke: INK, 'stroke-width': 5, 'stroke-linecap': 'round' }, g);
+  return g;
+}
+function dog(parent, x, y, s) {
+  const g = $('g', { transform: `translate(${x} ${y}) scale(${s})` }, parent);
+  $('circle', { r: 56, fill: ORANGE, stroke: INK, 'stroke-width': 7 }, g);
+  $('path', { d: 'M-50 -34 q-34 10 -24 62 q22 -6 22 -44Z M50 -34 q34 10 24 62 q-22 -6 -22 -44Z', fill: INK }, g);
+  $('circle', { cx: -20, cy: -10, r: 8, fill: INK }, g);
+  $('circle', { cx: 20, cy: -10, r: 8, fill: INK }, g);
+  $('ellipse', { cx: 0, cy: 16, rx: 15, ry: 11, fill: INK }, g);
+  $('path', { d: 'M0 27 V38 M-14 38 q14 12 28 0', fill: 'none', stroke: INK, 'stroke-width': 5, 'stroke-linecap': 'round' }, g);
+  return g;
+}
+function ruleBook(g, size, rows) {
+  text(g, 0, -rows.y0, 'RULES', { 'font-size': size });
+  rows.items.forEach((s, i) => {
+    const y = rows.y1 + i * rows.gap;
+    $('rect', { x: -rows.w / 2, y: y - 44, width: 46, height: 46, rx: 8, fill: CARD, stroke: INK, 'stroke-width': 7 }, g);
+    if (s) text(g, -rows.w / 2 + 74, y, s, { ...MUKTA, 'font-size': 60, 'text-anchor': 'start' });
+    else $('path', { d: `M${-rows.w / 2 + 74} ${y - 20} H${rows.w / 2 - (i % 2) * 60}`, stroke: INK, 'stroke-width': 11, 'stroke-linecap': 'round', opacity: 0.6 }, g);
+  });
+}
+function bubble(parent, x, y, w, h, t, rot = -3) {
+  const b = pop(parent, x, y, { t, rot });
+  const tail = `M${-w / 2 + 40} ${h / 2 - 8} L${-w / 2 - 10} ${h / 2 + 62} L${-w / 2 + 110} ${h / 2 - 8}Z`;
+  $('path', { d: tail, fill: INK, transform: 'translate(10 12)' }, b);
+  $('rect', { x: -w / 2 + 12, y: -h / 2 + 14, width: w, height: h, rx: 36, fill: INK }, b);
+  $('path', { d: tail, fill: CARD, stroke: INK, 'stroke-width': 9, 'stroke-linejoin': 'round' }, b);
+  $('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 36, fill: CARD, stroke: INK, 'stroke-width': 9 }, b);
+  $('rect', { x: -w / 2 + 46, y: h / 2 - 14, width: 58, height: 12, fill: CARD }, b);
+  return b;
+}
+const catLine = (g, x, y, k, t, w) => stroke(g, CAT.map(([px, py]) => [x + px * k, y + py * k]), { t, d: 0.3, w, color: PINK, amp: 2, step: 30 });
+
+// ---------- 1. hook: nobody taught ChatGPT rules ----------
+{
+  const S = scene(T.toKid, -1);
+  sunburst(S, 330, 1150);
+  sticker(S, 'circle', 60, 1570, 100, MINT);
+  sticker(S, 'plus', 990, 640, 30, ORANGE);
+  mascot(S, 320, 1460, 0.6, {
+    t: -0.3,
+    pose: (t) => ({ look: t < T.q ? [790, 1010] : [800, 1380], mouth: t < T.cross ? 0.25 : 0.9, wave: t > T.cross ? 1 : 0, hop: 50 * Math.max(0, bump(t - T.cross)) }),
+  });
+  const tag = card(S, 320, 706, 420, 124, -4, -0.26);
+  text(tag, 0, 28, 'ChatGPT', { 'font-size': 84 });
+  const bookG = $('g', {}, S);
+  const book = card(bookG, 0, 0, 420, 540, 0, null, { fill: YELLOW });
+  ruleBook(book, 100, { y0: 140, y1: -40, gap: 92, w: 290, items: ['', '', '', ''] });
+  cross(book, 165, T.cross, 40);
+  U.push((t) => {
+    const e = eo(clamp((t + 0.26) / 0.3));
+    const k = sp(t - T.cross - 0.1);
+    bookG.setAttribute('transform', `translate(${790 + 16 * k} ${1010 - (1 - e) * 600 + 34 * k}) rotate(${5 + (1 - e) * 14 + 9 * k})`);
+  });
+  const wig = $('g', {}, S);
+  txt(wig, 800, 1500, '?', { size: 300, color: PINK, t: T.q });
+  U.push((t) => wig.setAttribute('transform', `rotate(${Math.sin(t * 5.2) * 6} 800 1400)`));
+}
+
+// ---------- 2. a child: cats, not rules ----------
+{
+  const S = scene(T.toMachine, 1, T.toKid);
+  sunburst(S, 540, 900, { t: T.toKid + 0.05 });
+  sticker(S, 'circle', 1040, 1570, 100, MINT, { t: T.kid });
+  const kid = $('g', {}, S);
+  const face = pop(kid, 230, 1300, { t: T.kid });
+  $('circle', { cx: 10, cy: 12, r: 150, fill: INK }, face);
+  $('circle', { r: 150, fill: CARD, stroke: INK, 'stroke-width': 11 }, face);
+  $('path', { d: 'M-150 -20 C-150 -190 150 -190 150 -20 C100 -70 60 -30 20 -80 C-30 -30 -90 -70 -150 -20Z', fill: ORANGE, stroke: INK, 'stroke-width': 11, 'stroke-linejoin': 'round' }, face);
+  $('circle', { cx: -52, cy: 20, r: 16, fill: INK }, face);
+  $('circle', { cx: 52, cy: 20, r: 16, fill: INK }, face);
+  $('circle', { cx: -92, cy: 62, r: 22, fill: PINK, opacity: 0.7 }, face);
+  $('circle', { cx: 92, cy: 62, r: 22, fill: PINK, opacity: 0.7 }, face);
+  $('path', { d: 'M-48 70 Q0 112 48 70', fill: 'none', stroke: INK, 'stroke-width': 12, 'stroke-linecap': 'round' }, face);
+  U.push((t) => kid.setAttribute('transform', `translate(0 ${-30 * Math.max(0, bump(t - T.know))})`));
+
+  const ask = card(S, 700, 850, 330, 380, 4, T.askCat, { out: T.rule - 0.05 });
+  cat(ask, 0, 8, 1.8, 0);
+  txt(S, 905, 720, '?', { size: 230, color: PINK, t: T.askCat + 0.2, out: T.rule - 0.05, rot: 10 });
+
+  const toss = $('g', {}, S);
+  U.push((t) => {
+    const q = ei(prog(t, T.cats[0] - 0.12, 0.3));
+    toss.style.display = q >= 1 ? 'none' : '';
+    toss.setAttribute('transform', `translate(${1100 * q} ${-200 * q}) rotate(${30 * q} 690 830)`);
+  });
+  const rc = card(toss, 690, 840, 560, 430, 3, T.rule, { fill: YELLOW });
+  ruleBook(rc, 78, { y0: 130, y1: -18, gap: 84, w: 380, items: ['4 पैर', '2 कान', '1 पूँछ'] });
+  cross(rc, 150, T.ruleX, 36);
+
+  [150, 395, 640, 885].forEach((x, i) => cat(card(S, x, 850, 228, 280, [-4, 3, -2, 4][i], T.cats[i]), 0, 6, 1.25, i));
+
+  const nc = card(S, 760, 1280, 300, 350, 4, T.newcat);
+  cat(nc, 0, 10, 1.6, 4);
+  const nt = pop(nc, 108, -150, { t: T.newcat + 0.22, rot: 10 });
+  $('rect', { x: -66, y: -40, width: 132, height: 80, rx: 10, fill: MINT, stroke: INK, 'stroke-width': 7 }, nt);
+  text(nt, 0, 22, 'नई', { 'font-size': 58 });
+
+  const b = bubble(S, 470, 1070, 360, 132, T.know);
+  text(b, -26, 28, 'बिल्ली!', { 'font-size': 86 });
+  tick(b, 126, 0, 0.9, T.know + 0.14, 16);
+}
+
+// ---------- 3 + 4. the machine eats thousands of examples, then guesses and corrects ----------
+{
+  const S = scene(T.toPattern, -1, T.toMachine);
+  sunburst(S, 290, 1150, { t: T.toMachine + 0.05 });
+  const MX = 290;
+  const MY = 1490;
+  const MS = 0.6;
+  const MOUTH = [MX, MY - 550 * MS];
+  // which photos are eaten (the rest land in a pile and get the EXAMPLES stamp)
+  const cards = Array.from({ length: 12 }, (_, i) => ({ i, t0: lerp(T.pile.a, T.pile.b, i / 11), eaten: i % 3 !== 2 }));
+  const eatT = cards.filter((c) => c.eaten).map((c) => c.t0 + 0.34);
+  const chomp = (t) => Math.max(0, ...eatT.map((a) => Math.exp(-(((t - a) / 0.09) ** 2))));
+  mascot(S, MX, MY, MS, {
+    t: T.machine,
+    pose: (t) => {
+      if (t < T.toLoop) return { look: [1000, 700], mouth: 0.35 + 0.65 * chomp(t - 0.12), squash: -0.05 * chomp(t), wave: t > T.stamp ? 1 : 0 };
+      return { look: [770, 905], mouth: t < T.guess ? 0.2 : t < T.wrong ? 0.8 : t < T.right ? 0.15 : 1, wave: t > T.tune && t < T.right ? 1 : 0, hop: 60 * Math.max(0, bump(t - T.right)) };
+    },
+  });
+
+  const pile = $('g', {}, S);
+  U.push((t) => {
+    const q = eio(prog(t, T.toLoop, 0.35));
+    pile.setAttribute('transform', `translate(${lerp(0, 210, q)} ${lerp(0, -215, q)}) translate(760 880) scale(${lerp(1, 0.4, q)}) translate(-760 -880)`);
+  });
+  const r = mulberry32(5);
+  cards.forEach(({ i, t0, eaten }) => {
+    const tx = 760 + (r() - 0.5) * 300;
+    const ty = 870 + (r() - 0.5) * 240;
+    const rot = (r() - 0.5) * 36;
+    const isDog = i % 4 === 3;
+    const o = $('g', {}, eaten ? S : pile);
+    const c = card(o, 0, 0, 190, 220, 0, null, { rx: 18, sw: 8, shadow: [10, 12] });
+    (isDog ? dog : cat)(c, 0, 4, 1.05, i);
+    const badge = pop(c, 76, -92, { t: Math.max(T.labels + i * 0.03, t0) });
+    $('circle', { r: 32, fill: isDog ? INK : MINT, stroke: INK, 'stroke-width': 6 }, badge);
+    $('path', { d: isDog ? 'M-13 -13 L13 13 M13 -13 L-13 13' : 'M-15 0 L-4 12 L16 -13', fill: 'none', stroke: isDog ? PAPER : INK, 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, badge);
+    U.push((t) => {
+      if (eaten) {
+        const e = prog(t, t0, 0.34);
+        o.style.display = t < t0 || e >= 1 ? 'none' : '';
+        const x = lerp(1250, MOUTH[0], eo(e));
+        const y = lerp(ty - 200, MOUTH[1], e) - Math.sin(Math.PI * e) * 260;
+        o.setAttribute('transform', `translate(${x} ${y}) rotate(${rot + e * 300}) scale(${lerp(1, 0.3, e * e)})`);
+      } else {
+        const e = eo(prog(t, t0, 0.28));
+        o.style.display = t < t0 ? 'none' : '';
+        o.setAttribute('transform', `translate(${lerp(1250, tx, e)} ${lerp(ty - 300, ty, e)}) rotate(${rot + (1 - e) * 60})`);
+      }
+    });
+  });
+  // counter sticker
+  const cs = sticker(S, 'star', 820, 1300, 170, ORANGE, { t: T.pile.a, out: T.toLoop, rot: -10 });
+  const count = text(cs, 0, 14, '', { 'font-size': 92 });
+  text(cs, 0, 64, 'photos', { ...MUKTA, 'font-size': 44 });
+  U.push((t) => {
+    const p = prog(t, T.pile.a, T.pile.b - T.pile.a);
+    count.textContent = p >= 1 ? '1000+' : String(Math.max(1, Math.round(1000 * p * p)));
+  });
+  stamp(pile, 760, 890, -8, 'EXAMPLES', T.stamp, PINK, 460);
+
+  // one photo comes forward: guess, wrong, adjust, right
+  const big = card(S, 780, 925, 350, 420, 4, T.toLoop + 0.1);
+  cat(big, 0, -34, 1.9, 2);
+  text(big, 0, 174, 'बिल्ली', { 'font-size': 66 });
+  const b = bubble(S, 420, 720, 400, 140, T.guess);
+  const say = text(b, -20, 30, '', { 'font-size': 88 });
+  U.push((t) => { say.textContent = t < T.right ? 'कुत्ता?' : 'बिल्ली!'; });
+  stroke(b, [[-150, -60], [150, 60]], { t: T.wrong, d: 0.12, w: 28, color: RED, amp: 4, out: T.right - 0.05, outD: 0.06 });
+  stroke(b, [[150, -60], [-150, 60]], { t: T.wrong + 0.1, d: 0.12, w: 28, color: RED, amp: 4, out: T.right - 0.05, outD: 0.06 });
+  tick(b, 150, 0, 0.9, T.right + 0.06, 16);
+  [0, 1, 2].forEach((i) => {
+    const k = pop(S, 640 + i * 132, 1290, { t: T.toLoop + 0.2 + i * 0.05 });
+    $('circle', { cx: 6, cy: 8, r: 54, fill: INK }, k);
+    $('circle', { r: 54, fill: YELLOW, stroke: INK, 'stroke-width': 9 }, k);
+    const hand = $('path', { d: 'M0 6 V-40', stroke: PINK, 'stroke-width': 15, 'stroke-linecap': 'round' }, k);
+    $('circle', { r: 9, fill: INK }, k);
+    U.push((t) => hand.setAttribute('transform', `rotate(${[-50, 20, -110][i] + [150, -120, 170][i] * eio(prog(t, T.tune + i * 0.12, 0.3))})`));
+  });
+}
+
+// ---------- 5. the pattern: what every cat has in common, now in the machine's belly ----------
+{
+  const S = scene(T.toPay, 1, T.toPattern);
+  sunburst(S, 540, 950, { t: T.toPattern + 0.05 });
+  const CX = 480;
+  const CY = 930;
+  const K = 2.2;
+  [[-46, -30, -8], [40, -22, 7], [-30, 34, 5], [44, 30, -6], [0, 0, 0]].forEach(([ox, oy, rot], i) => {
+    const o = $('g', {}, S);
+    const c = card(o, 0, 0, 390, 450, 0);
+    cat(c, 0, 0, K, i);
+    const t0 = T.merge + i * 0.09;
+    const from = [[-500, 300], [1500, 500], [-400, 1500], [1500, 1400], [540, 2300]][i];
+    U.push((t) => {
+      o.style.display = t < t0 ? 'none' : '';
+      const e = eo(prog(t, t0, 0.3));
+      const a = 1 - eio(prog(t, T.trace - 0.2, 0.28));
+      o.setAttribute('transform', `translate(${lerp(from[0], CX + ox * a, e)} ${lerp(from[1], CY + oy * a, e)}) rotate(${rot * a + (1 - e) * 40})`);
+    });
+  });
+  stroke(S, CAT.map(([x, y]) => [CX + x * K, CY + y * K]), { t: T.trace, d: 0.6, w: 26, color: PINK, amp: 4, step: 40 });
+  stamp(S, 330, 1262, -4, 'pattern', T.trace + 0.5, PINK, 400, 92);
+  const m = mascot(S, 850, 1500, 0.46, {
+    t: T.trace + 0.3, belly: true,
+    pose: (t) => ({ look: [CX, CY], mouth: 0.75, hop: 40 * Math.max(0, bump(t - T.every - 0.5)), wave: t > T.every + 0.4 ? 1 : 0 }),
+  });
+  catLine(m.belly, 0, -8, 1.25, T.every + 0.3, 13);
+  [130, 330, 530].forEach((x, i) => {
+    const t0 = T.every + i * 0.3;
+    cat(pop(S, x, 1425, { t: t0 }), 0, 0, 0.8, i + 1);
+    catLine(S, x, 1425, 0.8, t0 + 0.08, 11);
+  });
+}
+
+// ---------- 6. payoff: not rules, examples to pattern. ChatGPT did the same ----------
+{
+  const S = scene(Infinity, -1, T.toPay);
+  sunburst(S, 760, 1100, { t: T.toPay + 0.05 });
+  sticker(S, 'plus', 80, 1420, 30, ORANGE, { t: T.book });
+  const bk = card(S, 262, 820, 400, 500, -5, T.book, { fill: YELLOW });
+  ruleBook(bk, 92, { y0: 136, y1: -24, gap: 92, w: 280, items: ['', '', ''] });
+  cross(bk, 150, T.bookX, 38);
+
+  [[-104, -10], [0, 0], [104, 10]].forEach(([dx, rot], i) => cat(card(S, 760 + dx, 700, 190, 222, rot, T.flow + i * 0.07, { rx: 16, sw: 8, shadow: [10, 12] }), 0, 4, 1.05, i));
+  txt(S, 760, 890, 'examples', { size: 76, t: T.flow + 0.2 });
+  stroke(S, [[760, 912], [760, 962]], { t: T.flowPat - 0.2, d: 0.1, w: 15, amp: 2 });
+  stroke(S, [[730, 944], [760, 974], [790, 944]], { t: T.flowPat - 0.12, d: 0.08, w: 15, amp: 1 });
+  const m = mascot(S, 760, 1400, 0.38, {
+    t: T.flowPat - 0.15, belly: true,
+    pose: (t) => ({ look: t < T.gpt ? [760, 700] : [300, 1280], mouth: 0.8, hop: 50 * Math.max(0, bump(t - T.gptTick)), wave: t > T.gptTick ? 1 : 0 }),
+  });
+  catLine(m.belly, 0, -8, 1.25, T.flowPat + 0.1, 13);
+  txt(S, 760, 1474, 'pattern', { size: 76, color: PINK, t: T.flowPat + 0.25 });
+
+  const g = card(S, 290, 1262, 500, 156, -3, T.gpt);
+  text(g, -56, 30, 'ChatGPT', { 'font-size': 84 });
+  tick(g, 176, 0, 1.05, T.gptTick, 22);
+}
+
+// ---------- captions ----------
+const hl = {
+  hook: ['rules नहीं', 'कैसे'], kid: ['बिल्ली', 'rules नहीं', 'बिल्लियाँ'], kid2: ['खुद'],
+  machine: ['Machine', 'हज़ारों photos', 'examples'], loop: ['अंदाज़ा', 'बदलती'],
+  pattern: ['pattern', 'हर बिल्ली'], payoff: ['rules', 'pattern', 'ChatGPT'],
+};
+const caps = [];
+for (const id of Object.keys(hl)) L[id].s.forEach((s, i) => caps.push({ ...s, hl: hl[id][i] }));
+// the hook is fully readable on frame 0
+caps[0].words = caps[0].text.split(' ').map((word) => ({ word, t: -1 }));
+kit.captions(document.getElementById('caps'), caps, dur);
+
+// ---------- seek ----------
+const paperEl = document.getElementById('paper');
+const cuts = [T.toKid, T.toMachine, T.toPattern, T.toPay];
+window.DUR = dur;
+window.seek = (t) => {
+  let rot = 0;
+  let shift = 0;
+  cuts.forEach((c, i) => {
+    const p = prog(t, c, 0.44);
+    rot += (i % 2 ? -3 : 3) * Math.sin(Math.PI * p);
+    shift += eio(p) * 62;
+  });
+  root.setAttribute('transform', `rotate(${rot} 540 960)`);
+  paperEl.style.transform = `translateY(${-shift % 97}px) rotate(${rot * 0.3}deg)`;
+  kit.frame(t);
+};
+window.seek(0);
+window.ready = true;
+if (!new URLSearchParams(location.search).has('render')) preview(stage, window.seek);
+</script>
+</body>
+</html>

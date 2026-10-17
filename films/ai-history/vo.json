@@ -1,0 +1,136 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 27.376,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "AI नया नहीं है, यह सत्तर साल पुराना है। और यह दो बार fail भी हुआ।",
+      "sentences": [
+        "AI नया नहीं है, यह सत्तर साल पुराना है।",
+        "और यह दो बार fail भी हुआ।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 3.865,
+      "pauses": [
+        [
+          1.01,
+          1.2
+        ],
+        [
+          1.59,
+          1.77
+        ],
+        [
+          2.52,
+          2.78
+        ]
+      ]
+    },
+    {
+      "id": "name",
+      "text": "1956 में इसे नाम मिला: Artificial Intelligence। वादा बड़ा था कि machine इंसान जैसा सोचेगी।",
+      "sentences": [
+        "1956 में इसे नाम मिला: Artificial Intelligence।",
+        "वादा बड़ा था कि machine इंसान जैसा सोचेगी।"
+      ],
+      "file": "vo/name.wav",
+      "start": 4.063,
+      "duration": 5.586,
+      "pauses": [
+        [
+          2.73,
+          3.08
+        ]
+      ]
+    },
+    {
+      "id": "winter",
+      "text": "पर computer कमज़ोर थे और पैसा रुक गया। इसे AI winter कहते हैं।",
+      "sentences": [
+        "पर computer कमज़ोर थे और पैसा रुक गया।",
+        "इसे AI winter कहते हैं।"
+      ],
+      "file": "vo/winter.wav",
+      "start": 10,
+      "duration": 3.943,
+      "pauses": [
+        [
+          1.3,
+          1.52
+        ],
+        [
+          2.2,
+          2.57
+        ]
+      ]
+    },
+    {
+      "id": "twice",
+      "text": "ऐसा दो बार हुआ।",
+      "sentences": [
+        "ऐसा दो बार हुआ।"
+      ],
+      "file": "vo/twice.wav",
+      "start": 14.063,
+      "duration": 1.032,
+      "pauses": []
+    },
+    {
+      "id": "chess",
+      "text": "1997 में computer ने chess champion को हराया।",
+      "sentences": [
+        "1997 में computer ने chess champion को हराया।"
+      ],
+      "file": "vo/chess.wav",
+      "start": 15.313,
+      "duration": 2.938,
+      "pauses": []
+    },
+    {
+      "id": "deep",
+      "text": "2012 में deep learning ने photos पहचानने का मुक़ाबला जीता।",
+      "sentences": [
+        "2012 में deep learning ने photos पहचानने का मुक़ाबला जीता।"
+      ],
+      "file": "vo/deep.wav",
+      "start": 18.438,
+      "duration": 3.212,
+      "pauses": []
+    },
+    {
+      "id": "gpt",
+      "text": "और 2022 में ChatGPT आया।",
+      "sentences": [
+        "और 2022 में ChatGPT आया।"
+      ],
+      "file": "vo/gpt.wav",
+      "start": 21.875,
+      "duration": 1.986,
+      "pauses": []
+    },
+    {
+      "id": "pay",
+      "text": "तो AI एक रात में नहीं बना। यह सत्तर साल की मेहनत है।",
+      "sentences": [
+        "तो AI एक रात में नहीं बना।",
+        "यह सत्तर साल की मेहनत है।"
+      ],
+      "file": "vo/pay.wav",
+      "start": 24.063,
+      "duration": 3.214,
+      "pauses": [
+        [
+          1.52,
+          1.75
+        ],
+        [
+          2.13,
+          2.27
+        ]
+      ]
+    }
+  ]
+}

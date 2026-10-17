@@ -1,0 +1,13 @@
+TITLE
+ChatGPT को किसी ने rules नहीं सिखाए। तो machine सीखती कैसे है?
+
+DESCRIPTION
+एक बच्चा बिल्ली को rules से नहीं पहचानता। तुम उसे बिल्लियाँ दिखाते हो, और वह खुद सीख जाता है।
+Machine भी यही करती है: हज़ारों examples, अंदाज़ा, ग़लती, सुधार। फिर उसे pattern मिल जाता है।
+याद रखो: machine rules से नहीं, examples से pattern निकालकर सीखती है।
+
+ये उस दोस्त को भेजो जो ChatGPT use करता है।
+AI को अपनी भाषा में समझने के लिए follow करो: @vipulsingh_ai
+
+HASHTAGS
+#AI #MachineLearning #ChatGPT #AIinHindi #LearnAI

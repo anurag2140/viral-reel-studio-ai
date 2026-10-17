@@ -1,0 +1,14 @@
+TITLE
+Neural network दिमाग़ की copy नहीं है। तो फिर वह है क्या?
+
+DESCRIPTION
+नाम दिमाग़ के neuron से आया, पर काम अलग है।
+दिमाग़ का neuron एक cell है। Network का neuron बस एक छोटा हिसाब है: numbers लो, गुणा करो, जोड़ो।
+ऐसे करोड़ों हिसाब layers में जुड़ते हैं, और यही neural network है।
+याद रखो: idea दिमाग़ से लिया गया, पर यह दिमाग़ नहीं, maths है।
+
+Coding नहीं आती? कोई बात नहीं। AI zero से pro तक, एक-एक video में।
+पूरा सफ़र देखने के लिए follow करो: @vipulsingh_ai
+
+HASHTAGS
+#AI #NeuralNetwork #ChatGPT #AIinHindi #LearnAI

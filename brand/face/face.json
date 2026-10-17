@@ -1,0 +1,40 @@
+{
+  "note": "Made by face-prep.mjs. Names say where the eyes look on screen.",
+  "size": [
+    630,
+    855
+  ],
+  "top": 18,
+  "centre": 315,
+  "faceWidth": 566,
+  "chin": {
+    "neutral": 757,
+    "look-left": 815,
+    "look-right": 821,
+    "grin": 768,
+    "worried": 783,
+    "yawn": 816,
+    "wink": 762,
+    "thinking": 756,
+    "sad": 779,
+    "blink": 774,
+    "talk": 800
+  },
+  "names": [
+    "neutral",
+    "look-left",
+    "look-right",
+    "grin",
+    "worried",
+    "yawn",
+    "wink",
+    "thinking",
+    "sad",
+    "blink",
+    "talk"
+  ],
+  "skin": "#feb578",
+  "cheek": "#fdac6b",
+  "shade": "#875841",
+  "hair": "#2b292d"
+}

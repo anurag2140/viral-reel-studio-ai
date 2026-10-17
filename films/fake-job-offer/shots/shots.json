@@ -1,0 +1,137 @@
+{
+  "captured": "2026-10-17",
+  "shots": [
+    {
+      "name": "icann",
+      "url": "https://lookup.icann.org/en/lookup?name=infosys.com",
+      "file": "shots/icann.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "ICANN Lookup",
+      "finalUrl": "https://lookup.icann.org/en",
+      "w": 824,
+      "h": 4754,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Registration data lookup tool",
+          "x": 40,
+          "y": 186,
+          "w": 744,
+          "h": 169
+        },
+        {
+          "tag": "h2",
+          "text": "REGISTRATION DATA LOOKUP TOOL TERMS OF USE",
+          "x": 40,
+          "y": 2689,
+          "w": 744,
+          "h": 128
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "whois",
+      "url": "https://who.is/whois/infosys.com",
+      "file": "shots/whois.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "infosys.com WHOIS Domain Name Lookup - Who.is",
+      "finalUrl": "https://who.is/whois/infosys.com",
+      "w": 824,
+      "h": 7236,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "infosys.com",
+          "x": 82,
+          "y": 898,
+          "w": 660,
+          "h": 72
+        },
+        {
+          "tag": "h2",
+          "text": "Contact Information",
+          "x": 82,
+          "y": 1842,
+          "w": 660,
+          "h": 56
+        },
+        {
+          "tag": "h3",
+          "text": "Abuse Contact",
+          "x": 82,
+          "y": 1930,
+          "w": 660,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "Registrar Information",
+          "x": 82,
+          "y": 2382,
+          "w": 660,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "Important Dates",
+          "x": 82,
+          "y": 2970,
+          "w": 660,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "Nameservers",
+          "x": 82,
+          "y": 3622,
+          "w": 660,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "Domain Status",
+          "x": 82,
+          "y": 4104,
+          "w": 660,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "Similar Domains",
+          "x": 82,
+          "y": 4836,
+          "w": 660,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "Raw WHOIS Data",
+          "x": 82,
+          "y": 5720,
+          "w": 330,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "About WHOIS",
+          "x": 82,
+          "y": 6168,
+          "w": 660,
+          "h": 56
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 27.674,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "Neural network दिमाग़ की copy नहीं है। फिर ChatGPT चलता किससे है?",
+      "sentences": [
+        "Neural network दिमाग़ की copy नहीं है।",
+        "फिर ChatGPT चलता किससे है?"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 3.774,
+      "pauses": [
+        [
+          1.88,
+          2.21
+        ]
+      ]
+    },
+    {
+      "id": "myth",
+      "text": "नाम दिमाग़ के neuron से आया। दिमाग़ में neuron एक cell है जो दूसरे cells को signal भेजता है।",
+      "sentences": [
+        "नाम दिमाग़ के neuron से आया।",
+        "दिमाग़ में neuron एक cell है जो दूसरे cells को signal भेजता है।"
+      ],
+      "file": "vo/myth.wav",
+      "start": 4.063,
+      "duration": 5.525,
+      "pauses": [
+        [
+          1.7,
+          2.06
+        ],
+        [
+          3.57,
+          3.72
+        ]
+      ]
+    },
+    {
+      "id": "fact",
+      "text": "Neural network में neuron बस एक छोटा हिसाब है।",
+      "sentences": [
+        "Neural network में neuron बस एक छोटा हिसाब है।"
+      ],
+      "file": "vo/fact.wav",
+      "start": 9.688,
+      "duration": 2.319,
+      "pauses": []
+    },
+    {
+      "id": "calc",
+      "text": "वह numbers लेता है, उन्हें गुणा करता है, और जोड़ता है।",
+      "sentences": [
+        "वह numbers लेता है, उन्हें गुणा करता है, और जोड़ता है।"
+      ],
+      "file": "vo/calc.wav",
+      "start": 12.188,
+      "duration": 2.452,
+      "pauses": [
+        [
+          0.78,
+          0.98
+        ],
+        [
+          1.75,
+          1.9
+        ]
+      ]
+    },
+    {
+      "id": "layers",
+      "text": "ऐसे करोड़ों हिसाब layers में जुड़ते हैं। यही जाल neural network है।",
+      "sentences": [
+        "ऐसे करोड़ों हिसाब layers में जुड़ते हैं।",
+        "यही जाल neural network है।"
+      ],
+      "file": "vo/layers.wav",
+      "start": 15,
+      "duration": 4.1,
+      "pauses": [
+        [
+          2.24,
+          2.53
+        ]
+      ]
+    },
+    {
+      "id": "diff",
+      "text": "दिमाग़ सोचता और महसूस करता है। यह network सिर्फ़ numbers बदलता है।",
+      "sentences": [
+        "दिमाग़ सोचता और महसूस करता है।",
+        "यह network सिर्फ़ numbers बदलता है।"
+      ],
+      "file": "vo/diff.wav",
+      "start": 19.375,
+      "duration": 3.761,
+      "pauses": [
+        [
+          1.93,
+          2.18
+        ]
+      ]
+    },
+    {
+      "id": "pay",
+      "text": "तो idea दिमाग़ से लिया गया, पर यह दिमाग़ नहीं है।",
+      "sentences": [
+        "तो idea दिमाग़ से लिया गया, पर यह दिमाग़ नहीं है।"
+      ],
+      "file": "vo/pay.wav",
+      "start": 23.438,
+      "duration": 2.556,
+      "pauses": [
+        [
+          1.48,
+          1.68
+        ]
+      ]
+    },
+    {
+      "id": "maths",
+      "text": "यह maths है।",
+      "sentences": [
+        "यह maths है।"
+      ],
+      "file": "vo/maths.wav",
+      "start": 26.25,
+      "duration": 1.324,
+      "pauses": []
+    }
+  ]
+}

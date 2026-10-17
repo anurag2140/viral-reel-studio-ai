@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>AI vs ML vs Deep Learning vs GenAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #111; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: var(--paper); color: var(--ink); }
+  #paper { position: absolute; inset: -200px 0; background-image: repeating-linear-gradient(#0000 0 94px, var(--rule) 94px 97px); }
+  svg { position: absolute; left: 0; top: 0; overflow: visible; }
+  #tag { position: absolute; left: 60px; top: 197px; font: 700 34px/1 Mukta; letter-spacing: .16em; border: 3.5px solid var(--ink); border-radius: 99px; padding: 13px 22px 11px; }
+  #label { position: absolute; top: 197px; height: 66px; display: flex; align-items: center; gap: 14px; white-space: nowrap; }
+  #label b { font: 800 44px/1 "Baloo 2"; color: var(--accent); padding-top: 6px; }
+  #label span { font: 600 36px/1 Mukta; color: var(--ink); opacity: .7; }
+  .cap { position: absolute; left: 60px; top: 342px; width: 960px; font: 800 88px/1.16 "Baloo 2"; }
+  .cap .w { display: inline-block; white-space: pre; }
+  .cap .hl { background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 60% / 0% 84%; }
+  .chip { position: absolute; left: 0; top: 0; transform-origin: 0 0; white-space: nowrap; font: 800 120px/1 "Baloo 2";
+          padding: 22px 46px 8px; border: 6px solid var(--ink); background: var(--card); border-radius: 26px; box-shadow: 13px 15px 0 var(--ink); }
+  audio { position: fixed; left: 8px; bottom: 8px; width: 300px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="paper"></div>
+  <svg id="world" width="1080" height="1920"></svg>
+  <svg id="over" width="1080" height="1920"></svg>
+  <div id="chips"></div>
+  <div id="tag">AI</div>
+  <div id="label"><b></b><span></span></div>
+  <div id="caps"></div>
+</div>
+<script type="module">
+import { build, wordTimes } from './timeline.js';
+
+const RENDER = new URLSearchParams(location.search).has('render');
+const brand = await (await fetch('/brand/brand.json')).json();
+const vo = await (await fetch('vo.json')).json();
+const { dur, L, T } = build(vo);
+const { paper: PAPER, card: CARD, ink: INK, accent: RED, rule: RULE } = brand.color;
+const stage = document.getElementById('stage');
+for (const [k, v] of Object.entries({ paper: PAPER, card: CARD, ink: INK, accent: RED, rule: RULE })) stage.style.setProperty(`--${k}`, v);
+await document.fonts.ready;
+
+// video number and short title, on the tag row for the whole film
+{
+  const meta = await (await fetch('script.json')).json();
+  const label = document.getElementById('label');
+  const tag = document.getElementById('tag');
+  label.querySelector('b').textContent = '#' + String(meta.number).padStart(2, '0');
+  label.querySelector('span').textContent = meta.title;
+  label.style.left = tag.offsetLeft + tag.offsetWidth + 26 + 'px';
+}
+await Promise.all(['800 80px "Baloo 2"', '700 80px "Baloo 2"', '600 40px Mukta', '700 40px Mukta'].map((f) => document.fonts.load(f, 'अAI')));
+
+// ---------- maths ----------
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, p) => a + (b - a) * p;
+const prog = (t, a, d) => clamp((t - a) / d);
+const eo = (p) => 1 - (1 - p) ** 3;
+const ei = (p) => p * p * p;
+const eio = (p) => (p < 0.5 ? 4 * p * p * p : 1 - (-2 * p + 2) ** 3 / 2);
+const sp = (x) => (x <= 0 ? 0 : 1 - Math.exp(-9 * x) * Math.cos(16 * x)); // settle with overshoot
+const bump = (x) => (x <= 0 ? 0 : Math.exp(-7 * x) * Math.sin(18 * x));
+function mulberry32(a) {
+  return () => {
+    a |= 0; a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+// ---------- drawing kit ----------
+const NS = 'http://www.w3.org/2000/svg';
+const $ = (n, a = {}, p) => {
+  const e = document.createElementNS(NS, n);
+  for (const k in a) e.setAttribute(k, a[k]);
+  if (p) p.appendChild(e);
+  return e;
+};
+const U = []; // per-frame updaters, each a pure function of (t, G)
+let boil = 0; // which hand-drawn variant is shown (changes on threes)
+let seed = 7;
+let OUT = null; // default erase time for the section being built
+
+function subdiv(pts, step) {
+  const out = [pts[0]];
+  for (let i = 1; i < pts.length; i++) {
+    const [x0, y0] = pts[i - 1];
+    const [x1, y1] = pts[i];
+    const n = Math.max(1, Math.round(Math.hypot(x1 - x0, y1 - y0) / step));
+    for (let k = 1; k <= n; k++) out.push([x0 + ((x1 - x0) * k) / n, y0 + ((y1 - y0) * k) / n]);
+  }
+  return out;
+}
+function jit(pts, sd, amp) {
+  const r = mulberry32(sd);
+  return pts.map(([x, y]) => [x + (r() - 0.5) * 2 * amp, y + (r() - 0.5) * 2 * amp]);
+}
+function toPath(p, smooth) {
+  const f = (q) => `${q[0].toFixed(1)} ${q[1].toFixed(1)}`;
+  if (!smooth) return 'M' + p.map(f).join('L');
+  let d = 'M' + f(p[0]);
+  for (let i = 0; i < p.length - 1; i++) {
+    const p0 = p[i - 1] ?? p[i];
+    const p1 = p[i];
+    const p2 = p[i + 1];
+    const p3 = p[i + 2] ?? p2;
+    d += `C${f([p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6])} ${f([p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6])} ${f(p2)}`;
+  }
+  return d;
+}
+const circ = (cx, cy, r, n = 26, a0 = -2.2) =>
+  Array.from({ length: n + 1 }, (_, i) => {
+    const a = a0 + (i / n) * Math.PI * 2.06;
+    return [cx + Math.cos(a) * r, cy + Math.sin(a) * r];
+  });
+const box = (x, y, w, h) => [[x, y], [x + w, y], [x + w, y + h], [x, y + h], [x, y - 4]];
+
+// A pencil or marker stroke that draws on, boils, and erases.
+function stroke(parent, pts, o = {}) {
+  const { t = 0, d = 0.4, w = 16, color = INK, fill = 'none', amp = 5, step = 70, smooth = false, out = OUT, op = 1, cap = 'round' } = o;
+  const base = smooth ? pts : subdiv(pts, step);
+  const vars = [0, 1, 2].map((k) => toPath(jit(base, seed + k * 977, amp), true));
+  seed += 13;
+  const e = $('path', { fill, stroke: color, 'stroke-width': w, 'stroke-linecap': cap, 'stroke-linejoin': 'round', pathLength: 1, 'stroke-dasharray': '1 1', opacity: op }, parent);
+  U.push((time) => {
+    let p = eo(prog(time, t, d));
+    if (out != null) p *= 1 - prog(time, out, 0.3);
+    if (p <= 0.002) { e.style.display = 'none'; return; }
+    e.style.display = '';
+    e.setAttribute('d', vars[boil]);
+    e.setAttribute('stroke-dashoffset', 1 - p);
+  });
+  return e;
+}
+// A group that pops in with a spring and shrinks out.
+function pop(parent, x, y, o = {}) {
+  const { t = 0, rot = 0, out = OUT, s = 1, spin = 0 } = o;
+  const g = $('g', {}, parent);
+  U.push((time) => {
+    let k = sp(time - t) * s;
+    if (out != null) k *= 1 - ei(prog(time, out, 0.22));
+    if (k <= 0.002) { g.style.display = 'none'; return; }
+    g.style.display = '';
+    g.setAttribute('transform', `translate(${x} ${y}) rotate(${rot + spin * time}) scale(${k})`);
+  });
+  return g;
+}
+function txt(parent, x, y, str, o = {}) {
+  const { size = 80, weight = 800, font = 'Baloo 2', color = INK, anchor = 'middle' } = o;
+  const g = pop(parent, x, y, o);
+  $('text', { 'font-family': `"${font}"`, 'font-size': size, 'font-weight': weight, fill: color, 'text-anchor': anchor }, g).textContent = str;
+  return g;
+}
+function dot(parent, x, y, r, o = {}) {
+  const g = pop(parent, x, y, o);
+  $('circle', { r, fill: o.fill ?? INK, stroke: o.stroke ?? 'none', 'stroke-width': o.sw ?? 10 }, g);
+  return g;
+}
+// A cream card that drops, tilts and settles.
+function card(parent, cx, cy, w, h, rot, t, out = OUT) {
+  const g = $('g', {}, parent);
+  $('rect', { x: -w / 2 + 22, y: -h / 2 + 26, width: w, height: h, rx: 30, fill: INK }, g);
+  $('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 30, fill: CARD, stroke: INK, 'stroke-width': 10 }, g);
+  U.push((time) => {
+    const x = time - t;
+    let k = x < 0 ? 0 : 1;
+    if (out != null) k *= 1 - ei(prog(time, out, 0.22));
+    if (k <= 0.002) { g.style.display = 'none'; return; }
+    g.style.display = '';
+    const e = eo(clamp(x / 0.28));
+    const sc = lerp(1.35, 1, e) * (1 + 0.05 * bump(x - 0.28)) * k;
+    g.setAttribute('transform', `translate(${cx} ${cy - (1 - e) * 170}) rotate(${rot + (1 - e) * 12 + 3 * bump(x - 0.28)}) scale(${sc})`);
+  });
+  return g;
+}
+
+// ---------- world: four nested circles and a camera ----------
+const world = document.getElementById('world');
+const rotG = $('g', {}, world);
+const zooms = [null, T.zoom[1], T.zoom[2], T.zoom[3]];
+const E = [T.zoom[1].a - 0.05, T.zoom[2].a - 0.05, T.zoom[3].a - 0.05, T.erase]; // when each level's drawing is erased
+const arrive = [T.morph.b, T.zoom[1].b, T.zoom[2].b, T.zoom[3].b, T.out.b];
+
+function geo(t) {
+  const gIn = eio(prog(t, T.morph.a, T.morph.b - T.morph.a));
+  const outP = prog(t, T.out.a, T.out.b - T.out.a);
+  const g = gIn * (1 - eio(outP)); // 0 = overview diagram, 1 = zoom journey
+  let u = 0;
+  let rot = -4 * Math.sin(Math.PI * prog(t, T.morph.a, T.morph.b - T.morph.a));
+  for (let k = 1; k <= 3; k++) {
+    const p = prog(t, zooms[k].a, zooms[k].b - zooms[k].a);
+    u += eio(p);
+    rot += (k % 2 ? 5 : -5) * Math.sin(Math.PI * p);
+  }
+  u *= 1 - eio(outP);
+  rot += 7 * Math.sin(Math.PI * outP);
+  const sig = lerp(0.74, 0.26, g);
+  const c = [lerp(0, 490, g), lerp(215, 530, g)];
+  const C = [540, lerp(1060, 1100, g)];
+  let s = lerp(0.5, 0.48, g) * sig ** -u;
+  for (const a of arrive) s *= 1 + 0.035 * bump(t - a);
+  const O = [[0, 0]];
+  for (let j = 1; j < 4; j++) O.push([O[j - 1][0] + sig ** (j - 1) * c[0], O[j - 1][1] + sig ** (j - 1) * c[1]]);
+  const k = Math.min(2, Math.floor(u));
+  const f = u - k;
+  const m = (sig ** k * (1 - sig ** f)) / (1 - sig);
+  const F = [O[k][0] + c[0] * m, O[k][1] + c[1] * m];
+  const a = [0, 1, 2, 3].map((j) => s * sig ** j);
+  const X = O.map((o) => [C[0] + s * (o[0] - F[0]), C[1] + s * (o[1] - F[1])]);
+  return { g, u, rot, C, a, X };
+}
+const rotPt = (G, x, y) => {
+  const r = (G.rot * Math.PI) / 180;
+  const dx = x - G.C[0];
+  const dy = y - G.C[1];
+  return [G.C[0] + dx * Math.cos(r) - dy * Math.sin(r), G.C[1] + dx * Math.sin(r) + dy * Math.cos(r)];
+};
+
+const LV = [];
+const LC = [];
+for (let j = 0; j < 4; j++) {
+  const lv = $('g', {}, rotG);
+  LV.push(lv);
+  const redVars = [0, 1, 2].map((k) => toPath(jit(circ(0, 0, 1000, 44, -1.9), 500 + j * 31 + k * 7, 14), true));
+  const red = $('path', { fill: 'none', stroke: RED, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': '1 1', opacity: 0.92 }, lv);
+  const inkVars = [0, 1, 2].map((k) => toPath(jit(circ(0, 0, 1000, 44, -2.4 + j), 900 + j * 17 + k * 5, 9), true));
+  const ring = $('path', { fill: 'none', stroke: INK, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': '1 1' }, lv);
+  const content = $('g', {}, lv);
+  LC.push(content);
+  U.push((t, G) => {
+    const a = G.a[j];
+    lv.setAttribute('transform', `translate(${G.X[j][0]} ${G.X[j][1]}) scale(${a})`);
+    content.style.display = a * 1000 < 40 ? 'none' : '';
+    const seen = clamp((1.5 - (j - G.u)) / 0.35);
+    const p = eo(prog(t, T.ringDraw[j], 0.5)) * lerp(1, seen, G.g);
+    ring.style.display = p <= 0.002 ? 'none' : '';
+    ring.setAttribute('d', inkVars[boil]);
+    ring.setAttribute('stroke-dashoffset', 1 - p);
+    const x = t - T.pulse[3 - j];
+    ring.setAttribute('stroke-width', (9 + 11 * Math.exp(-(((x - 0.12) / 0.11) ** 2))) / a);
+    const rp = eo(prog(t, T.ringRed[j], 0.8)) * (1 - prog(t, E[j], 0.3));
+    red.style.display = rp <= 0.002 ? 'none' : '';
+    red.setAttribute('d', redVars[boil]);
+    red.setAttribute('stroke-dashoffset', 1 - rp);
+    red.setAttribute('stroke-width', 20 / a);
+  });
+  // "?" on the next circle while it waits to be opened.
+  if (j > 0) {
+    const q = $('g', {}, lv);
+    $('text', { 'font-family': '"Baloo 2"', 'font-size': 1250, 'font-weight': 800, fill: RED, 'text-anchor': 'middle', y: 430 }, q).textContent = '?';
+    U.push((t, G) => {
+      const k = t >= T.out.a ? 0 : eio(G.g) * clamp((j - G.u - 0.55) / 0.25) * clamp((1.3 - (j - G.u)) / 0.2);
+      q.style.display = k <= 0.002 ? 'none' : '';
+      q.setAttribute('transform', `rotate(${Math.sin(t * 4.2) * 7}) scale(${k})`);
+    });
+  }
+}
+
+// ---------- level 0: AI ----------
+OUT = E[0];
+{
+  const g = $('g', { transform: 'translate(0 -330) scale(1.3) translate(0 330)' }, LC[0]);
+  const t = T.illus[0];
+  stroke(g, [[-300, -720], [300, -720], [300, -330], [-300, -330], [-300, -724]], { t, d: 0.5 });
+  stroke(g, [[0, -330], [0, -250]], { t: t + 0.4, d: 0.15 });
+  stroke(g, [[-150, -250], [150, -250]], { t: t + 0.5, d: 0.15 });
+  dot(g, -115, -570, 36, { t: t + 0.55 });
+  dot(g, 115, -570, 36, { t: t + 0.62 });
+  stroke(g, [[-130, -460], [-50, -410], [50, -410], [130, -460]], { t: t + 0.7, d: 0.2, smooth: true });
+  // idea bulb on "smart"
+  const b = T.bulb;
+  stroke(g, circ(400, -650, 72, 18), { t: b, d: 0.25, color: RED, w: 14, smooth: true, amp: 3 });
+  stroke(g, [[370, -570], [430, -570]], { t: b + 0.15, d: 0.1, color: RED, w: 14 });
+  [[-150, 60], [-95, 100], [-40, 110], [10, 95], [-195, 0]].forEach(([deg, len], i) => {
+    const a = (deg * Math.PI) / 180;
+    stroke(g, [[400 + Math.cos(a) * 105, -650 + Math.sin(a) * 105], [400 + Math.cos(a) * (105 + len * 0.6), -650 + Math.sin(a) * (105 + len * 0.6)]], { t: b + 0.2 + i * 0.03, d: 0.12, color: RED, w: 12 });
+  });
+  // example: chess computer
+  const ct = T.card[0];
+  const c = $('g', { transform: 'scale(1.12)' }, card(LC[0], -270, 480, 900, 560, -4, ct));
+  const cell = 92;
+  const bx = -350;
+  const by = -184;
+  for (let i = 0; i < 4; i++) for (let k = 0; k < 4; k++) if ((i + k) % 2) $('rect', { x: bx + i * cell, y: by + k * cell, width: cell, height: cell, fill: INK, opacity: 0.86 }, c);
+  $('rect', { x: bx, y: by, width: cell * 4, height: cell * 4, fill: 'none', stroke: INK, 'stroke-width': 8 }, c);
+  const piece = $('g', {}, c);
+  $('circle', { r: 30, fill: RED, stroke: CARD, 'stroke-width': 7 }, piece);
+  U.push((time) => {
+    const p1 = eio(prog(time, ct + 0.65, 0.3));
+    const p2 = eio(prog(time, ct + 0.98, 0.22));
+    const hop = Math.sin(Math.PI * p1) * 26 + Math.sin(Math.PI * p2) * 18;
+    piece.setAttribute('transform', `translate(${bx + cell * (0.5 + p2)} ${by + cell * (3.5 - 2 * p1) - hop})`);
+  });
+  txt(c, 205, -20, 'chess', { t: ct + 0.3, size: 104 });
+  txt(c, 205, 80, 'computer', { t: ct + 0.38, size: 72, font: 'Mukta', weight: 700 });
+}
+
+// ---------- level 1: Machine Learning ----------
+OUT = E[1];
+{
+  const g = LC[1];
+  const t = T.illus[1];
+  stroke(g, [[-640, -760], [-640, 40], [660, 40]], { t, d: 0.45 });
+  const r = mulberry32(42);
+  for (let i = 0; i < 14; i++) {
+    const redOne = i % 2 === 0;
+    const x = (redOne ? -330 : 300) + (r() - 0.5) * 420;
+    const y = (redOne ? -540 : -200) + (r() - 0.5) * 300;
+    dot(g, x, y, 46, { t: t + 0.25 + i * 0.07, fill: redOne ? RED : CARD, stroke: redOne ? 'none' : INK, sw: 14 });
+  }
+  txt(g, -580, 140, 'data', { t: t + 0.3, size: 96, font: 'Mukta', weight: 700, anchor: 'start' });
+  stroke(g, [[-560, -30], [-200, -260], [160, -470], [560, -740]], { t: T.learn, d: 0.55, color: RED, w: 28, smooth: true, amp: 10 });
+  // example: spam filter
+  const ct = T.card[1];
+  const c = $('g', { transform: 'scale(1.12)' }, card(LC[1], -270, 480, 900, 560, 3, ct));
+  [-250, 0, 250].forEach((x, i) => {
+    stroke(c, box(x - 100, -170, 200, 140), { t: ct + 0.25 + i * 0.07, d: 0.25, w: 9, amp: 3 });
+    stroke(c, [[x - 100, -170], [x, -90], [x + 100, -170]], { t: ct + 0.35 + i * 0.07, d: 0.15, w: 9, amp: 3 });
+  });
+  stroke(c, [[-285, 0], [-255, 30], [-205, -30]], { t: ct + 0.5, d: 0.15, w: 11, amp: 2 });
+  stroke(c, [[215, 0], [245, 30], [295, -30]], { t: ct + 0.85, d: 0.15, w: 11, amp: 2 });
+  const st = $('g', {}, c);
+  $('rect', { x: -112, y: -48, width: 224, height: 96, rx: 10, fill: CARD, stroke: RED, 'stroke-width': 10 }, st);
+  $('text', { 'font-family': '"Baloo 2"', 'font-size': 78, 'font-weight': 800, fill: RED, 'text-anchor': 'middle', y: 30 }, st).textContent = 'SPAM';
+  U.push((time) => {
+    const x = time - T.stamp[1];
+    const k = (x < 0 ? 0 : lerp(2.6, 1, eo(clamp(x / 0.12))) * (1 + 0.06 * bump(x - 0.12))) * (1 - ei(prog(time, E[1], 0.22)));
+    st.style.display = k <= 0.002 ? 'none' : '';
+    st.setAttribute('transform', `translate(0 -95) rotate(-12) scale(${k})`);
+  });
+  txt(c, 0, 170, 'spam filter', { t: ct + 0.3, size: 104 });
+}
+
+// ---------- level 2: Deep Learning ----------
+OUT = E[2];
+{
+  const g = $('g', { transform: 'translate(0 -330) scale(1.1) translate(0 330)' }, LC[2]);
+  const t = T.illus[2];
+  const xs = [-540, -180, 180, 540];
+  const counts = [3, 5, 5, 2];
+  const node = (l, i) => [xs[l], -350 + (i - (counts[l] - 1) / 2) * 150];
+  const edges = $('g', {}, g);
+  for (let l = 0; l < 3; l++) {
+    let n = 0;
+    for (let i = 0; i < counts[l]; i++) for (let k = 0; k < counts[l + 1]; k++) stroke(edges, [node(l, i), node(l + 1, k)], { t: t + 0.15 + l * 0.45 + n++ * 0.01, d: 0.3, w: 6, amp: 2, step: 200, op: 0.55 });
+  }
+  // signals that run through the layers
+  const routes = [[1, 0, 3, 0], [0, 3, 1, 1], [2, 4, 4, 0]];
+  routes.forEach((rt, i) => {
+    const pts = rt.map((n, l) => node(l, n));
+    const p = $('circle', { r: 26, fill: RED }, g);
+    U.push((time) => {
+      const x = time - (t + 1.75 + i * 0.3);
+      const on = x >= 0 && time < E[2];
+      p.style.display = on ? '' : 'none';
+      if (!on) return;
+      const ph = ((x / 1.1) % 1) * 3;
+      const k = Math.min(2, Math.floor(ph));
+      const f = eio(ph - k);
+      p.setAttribute('cx', lerp(pts[k][0], pts[k + 1][0], f));
+      p.setAttribute('cy', lerp(pts[k][1], pts[k + 1][1], f));
+    });
+  });
+  for (let l = 0; l < 4; l++) for (let i = 0; i < counts[l]; i++) {
+    const [x, y] = node(l, i);
+    dot(g, x, y, 46, { t: t + l * 0.45 + i * 0.03, fill: CARD, stroke: INK, sw: 13 });
+  }
+  xs.forEach((x, l) => txt(g, x, 110, String(l + 1), { t: T.layers + l * 0.09, size: 100, color: RED }));
+  stroke(g, [[-600, 20], [600, 20]], { t: T.layers, d: 0.3, color: RED, w: 10 });
+  // example: face unlock
+  const ct = T.card[2];
+  const c = $('g', { transform: 'scale(1.12)' }, card(LC[2], -270, 480, 900, 560, -3, ct));
+  stroke(c, circ(-190, -20, 105, 20), { t: ct + 0.25, d: 0.3, w: 10, smooth: true, amp: 3 });
+  dot(c, -228, -48, 15, { t: ct + 0.45 });
+  dot(c, -152, -48, 15, { t: ct + 0.5 });
+  stroke(c, [[-235, 15], [-190, 45], [-145, 15]], { t: ct + 0.5, d: 0.15, w: 10, smooth: true, amp: 2 });
+  [[-1, -1], [1, -1], [1, 1], [-1, 1]].forEach(([sx, sy], i) => {
+    const x = -190 + sx * 150;
+    const y = -20 + sy * 150;
+    stroke(c, [[x, y - sy * 55], [x, y], [x - sx * 55, y]], { t: ct + 0.3 + i * 0.04, d: 0.15, w: 10, amp: 2 });
+  });
+  const scan = $('rect', { x: -350, width: 320, height: 12, rx: 6, fill: RED }, c);
+  U.push((time) => {
+    const p = prog(time, ct + 0.35, 0.75);
+    scan.style.display = p > 0 && p < 1 ? '' : 'none';
+    scan.setAttribute('y', -20 + Math.cos(p * Math.PI * 2) * 150);
+  });
+  stroke(c, [[-100, 60], [-55, 110], [30, 5]], { t: T.stamp[2] + 0.5, d: 0.18, w: 26, color: RED, amp: 3 });
+  txt(c, 190, -5, 'face', { t: ct + 0.3, size: 110 });
+  txt(c, 190, 105, 'unlock', { t: ct + 0.38, size: 110 });
+}
+
+// ---------- level 3: GenAI ----------
+OUT = E[3];
+{
+  const g = $('g', { transform: 'translate(0 -330) scale(1.2) translate(0 330)' }, LC[3]);
+  const t = T.illus[3];
+  const star = pop(g, 0, -610, { t: T.zoom[3].b + 0.1, spin: 50 });
+  $('path', { d: 'M0 -150 Q22 -22 150 0 Q22 22 0 150 Q-22 22 -150 0 Q-22 -22 0 -150Z', fill: RED }, star);
+  const outs = [[-430, -250, -8], [0, -190, 2], [430, -250, 9]];
+  outs.forEach(([x, y, rot], i) => {
+    const t0 = t + 0.15 + i * 0.28;
+    const o = $('g', {}, g);
+    $('rect', { x: -150, y: -128, width: 340, height: 300, rx: 26, fill: INK }, o);
+    $('rect', { x: -170, y: -150, width: 340, height: 300, rx: 26, fill: CARD, stroke: INK, 'stroke-width': 10 }, o);
+    U.push((time) => {
+      const k = sp(time - t0) * (1 - ei(prog(time, T.erase, 0.22)));
+      o.style.display = k <= 0.002 ? 'none' : '';
+      const e = eo(prog(time, t0, 0.3));
+      o.setAttribute('transform', `translate(${lerp(0, x, e)} ${lerp(-610, y, e)}) rotate(${rot * e + (1 - e) * -40}) scale(${k})`);
+    });
+    if (i === 0) {
+      $('text', { 'font-family': '"Baloo 2"', 'font-size': 150, 'font-weight': 800, fill: INK, 'text-anchor': 'middle', y: -5 }, o).textContent = 'Aa';
+      stroke(o, [[-110, 50], [-40, 40], [30, 55], [110, 45]], { t: t0 + 0.25, d: 0.2, w: 11, smooth: true });
+      stroke(o, [[-110, 100], [-30, 92], [50, 104]], { t: t0 + 0.35, d: 0.2, w: 11, smooth: true });
+    } else if (i === 1) {
+      $('circle', { cx: 75, cy: -70, r: 38, fill: RED }, o);
+      stroke(o, [[-130, 105], [-50, -20], [10, 60], [50, 10], [130, 105]], { t: t0 + 0.25, d: 0.3, w: 12, amp: 3 });
+      stroke(o, [[-130, 105], [130, 105]], { t: t0 + 0.4, d: 0.15, w: 12, amp: 2 });
+    } else {
+      stroke(o, box(-120, -90, 240, 180), { t: t0 + 0.25, d: 0.3, w: 11, amp: 3 });
+      $('path', { d: 'M-32 -50 L52 0 L-32 50Z', fill: RED }, o);
+    }
+  });
+  // example: ChatGPT
+  const ct = T.card[3];
+  const c = $('g', { transform: 'scale(1.08)' }, card(LC[3], 0, 470, 1140, 500, -2, ct));
+  const ub = pop(c, 240, -105, { t: ct + 0.28 });
+  $('rect', { x: -230, y: -58, width: 460, height: 116, rx: 58, fill: INK }, ub);
+  $('text', { 'font-family': 'Mukta', 'font-size': 64, 'font-weight': 700, fill: CARD, 'text-anchor': 'middle', y: 22 }, ub).textContent = 'एक poem लिखो';
+  stroke(c, [[-470, -10], [10, -10], [10, 170], [-470, 170], [-470, -14]], { t: ct + 0.45, d: 0.3, w: 9, amp: 3 });
+  [0, 1, 2].forEach((i) => {
+    const d = $('circle', { cx: -400 + i * 60, cy: 80, r: 17, fill: INK }, c);
+    U.push((time) => {
+      const x = time - (ct + 0.55);
+      const on = x >= 0 && x < 0.45;
+      d.style.display = on ? '' : 'none';
+      d.setAttribute('cy', 80 - Math.max(0, Math.sin((x * 14) - i * 1.1)) * 16);
+    });
+  });
+  stroke(c, [[-420, 45], [-300, 36], [-180, 50], [-50, 40]], { t: ct + 1.0, d: 0.25, w: 12, smooth: true });
+  stroke(c, [[-420, 110], [-320, 102], [-220, 114], [-130, 106]], { t: ct + 1.15, d: 0.25, w: 12, smooth: true });
+  txt(c, 265, 125, 'ChatGPT', { t: ct + 0.3, size: 104 });
+}
+
+// ---------- payoff, drawn on the overview diagram ----------
+OUT = null;
+{
+  // innermost circle fills with marker hatch
+  const defs = $('defs', {}, world);
+  $('circle', { r: 978 }, $('clipPath', { id: 'in3' }, defs));
+  const h = $('g', { 'clip-path': 'url(#in3)' }, LV[3]);
+  LV[3].insertBefore(h, LV[3].firstChild);
+  for (let i = 0; i < 15; i++) {
+    const x = -1500 + i * 215;
+    stroke(h, [[x - 500, 1050], [x + 500, -1050]], { t: T.fill + i * 0.035, d: 0.22, w: 120, color: RED, amp: 14, step: 400, op: 0.9, cap: 'butt' });
+  }
+  // one thing that is AI but not GenAI
+  const g = $('g', {}, LV[0]);
+  const D = [-760, -330];
+  stroke(g, [[-700, -630], [-750, -400]], { t: T.dot + 0.3, d: 0.15, w: 12 });
+  dot(g, D[0], D[1], 46, { t: T.dot, fill: RED, stroke: INK, sw: 12 });
+  const n = card(g, -640, -720, 680, 160, -4, T.dot + 0.1);
+  txt(n, 0, 30, 'chess computer', { t: T.dot + 0.2, size: 86, font: 'Mukta', weight: 700 });
+  const E = [-282, 202];
+  for (let i = 0; i < 6; i++) {
+    const a = 0.1 + i * 0.15;
+    stroke(g, [[lerp(D[0], E[0], a), lerp(D[1], E[1], a)], [lerp(D[0], E[0], a + 0.09), lerp(D[1], E[1], a + 0.09)]], { t: T.link + i * 0.06, d: 0.1, w: 14, amp: 3 });
+  }
+  const M = [lerp(D[0], E[0], 0.55), lerp(D[1], E[1], 0.55)];
+  stroke(g, [[M[0] - 80, M[1] - 80], [M[0] + 80, M[1] + 80]], { t: T.cross, d: 0.12, w: 34, color: RED, amp: 4 });
+  stroke(g, [[M[0] + 80, M[1] - 80], [M[0] - 80, M[1] + 80]], { t: T.cross + 0.12, d: 0.12, w: 34, color: RED, amp: 4 });
+}
+
+// ---------- screen-space overlay ----------
+const over = document.getElementById('over');
+{
+  // "inside": an arrow that goes into the circles
+  OUT = T.morph.a - 0.1;
+  stroke(over, [[10, 1245], [130, 1210], [250, 1275], [392, 1268]], { t: T.arrow, d: 0.45, w: 16, color: RED, smooth: true, amp: 4 });
+  stroke(over, [[352, 1228], [398, 1268], [346, 1304]], { t: T.arrow + 0.38, d: 0.12, w: 16, color: RED, amp: 2 });
+  // "yes": every GenAI is AI
+  OUT = T.dot - 0.1;
+  const ok = pop(over, 935, 650, { t: T.check, rot: 8 });
+  $('circle', { r: 78, fill: RED }, ok);
+  $('path', { d: 'M-36 4 L-10 32 L40 -30', fill: 'none', stroke: PAPER, 'stroke-width': 18, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, ok);
+  OUT = null;
+}
+
+// ---------- label chips ----------
+const chipsEl = document.getElementById('chips');
+const CH = ['AI', 'ML', 'Deep Learning', 'GenAI', 'Machine Learning'].map((s, i) => {
+  const e = document.createElement('div');
+  e.className = 'chip';
+  e.textContent = s;
+  chipsEl.appendChild(e);
+  return { e, i, j: i === 4 ? 1 : i };
+});
+const HP = [[300, 730, -5], [760, 930, 4], [540, 1135, -2], [560, 1350, 3]];
+const HS = [1.5, 1.4, 0.98, 1.3];
+const JOLT = [[-34, -26, -5], [44, -8, 5], [-26, 10, -3], [40, 26, 5]];
+const OVS = [0.55, 0.55, 0.36, 0.55, 0.4];
+
+function chipPose(c, t, G) {
+  const { i, j } = c;
+  const top = (k) => G.X[k][1] - 1000 * G.a[k];
+  const ov = { x: G.X[j][0], y: j < 3 ? (top(j) + top(j + 1)) / 2 : G.X[3][1], s: OVS[i], r: [-2, 1.5, -1.5, 2][j] };
+  const rim = { x: G.X[j][0], y: top(j), s: 0.62 * clamp((G.a[j] / 0.48) ** 0.7, 0.2, 4), r: -3 };
+  const mix = (A, B, e) => ({ x: lerp(A.x, B.x, e), y: lerp(A.y, B.y, e), s: lerp(A.s, B.s, e), r: lerp(A.r, B.r, e) });
+  let P = null;
+  if (t < T.morph.a) {
+    if (i === 4) return null;
+    const x = t - (T.slam[j] - 0.16);
+    if (x < 0) return null;
+    const p = clamp(x / 0.16);
+    const k = sp(t - (T.jolt + j * 0.07));
+    const hook = {
+      x: HP[j][0] + JOLT[j][0] * k,
+      y: HP[j][1] + JOLT[j][1] * k,
+      s: HS[j] * lerp(2.3, 1, p * p) * (1 + 0.08 * bump(x - 0.16)),
+      r: HP[j][2] + (1 - p) * (j % 2 ? 12 : -12) + JOLT[j][2] * k,
+    };
+    const e = eio(prog(t, T.toOv.a, T.toOv.b - T.toOv.a));
+    P = mix(hook, ov, e);
+    P.y -= Math.sin(Math.PI * e) * 70;
+    P.r += Math.sin(Math.PI * e) * (j % 2 ? 10 : -10);
+  } else if (t < T.out.a) {
+    if (i === 0) P = mix(ov, rim, eio(prog(t, T.morph.a, T.morph.b - T.morph.a)));
+    else {
+      const born = i === 4 ? T.zoom[1].b - 0.15 : i >= 2 ? T.zoom[j].b - 0.15 : Infinity;
+      if (t >= born) { P = rim; P.s *= sp(t - born); }
+      else if (i < 4 && t < T.morph.b) P = mix(ov, { x: G.X[1][0], y: G.X[1][1], s: 0, r: 20 }, ei(prog(t, T.morph.a, 0.5)));
+      else return null;
+    }
+  } else {
+    if (i === 1) return null;
+    P = mix(rim, ov, eio(prog(t, T.out.a, T.out.b - T.out.a)));
+    P.s *= 1 + 0.16 * bump(t - (T.recap + (3 - j) * 0.09));
+  }
+  [P.x, P.y] = rotPt(G, P.x, P.y);
+  P.r += G.rot;
+  return P;
+}
+U.push((t, G) => {
+  for (const c of CH) {
+    const P = chipPose(c, t, G);
+    if (!P || P.s <= 0.003 || P.y < -400 || P.y > 2400 || P.x < -900 || P.x > 2000) { c.e.style.display = 'none'; continue; }
+    c.e.style.display = '';
+    c.e.style.transform = `translate(${P.x}px,${P.y}px) rotate(${P.r}deg) scale(${P.s}) translate(-50%,-50%)`;
+  }
+});
+
+// ---------- captions: the spoken sentence, word by word ----------
+const capsEl = document.getElementById('caps');
+const caps = [];
+const addCap = (a, text, hl, words) => caps.push({ a, text, hl, words: words ?? wordTimes({ a, b: a, text }) });
+addCap(0, 'क्या ये चारों एक ही हैं?', 'एक ही');
+const said = (s, hl) => caps.push({ a: s.a, text: s.text, hl, words: wordTimes(s) });
+said(L.hook.s[4], 'एक चीज़ नहीं');
+said(L.nest.s[0], 'अंदर');
+[['ai', ['AI', 'smart', 'chess']], ['ml', ['Machine Learning', 'data', 'spam filter']], ['dl', ['Deep Learning', 'layers', 'face unlock']], ['gen', ['GenAI', 'नया content', 'ChatGPT']]]
+  .forEach(([id, hls]) => L[id].s.forEach((s, i) => said(s, hls[i])));
+said(L.payoff.s[0], 'याद');
+said(L.payoff.s[1], 'AI है');
+said(L.payoff.s[2], 'नहीं');
+caps.push({ a: T.recap, text: 'एक के अंदर एक।', hl: 'अंदर', words: 'एक के अंदर एक।'.split(' ').map((word, i) => ({ word, t: T.recap + i * 0.1 })) });
+caps.forEach((c, n) => {
+  c.b = caps[n + 1]?.a ?? dur + 1;
+  const el = document.createElement('div');
+  el.className = 'cap';
+  const hlWords = c.hl.split(' ');
+  const clean = (w) => w.replace(/[।,?.!]/g, '');
+  const start = c.words.findIndex((_, k) => hlWords.every((h, m) => c.words[k + m] && clean(c.words[k + m].word) === h));
+  c.spans = c.words.map((w, k) => {
+    const sEl = document.createElement('span');
+    const inHl = start >= 0 && k >= start && k < start + hlWords.length;
+    const lastHl = k === start + hlWords.length - 1;
+    sEl.className = inHl ? 'w hl' : 'w';
+    // the gap after a highlighted run stays outside the marker
+    sEl.textContent = w.word + (k < c.words.length - 1 && !(inHl && lastHl) ? ' ' : '');
+    el.appendChild(sEl);
+    if (inHl && lastHl && k < c.words.length - 1) el.appendChild(document.createTextNode(' '));
+    return { el: sEl, t: w.t, inHl };
+  });
+  capsEl.appendChild(el);
+  // one line as large as it fits, else two lines
+  let fs = 112;
+  el.style.whiteSpace = 'nowrap';
+  do { fs -= 4; el.style.fontSize = fs + 'px'; } while (el.scrollWidth > 960 && fs > 84);
+  if (el.scrollWidth > 960) {
+    el.style.whiteSpace = 'normal';
+    fs = 92;
+    do { fs -= 4; el.style.fontSize = fs + 'px'; } while (el.offsetHeight > fs * 1.16 * 2 + 6 && fs > 56);
+  }
+  c.el = el;
+});
+U.push((t) => {
+  for (const c of caps) {
+    const on = t >= c.a && t < c.b;
+    c.el.style.display = on ? '' : 'none';
+    if (!on) continue;
+    for (const s of c.spans) {
+      const x = t - s.t;
+      const e = eo(clamp(x / 0.16));
+      s.el.style.visibility = x < 0 ? 'hidden' : 'visible';
+      s.el.style.transform = `translateY(${(1 - e) * 30}px) rotate(${(1 - e) * -4}deg)`;
+      if (!s.inHl) continue;
+      const hp = eo(prog(t, s.t + 0.03, 0.18));
+      s.el.style.backgroundSize = `${hp * 100}% 84%`;
+      s.el.style.color = hp > 0.45 ? PAPER : INK;
+    }
+  }
+});
+
+// ---------- seek ----------
+const paperEl = document.getElementById('paper');
+window.DUR = dur;
+window.seek = (t) => {
+  boil = Math.floor(t * 7.5) % 3;
+  const G = geo(t);
+  rotG.setAttribute('transform', `rotate(${G.rot} ${G.C[0]} ${G.C[1]})`);
+  paperEl.style.transform = `translateY(${-(G.u * 46 + G.g * 30) % 97}px) rotate(${G.rot * 0.3}deg)`;
+  for (const u of U) u(t, G);
+};
+window.seek(0);
+window.ready = true;
+
+// Preview only: fit to window and follow the audio clock.
+if (!RENDER) {
+  const fit = () => { stage.style.transform = `scale(${Math.min(innerWidth / 1080, innerHeight / 1920)})`; };
+  fit();
+  addEventListener('resize', fit);
+  const au = document.createElement('audio');
+  au.src = 'audio/audio.wav';
+  au.controls = true;
+  document.body.appendChild(au);
+  const loop = () => { window.seek(au.currentTime); requestAnimationFrame(loop); };
+  loop();
+}
+</script>
+</body>
+</html>

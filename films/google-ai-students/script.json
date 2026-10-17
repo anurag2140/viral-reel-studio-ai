@@ -1,0 +1,27 @@
+{
+  "title": "College ID है? Google का AI plan एक साल free",
+  "number": 9,
+  "lane": "TOOL",
+  "setting": "college",
+  "look": "illustrated story (brand/story.js, brand/scenes.js), my face and body as the main character",
+  "sendTo": "college group",
+  "link": "https://blog.google/intl/en-in/products/start-the-academic-year-with-one-year-of-gemini-on-us/",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a short story and lets you in on a useful find. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://blog.google/intl/en-in/products/start-the-academic-year-with-one-year-of-gemini-on-us/ (captured 2026-10-14: 'To help college students in India ... one year of Google AI Plus, free of charge', 'Gemini Omni, 2x higher usage limits in Gemini, 400 GB of storage'; banner: 'student plan for 1 year for Rs 4,000 FREE', 'Offer valid for limited time only')",
+    "News reports (Telangana Today, ETV Bharat, 2026-08/09): redeem by 31 December 2026, payment method needed, charged monthly after the free year unless cancelled. Not on the captured Google page, so the voice does not state the date or the price."
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["College ID है?", "तो Google का चार हज़ार वाला AI plan, एक साल free है।"] },
+    { "id": "trouble", "sentences": ["तुम्हारा दोस्त हर महीने AI के पैसे भरता है।", "और तुम free वाली limit पर अटक जाते हो।"] },
+    { "id": "turn", "sentences": ["लेकिन Google ने college students के लिए एक offer निकाला है।", "एक साल का Google AI Plus, बिल्कुल free।"] },
+    { "id": "how", "sentences": ["इसमें Gemini की double limit मिलती है।", "और चार सौ GB storage।"] },
+    { "id": "twist", "sentences": ["बस दो बातें याद रखना।", "Offer सीमित समय के लिए है।", "और एक साल बाद यह paid हो जाता है, तो reminder लगा लो।"] },
+    { "id": "link", "sentences": ["इस offer का link चाहिए?", "Comment में कुछ भी लिख दो।"] },
+    { "id": "ask", "sentences": ["और यह reel अपने college group में भेज दो।"] }
+  ]
+}

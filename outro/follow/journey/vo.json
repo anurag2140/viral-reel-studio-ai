@@ -1,0 +1,45 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 7.232,
+  "lines": [
+    {
+      "id": "journey-pitch",
+      "text": "Coding नहीं आती? कोई बात नहीं। यहाँ AI zero से pro तक सीखो, एक-एक video में।",
+      "sentences": [
+        "Coding नहीं आती?",
+        "कोई बात नहीं।",
+        "यहाँ AI zero से pro तक सीखो, एक-एक video में।"
+      ],
+      "file": "vo/journey-pitch.wav",
+      "start": 0,
+      "duration": 4.925,
+      "pauses": [
+        [
+          0.74,
+          0.98
+        ],
+        [
+          1.57,
+          1.95
+        ],
+        [
+          3.93,
+          4.15
+        ]
+      ]
+    },
+    {
+      "id": "journey-cta",
+      "text": "पूरा सफ़र देखने के लिए follow करो।",
+      "sentences": [
+        "पूरा सफ़र देखने के लिए follow करो।"
+      ],
+      "file": "vo/journey-cta.wav",
+      "start": 5.313,
+      "duration": 1.819,
+      "pauses": []
+    }
+  ]
+}

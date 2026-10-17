@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Look B: Poster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800;900&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #FFD60A; font-family: "Poppins"; font-weight: 900; color: #111; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script type="module">
+// Look B, "Poster": one full-bleed colour per beat, fat type locked to the frame width,
+// key words in inverted boxes, diagonal colour wipes, words that pop with overshoot.
+import { backOut, bump, clamp, clean, cubicOut, el, expoOut, fillWidth, lerp, pageCrop, pointer, pop, popLine, prog, setup, start } from '../lib.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const vo = await (await fetch('vo.json')).json();
+const { dur, S, T } = build(vo);
+const SHOT = '/films/napkin-ai/shots/home.jpg';
+await setup(['900 100px "Poppins"', '600 40px "Poppins"'], [SHOT]);
+const U = [];
+const YEL = '#FFD60A';
+const BLUE = '#2A3CFF';
+const INK = '#111111';
+const W = 950;
+const LH = 'line-height:1.22';
+
+// a scene is a full-bleed layer; it arrives with a slanted wipe, a band of `edge` colour leads it
+const scene = (bg, t0, edge) => {
+  const band = t0 == null ? null : el('div', `position:absolute;inset:0;background:${edge}`, stage);
+  const layer = el('div', `position:absolute;inset:0;background:${bg};overflow:hidden`, stage);
+  if (t0 != null) U.push((t) => {
+    const cut = (node, p) => {
+      const x = cubicOut(p) * 1700;
+      node.style.visibility = p <= 0 ? 'hidden' : 'visible';
+      node.style.clipPath = p >= 1 ? 'none' : `polygon(0 0, ${x}px 0, ${x - 620}px 100%, 0 100%)`;
+    };
+    cut(band, prog(t, t0 - 0.3, 0.42));
+    cut(layer, prog(t, t0 - 0.2, 0.42));
+  });
+  return layer;
+};
+const tag = (parent, bg, fg) => el('div', `position:absolute;left:62px;top:168px;font:800 34px/1 "Poppins";letter-spacing:.1em;color:${fg};background:${bg};padding:16px 24px;border-radius:999px`, parent, 'AI TOOL');
+
+// ---------- 1. yellow: "Teacher को लगेगा तुमने पूरी रात मेहनत की" ----------
+const s1 = scene(YEL);
+tag(s1, INK, YEL);
+// the night: a black disc that runs off the corner, with the hour in it
+const moon = el('div', `position:absolute;left:470px;top:1250px;width:900px;height:900px;border-radius:50%;background:${INK}`, s1);
+el('div', `position:absolute;left:150px;top:150px;font:900 190px/1 "Poppins";color:${YEL};white-space:nowrap`, moon, '2<span style="font-size:96px"> AM</span>');
+const b1 = el('div', `position:absolute;left:62px;top:300px;width:${W}px;${LH}`, s1);
+const W1 = clean(S[0].words);
+const rows1 = [[0, 1], [2, 3], [4, 5], [6, 7]].map((ix, n) => {
+  const row = el('div', n === 2 ? `margin:44px 0 26px;transform:rotate(-3deg);transform-origin:0 50%` : '', b1);
+  const holder = n === 2 ? el('div', `display:inline-block;background:${INK};color:${YEL};padding:0 34px;border-radius:26px`, row) : row;
+  const words = popLine(holder, ix.map((i) => W1[i]));
+  fillWidth(words[0].line, n === 2 ? W - 100 : W, n === 2 ? 250 : 230);
+  return { row, words };
+});
+U.push((t) => {
+  // the hook is complete on the first frame; each word is hit as it is spoken
+  rows1.forEach(({ words }) => words.forEach((x) => {
+    const k = Math.max(0, bump(t - x.t));
+    x.w.style.transform = `scale(${1 + 0.16 * k}) rotate(${x.r * 0.5 * k}deg)`;
+  }));
+  rows1[2].row.style.transform = `rotate(${-3 - 3 * Math.max(0, bump(t - T.night))}deg)`;
+  moon.style.transform = `translate(${Math.sin(t * 1.3) * 14}px,${-expoOut(prog(t, 0, 0.6)) * 60 + 60}px)`;
+});
+
+// ---------- 2. blue: "असल में सिर्फ़ एक CLICK लगा" ----------
+const s2 = scene(BLUE, T.s2, INK);
+tag(s2, '#fff', BLUE);
+const one = el('div', 'position:absolute;left:470px;top:560px;font:900 1500px/1 "Poppins";color:#1E2DDB', s2, '1');
+const b2 = el('div', `position:absolute;left:62px;top:320px;width:${W}px;color:#fff;${LH}`, s2);
+const W2 = clean(S[1].words);
+const r21 = popLine(b2, [W2[0], W2[1]], 'font-size:104px;font-weight:800');
+const r22 = popLine(b2, [W2[2], W2[3]]);
+fillWidth(r22[0].line, W, 240);
+const chip = el('div', `display:table;margin:26px 0 20px;background:${YEL};color:${INK};padding:0 44px;border-radius:34px;font-size:250px;line-height:1.3;transform-origin:30% 50%;box-shadow:22px 22px 0 ${INK}`, b2, 'CLICK');
+const r24 = popLine(b2, [W2[5]], 'font-size:210px');
+const cur = pointer(s2, INK, '#fff', 170);
+U.push((t) => {
+  [r21, r22, r24].forEach((l) => pop(l, t));
+  const q = t - T.click;
+  const p = expoOut(clamp((q + 0.03) / 0.28));
+  chip.style.visibility = q < -0.03 ? 'hidden' : 'visible';
+  chip.style.transform = `scale(${lerp(3, 1, p) * (1 - 0.1 * Math.exp(-(((q - 0.42) / 0.07) ** 2)))}) rotate(${lerp(-14, -3, p)}deg)`;
+  // the stamp shakes the whole scene, and the big numeral jumps
+  const k = Math.max(0, bump(q));
+  b2.style.transform = `translateY(${k * 26}px)`;
+  one.style.transform = `translate(${-t * 20}px,${-k * 70}px) rotate(${6 + k * 3}deg)`;
+  const a = cubicOut(prog(t, T.click + 0.12, 0.28));
+  cur.style.visibility = q > 0.1 ? 'visible' : 'hidden';
+  cur.style.transform = `translate(${lerp(1150, 640, a)}px,${lerp(1500, chip.offsetTop + 320 + chip.offsetHeight * 0.55, a)}px) scale(${1 - 0.18 * Math.exp(-(((q - 0.42) / 0.07) ** 2))})`;
+});
+
+// ---------- 3. black: "यह है Napkin AI" ----------
+const s3 = scene(INK, T.s3, YEL);
+tag(s3, YEL, INK);
+const band = (top, bg, fg, rot) => {
+  const b = el('div', `position:absolute;left:-200px;top:${top}px;width:1500px;height:150px;background:${bg};transform:rotate(${rot}deg);overflow:hidden`, s3);
+  const run = el('div', `white-space:nowrap;font:900 96px/150px "Poppins";color:${fg}`, b, 'NAPKIN AI ✦ '.repeat(8));
+  return run;
+};
+const runA = band(1560, YEL, INK, -5);
+const runB = band(770, BLUE, '#fff', 7);
+const b3 = el('div', `position:absolute;left:62px;top:300px;width:${W}px;color:#fff;${LH}`, s3);
+const W3 = clean(S[2].words);
+const r31 = popLine(b3, [W3[0], W3[1]], 'font-size:104px;font-weight:800');
+const r32 = popLine(b3, [W3[2], W3[3]]);
+fillWidth(r32[0].line, W, 230);
+const card = el('div', `position:absolute;left:150px;top:780px;width:780px;height:700px;background:#fff;border:16px solid #fff;border-radius:40px;box-shadow:28px 28px 0 ${YEL};box-sizing:border-box;overflow:hidden`, s3);
+const page = pageCrop(card, SHOT, 'position:absolute;inset:0;border-radius:26px', 748);
+const SLIDE = [120, 8867, 584, 400]; // the finished diagram on the page, in image pixels
+const box = el('div', `position:absolute;border:12px solid ${BLUE};border-radius:18px;box-sizing:border-box`, card);
+U.push((t) => {
+  [r31, r32].forEach((l) => pop(l, t));
+  runA.style.transform = `translateX(${-200 - t * 150}px)`;
+  runB.style.transform = `translateX(${-900 + t * 110}px)`;
+  const p = prog(t, T.s3 + 0.1, 0.5);
+  card.style.visibility = p <= 0 ? 'hidden' : 'visible';
+  card.style.transform = `scale(${lerp(0.3, 1, backOut(p))}) rotate(${lerp(-16, 3, cubicOut(p)) + Math.sin(t * 2.2) * 0.8}deg)`;
+  const scroll = lerp(8500, 8640, cubicOut(prog(t, T.s3, 2.2)));
+  page.set(scroll);
+  const m = prog(t, T.name + 0.35, 0.3);
+  box.style.visibility = m > 0 ? 'visible' : 'hidden';
+  box.style.left = `${SLIDE[0] * page.k - 18}px`;
+  box.style.top = `${(SLIDE[1] - scroll) * page.k - 18}px`;
+  box.style.width = `${SLIDE[2] * page.k + 36}px`;
+  box.style.height = `${SLIDE[3] * page.k + 36}px`;
+  box.style.transform = `scale(${lerp(1.4, 1, backOut(m))})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

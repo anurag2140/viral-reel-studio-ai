@@ -1,0 +1,164 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 36.333,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "पचास applications के बाद offer आया, और वो तुम्हें लूटने आया था।",
+      "sentences": [
+        "पचास applications के बाद offer आया, और वो तुम्हें लूटने आया था।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 3.651,
+      "pauses": [
+        [
+          2.06,
+          2.31
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "WhatsApp पर HR का message आया। Interview हुआ ही नहीं, फिर भी सीधा offer letter। बस joining से पहले पाँच हज़ार की training fee भरनी थी।",
+      "sentences": [
+        "WhatsApp पर HR का message आया।",
+        "Interview हुआ ही नहीं, फिर भी सीधा offer letter।",
+        "बस joining से पहले पाँच हज़ार की training fee भरनी थी।"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 4.038,
+      "duration": 6.803,
+      "pauses": [
+        [
+          1.58,
+          1.98
+        ],
+        [
+          2.78,
+          3.01
+        ],
+        [
+          4.04,
+          4.42
+        ]
+      ]
+    },
+    {
+      "id": "stake",
+      "text": "पहली job थी, तुम pay करने ही वाले थे। लेकिन तभी नज़र letter पर लिखी website पर गई।",
+      "sentences": [
+        "पहली job थी, तुम pay करने ही वाले थे।",
+        "लेकिन तभी नज़र letter पर लिखी website पर गई।"
+      ],
+      "file": "vo/stake.wav",
+      "start": 10.962,
+      "duration": 4.722,
+      "pauses": [
+        [
+          0.88,
+          1.09
+        ],
+        [
+          2.19,
+          2.47
+        ]
+      ]
+    },
+    {
+      "id": "how",
+      "text": "who.is पर किसी भी website का नाम डालो। यह बताता है कि website कब बनी थी। असली companies की website सालों पुरानी होती है।",
+      "sentences": [
+        "who.is पर किसी भी website का नाम डालो।",
+        "यह बताता है कि website कब बनी थी।",
+        "असली companies की website सालों पुरानी होती है।"
+      ],
+      "file": "vo/how.wav",
+      "start": 15.865,
+      "duration": 6.848,
+      "pauses": [
+        [
+          2.35,
+          2.61
+        ],
+        [
+          4.22,
+          4.62
+        ]
+      ]
+    },
+    {
+      "id": "twist",
+      "text": "और इस company की website? सिर्फ़ छह दिन पुरानी। असली company job देने के पैसे कभी नहीं माँगती।",
+      "sentences": [
+        "और इस company की website?",
+        "सिर्फ़ छह दिन पुरानी।",
+        "असली company job देने के पैसे कभी नहीं माँगती।"
+      ],
+      "file": "vo/twist.wav",
+      "start": 23.077,
+      "duration": 5.301,
+      "pauses": [
+        [
+          1.14,
+          1.4
+        ],
+        [
+          2.6,
+          2.79
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "तुमने pay नहीं किया। अगले दिन उस HR का number बंद था।",
+      "sentences": [
+        "तुमने pay नहीं किया।",
+        "अगले दिन उस HR का number बंद था।"
+      ],
+      "file": "vo/end.wav",
+      "start": 28.558,
+      "duration": 2.807,
+      "pauses": [
+        [
+          0.9,
+          1.17
+        ]
+      ]
+    },
+    {
+      "id": "link",
+      "text": "इस website का link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "इस website का link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 31.731,
+      "duration": 2.614,
+      "pauses": [
+        [
+          1.12,
+          1.38
+        ],
+        [
+          1.93,
+          2.06
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "उस दोस्त को भेजो जो अभी job ढूँढ रहा है।",
+      "sentences": [
+        "उस दोस्त को भेजो जो अभी job ढूँढ रहा है।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 34.615,
+      "duration": 1.618,
+      "pauses": []
+    }
+  ]
+}

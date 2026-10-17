@@ -1,0 +1,50 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 7.134,
+  "lines": [
+    {
+      "id": "share-pitch",
+      "text": "कोई दोस्त AI सीखना चाहता है? ये video उसे भेज दो, और दोनों साथ सीखो।",
+      "sentences": [
+        "कोई दोस्त AI सीखना चाहता है?",
+        "ये video उसे भेज दो, और दोनों साथ सीखो।"
+      ],
+      "file": "vo/share-pitch.wav",
+      "start": 0,
+      "duration": 3.847,
+      "pauses": [
+        [
+          1.45,
+          1.77
+        ]
+      ]
+    },
+    {
+      "id": "share-cta",
+      "text": "Zero से pro तक, बिना coding। Follow करो।",
+      "sentences": [
+        "Zero से pro तक, बिना coding।",
+        "Follow करो।"
+      ],
+      "file": "vo/share-cta.wav",
+      "start": 4.063,
+      "duration": 2.972,
+      "pauses": [
+        [
+          0.69,
+          0.83
+        ],
+        [
+          1.26,
+          1.43
+        ],
+        [
+          2.14,
+          2.36
+        ]
+      ]
+    }
+  ]
+}

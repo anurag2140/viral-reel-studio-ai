@@ -1,0 +1,134 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 27.665,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "College ID है? तो Google का चार हज़ार वाला AI plan, एक साल free है।",
+      "sentences": [
+        "College ID है?",
+        "तो Google का चार हज़ार वाला AI plan, एक साल free है।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 4.448,
+      "pauses": [
+        [
+          0.86,
+          1.2
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "तुम्हारा दोस्त हर महीने AI के पैसे भरता है। और तुम free वाली limit पर अटक जाते हो।",
+      "sentences": [
+        "तुम्हारा दोस्त हर महीने AI के पैसे भरता है।",
+        "और तुम free वाली limit पर अटक जाते हो।"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 4.615,
+      "duration": 4.083,
+      "pauses": [
+        [
+          2.18,
+          2.44
+        ]
+      ]
+    },
+    {
+      "id": "turn",
+      "text": "लेकिन Google ने college students के लिए एक offer निकाला है। एक साल का Google AI Plus, बिल्कुल free।",
+      "sentences": [
+        "लेकिन Google ने college students के लिए एक offer निकाला है।",
+        "एक साल का Google AI Plus, बिल्कुल free।"
+      ],
+      "file": "vo/turn.wav",
+      "start": 8.942,
+      "duration": 4.996,
+      "pauses": [
+        [
+          2.2,
+          2.55
+        ],
+        [
+          4.06,
+          4.23
+        ]
+      ]
+    },
+    {
+      "id": "how",
+      "text": "इसमें Gemini की double limit मिलती है। और चार सौ GB storage।",
+      "sentences": [
+        "इसमें Gemini की double limit मिलती है।",
+        "और चार सौ GB storage।"
+      ],
+      "file": "vo/how.wav",
+      "start": 14.135,
+      "duration": 3.205,
+      "pauses": [
+        [
+          1.74,
+          1.89
+        ]
+      ]
+    },
+    {
+      "id": "twist",
+      "text": "बस दो बातें याद रखना। Offer सीमित समय के लिए है। और एक साल बाद यह paid हो जाता है, तो reminder लगा लो।",
+      "sentences": [
+        "बस दो बातें याद रखना।",
+        "Offer सीमित समय के लिए है।",
+        "और एक साल बाद यह paid हो जाता है, तो reminder लगा लो।"
+      ],
+      "file": "vo/twist.wav",
+      "start": 17.596,
+      "duration": 5.198,
+      "pauses": [
+        [
+          1.1,
+          1.42
+        ],
+        [
+          2.52,
+          2.77
+        ],
+        [
+          4.23,
+          4.42
+        ]
+      ]
+    },
+    {
+      "id": "link",
+      "text": "इस offer का link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "इस offer का link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 23.077,
+      "duration": 2.367,
+      "pauses": [
+        [
+          0.99,
+          1.4
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "और यह reel अपने college group में भेज दो।",
+      "sentences": [
+        "और यह reel अपने college group में भेज दो।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 25.673,
+      "duration": 1.892,
+      "pauses": []
+    }
+  ]
+}

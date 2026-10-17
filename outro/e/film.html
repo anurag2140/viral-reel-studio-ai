@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Outro E</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #111; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: var(--paper); --cap-top: 268px; }
+  #paper { position: absolute; inset: -200px 0; background-image: repeating-linear-gradient(#0000 0 94px, var(--rule) 94px 97px); }
+  svg { position: absolute; left: 0; top: 0; overflow: visible; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="paper"></div>
+  <svg id="world" width="1080" height="1920"></svg>
+  <div id="caps"></div>
+</div>
+<script type="module">
+import { $, boot, bump, circ, clamp, createKit, ei, eio, eo, lerp, preview, prog, sp } from '/brand/kagaz.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const brand = await boot(stage);
+const vo = await (await fetch('vo.json')).json();
+const { dur, L, T } = build(vo);
+const kit = createKit(brand);
+const { stroke, pop, dot, card, U, st, PAPER, CARD, INK, RED } = kit;
+const HANDLE = '@vipulsingh_ai';
+const text = (parent, x, y, str, a = {}) => {
+  const e = $('text', { x, y, 'font-family': '"Baloo 2"', 'font-weight': 800, 'font-size': 80, fill: INK, 'text-anchor': 'middle', ...a }, parent);
+  e.textContent = str;
+  return e;
+};
+const root = $('g', {}, document.getElementById('world'));
+
+// Sticker Pop backdrop: rays, stickers and (where there is room) the mascot
+kit.sunburst(root, 540, 1000);
+kit.sticker(root, 'circle', 1040, 1575, 110, kit.MINT);
+kit.sticker(root, 'plus', 70, 1180, 30, kit.ORANGE);
+
+// ---------- 1. the video becomes a paper plane and flies to a scared friend ----------
+{
+  const S = $('g', {}, root);
+  U.push((t) => {
+    const q = ei(prog(t, T.toComment, 0.34));
+    S.style.display = q >= 1 ? 'none' : '';
+    S.setAttribute('transform', `translate(${-1400 * q} 80) rotate(${-6 * q} 540 960)`);
+  });
+
+  // flight path
+  const P = [[285, 940], [300, 440], [700, 470], [560, 1190]];
+  const B = (e) => {
+    const m = 1 - e;
+    const k = [m * m * m, 3 * m * m * e, 3 * m * e * e, e * e * e];
+    return [0, 1].map((i) => k[0] * P[0][i] + k[1] * P[1][i] + k[2] * P[2][i] + k[3] * P[3][i]);
+  };
+  const flight = (t) => eio(prog(t, T.fly.a, T.fly.b - T.fly.a));
+
+  // friend
+  const FX = 800;
+  const FY = 1175;
+  const friend = $('g', {}, S);
+  U.push((t) => friend.setAttribute('transform', `translate(${t < T.land ? Math.sin(t * 38) * 5 * clamp((t - T.fear) * 6 + 0.3) : 0} ${-14 * Math.max(0, bump(t - T.land))})`));
+  stroke(friend, circ(FX, FY, 138, 26), { t: -0.45, d: 0.4, w: 14, smooth: true, amp: 3 });
+  st.out = T.land; // scared face
+  stroke(friend, circ(FX - 46, FY - 22, 27, 12), { t: -0.2, d: 0.15, w: 10, smooth: true, amp: 1, outD: 0.08 });
+  stroke(friend, circ(FX + 46, FY - 22, 27, 12), { t: -0.2, d: 0.15, w: 10, smooth: true, amp: 1, outD: 0.08 });
+  dot(friend, FX - 54, FY - 20, 9, { t: -0.1 });
+  dot(friend, FX + 38, FY - 20, 9, { t: -0.1 });
+  stroke(friend, [[FX - 48, FY + 58], [FX - 24, FY + 44], [FX, FY + 60], [FX + 24, FY + 44], [FX + 48, FY + 58]], { t: -0.1, d: 0.15, w: 12, smooth: true, amp: 1, outD: 0.08 });
+  [[-1, -70], [-1, 0], [1, -70], [1, 0]].forEach(([sx, dy], i) =>
+    stroke(friend, [[FX + sx * 168, FY + dy - 14], [FX + sx * 184, FY + dy + 6], [FX + sx * 168, FY + dy + 26]], { t: T.fear + i * 0.03, d: 0.1, w: 10, amp: 1, outD: 0.08 }));
+  // jagged fear bubble
+  const jag = Array.from({ length: 25 }, (_, i) => {
+    const a = (i / 24) * Math.PI * 2;
+    const r = i % 2 ? 1 : 0.78;
+    return [Math.cos(a) * 190 * r, Math.sin(a) * 128 * r];
+  });
+  const fear = pop(S, FX - 10, FY - 300, { t: T.fear, rot: 4 });
+  $('path', { d: 'M' + jag.map((p) => `${(p[0] + 12).toFixed(0)} ${(p[1] + 14).toFixed(0)}`).join('L') + 'Z', fill: INK }, fear);
+  $('path', { d: 'M' + jag.map((p) => `${p[0].toFixed(0)} ${p[1].toFixed(0)}`).join('L') + 'Z', fill: CARD, stroke: INK, 'stroke-width': 9, 'stroke-linejoin': 'round' }, fear);
+  text(fear, 0, 40, 'AI?!', { 'font-size': 116, fill: RED });
+  st.out = null; // happy face
+  stroke(friend, [[FX - 72, FY - 14], [FX - 46, FY - 40], [FX - 20, FY - 14]], { t: T.land, d: 0.1, w: 12, smooth: true, amp: 1 });
+  stroke(friend, [[FX + 20, FY - 14], [FX + 46, FY - 40], [FX + 72, FY - 14]], { t: T.land, d: 0.1, w: 12, smooth: true, amp: 1 });
+  stroke(friend, [[FX - 60, FY + 36], [FX - 30, FY + 70], [FX + 30, FY + 70], [FX + 60, FY + 36]], { t: T.land + 0.04, d: 0.12, w: 13, smooth: true, amp: 1 });
+  const ok = pop(S, FX - 30, FY - 290, { t: T.land + 0.08, rot: -3 });
+  card(ok, 0, 0, 460, 132, 0, null, { rx: 40, sw: 9, shadow: [12, 14] });
+  text(ok, 0, 26, 'अरे, आसान है!', { 'font-size': 68 });
+
+  // the video card
+  const vid = $('g', {}, S);
+  const vc = card(vid, 0, 0, 350, 580, 0);
+  text(vc, 0, -214, 'ये VIDEO', { 'font-family': 'Mukta', 'font-weight': 700, 'font-size': 44, 'letter-spacing': '0.1em' });
+  $('path', { d: 'M-40 -80 L56 -22 L-40 36Z', fill: RED, stroke: INK, 'stroke-width': 8, 'stroke-linejoin': 'round' }, vc);
+  stroke(vc, [[-120, 130], [-20, 122], [120, 132]], { t: -0.2, d: 0.2, w: 13, smooth: true });
+  stroke(vc, [[-120, 196], [20, 190]], { t: -0.1, d: 0.2, w: 13, smooth: true });
+  U.push((t) => {
+    const f = ei(prog(t, T.fold, 0.2));
+    vid.style.display = f >= 1 ? 'none' : '';
+    const e = eo(clamp((t + 0.3) / 0.34));
+    vid.setAttribute('transform', `translate(${P[0][0]} ${P[0][1] + (1 - e) * 900}) rotate(${-6 + (1 - e) * -30 + f * 50 + Math.sin(t * 2.2) * 1.2}) scale(${(1 - f) * (1 + 0.04 * bump(t - 0.04))})`);
+  });
+
+  // dashed trail, then the plane
+  for (let i = 0; i < 17; i++) {
+    const a = 0.05 + i / 18;
+    const g = $('g', {}, S);
+    stroke(g, [B(a), B(a + 0.028)], { t: -1, w: 11, amp: 1, step: 200 });
+    U.push((t) => { g.style.display = flight(t) > a + 0.06 ? '' : 'none'; });
+  }
+  const plane = $('g', {}, S);
+  $('path', { d: 'M70 0 L-58 -44 L-34 0 L-58 44Z', fill: CARD, stroke: INK, 'stroke-width': 7, 'stroke-linejoin': 'round' }, plane);
+  $('path', { d: 'M70 0 L-34 0 M-34 0 L-46 30', fill: 'none', stroke: INK, 'stroke-width': 6, 'stroke-linecap': 'round' }, plane);
+  U.push((t) => {
+    const k = sp(t - T.fold - 0.06);
+    plane.style.display = k <= 0.002 ? 'none' : '';
+    const e = flight(t);
+    const [x, y] = B(e);
+    const [x2, y2] = B(Math.min(1, e + 0.01));
+    const [x1, y1] = B(Math.max(0, e - 0.01));
+    const ang = e <= 0 ? -70 : (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI;
+    const rest = clamp((t - T.land) * 5);
+    plane.setAttribute('transform', `translate(${x} ${y + Math.sin(t * 3) * 5 * rest}) rotate(${lerp(ang, -12, rest)}) scale(${2.5 * k})`);
+  });
+}
+
+// ---------- 2. comment the next topic; logo, handle and follow ----------
+{
+  const c = card(root, 540, 790, 920, 196, -2, T.box);
+  $('image', { href: '/logo.png', x: -438, y: -78, width: 156, height: 156 }, c);
+  const typed = text(c, -258, 30, '', { 'font-size': 84, 'text-anchor': 'start' });
+  const caret = $('rect', { y: -46, width: 9, height: 90, rx: 4, fill: RED }, c);
+  const segs = [...new Intl.Segmenter('hi', { granularity: 'grapheme' }).segment('API क्या है?')].map((s) => s.segment);
+  U.push((t) => {
+    const n = Math.round(prog(t, T.type.a, T.type.b - T.type.a) * segs.length);
+    typed.textContent = segs.slice(0, n).join('');
+    caret.setAttribute('x', -258 + (n ? typed.getComputedTextLength() : 0) + 10);
+    caret.style.display = t < T.type.b || Math.sin(t * 22) > 0 ? '' : 'none';
+  });
+  const send = $('g', {}, pop(c, 382, 0, { t: T.box + 0.22 }));
+  $('circle', { r: 56, fill: RED, stroke: INK, 'stroke-width': 8 }, send);
+  $('path', { d: 'M-22 0 H22 M4 -20 L24 0 L4 20', fill: 'none', stroke: PAPER, 'stroke-width': 12, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, send);
+  U.push((t) => send.setAttribute('transform', `scale(${1 + 0.3 * bump(t - T.send)})`));
+
+  const k = card(root, 540, 1135, 940, 330, 2, T.lock);
+  const logo = $('g', {}, k);
+  $('image', { href: '/logo.png', x: -132, y: -132, width: 264, height: 264 }, logo);
+  U.push((t) => logo.setAttribute('transform', `translate(-312 ${-18 * Math.max(0, bump(t - T.press - 0.05))}) rotate(${-3 + Math.sin(t * 1.8) * 1.5})`));
+  text(k, -160, 4, HANDLE, { 'font-size': 76, 'text-anchor': 'start' });
+  text(k, -156, 68, 'Instagram  ·  YouTube', { 'font-family': 'Mukta', 'font-weight': 700, 'font-size': 46, 'text-anchor': 'start', opacity: 0.75 });
+
+  const BY = 1436;
+  const btn = $('g', {}, root);
+  $('rect', { x: -268, y: -48, width: 560, height: 124, rx: 62, fill: INK }, btn);
+  const face = $('g', {}, btn);
+  const body = $('rect', { x: -280, y: -62, width: 560, height: 124, rx: 62, stroke: INK, 'stroke-width': 8 }, face);
+  const label = text(face, 0, 26, '', { 'font-size': 76 });
+  stroke(face, [[150, 0], [176, 28], [226, -34]], { t: T.press + 0.1, d: 0.16, w: 18, color: RED, amp: 2 });
+  U.push((t) => {
+    const x = t - T.btn;
+    btn.style.display = x < 0 ? 'none' : '';
+    const e = eo(clamp(x / 0.3));
+    const down = Math.exp(-(((t - T.press - 0.05) / 0.07) ** 2));
+    const done = t >= T.press + 0.06;
+    body.setAttribute('fill', done ? kit.MINT : kit.PINK);
+    label.setAttribute('fill', done ? INK : PAPER);
+    label.setAttribute('x', done ? -40 : 0);
+    label.textContent = done ? 'Following' : 'Follow करो';
+    face.setAttribute('transform', `translate(${12 * down} ${14 * down})`);
+    btn.setAttribute('transform', `translate(540 ${BY + (1 - e) * 400}) rotate(${-2 + (1 - e) * 10}) scale(${1 + 0.06 * bump(x - 0.3) + 0.07 * bump(t - T.press - 0.1) + 0.03 * bump(t - T.recap)})`);
+  });
+  for (let i = 0; i < 10; i++) {
+    const a = (i / 10) * Math.PI * 2 + 0.3;
+    if (Math.sin(a) < -0.45) continue; // keep clear of the card above
+    stroke(root, [[540 + Math.cos(a) * 330, BY + Math.sin(a) * 112], [540 + Math.cos(a) * 376, BY + Math.sin(a) * 152]], { t: T.press + 0.05, d: 0.14, w: 14, color: kit.ORANGE, amp: 2, out: T.press + 0.55 });
+  }
+}
+
+// ---------- captions ----------
+kit.captions(document.getElementById('caps'), [
+  { ...L.send.s[0], hl: 'भेजो' },
+  { ...L.ask.s[0], hl: 'comment' },
+], dur);
+
+// ---------- seek ----------
+const paperEl = document.getElementById('paper');
+window.DUR = dur;
+window.seek = (t) => {
+  const b = prog(t, T.toComment, 0.46);
+  const rot = 3 * Math.sin(Math.PI * b);
+  root.setAttribute('transform', `rotate(${rot} 540 960)`);
+  paperEl.style.transform = `translateY(${-(eio(b) * 62) % 97}px) rotate(${rot * 0.3}deg)`;
+  kit.frame(t);
+};
+window.seek(0);
+window.ready = true;
+if (!new URLSearchParams(location.search).has('render')) preview(stage, window.seek);
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "voice": "Orus",
+  "bpm": 96,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friendly college senior who talks to a junior. English words in Indian English. Warm, confident and clear, one even tone from start to end, brisk pace with only a short breath between sentences. No acting, no exaggeration.",
+  "lines": [
+    { "id": "share-pitch", "sentences": ["कोई दोस्त AI सीखना चाहता है?", "ये video उसे भेज दो, और दोनों साथ सीखो।"] },
+    { "id": "share-cta", "sentences": ["Zero से pro तक, बिना coding।", "Follow करो।"] }
+  ]
+}

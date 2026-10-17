@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Main character sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #F6EEDF; }
+  svg { display: block; }
+  text { font-family: "Anek Devanagari"; }
+</style>
+</head>
+<body>
+<svg id="sheet" viewBox="0 0 2400 1800" width="2400" height="1800"></svg>
+<script type="module">
+// The main character on one page: both outfits, the poses the reels use, every hand shape.
+// Render it with: node sheet.mjs brand/character.html brand/character-sheet.png
+import { hero } from './body.js';
+
+const NS = 'http://www.w3.org/2000/svg';
+const S = (tag, attrs = {}, parent, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+const svg = document.getElementById('sheet');
+const meta = await (await fetch('/brand/face/face.json')).json();
+const FACE = { dir: '/brand/face/', meta };
+await Promise.all(meta.names.map((n) => new Promise((ok) => { const i = new Image(); i.onload = i.onerror = ok; i.src = `${FACE.dir}${n}.png`; })));
+await document.fonts.ready;
+
+S('rect', { width: 2400, height: 1800, fill: '#F6EEDF' }, svg);
+S('text', { x: 60, y: 76, 'font-size': 46, 'font-weight': 800, fill: '#2A1A12' }, svg, 'Main character · body (brand/body.js)');
+S('text', { x: 60, y: 118, 'font-size': 28, 'font-weight': 500, fill: '#6B5A4C' }, svg, 'Top row: hoodie (college, home). Bottom row: shirt and ID card (office). Each pose uses one of the eleven face pictures.');
+
+const POSES = [
+  ['idle', { face: 'neutral' }],
+  ['wave', { face: 'grin', handR: [196, -430], tilt: 4 }],
+  ['point', { face: 'look-right', handR: [222, -296], gripR: 'point' }],
+  ['cheer', { face: 'grin', handL: [-186, -420], handR: [186, -420], gripL: 'fist', gripR: 'fist' }],
+  ['think', { face: 'thinking', handR: [70, -322], gripR: 'fist', tilt: -4 }],
+  ['panic', { face: 'worried', handL: [-150, -560], handR: [150, -560] }],
+  ['thumbs up', { face: 'wink', handR: [176, -318], gripR: 'thumb', tilt: 3 }],
+  ['idle', { face: 'neutral' }],
+  ['explain', { face: 'talk', handL: [-290, -200], handR: [290, -200] }],
+  ['sad', { face: 'sad', tilt: 5, hy: 8 }],
+  ['yawn', { face: 'yawn', handR: [44, -306], tilt: -3 }],
+  ['look left', { face: 'look-left', handL: [-222, -296], gripL: 'point' }],
+  ['hands on hips', { face: 'grin', handL: [-112, -96], handR: [112, -96], gripL: 'fist', gripR: 'fist' }],
+  ['asleep', { face: 'blink', tilt: 8, hy: 10 }],
+];
+POSES.forEach(([label, pose], i) => {
+  const row = i < 7 ? 0 : 1;
+  const x = 190 + (i % 7) * 336;
+  const y = 640 + row * 800;
+  S('ellipse', { cx: x, cy: y + 252, rx: 120, ry: 20, fill: '#2A1A12', opacity: 0.12 }, svg);
+  hero(svg, { face: FACE, skin: meta.cheek, outfit: row ? 'shirt' : 'hoodie' }).pose({ x, y, s: 0.7, ...pose });
+  S('text', { x, y: y + 318, 'text-anchor': 'middle', 'font-size': 30, 'font-weight': 700, fill: '#2A1A12' }, svg, `${label}  ·  ${pose.face}`);
+});
+// the body alone, one file per outfit (written by `node sheet.mjs ... --export brand/body`)
+window.exports = {};
+for (const outfit of ['hoodie', 'shirt']) {
+  const one = document.createElementNS(NS, 'svg');
+  one.setAttribute('xmlns', NS);
+  one.setAttribute('viewBox', '-250 -390 500 760');
+  one.setAttribute('width', 500);
+  one.setAttribute('height', 760);
+  hero(one, { skin: meta.cheek, outfit }).pose({});
+  window.exports[`body-${outfit}.svg`] = one.outerHTML;
+}
+window.ready = true;
+</script>
+</body>
+</html>

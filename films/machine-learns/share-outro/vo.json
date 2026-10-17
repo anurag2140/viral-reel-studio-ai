@@ -1,0 +1,19 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 2.772,
+  "lines": [
+    {
+      "id": "e",
+      "text": "ये उस दोस्त को भेजो जो ChatGPT use करता है।",
+      "sentences": [
+        "ये उस दोस्त को भेजो जो ChatGPT use करता है।"
+      ],
+      "file": "vo/e.wav",
+      "start": 0,
+      "duration": 2.522,
+      "pauses": []
+    }
+  ]
+}

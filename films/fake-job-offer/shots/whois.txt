@@ -1,0 +1,97 @@
+WHOIS
+RDAP
+DNS
+Uptime
+Domain Events
+Monitoring
+Login
+
+WHOIS Domain Lookup
+
+Look up registration details, contacts, and nameservers for any domain name
+
+Enter a domain name...
+Search
+infosys.com
+
+WHOIS Information
+
+IP Address: 35.71.178.178
+
+Whois
+RDAP
+DNS Records
+Certificate
+Uptime
+Diagnostics
+History
+Hide Contact Info
+Refresh Data
+
+The domain infosys.com is registered. You can still try to buy it here.
+
+Contact Information
+Abuse Contact
+Phone
+8887802723
+Email
+domainabuse [at] cscglobal [dot] com
+Registrar Information
+Registrar
+CSC Corporate Domains, Inc.
+WHOIS Server
+whois.corporatedomains.com
+Referral URL
+http://cscdbs.com
+Important Dates
+Created
+July 17, 1992
+Updated
+October 9, 2026
+Expires
+October 13, 2027
+
+WHOIS data last fetched October 10, 2026
+
+Nameservers
+Hostname	IP Address
+udns1.cscdns.net	204.74.66.1
+udns2.cscdns.uk	204.74.111.1
+Domain Status
+clientTransferProhibited https://icann.org/epp#clientTransferProhibited
+serverDeleteProhibited https://icann.org/epp#serverDeleteProhibited
+serverTransferProhibited https://icann.org/epp#serverTransferProhibited
+serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited
+Similar Domains
+infosysscience.foundation
+info-starbucks.com
+infostations.com
+infos-cuisinesvernier.fr
+infostart.buzz
+infosabercore.online
+infos-caf.org
+infoset.ch
+infosec.com.tr
+infosichr.com
+infoservice0.com
+Raw WHOIS Data
+
+Raw WHOIS responses from registry and registrar servers.
+
+Raw Registry WHOIS Data
+About WHOIS
+
+WHOIS is a query and response protocol used for querying databases that store registered users of Internet resources, including domain names and IP addresses.
+
+The protocol provides essential information about domain ownership, administrative contacts, and technical details that are invaluable for domain management and security purposes.
+
+Overview
+Learn
+DNS Report
+API
+FAQ
+Terms
+Privacy
+Contact
+
+© 2026 who.is All rights reserved.

@@ -1,0 +1,301 @@
+Skip to content
+AI / FROM SCRATCH
+67.9K
+FIG_000 · CURRICULUM V1.0 · 2026
+OPEN SOURCE · MIT
+AI ENGINEERING
+FROM SCRATCH
+
+528 lessons. 20 phases. Every algorithm built from raw math before a single framework gets imported.
+
+Maintained by Rohit Ghumare and contributors. Run on your own machine.
+
+Start the Course
+Explore Learning Paths
+Star on GitHub
+67.9k
+Follow @rohitg00
+LEARN IN YOUR TERMINAL
+COPY
+npx skills add rohitg00/ai-engineering-from-scratch
+> Use start-learning to begin the course.
+CLAUDE
+CURSOR
+CODEX
++ ANY SKILL.MD AGENT
+
+Your agent becomes your tutor: placement quiz, personalized path, lessons taught interactively in your terminal.
+
+THOUGHT EXPERIMENT
+001 / ?
+
+Is superintelligence here yet?
+
+Ask the machine
+
+A very unofficial test.
+
+Ask a big question. Get a small answer.
+
+Learn AI from scratch. Stay ahead of what’s next.
+
+Practical lessons, tools worth trying, and the week’s key developments across AI, DevOps, and cloud native. One free email, every week.
+
+Email address
+Subscribe free ↗
+
+Free. Unsubscribe anytime. Finish signup on Substack.
+
+READ BY ENGINEERS AND STUDENTS AT
+Apple
+Google
+Meta
+OpenAI
+NVIDIA
+IIT Bombay
+University of Windsor
+Apple
+Google
+Meta
+OpenAI
+NVIDIA
+IIT Bombay
+University of Windsor
+
+“Obsessed with the AI Engineering from Scratch repo.” - AI engineer at Google
+
+HOW THIS WORKS
+
+Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't explain its loss curve. You hook a function to an agent but can't say what attention does inside the model that's calling it.
+
+This curriculum is the spine. 20 phases, 528 lessons, four languages: Python, TypeScript, Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time PyTorch shows up, you already know what it's doing under the hood.
+
+Each lesson runs the same loop: read the problem, derive the math, write the code, run the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding. Free, open source, and built to run on your own laptop.
+
+CHOOSE THE WORK YOU WANT TO DO
+
+AI engineering is larger than model code. Choose one of four core learning paths, then learn from the same source, labs, tests, and artifacts in the browser or on GitHub.
+
+VIEW LEARNING PATHS
+BROWSE CAREER ROUTES
+AI ENGINEERING
+4 CONNECTED DOMAINS
+BUILDING AND DEPLOYING AI APPLICATIONS
+SOFTWARE ENGINEERING FUNDAMENTALS
+AGENT-ASSISTED ENGINEERING
+PRODUCT JUDGMENT AND DELIVERY
+RECOMMENDED FIRST
+NEW TO AI ENGINEERING
+
+Set up a working environment, run the repository, and learn the lesson workflow before choosing a specialization.
+
+Open lesson
+GitHub source
+CORE DOMAIN
+BUILDING AND DEPLOYING AI APPLICATIONS
+
+Move from prompts, structured outputs, embeddings, and retrieval through evaluation, serving, observability, and safe release.
+
+Start path
+GitHub path
+CORE DOMAIN
+SOFTWARE ENGINEERING FUNDAMENTALS
+
+Build the repository, environment, interface, debugging, verification, security, release, and operational foundations AI systems depend on.
+
+Start path
+GitHub path
+CORE DOMAIN
+AGENT-ASSISTED ENGINEERING
+
+Frame the task, plan from repository evidence, engineer the loop and harness, isolate delegation, verify the result, and preserve feedback.
+
+Start path
+GitHub path
+CORE DOMAIN
+PRODUCT JUDGMENT AND DELIVERY
+
+Turn observed work into outcomes, assumptions, testable slices, executable specifications, measurement plans, staged releases, and owned feedback.
+
+Start path
+GitHub path
+FOCUSED PATH
+MODEL CONTEXT PROTOCOL (MCP)
+
+Build, secure, verify, and operate stateless MCP systems from wire envelopes through release gates.
+
+Start path
+GitHub source
+FOCUSED PATH
+AGENT SKILLS
+
+Build, invoke, route, secure, evaluate, package, and verify portable skills in real agent hosts.
+
+Start path
+GitHub source
+PRACTICE BY EVIDENCE
+CERTIFICATION PREPARATION
+
+Choose a Claude or MCPA certification route, complete practical labs, keep learner-owned artifacts, and use original assessments.
+
+Explore paths
+GitHub tutor
+CURRENT PROGRESS
+FINISHED LESSONS
+bar
+528 / 528
+PHASES
+bar
+20 / 20
+LANGUAGES
+bar
+4
+GLOSSARY TERMS
+bar
+250
+CURRICULUM · 20 PHASES · 528 LESSONS
+Tap a phase to expand its lessons. Each one ships when its math, code, and test are all written.
+0.
+SETUP & TOOLING
+13 / 13
+I.
+MATH FOUNDATIONS
+22 / 22
+II.
+ML FUNDAMENTALS
+21 / 21
+III.
+DEEP LEARNING CORE
+13 / 13
+IV.
+COMPUTER VISION
+28 / 28
+V.
+NLP: FOUNDATIONS TO ADVANCED
+29 / 29
+VI.
+SPEECH & AUDIO
+17 / 17
+VII.
+TRANSFORMERS DEEP DIVE
+16 / 16
+VIII.
+GENERATIVE AI
+15 / 15
+IX.
+REINFORCEMENT LEARNING
+12 / 12
+X.
+LLMS FROM SCRATCH
+24 / 24
+XI.
+LLM ENGINEERING
+17 / 17
+XII.
+MULTIMODAL AI
+25 / 25
+XIII.
+TOOLS & PROTOCOLS
+31 / 31
+XIV.
+AGENT ENGINEERING
+54 / 54
+XV.
+AUTONOMOUS SYSTEMS
+22 / 22
+XVI.
+MULTI-AGENT & SWARMS
+25 / 25
+XVII.
+INFRASTRUCTURE & PRODUCTION
+29 / 29
+XVIII.
+ETHICS, SAFETY & ALIGNMENT
+30 / 30
+XIX.
+CAPSTONE PROJECTS
+85 / 85
+COMPLETE
+IN PROGRESS
+PLANNED
+×
+
+PROGRESS SAVED IN BROWSER ONLY
+RESET PROGRESS
+THE BOOK EDITION · SIX VOLUMES
+The course, compiled. EPUB and PDF built from the same lessons and attached to every GitHub release. The site stays the living edition. Every chapter links back here for the animated figures, quizzes, and code.
+VOL_001
+FOUNDATIONS
+
+Math, Tooling, and Classical Machine Learning · phases 00-02
+
+EPUB
+PDF
+VOL_002
+DEEP LEARNING
+
+Networks, Vision, and Speech · phases 03, 04, 06
+
+EPUB
+PDF
+VOL_003
+LANGUAGE
+
+NLP Foundations and the Transformer · phases 05, 07
+
+EPUB
+PDF
+VOL_004
+LARGE LANGUAGE MODELS
+
+Generation, Reinforcement, Pretraining, and Engineering · phases 08-11
+
+EPUB
+PDF
+VOL_005
+AGENTS
+
+Multimodality, Protocols, Autonomy, and Swarms · phases 12-16
+
+EPUB
+PDF
+VOL_006
+PRODUCTION
+
+Infrastructure, Safety, and Capstones · phases 17-19
+
+EPUB
+PDF
+Links resolve to the newest GitHub release · rebuilt by CI from the lessons on every release · how it's made
+INDEPENDENT CERTIFICATION PREPARATION
+PREPARE BY BUILDING THE REAL SYSTEMS
+
+Claude and Model Context Protocol Associate (MCPA) certification paths taught the same way as the course: step by step, with interactive labs, practical artifacts, and an AI tutor that works from the GitHub repo.
+
+5 TRACKS
+67 CERTIFICATION LESSONS
+505 ORIGINAL PRACTICE QUESTIONS
+
+Not affiliated with, endorsed by, sponsored by, or authorized by Anthropic, the Agentic AI Foundation, or the Linux Foundation. This curriculum does not issue credentials or guarantee a passing result.
+
+Explore certifications
+Learn with the GitHub tutor
+COLOPHON
+
+The entire curriculum is on GitHub. Clone it, fork it, learn at your own pace. No paywall, no account required. Every lesson has runnable code in Python, TypeScript, Rust, or Julia, depending on what fits the concept best.
+
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+COPY
+
+© 2026 · OPEN SOURCE · FREE FOREVER
+
+NEWSLETTER
+GITHUB
+ABOUT
+CERTIFICATIONS
+CATALOG
+BLOGS & GUIDES
+GLOSSARY
+REPORT
+FOR DEVS
+SPONSOR US

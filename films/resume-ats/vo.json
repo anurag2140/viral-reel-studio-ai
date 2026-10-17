@@ -1,0 +1,167 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 36.952,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "तुमने पचास जगह apply किया, और एक भी call नहीं आया। क्योंकि तुम्हारा resume किसी इंसान ने पढ़ा ही नहीं।",
+      "sentences": [
+        "तुमने पचास जगह apply किया, और एक भी call नहीं आया।",
+        "क्योंकि तुम्हारा resume किसी इंसान ने पढ़ा ही नहीं।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 5.253,
+      "pauses": [
+        [
+          1.44,
+          1.64
+        ],
+        [
+          2.74,
+          3.22
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "Companies पहले एक software से resume छाँटती हैं। इसे ATS कहते हैं। और यह software बहुत से resume पढ़ने से पहले ही reject कर देता है।",
+      "sentences": [
+        "Companies पहले एक software से resume छाँटती हैं।",
+        "इसे ATS कहते हैं।",
+        "और यह software बहुत से resume पढ़ने से पहले ही reject कर देता है।"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 5.481,
+      "duration": 7.834,
+      "pauses": [
+        [
+          2.07,
+          2.42
+        ],
+        [
+          3.43,
+          3.75
+        ],
+        [
+          6.1,
+          6.23
+        ]
+      ]
+    },
+    {
+      "id": "turn",
+      "text": "तभी तुम्हें एक free tool मिलता है। Resume Worded।",
+      "sentences": [
+        "तभी तुम्हें एक free tool मिलता है।",
+        "Resume Worded।"
+      ],
+      "file": "vo/turn.wav",
+      "start": 13.558,
+      "duration": 2.333,
+      "pauses": [
+        [
+          1.32,
+          1.48
+        ]
+      ]
+    },
+    {
+      "id": "how",
+      "text": "अपना resume upload करो। तीस second में सौ में से score मिलता है। और हर कमज़ोर line पर बताता है कि गलती क्या है।",
+      "sentences": [
+        "अपना resume upload करो।",
+        "तीस second में सौ में से score मिलता है।",
+        "और हर कमज़ोर line पर बताता है कि गलती क्या है।"
+      ],
+      "file": "vo/how.wav",
+      "start": 16.154,
+      "duration": 5.712,
+      "pauses": [
+        [
+          1.16,
+          1.45
+        ],
+        [
+          3.39,
+          3.64
+        ]
+      ]
+    },
+    {
+      "id": "twist",
+      "text": "लेकिन असली trick अब है। Lines ठीक करो और दोबारा upload करो, जितनी बार चाहो, free में। Score बढ़ता जाता है।",
+      "sentences": [
+        "लेकिन असली trick अब है।",
+        "Lines ठीक करो और दोबारा upload करो, जितनी बार चाहो, free में।",
+        "Score बढ़ता जाता है।"
+      ],
+      "file": "vo/twist.wav",
+      "start": 22.212,
+      "duration": 7.56,
+      "pauses": [
+        [
+          1.36,
+          1.85
+        ],
+        [
+          2.71,
+          3.03
+        ],
+        [
+          3.96,
+          4.4
+        ],
+        [
+          5.6,
+          5.75
+        ],
+        [
+          6.16,
+          6.61
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "अगले हफ़्ते, पहली interview call आ गई।",
+      "sentences": [
+        "अगले हफ़्ते, पहली interview call आ गई।"
+      ],
+      "file": "vo/end.wav",
+      "start": 30,
+      "duration": 1.697,
+      "pauses": []
+    },
+    {
+      "id": "link",
+      "text": "इस tool का link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "इस tool का link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 32.019,
+      "duration": 2.272,
+      "pauses": [
+        [
+          0.96,
+          1.31
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "उस दोस्त को भेजो जो हर दिन job apply कर रहा है।",
+      "sentences": [
+        "उस दोस्त को भेजो जो हर दिन job apply कर रहा है।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 34.615,
+      "duration": 2.236,
+      "pauses": []
+    }
+  ]
+}

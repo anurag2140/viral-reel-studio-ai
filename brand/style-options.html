@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1c1c1c; font-family: Mukta, sans-serif; color: #eee; padding: 36px 36px 30px; width: 1790px; }
+  .sheet { display: grid; grid-template-columns: repeat(4, 390px); gap: 44px; justify-content: center; }
+  .name { font: 700 28px/1.1 Mukta; margin-bottom: 4px; }
+  .sub { font: 500 16px/1.3 Mukta; color: #aaa; height: 44px; margin-bottom: 12px; }
+  .frame { width: 390px; height: 693px; border-radius: 8px; overflow: hidden; background: #000; position: relative; }
+  .frame img { width: 100%; height: 100%; display: block; }
+  .stage { width: 1080px; height: 1920px; transform: scale(0.3611); transform-origin: 0 0; position: relative; }
+  .stage svg { position: absolute; left: 0; top: 0; }
+  .tag { position: absolute; left: 60px; top: 197px; font: 700 34px/1 Mukta; letter-spacing: .16em; border: 3.5px solid; border-radius: 99px; padding: 13px 22px 11px; }
+  .label { position: absolute; left: 176px; top: 197px; height: 66px; display: flex; align-items: center; gap: 14px; white-space: nowrap; }
+  .label b { font: 800 44px/1 "Baloo 2"; padding-top: 6px; }
+  .label span { font: 600 36px/1 Mukta; opacity: .75; }
+  .cap { position: absolute; left: 60px; top: 342px; width: 960px; font: 800 96px/1.14 "Baloo 2"; }
+  .cap span { padding: 0 10px; margin: 0 -2px; display: inline-block; transform: rotate(-1.5deg); }
+  .spec { margin-top: 14px; font: 500 15px/1.5 Mukta; color: #ccc; }
+  .sw { display: flex; gap: 6px; margin-bottom: 8px; }
+  .sw i { width: 40px; height: 26px; border-radius: 4px; border: 1px solid #0008; }
+  .spec b { color: #fff; }
+</style>
+</head>
+<body>
+<div class="sheet" id="sheet">
+  <div>
+    <div class="name">Now · Kagaz</div>
+    <div class="sub">Video #02 as it is: cream paper, ink, one red.</div>
+    <div class="frame"><img src="../films/machine-learns/sheets/at-13.60.png"></div>
+    <div class="spec">
+      <div class="sw"><i style="background:#F4EEE1"></i><i style="background:#1B1A17"></i><i style="background:#E8452C"></i></div>
+      <b>Feel:</b> calm, tidy, like notes.<br>
+      <b>Objects:</b> cards and simple doodles.<br>
+      <b>Motion:</b> things drop in and settle.
+    </div>
+  </div>
+</div>
+<script>
+const TH = {
+  A: {
+    name: 'A · Sticker Pop', sub: 'The notebook stays, but loud stickers and a weird mascot take it over.',
+    bg: '#F4EEE1', lines: true, ink: '#1B1A17', text: '#1B1A17', body: '#3D5AFE', spot: '#7C93FF', tongue: '#FF4F9A', eye: '#FFFFFF', card: '#FFFDF6',
+    hl: '#FF4F9A', hlText: '#FFFDF6', num: '#E8452C', p1: '#FFD23F', p2: '#2EE6A6', p3: '#FF7A1A', shadow: '#1B1A17',
+    spec: ['<b>Feel:</b> your current brand, turned up.', '<b>Colours:</b> five sticker colours on cream.', '<b>Motion:</b> squash, stretch, bounce, wobble.'],
+  },
+  B: {
+    name: 'B · Colour Block', sub: 'Every scene is one loud colour, edge to edge. No paper.',
+    bg: '#6A35FF', lines: false, ink: '#14102B', text: '#FFF8E7', body: '#C8FF3D', spot: '#EAFFA6', tongue: '#FF5CA8', eye: '#FFFFFF', card: '#FFF8E7',
+    hl: '#FFD23F', hlText: '#14102B', num: '#FFD23F', p1: '#FF5CA8', p2: '#FF8A1F', p3: '#35E0FF', shadow: '#14102B',
+    spec: ['<b>Feel:</b> the most punchy; stops the scroll.', '<b>Colours:</b> a new background colour per scene.', '<b>Motion:</b> colour wipes, smears, hard snaps.'],
+  },
+  C: {
+    name: 'C · Riso Zine', sub: 'Three printing inks that overlap, with dot texture. Odd and arty.',
+    bg: '#FBF5E6', lines: false, ink: '#2B3FE0', text: '#2B3FE0', body: '#FF4F8B', spot: '#FFD400', tongue: '#FFD400', eye: '#FBF5E6', card: '#FBF5E6',
+    hl: '#FFD400', hlText: '#2B3FE0', num: '#FF4F8B', p1: '#FFD400', p2: '#FF4F8B', p3: '#2B3FE0', shadow: null, blend: true,
+    spec: ['<b>Feel:</b> the weirdest; like a college zine.', '<b>Colours:</b> pink, blue, yellow only, mixing where they overlap.', '<b>Motion:</b> jittery cut-outs, stop-motion steps.'],
+  },
+};
+
+function cat(th, ear) {
+  return `<path d="M-54 -22 L-46 -84 L-6 -50Z M54 -22 L46 -84 L6 -50Z" fill="${ear}" stroke="${th.ink}" stroke-width="7" stroke-linejoin="round"/>
+    <circle r="58" fill="${th.card}" stroke="${th.ink}" stroke-width="7"/>
+    <circle cx="-22" cy="-8" r="8" fill="${th.ink}"/><circle cx="22" cy="-8" r="8" fill="${th.ink}"/>
+    <path d="M-8 10 L8 10 L0 20Z" fill="${th.tongue}"/>
+    <path d="M-30 16 L-82 6 M-30 25 L-82 32 M30 16 L82 6 M30 25 L82 32 M-13 27 q6.5 9 13 0 q6.5 9 13 0" fill="none" stroke="${th.ink}" stroke-width="5" stroke-linecap="round"/>`;
+}
+function photo(th, k, x, y, rot, s, ear) {
+  const sh = th.shadow ? th.shadow : `url(#dots-${k})`;
+  return `<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})">
+    <rect x="-81" y="-99" width="190" height="230" rx="18" fill="${sh}"/>
+    <rect x="-95" y="-115" width="190" height="230" rx="18" fill="${th.card}" stroke="${th.ink}" stroke-width="9"/>
+    <g transform="translate(0 4)">${cat(th, ear)}</g></g>`;
+}
+function art(th, k) {
+  const sh = th.shadow ? th.shadow : `url(#dots-${k})`;
+  const W = 12;
+  const limb = (d, a = 58, b = 34) => `<path d="${d}" fill="none" stroke="${th.ink}" stroke-width="${a}" stroke-linecap="round"/><path d="${d}" fill="none" stroke="${th.body}" stroke-width="${b}" stroke-linecap="round"/>`;
+  const BODY = 'M250 1520 C170 1180 250 790 540 790 C830 790 910 1180 830 1520 C815 1590 265 1590 250 1520Z';
+  const MOUTH = 'M330 1040 C330 900 750 900 750 1040 C750 1210 330 1210 330 1040Z';
+  const eye = (x, y, r) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${th.eye}" stroke="${th.ink}" stroke-width="${W}"/><circle cx="${x + r * 0.3}" cy="${y - r * 0.08}" r="${r * 0.44}" fill="${th.ink}"/><circle cx="${x + r * 0.42}" cy="${y - r * 0.26}" r="${r * 0.13}" fill="${th.eye}"/>`;
+  let s = `<defs>
+    <pattern id="dots-${k}" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="12" cy="12" r="6.5" fill="${th.ink}"/></pattern>
+    <clipPath id="mouth-${k}"><path d="${MOUTH}"/></clipPath></defs>
+    <rect width="1080" height="1920" fill="${th.bg}"/>`;
+  if (th.lines) for (let y = 94; y < 1920; y += 97) s += `<rect y="${y}" width="1080" height="3" fill="rgba(27,26,23,0.08)"/>`;
+  // background shapes
+  if (k === 'A') {
+    let rays = '';
+    for (let i = 0; i < 14; i++) {
+      const a0 = (i / 14) * Math.PI * 2;
+      const a1 = a0 + Math.PI / 14;
+      rays += `M540 1180 L${540 + Math.cos(a0) * 900} ${1180 + Math.sin(a0) * 900} L${540 + Math.cos(a1) * 900} ${1180 + Math.sin(a1) * 900}Z `;
+    }
+    s += `<clipPath id="rayclip"><rect y="600" width="1080" height="1320"/></clipPath><path d="${rays}" fill="${th.p1}" clip-path="url(#rayclip)"/>
+      <circle cx="1010" cy="1560" r="170" fill="${th.p2}" stroke="${th.ink}" stroke-width="${W}"/>`;
+  }
+  if (k === 'B') {
+    s += `<circle cx="1030" cy="620" r="320" fill="${th.p1}"/><circle cx="20" cy="1740" r="380" fill="${th.p3}"/>
+      <path d="M-40 1720 l140 -90 l140 90 l140 -90 l140 90 l140 -90 l140 90 l140 -90 l140 90" fill="none" stroke="${th.p2}" stroke-width="70" stroke-linejoin="miter"/>`;
+  }
+  if (k === 'C') {
+    s += `<circle cx="800" cy="1210" r="430" fill="${th.p1}"/><circle cx="210" cy="1380" r="290" fill="url(#dots-${k})"/>
+      <rect x="640" y="560" width="380" height="150" fill="url(#dots-${k})" transform="rotate(-8 830 635)"/>`;
+  }
+  // monster and photos
+  s += `<g transform="translate(540 1100) scale(0.92) translate(-540 -1100)">
+    <path d="${BODY}" fill="${sh}" transform="translate(26 30)"/>
+    ${limb('M262 1250 C150 1230 100 1130 150 1050')}${limb('M818 1250 C940 1240 1000 1150 965 1075')}
+    ${limb('M430 830 C400 760 380 720 365 690', 44, 20)}${limb('M540 800 C540 740 540 700 540 660', 44, 20)}${limb('M650 830 C680 770 700 730 712 700', 44, 20)}
+    <g ${th.blend ? 'style="mix-blend-mode:multiply"' : ''}><path d="${BODY}" fill="${th.body}"/></g>
+    <path d="${BODY}" fill="none" stroke="${th.ink}" stroke-width="${W}"/>
+    <circle cx="330" cy="1330" r="34" fill="${th.spot}"/><circle cx="760" cy="1390" r="26" fill="${th.spot}"/><circle cx="745" cy="1250" r="16" fill="${th.spot}"/><circle cx="300" cy="1180" r="18" fill="${th.spot}"/>
+    <ellipse cx="400" cy="1565" rx="86" ry="36" fill="${th.body}" stroke="${th.ink}" stroke-width="${W}"/><ellipse cx="680" cy="1565" rx="86" ry="36" fill="${th.body}" stroke="${th.ink}" stroke-width="${W}"/>
+    <circle cx="150" cy="1050" r="38" fill="${th.body}" stroke="${th.ink}" stroke-width="${W}"/><circle cx="965" cy="1075" r="38" fill="${th.body}" stroke="${th.ink}" stroke-width="${W}"/>
+    <g clip-path="url(#mouth-${k})">
+      <path d="${MOUTH}" fill="${th.ink}"/>
+      <ellipse cx="490" cy="1140" rx="125" ry="72" fill="${th.tongue}"/>
+      ${photo(th, k, 660, 1040, 38, 0.82, th.p3)}
+      ${[0, 1, 2, 3, 4, 5].map((i) => `<path d="M${345 + i * 68} 880 L${379 + i * 68} ${1004 + (i % 2) * 14} L${413 + i * 68} 880Z" fill="${th.eye}" stroke="${th.ink}" stroke-width="7" stroke-linejoin="round"/>`).join('')}
+      <path d="M430 1240 L462 1128 L494 1240Z M586 1240 L618 1136 L650 1240Z" fill="${th.eye}" stroke="${th.ink}" stroke-width="7" stroke-linejoin="round"/>
+    </g>
+    <path d="${MOUTH}" fill="none" stroke="${th.ink}" stroke-width="${W}"/>
+    <rect x="418" y="1288" width="244" height="196" rx="30" fill="${th.card}" stroke="${th.ink}" stroke-width="${W}"/>
+    <path d="M497 1341 L503 1291 L535 1318 L545 1318 L577 1291 L583 1341 L586 1366 L572 1393 L540 1404 L508 1393 L494 1366Z" fill="none" stroke="${th.hl === '#FFD400' ? th.p2 : th.hl}" stroke-width="11" stroke-linejoin="round"/>
+    <text x="540" y="1464" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="50" fill="${th.ink}">pattern</text>
+    ${eye(365, 660, 66)}${eye(540, 610, 84)}${eye(715, 668, 66)}
+    <path d="M1010 600 l60 -50 M1030 680 l70 -34 M930 560 l40 -66" stroke="${th.text}" stroke-width="12" stroke-linecap="round"/>
+    ${photo(th, k, 905, 745, 16, 1.15, th.ink)}
+    ${photo(th, k, 815, 905, 27, 0.98, th.p2)}
+  </g>`;
+  // counter sticker and small shapes
+  let star = '';
+  for (let i = 0; i < 28; i++) {
+    const a = (i / 28) * Math.PI * 2;
+    const r = i % 2 ? 122 : 158;
+    star += `${i ? 'L' : 'M'}${(Math.cos(a) * r).toFixed(1)} ${(Math.sin(a) * r).toFixed(1)} `;
+  }
+  s += `<g transform="translate(205 830) rotate(-12)"><path d="${star}Z" fill="${sh}" transform="translate(12 14)"/><path d="${star}Z" fill="${k === 'A' ? th.p3 : th.p1}" stroke="${th.ink}" stroke-width="10" stroke-linejoin="round"/>
+      <text y="14" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="82" fill="${th.ink}">1000+</text>
+      <text y="60" text-anchor="middle" font-family="Mukta" font-weight="700" font-size="40" fill="${th.ink}">photos</text></g>
+    <path d="M60 1250 q30 -56 60 0 t60 0 t60 0" fill="none" stroke="${k === 'C' ? th.p2 : th.p2}" stroke-width="18" stroke-linecap="round"/>
+    <path d="M940 1300 v70 M905 1335 h70" stroke="${th.p3 === th.ink ? th.p2 : th.p3}" stroke-width="20" stroke-linecap="round"/>
+    <circle cx="120" cy="640" r="20" fill="${th.p2}"/><circle cx="960" cy="1460" r="14" fill="${th.p1}"/>`;
+  return `<svg viewBox="0 0 1080 1920" width="1080" height="1920" xmlns="http://www.w3.org/2000/svg">${s}</svg>`;
+}
+
+const sheet = document.getElementById('sheet');
+for (const [k, th] of Object.entries(TH)) {
+  const col = document.createElement('div');
+  col.innerHTML = `<div class="name">${th.name}</div><div class="sub">${th.sub}</div>
+    <div class="frame"><div class="stage">${art(th, k)}
+      <div class="tag" style="color:${th.text};border-color:${th.text}">AI</div>
+      <div class="label"><b style="color:${th.num}">#02</b><span style="color:${th.text}">Machine कैसे सीखती है?</span></div>
+      <div class="cap" style="color:${th.text}">Machine <span style="background:${th.hl};color:${th.hlText}">हज़ारों photos</span> खाती है।</div>
+    </div></div>
+    <div class="spec"><div class="sw">${[th.bg, th.ink, th.body, th.hl, th.p1, th.p2, th.p3].filter((c, i, a) => a.indexOf(c) === i).map((c) => `<i style="background:${c}"></i>`).join('')}</div>${th.spec.join('<br>')}</div>`;
+  sheet.appendChild(col);
+}
+</script>
+</body>
+</html>

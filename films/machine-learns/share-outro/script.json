@@ -1,0 +1,13 @@
+{
+  "voice": "Orus",
+  "bpm": 96,
+  "style": "Natural conversational Hindi as spoken in India, like a friendly college senior who talks to a junior. English words in Indian English. Warm and clear, one even tone, brisk pace. No acting, no exaggeration.",
+  "lines": [
+    {
+      "id": "e",
+      "sentences": [
+        "ये उस दोस्त को भेजो जो ChatGPT use करता है।"
+      ]
+    }
+  ]
+}

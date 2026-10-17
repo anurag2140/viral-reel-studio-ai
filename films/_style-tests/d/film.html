@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Look D: Illustrated story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #11143A; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// Look D, "Illustrated story": drawn people act the story out, the camera moves through the
+// scenes, and the real web page takes over the whole frame when the tool appears.
+import { S, backOut, bump, camera, captions, cubicOut, eio, expoOut, key, lerp, person, pointer, prog, project, pulse, setup, start, webpage } from '/brand/story.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, S: SEN, T } = build(vo);
+const SHOT = '/films/napkin-ai/shots/home.jpg';
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"'], [SHOT]);
+const U = [];
+const NAVY = '#0F1230';
+const BLUE = '#2F5BFF';
+const defs = S('defs', {}, svg);
+const star = (parent, x, y, r, fill) => S('path', { d: `M0,${-r} Q0,0 ${r},0 Q0,0 0,${r} Q0,0 ${-r},0 Q0,0 0,${-r} Z`, fill, transform: `translate(${x} ${y})` }, parent);
+
+// a scene leaves or arrives in a fast sideways move, blurred along the move
+const blurOf = (id) => S('feGaussianBlur', { stdDeviation: '0 0' }, S('filter', { id, x: '-30%', width: '160%', y: '0', height: '100%' }, defs));
+const whip = (g, fe, id, x, speed) => {
+  g.setAttribute('transform', `translate(${x} 0)`);
+  if (speed > 2) { fe.setAttribute('stdDeviation', `${speed} 0`); g.setAttribute('filter', `url(#${id})`); } else g.removeAttribute('filter');
+};
+
+// ================= scene 1: the classroom, the day after =================
+const s1 = S('g', {}, svg);
+const w1 = S('g', {}, s1);
+const cam1 = camera(w1);
+const fe1 = blurOf('mb1');
+S('rect', { x: -400, y: -400, width: 1880, height: 2800, fill: '#FFE7C4' }, w1);
+S('path', { d: 'M640,-400 L1100,-400 L800,1330 L340,1330 Z', fill: '#FFF4DE', opacity: 0.8 }, w1);
+S('rect', { x: -400, y: 1330, width: 1880, height: 1100, fill: '#F3CC98' }, w1);
+S('rect', { x: -400, y: 1318, width: 1880, height: 18, fill: '#E2B273' }, w1);
+// the projector screen with the finished diagram (a cut from the real page)
+S('rect', { x: 206, y: 322, width: 700, height: 406, fill: '#B98646', opacity: 0.28 }, w1);
+S('rect', { x: 190, y: 296, width: 700, height: 406, fill: '#fff' }, w1);
+S('image', { href: SHOT, width: 824, height: 14000 }, S('svg', { x: 206, y: 312, width: 668, height: 374, viewBox: '176 8970 485 272', preserveAspectRatio: 'xMidYMid slice' }, w1));
+S('rect', { x: 164, y: 256, width: 752, height: 48, rx: 24, fill: '#4B5368' }, w1);
+S('path', { d: 'M540,702 L540,742', stroke: '#4B5368', 'stroke-width': 5 }, w1);
+S('circle', { cx: 540, cy: 752, r: 12, fill: '#4B5368' }, w1);
+const shine = [[148, 344, 30], [934, 326, 38], [946, 664, 26], [140, 640, 34]].map(([x, y, r]) => ({ e: star(w1, 0, 0, r, '#FFB800'), x, y }));
+const teacher = person(w1, { kind: 'teacher', skin: '#D9996E', shade: '#BF8058', hair: '#2A1C1A', top: '#12A594', topShade: '#0E8C7E', accent: '#FFD166' });
+const kid = person(w1);
+// "वाह!" from the teacher, and what she pictures: the whole night
+const wah = S('g', {}, w1);
+S('path', { d: 'M-130,-70 Q-130,-130 -70,-130 L80,-130 Q140,-130 140,-70 L140,-40 Q140,20 80,20 L-10,20 L-56,74 L-52,20 L-70,20 Q-130,20 -130,-40 Z', fill: '#fff', transform: 'scale(-1 1)' }, wah);
+S('text', { x: -5, y: -24, 'text-anchor': 'middle', 'font-size': 92, fill: NAVY }, wah, 'वाह!');
+const think = S('g', {}, w1);
+S('ellipse', { cx: 0, cy: 0, rx: 172, ry: 112, fill: NAVY }, think);
+S('circle', { cx: -118, cy: 122, r: 24, fill: NAVY }, think);
+S('circle', { cx: -160, cy: 172, r: 13, fill: NAVY }, think);
+S('circle', { cx: -62, cy: -4, r: 54, fill: '#FFE7A3' }, think);
+S('circle', { cx: -38, cy: -22, r: 48, fill: NAVY }, think);
+star(think, 46, -46, 18, '#fff');
+star(think, 112, 14, 12, '#fff');
+S('text', { x: 62, y: 60, 'text-anchor': 'middle', 'font-size': 66, fill: '#FFE7A3' }, think, '2 AM');
+U.push((t) => {
+  const c = key(t, [[0, [540, 1010, 1.07, -1.2]], [0.9, [540, 990, 1, 0], expoOut], [T.s2, [540, 980, 1.08, 0.6], (p) => p]]);
+  cam1(...c);
+  const out = prog(t, T.s2 - 0.36, 0.3);
+  s1.style.display = out >= 1 ? 'none' : '';
+  whip(s1, fe1, 'mb1', -1500 * out ** 3, 90 * out * out);
+  shine.forEach((s, i) => s.e.setAttribute('transform', `translate(${s.x} ${s.y}) rotate(${t * 40 + i * 30}) scale(${0.7 + 0.45 * Math.sin(t * 7 + i * 1.7)})`));
+  // the teacher: amazed at the screen, then she turns to the student
+  const turn = eio(prog(t, SEN[0].words[3].t - 0.08, 0.3));
+  const beat = Math.sin(t * 5.2);
+  teacher.pose({
+    x: 312, y: 1630 - 10 * Math.max(0, beat), s: 1.32, lean: lerp(-2, 2, turn), tilt: lerp(-7, 5, turn),
+    look: [lerp(0.55, 1, turn), lerp(-0.95, 0, turn)], eye: 1.32, brow: [-8, 8], browY: -14 - 3 * beat,
+    open: lerp(1, 0.55, turn), smile: 1, mw: 24,
+    handL: [-104, -352 - 6 * beat], handR: [lerp(104, 212, backOut(turn)), lerp(-352, -236, turn) - 6 * beat],
+  });
+  // the student: a hand behind the head, then a wink on "पूरी रात"
+  const wink = pulse(t, T.night + 0.2, 0.16);
+  const hop = Math.max(0, bump(t - T.night));
+  kid.pose({
+    x: 792, y: 1630 - 40 * hop, s: 1.3, lean: 2, tilt: 4 + 6 * wink, look: [-1, -0.15], eye: 1, eyeR: 1 - wink,
+    brow: [-7, 7 + 8 * wink], browY: -10 - 6 * wink, smile: 1.1, open: 0.25 + 0.35 * wink, mw: 30,
+    handL: [-128, -70], handR: [92 + 6 * Math.sin(t * 9), -452 + 10 * Math.sin(t * 9)], backR: true,
+  });
+  wah.setAttribute('transform', `translate(172 892) rotate(${-6 + 2 * Math.sin(t * 4)}) scale(${1 + 0.05 * Math.sin(t * 6)})`);
+  const th = prog(t, T.night - 0.3, 0.3);
+  think.style.display = th <= 0 ? 'none' : '';
+  think.setAttribute('transform', `translate(668 808) scale(${0.92 * backOut(th)}) rotate(${3 * Math.sin(t * 3)})`);
+});
+
+// ================= scene 2: the night before, over the student's shoulder =================
+const s2 = S('g', {}, svg);
+const w2 = S('g', {}, s2);
+const cam2 = camera(w2);
+const fe2 = blurOf('mb2');
+const SCREEN = [176, 586, 728, 500];
+S('rect', { x: -500, y: -500, width: 2080, height: 3000, fill: '#1A1F4B' }, w2);
+const win = S('g', { transform: 'translate(64 300)' }, w2);
+S('rect', { width: 380, height: 300, rx: 16, fill: '#343E80' }, win);
+S('rect', { x: 16, y: 16, width: 348, height: 268, rx: 6, fill: '#0A0F33' }, win);
+S('circle', { cx: 270, cy: 104, r: 52, fill: '#FFE7A3' }, win);
+S('circle', { cx: 294, cy: 86, r: 46, fill: '#0A0F33' }, win);
+const stars = [[64, 70, 9], [128, 196, 7], [176, 58, 6], [318, 226, 8], [84, 246, 6]].map(([x, y, r]) => ({ e: star(win, 0, 0, r, '#fff'), x, y }));
+S('rect', { x: 182, y: 16, width: 16, height: 268, fill: '#343E80' }, win);
+S('rect', { x: 16, y: 142, width: 348, height: 16, fill: '#343E80' }, win);
+const clock = S('g', { transform: 'translate(846 446)' }, w2);
+S('circle', { r: 108, fill: '#343E80' }, clock);
+S('circle', { r: 90, fill: '#F3EFE6' }, clock);
+for (let i = 0; i < 12; i++) S('path', { d: 'M0,-80 L0,-68', stroke: '#1A1F4B', 'stroke-width': i % 3 ? 4 : 8, 'stroke-linecap': 'round', transform: `rotate(${i * 30})` }, clock);
+S('path', { d: 'M0,0 L0,-44', stroke: '#1A1F4B', 'stroke-width': 11, 'stroke-linecap': 'round', transform: 'rotate(60)' }, clock);
+S('path', { d: 'M0,0 L0,-66', stroke: '#1A1F4B', 'stroke-width': 8, 'stroke-linecap': 'round' }, clock);
+const second = S('path', { d: 'M0,14 L0,-72', stroke: '#FF4D6D', 'stroke-width': 4, 'stroke-linecap': 'round' }, clock);
+S('circle', { r: 9, fill: '#1A1F4B' }, clock);
+const glowG = S('radialGradient', { id: 'glow' }, defs);
+S('stop', { offset: 0, 'stop-color': '#8EA6FF', 'stop-opacity': 0.62 }, glowG);
+S('stop', { offset: 1, 'stop-color': '#8EA6FF', 'stop-opacity': 0 }, glowG);
+const glow = S('ellipse', { cx: 540, cy: 860, rx: 760, ry: 660, fill: 'url(#glow)' }, w2);
+const coneG = S('linearGradient', { id: 'cone', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+S('stop', { offset: 0, 'stop-color': '#FFC94A', 'stop-opacity': 0.5 }, coneG);
+S('stop', { offset: 1, 'stop-color': '#FFC94A', 'stop-opacity': 0 }, coneG);
+S('path', { d: 'M1000,690 L1130,700 L1260,1190 L820,1190 Z', fill: 'url(#cone)' }, w2);
+S('path', { d: 'M1100,580 L1150,250', stroke: '#8088B8', 'stroke-width': 16, 'stroke-linecap': 'round' }, w2);
+S('path', { d: 'M968,610 L1110,560 L1150,706 L996,700 Z', fill: '#FFC94A' }, w2);
+S('rect', { x: -500, y: 1180, width: 2080, height: 1500, fill: '#2A2150' }, w2);
+S('rect', { x: -500, y: 1180, width: 2080, height: 16, fill: '#43387F' }, w2);
+S('path', { d: 'M118,1120 q44,26 0,58', fill: 'none', stroke: '#FF6B4A', 'stroke-width': 16 }, w2);
+S('rect', { x: 26, y: 1084, width: 98, height: 108, rx: 16, fill: '#FF6B4A' }, w2);
+const steam = [52, 92].map((x) => S('path', { d: `M${x},1064 q-14,-22 0,-44 q14,-22 0,-44`, fill: 'none', stroke: '#fff', 'stroke-width': 7, 'stroke-linecap': 'round', opacity: 0.4 }, w2));
+// the laptop; its screen first shows a drawn editor, then the real page takes over
+S('rect', { x: 150, y: 560, width: 780, height: 566, rx: 30, fill: '#0B0E24' }, w2);
+S('rect', { x: SCREEN[0], y: SCREEN[1], width: SCREEN[2], height: SCREEN[3], rx: 8 }, S('clipPath', { id: 'scr' }, defs));
+const ed = S('g', { transform: `translate(${SCREEN[0]} ${SCREEN[1]})` }, S('g', { 'clip-path': 'url(#scr)' }, w2));
+S('rect', { width: 728, height: 500, fill: '#fff' }, ed);
+S('rect', { width: 728, height: 48, fill: '#ECEEF4' }, ed);
+['#FF5F57', '#FEBC2E', '#28C840'].forEach((f, i) => S('circle', { cx: 28 + i * 26, cy: 24, r: 8, fill: f }, ed));
+const bars = [560, 630, 480, 600, 390].map((w, i) => S('rect', { x: 40, y: 88 + i * 52, width: w, height: 26, rx: 13, fill: i ? '#D8DCE6' : '#AEB4C4' }, ed));
+const NODES = [['Notes', '#1A1F4B', 254, 80], ['Idea', '#FFB020', 40, 232], ['Plan', '#19C37D', 254, 232], ['Result', BLUE, 468, 232]];
+const nodes = NODES.map(([label, fill, x, y]) => {
+  const n = S('g', {}, ed);
+  S('rect', { x: -110, y: -42, width: 220, height: 84, rx: 22, fill }, n);
+  S('text', { y: 15, 'text-anchor': 'middle', 'font-size': 44, fill: '#fff' }, n, label);
+  return { n, x: x + 110, y: y + 42 };
+});
+const links = [['M364,164 L364,196', 0], ['M150,196 L578,196', 1], ['M150,196 L150,232', 2], ['M364,196 L364,232', 2], ['M578,196 L578,232', 2]]
+  .map(([d, i]) => ({ e: S('path', { d, fill: 'none', stroke: '#1A1F4B', 'stroke-width': 8, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1 }, ed), i }));
+const btn = S('g', {}, ed);
+S('rect', { x: -150, y: -46, width: 300, height: 92, rx: 24, fill: BLUE }, btn);
+S('text', { y: 16, 'text-anchor': 'middle', 'font-size': 48, fill: '#fff' }, btn, '✦ Generate');
+const flash = S('rect', { width: 728, height: 500, fill: '#fff' }, ed);
+S('path', { d: 'M96,1126 L984,1126 L1054,1218 L26,1218 Z', fill: '#B4BCD6' }, w2);
+for (let r = 0; r < 3; r++) for (let k = 0; k < 11; k++) S('rect', { x: 150 - r * 20 + k * (71.5 + r * 3.6), y: 1140 + r * 24, width: 56 + r * 3, height: 15, rx: 5, fill: '#8D97B9' }, w2);
+const ring = S('circle', { cx: 366, cy: 1004, r: 40, fill: 'none', stroke: BLUE }, w2);
+const cur = S('path', { d: 'M0 0 L0 110 L30 82 L52 132 L74 122 L52 74 L92 74Z', fill: NAVY, stroke: '#fff', 'stroke-width': 9, 'stroke-linejoin': 'round' }, w2);
+// the student from behind, close to the camera
+const back = S('g', {}, w2);
+S('path', { d: 'M-120,2000 Q-90,1730 110,1700 L430,1700 Q630,1730 660,2000 Z', fill: '#FF6B4A' }, back);
+S('path', { d: 'M96,1716 Q270,1820 444,1716 Q270,1650 96,1716 Z', fill: '#E0502F' }, back);
+S('rect', { x: 206, y: 1620, width: 128, height: 96, fill: '#C98B60' }, back);
+S('ellipse', { cx: 64, cy: 1530, rx: 28, ry: 42, fill: '#E3A678' }, back);
+S('ellipse', { cx: 476, cy: 1530, rx: 28, ry: 42, fill: '#E3A678' }, back);
+S('ellipse', { cx: 270, cy: 1500, rx: 204, ry: 218, fill: '#1F1A24' }, back);
+S('path', { d: 'M150,1310 C190,1240 300,1230 330,1300 Z', fill: '#1F1A24' }, back);
+S('path', { d: 'M318,1296 Q470,1330 470,1470', fill: 'none', stroke: '#9DB2FF', 'stroke-width': 12, 'stroke-linecap': 'round', opacity: 0.6 }, back);
+
+const page = webpage(stage, SHOT);
+const mark = S('ellipse', { cx: 350, cy: 160, rx: 330, ry: 140, fill: 'none', stroke: '#FF4D6D', 'stroke-width': 13, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: 'rotate(-3 350 160)' },
+  (() => { const d = document.createElement('div'); d.style.cssText = 'position:absolute;left:176px;top:250px;width:700px;height:320px'; page.sheet.appendChild(d); return S('svg', { width: 700, height: 320, viewBox: '0 0 700 320', style: 'overflow:visible' }, d); })());
+const tip = pointer(stage, NAVY, '#fff', 130);
+
+U.push((t) => {
+  const into = prog(t, T.s2 - 0.2, 0.42);
+  s2.style.display = into <= 0 ? 'none' : '';
+  whip(s2, fe2, 'mb2', 1500 * (1 - expoOut(into)), into < 1 ? 80 * (1 - into) ** 2 : 0);
+  const grow = eio(prog(t, T.s3 + 0.08, 0.55));
+  const c = key(t, [[T.s2 - 0.2, [540, 990, 1]], [T.s3, [540, 880, 1.22], cubicOut]]);
+  const z = c[2] + grow * 0.5;
+  cam2(c[0], lerp(c[1], 836, grow), z);
+  stars.forEach((s, i) => s.e.setAttribute('transform', `translate(${s.x} ${s.y}) scale(${0.7 + 0.4 * Math.sin(t * 5 + i * 2)})`));
+  second.setAttribute('transform', `rotate(${t * 40})`);
+  steam.forEach((s, i) => s.setAttribute('transform', `translate(${6 * Math.sin(t * 3 + i * 2)} ${-8 * ((t * 0.9 + i * 0.5) % 1)})`));
+  // one click: the lines of text turn into a diagram
+  const q = t - T.click;
+  const press = pulse(q, 0.02, 0.07);
+  btn.setAttribute('transform', `translate(190 418) scale(${1 - 0.1 * press})`);
+  bars.forEach((b, i) => b.setAttribute('transform', `translate(40 0) scale(${1 - expoOut(prog(q, 0.05 + i * 0.03, 0.22))} 1) translate(-40 0)`));
+  nodes.forEach((n, i) => {
+    const p = prog(q, i ? 0.2 + i * 0.05 : 0.08, 0.26);
+    n.n.style.display = p <= 0 ? 'none' : '';
+    n.n.setAttribute('transform', `translate(${n.x} ${n.y}) scale(${lerp(0.3, 1, backOut(p))})`);
+  });
+  links.forEach((l) => l.e.setAttribute('stroke-dashoffset', 1 - expoOut(prog(q, 0.13 + l.i * 0.05, 0.2))));
+  flash.setAttribute('opacity', 0.9 * Math.exp(-Math.max(0, q) * 9) * (q > 0 ? 1 : 0));
+  glow.setAttribute('opacity', 0.8 + 0.5 * Math.exp(-Math.max(0, q) * 5) * (q > 0 ? 1 : 0) + 0.04 * Math.sin(t * 7));
+  const a = eio(prog(t, T.s2 + 0.1, T.click - T.s2 - 0.18));
+  cur.setAttribute('transform', `translate(${lerp(1020, 372, a)} ${lerp(1380, 1010, a)}) scale(${0.72 - 0.1 * press})`);
+  const rp = prog(q, 0.03, 0.5);
+  ring.style.display = rp > 0 && rp < 1 ? '' : 'none';
+  ring.setAttribute('r', lerp(20, 150, cubicOut(rp)));
+  ring.setAttribute('stroke-width', lerp(14, 1, rp));
+  // the student sits up when the diagram appears
+  back.setAttribute('transform', `translate(${5 * Math.sin(t * 1.7)} ${-46 * Math.max(0, bump(q - 0.12)) + 6 * Math.sin(t * 2.3)})`);
+
+  // the real page comes up inside the laptop, then the screen grows into the whole frame
+  const up = expoOut(prog(t, T.s3 - 0.14, 0.3));
+  if (t < T.s3 - 0.14) { page.hide(); tip.style.visibility = 'hidden'; mark.style.display = 'none'; return; }
+  const r0 = project(c[0], lerp(c[1], 836, grow), z, SCREEN);
+  const rect = r0.map((v, i) => lerp(v, [0, 0, 1080, 1920][i], grow));
+  const zoom = key(t, [[T.s3 + 0.63, 1], [dur, 1.2]]);
+  page.set({ rect, radius: 8 * z * (1 - grow), slide: (1 - up) * (rect[3] / (rect[2] / 1080)), zoom, fx: 300, fy: 420 });
+  const m = eio(prog(t, T.name + 0.12, 0.5));
+  mark.style.display = m > 0 ? '' : 'none';
+  mark.setAttribute('stroke-dashoffset', 1 - m);
+  const fly = cubicOut(prog(t, T.name - 0.25, 0.5));
+  tip.style.visibility = fly > 0 ? 'visible' : 'hidden';
+  tip.style.transform = `translate(${lerp(1160, 870, fly) + 6 * Math.sin(t * 3)}px,${lerp(1500, 600, fly) + 5 * Math.sin(t * 2.2)}px)`;
+});
+
+const clean = (words) => words.map((x) => ({ ...x, word: x.word.replace(/[।.,]+$/, '') }));
+U.push(captions(stage, [
+  { words: clean(SEN[0].words), a: 0, b: T.s2 - 0.14 },
+  { words: clean(SEN[1].words), a: T.s2, b: T.s3 - 0.08 },
+  { words: clean(SEN[2].words), a: T.s3, b: dur + 1 },
+], { size: 80 }));
+stage.appendChild(tip);
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+{
+  "captured": "2026-10-12",
+  "shots": [
+    {
+      "name": "home",
+      "url": "https://www.napkin.ai/",
+      "file": "shots/home.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "Napkin AI - Turn Text into AI Diagrams and Visuals",
+      "finalUrl": "https://www.napkin.ai/",
+      "w": 824,
+      "h": 14000,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Get visuals from your text",
+          "x": 172,
+          "y": 234,
+          "w": 441,
+          "h": 160
+        },
+        {
+          "tag": "h2",
+          "text": "Napkin turns your text into visuals so sharing your ideas is quick and effective.",
+          "x": 172,
+          "y": 434,
+          "w": 480,
+          "h": 150
+        },
+        {
+          "tag": "h2",
+          "text": "How it works",
+          "x": 0,
+          "y": 1646,
+          "w": 824,
+          "h": 90
+        },
+        {
+          "tag": "h3",
+          "text": "Start by Importing or Pasting your text",
+          "x": 116,
+          "y": 1896,
+          "w": 628,
+          "h": 208
+        },
+        {
+          "tag": "h3",
+          "text": "Click to generate visuals",
+          "x": 116,
+          "y": 3039,
+          "w": 626,
+          "h": 136
+        },
+        {
+          "tag": "h3",
+          "text": "Polish it up, make it yours",
+          "x": 116,
+          "y": 4236,
+          "w": 410,
+          "h": 136
+        },
+        {
+          "tag": "h3",
+          "text": "Take it anywhere",
+          "x": 116,
+          "y": 6684,
+          "w": 592,
+          "h": 72
+        },
+        {
+          "tag": "h2",
+          "text": "Use cases",
+          "x": 120,
+          "y": 8181,
+          "w": 584,
+          "h": 90
+        },
+        {
+          "tag": "h3",
+          "text": "Presentations",
+          "x": 120,
+          "y": 8667,
+          "w": 584,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Blog",
+          "x": 120,
+          "y": 9380,
+          "w": 584,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Social Media",
+          "x": 120,
+          "y": 10146,
+          "w": 584,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Docs",
+          "x": 120,
+          "y": 10809,
+          "w": 584,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "Gallery",
+          "x": 280,
+          "y": 11780,
+          "w": 263,
+          "h": 124
+        },
+        {
+          "tag": "h2",
+          "text": "Don’t take our word for it.",
+          "x": 0,
+          "y": 13840,
+          "w": 824,
+          "h": 180
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "pricing",
+      "url": "https://www.napkin.ai/pricing",
+      "file": "shots/pricing.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "Pricing - Napkin AI",
+      "finalUrl": "https://www.napkin.ai/pricing/",
+      "w": 824,
+      "h": 11302,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Create Compelling Visuals 10x Faster",
+          "x": 92,
+          "y": 188,
+          "w": 640,
+          "h": 160
+        },
+        {
+          "tag": "h2",
+          "text": "FREE",
+          "x": 120,
+          "y": 598,
+          "w": 101,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "PLUS",
+          "x": 120,
+          "y": 1770,
+          "w": 153,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "PRO",
+          "x": 120,
+          "y": 2922,
+          "w": 143,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "Frequently asked questions",
+          "x": 60,
+          "y": 4758,
+          "w": 704,
+          "h": 160
+        },
+        {
+          "tag": "h3",
+          "text": "What are AI credits?",
+          "x": 108,
+          "y": 5298,
+          "w": 608,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Is there a discount on annual billing?",
+          "x": 108,
+          "y": 5502,
+          "w": 608,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "What payment methods are accepted?",
+          "x": 108,
+          "y": 5754,
+          "w": 608,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "Can I add my company branding to Napkin?",
+          "x": 108,
+          "y": 6006,
+          "w": 608,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "How does Napkin use my data?",
+          "x": 108,
+          "y": 6258,
+          "w": 608,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "How do I get charged when adding a member to my teamspace?",
+          "x": 108,
+          "y": 6462,
+          "w": 608,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "Can I change my plan or cancel at any time?",
+          "x": 108,
+          "y": 6714,
+          "w": 608,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "What happens when I change plans?",
+          "x": 108,
+          "y": 6966,
+          "w": 608,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "What happens to my content if I cancel my subscription?",
+          "x": 108,
+          "y": 7218,
+          "w": 608,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "Can I change my payment method?",
+          "x": 108,
+          "y": 7470,
+          "w": 608,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "What happens if my payment fails? Like if my credit card expires?",
+          "x": 108,
+          "y": 7722,
+          "w": 608,
+          "h": 144
+        },
+        {
+          "tag": "h3",
+          "text": "What happens if I exhaust my AI credits?",
+          "x": 108,
+          "y": 8022,
+          "w": 608,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "Do you offer discounts to Non-Profits or Students?",
+          "x": 108,
+          "y": 8274,
+          "w": 608,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "How can I connect with the sales team?",
+          "x": 108,
+          "y": 8526,
+          "w": 608,
+          "h": 96
+        },
+        {
+          "tag": "h2",
+          "text": "Try Napkin!",
+          "x": 82,
+          "y": 9250,
+          "w": 659,
+          "h": 80
+        },
+        {
+          "tag": "h3",
+          "text": "Product",
+          "x": 100,
+          "y": 10167,
+          "w": 222,
+          "h": 46
+        },
+        {
+          "tag": "h3",
+          "text": "Company",
+          "x": 502,
+          "y": 10167,
+          "w": 222,
+          "h": 46
+        },
+        {
+          "tag": "h3",
+          "text": "Privacy",
+          "x": 100,
+          "y": 10565,
+          "w": 624,
+          "h": 46
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

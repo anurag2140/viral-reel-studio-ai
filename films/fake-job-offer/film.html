@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#13 पचास applications के बाद offer आया</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #FFE3BF; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// Three places: my desk by day (the offer letter hangs on a fishing hook: the bait), my phone
+// up close (the fake HR's chat, and later a drawn domain lookup that shows the site is six days
+// old), and who.is's own pages, which fill the frame while the voice talks about the check.
+import { S, backOut, bump, camera, captionsCompact, cubicOut, eio, expoOut, key, lerp, pointer, prog, pulse, setup, start, webpage } from '/brand/story.js';
+import { CORAL, INK, NAVY, desk, followCard, lights, linkLine, paperPlane, show, star, whip, whipIn, whipOut } from '/brand/scenes.js';
+import { OUTFITS } from '/brand/body.js';
+import { cast } from '/brand/cast.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const TOP = 'shots/top.jpg';     // who.is/whois/infosys.com, 0 to 800 css px at 4x
+const DATES = 'shots/dates.jpg'; // the same page, 1440 to 1760 css px at 4x (Important Dates)
+const FACE = { dir: '/brand/face/', meta: await (await fetch('/brand/face/face.json')).json() };
+const ME = { face: FACE, skin: FACE.meta.cheek, outfit: 'hoodie' };
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"'], [TOP, DATES, '/logo.png', ...FACE.meta.names.map((n) => `${FACE.dir}${n}.png`)]);
+const pop = (t, at) => 1 - 0.07 * at.reduce((v, a) => v + Math.max(0, bump(t - a)), 0);
+const mix = (a, b, p) => a.map((v, i) => lerp(v, b[i], p));
+const place = (g, x, y, s = 1, r = 0) => g.setAttribute('transform', `translate(${x} ${y}) rotate(${r}) scale(${s})`);
+const U = [];
+const L = lights(svg);
+const YEL = '#FFD23F';
+const GREEN = '#19C37D';
+const GREY = '#5B6070';
+const line = { stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+const chip = (parent, text, w, size, fill = YEL, ink = NAVY) => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -size * 0.75, width: w, height: size * 1.5, rx: size * 0.36, fill, ...line }, g);
+  S('text', { y: size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, text);
+  return g;
+};
+const cross = (parent, r, w = 16) => S('path', { d: `M${-r},${-r} L${r},${r} M${r},${-r} L${-r},${r}`, stroke: CORAL, 'stroke-width': w, 'stroke-linecap': 'round', fill: 'none' }, parent);
+// the fake HR's profile picture: a smart young man in a suit; mask(p) puts a robber's mask on
+let avN = 0;
+const avatar = (parent, r) => {
+  const g = S('g', {}, parent);
+  const id = `av${++avN}`;
+  S('circle', { r, fill: '#C9D4F5', ...line, 'stroke-width': 4 }, g);
+  const k = S('g', { 'clip-path': `url(#${id})` }, g);
+  S('circle', { r: r - 2 }, S('clipPath', { id }, L.defs));
+  S('path', { d: `M${-r},${r} Q${-r * 0.9},${r * 0.35} 0,${r * 0.3} Q${r * 0.9},${r * 0.35} ${r},${r} Z`, fill: NAVY }, k);
+  S('path', { d: `M${-r * 0.2},${r * 0.3} L0,${r * 0.62} L${r * 0.2},${r * 0.3} Z`, fill: '#fff' }, k);
+  S('path', { d: `M0,${r * 0.36} L${-r * 0.07},${r * 0.75} L0,${r * 0.85} L${r * 0.07},${r * 0.75} Z`, fill: CORAL }, k);
+  S('ellipse', { cy: -r * 0.12, rx: r * 0.36, ry: r * 0.42, fill: '#D9A27A' }, k);
+  S('path', { d: `M${-r * 0.38},${-r * 0.2} Q${-r * 0.4},${-r * 0.66} 0,${-r * 0.62} Q${r * 0.42},${-r * 0.64} ${r * 0.38},${-r * 0.2} Q${r * 0.2},${-r * 0.44} ${-r * 0.38},${-r * 0.2} Z`, fill: '#231616' }, k);
+  const eyes = S('g', {}, k);
+  for (const x of [-0.14, 0.14]) S('circle', { cx: r * x, cy: -r * 0.12, r: r * 0.045, fill: '#231616' }, eyes);
+  S('path', { d: `M${-r * 0.14},${r * 0.06} Q0,${r * 0.18} ${r * 0.14},${r * 0.06}`, fill: 'none', stroke: '#231616', 'stroke-width': r * 0.05, 'stroke-linecap': 'round' }, k);
+  const mk = S('g', {}, k);
+  S('rect', { x: -r * 0.46, y: -r * 0.24, width: r * 0.92, height: r * 0.24, rx: r * 0.1, fill: '#14151A' }, mk);
+  for (const x of [-0.14, 0.14]) S('ellipse', { cx: r * x, cy: -r * 0.12, rx: r * 0.07, ry: r * 0.05, fill: '#fff' }, mk);
+  const off = S('rect', { x: -r, y: -r, width: 2 * r, height: 2 * r, fill: '#8D97B9', opacity: 0.75 }, k);
+  return {
+    g,
+    set(m, grey = 0) {
+      show(mk, m > 0);
+      mk.setAttribute('transform', `translate(0 ${-r * 1.2 * (1 - m)})`);
+      show(off, grey > 0);
+      off.setAttribute('opacity', 0.75 * grey);
+    },
+  };
+};
+// the offer letter; the origin is the hook it hangs from
+const letterArt = (g) => {
+  S('rect', { x: -150, y: 30, width: 300, height: 410, rx: 10, fill: '#fff', ...line }, g);
+  S('path', { d: 'M-147,90 L-147,40 Q-147,33 -140,33 L140,33 Q147,33 147,40 L147,90 Z', fill: NAVY }, g);
+  S('text', { y: 76, 'text-anchor': 'middle', 'font-size': 32, fill: '#fff' }, g, 'NextGen Tech');
+  S('text', { y: 146, 'text-anchor': 'middle', 'font-size': 36, fill: NAVY, 'letter-spacing': 2 }, g, 'OFFER LETTER');
+  for (let k = 0; k < 4; k++) S('rect', { x: -120, y: 176 + k * 30, width: [240, 200, 226, 150][k], height: 12, rx: 6, fill: '#C9CEDA' }, g);
+  S('path', { d: 'M-118,348 q20,-34 34,-6 q12,24 28,-10 q10,-20 26,4', fill: 'none', stroke: '#2F5BFF', 'stroke-width': 5, 'stroke-linecap': 'round' }, g);
+  S('circle', { cx: 92, cy: 330, r: 38, fill: YEL, ...line, 'stroke-width': 4 }, g);
+  star(g, 92, 330, 22, '#fff');
+  S('text', { y: 414, 'text-anchor': 'middle', 'font-size': 24, fill: GREY, 'font-weight': 700 }, g, 'www.nextgen-careers.in');
+};
+const letter = (parent) => {
+  const g = S('g', {}, parent);
+  const halves = [];
+  for (const [i, x0] of [[0, -160], [1, 0]]) {
+    const id = `lh${i}`;
+    S('path', { d: i === 0 ? 'M-160,0 L0,0 L-14,120 L12,230 L-10,330 L6,460 L-160,460 Z' : 'M0,0 L160,0 L160,460 L6,460 L-10,330 L12,230 L-14,120 Z' }, S('clipPath', { id }, L.defs));
+    const h = S('g', {}, g);
+    letterArt(S('g', { 'clip-path': `url(#${id})` }, h));
+    halves.push(h);
+  }
+  const hook = S('path', { d: 'M0,-14 L0,26 q0,24 -20,24 q-16,0 -16,-16', fill: 'none', stroke: '#6B7699', 'stroke-width': 7, 'stroke-linecap': 'round' }, g);
+  return { g, halves, hook };
+};
+const loopRing = (parent, cx, cy, rx, ry, rot = -3, w = 10) => {
+  const e = S('ellipse', { cx, cy, rx, ry, fill: 'none', stroke: CORAL, 'stroke-width': w, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: `rotate(${rot} ${cx} ${cy})` }, parent);
+  return (p) => { show(e, p > 0); e.setAttribute('stroke-dashoffset', 1 - p); };
+};
+
+// ================= my desk, by day =================
+const D = desk(svg, L, ME, { day: true });
+const ana = cast(D.behind, 'ananya');
+const anaPhone = S('g', {}, D.behind);
+S('rect', { x: -30, y: -50, width: 60, height: 100, rx: 12, fill: NAVY, ...line, 'stroke-width': 5 }, anaPhone);
+S('rect', { x: -23, y: -40, width: 46, height: 80, rx: 6, fill: '#BFD0FF' }, anaPhone);
+const fishLine = S('path', { d: '', stroke: '#6B7699', 'stroke-width': 4, fill: 'none' }, D.props);
+const LT = letter(D.props);
+const ringSite = loopRing(LT.g, 0, 406, 150, 26, -1, 7);
+const fee = chip(D.props, 'Training fee ₹5,000', 520, 52, CORAL, '#fff');
+const offerTag = chip(D.props, 'Offer!', 220, 50, GREEN, '#fff');
+// my phone, in my hand; its screen shows the Pay button
+const myPhone = S('g', {}, D.props);
+S('rect', { x: -40, y: -68, width: 80, height: 136, rx: 15, fill: NAVY, ...line }, myPhone);
+S('rect', { x: -32, y: -56, width: 64, height: 112, rx: 7, fill: '#FFF4E3' }, myPhone);
+S('text', { y: -14, 'text-anchor': 'middle', 'font-size': 19, fill: CORAL }, myPhone, '₹5,000');
+const payBtn = S('g', {}, myPhone);
+S('rect', { x: -26, y: 4, width: 52, height: 30, rx: 10, fill: GREEN }, payBtn);
+S('text', { y: 26, 'text-anchor': 'middle', 'font-size': 17, fill: '#fff' }, payBtn, 'Pay');
+const payX = cross(myPhone, 26, 7);
+const payBig = chip(D.props, 'Pay ₹5,000', 360, 56, GREEN, '#fff');
+// the end: the number is switched off
+const offCard = S('g', {}, D.props);
+S('rect', { x: -250, y: -70, width: 500, height: 140, rx: 40, fill: '#fff', ...line }, offCard);
+const offAv = avatar(offCard, 46);
+offAv.g.setAttribute('transform', 'translate(-180 0)');
+S('text', { x: -112, y: -6, 'font-size': 36, fill: NAVY }, offCard, 'HR · NextGen');
+S('text', { x: -112, y: 40, 'font-size': 34, fill: CORAL }, offCard, 'Number बंद');
+const plane = paperPlane(D.props, [800, 1150], [880, 700], [990, 1150]);
+
+U.push((t) => {
+  const A = t < T.wa + 0.02;                          // the hook
+  const B = t >= T.pay - 0.2 && t < T.how + 0.14;       // the first job, then the website on the letter
+  const C = t >= T.nopay - 0.2;                         // I do not pay; the link line; the ask
+  if (!show(D.s, A || B || C)) return;
+  D.tick(t);
+  // the letter hangs on its hook and sways; in the end it tears and the hook goes up empty
+  const tear = C ? prog(t, T.nahi, 0.9) : 0;
+  const up = C ? eio(prog(t, T.off, 0.9)) : 0;
+  const ly = 470 - 40 * Math.max(0, bump(t - T.loot)) * (A ? 1 : 0) - 900 * up;
+  show(LT.g, true);
+  place(LT.g, 262, ly, 1, 4 * Math.sin(t * 1.6) + (A ? 3 * Math.max(0, bump(t - T.loot)) * 4 : 0));
+  LT.halves.forEach((h, i) => {
+    const s = i ? 1 : -1;
+    show(h, tear < 1);
+    h.setAttribute('transform', `translate(${s * 80 * cubicOut(tear)} ${1500 * tear * tear}) rotate(${s * 35 * tear} 0 230)`);
+  });
+  fishLine.setAttribute('d', `M262,-700 L262,${ly - 14}`);
+  ringSite(B ? eio(prog(t, T.site - 0.05, 0.4)) : 0);
+  show(fee, A); show(offerTag, A);
+  show(payBig, B && t < T.but + 0.3);
+  show(offCard, C && t > T.band - 0.15 && t < T.link);
+  show(ana.g, C && t > T.ask - 0.1); show(anaPhone, C && t > T.ask - 0.1);
+  plane(t, C ? T.ask + 0.3 : 1e9, T.send + 0.35);
+  show(payX, C);
+  if (A) {
+    whipOut(D.s, D.blur, t, T.wa - 0.06, -1);
+    D.cam(...key(t, [[0, [540, 1000, 1.12]], [T.wa, [540, 985, 1.2], (p) => p]]));
+    place(fee, 790, 610, (1 + 0.12 * Math.max(0, bump(t - T.loot))) * (1 + 0.03 * Math.sin(t * 6)), 5);
+    place(offerTag, 440, 470, 1, 10 + 3 * Math.sin(t * 2.4));
+    const hR = [150, -430];
+    D.kid.pose({
+      x: 540, y: 1640, s: 1.5, tilt: -4 + 2 * Math.sin(t * 2.2), hx: t > T.loot ? 5 * Math.sin(t * 40) * Math.exp(-(t - T.loot) * 3) : 0,
+      face: t < T.loot ? 'worried' : 'sad', pop: pop(t, [T.loot]),
+      handL: [-215, -330], handR: hR,
+    });
+    place(myPhone, 540 + (hR[0] - 4) * 1.5, 1640 + (hR[1] - 46) * 1.5, 1.7, -8 + 3 * Math.sin(t * 5));
+    return;
+  }
+  whip(D.s, D.blur, 0, 0);
+  if (B) {
+    if (t < T.pay + 0.3) whipIn(D.s, D.blur, t, T.pay - 0.2, 1);
+    // the first job: I grin and reach for Pay; "लेकिन": I stop, and the camera goes to the letter
+    D.cam(...key(t, [[T.pay - 0.2, [560, 1000, 1.22]], [T.but, [580, 990, 1.36], (p) => p], [T.site - 0.1, [262, 860, 2.5]], [T.how, [262, 865, 2.7], (p) => p]]));
+    const reach = eio(prog(t, T.payWord - 0.3, 0.5)) * (1 - eio(prog(t, T.but, 0.3)));
+    const hR = [150, -430];
+    D.kid.pose({
+      x: 540, y: 1640 - 24 * Math.max(0, bump(t - T.pay - 0.1)), s: 1.5, tilt: 2 * Math.sin(t * 2.4),
+      face: t < T.but ? 'grin' : 'look-left', pop: pop(t, [T.but]),
+      handL: mix([-130, -300], [100, -420], reach), handR: hR, gripL: reach > 0.4 ? 'point' : 'open',
+    });
+    place(myPhone, 540 + (hR[0] - 4) * 1.5, 1640 + (hR[1] - 46) * 1.5, 1.7, -8 + 3 * Math.sin(t * 5));
+    place(payBig, 770, 600, backOut(prog(t, T.payWord - 0.1, 0.3)) * (1 + 0.06 * Math.sin(t * 9)), -5);
+    return;
+  }
+  // I do not pay: the letter tears and falls, the hook goes up empty, the number is off
+  if (t < T.nopay + 0.3) whipIn(D.s, D.blur, t, T.nopay - 0.2, 1);
+  D.cam(...key(t, [[T.nopay - 0.2, [540, 1000, 1.2]], [T.link, [560, 990, 1.24], (p) => p], [T.ask + 0.2, [720, 1000, 1.08]], [dur, [740, 1000, 1.06], (p) => p]]));
+  place(offCard, 780, 640, backOut(prog(t, T.band - 0.15, 0.3)), 3);
+  offAv.set(1, prog(t, T.band, 0.3));
+  const offer = eio(prog(t, T.link, 0.3)) * (1 - prog(t, T.ask, 0.2));
+  const hand = [lerp(-130, -215, offer), lerp(-300, -360, offer) - 8 * offer * Math.sin(t * 6)];
+  const hR = mix([150, -430], [170, -200], eio(prog(t, T.ask, 0.3)));
+  D.kid.pose({
+    x: 540, y: 1640 - 30 * Math.max(0, bump(t - T.nahi)) - 24 * Math.max(0, bump(t - T.send)), s: 1.5, tilt: 2 * Math.sin(t * 2.4),
+    face: t < T.nahi ? 'talk' : t < T.off ? 'wink' : t < T.link ? 'grin' : t < T.comment - 0.1 ? 'talk' : t < T.send ? 'grin' : t < T.send + 0.6 ? 'wink' : 'grin',
+    pop: pop(t, [T.nahi, T.off, T.link, T.comment - 0.1, T.send, T.send + 0.6]),
+    handL: hand, handR: hR,
+  });
+  place(myPhone, 540 + (hR[0] - 4) * 1.5, 1640 + (hR[1] - 46) * 1.5, 1.7, -8 + 3 * Math.sin(t * 5));
+  // Ananya comes in for the ask, and my reel lands on her phone
+  const inA = expoOut(prog(t, T.ask - 0.1, 0.5));
+  const got = t > T.send + 0.35;
+  const aH = [-150, -330];
+  ana.pose({
+    x: lerp(1450, 990, inA), y: 1640 - 30 * Math.max(0, bump(t - T.send - 0.35)), s: 1.35, tilt: -4 + 2 * Math.sin(t * 2.3),
+    face: got ? 'grin' : 'talk', pop: pop(t, [T.send + 0.35]), handL: aH, handR: [150, -62],
+  });
+  place(anaPhone, lerp(1450, 990, inA) + (aH[0] - 4) * 1.35, 1640 + (aH[1] - 46) * 1.35, 1.5, 8 + 3 * Math.sin(t * 4));
+});
+
+// ================= my phone, up close =================
+const sP = S('g', {}, svg);
+const wP = S('g', {}, sP);
+const camP = camera(wP);
+const blurP = L.blurOf('mbPhone');
+S('rect', { x: -900, y: -600, width: 2900, height: 3200, fill: '#FFE3BF' }, wP);
+S('path', { d: 'M560,-600 L1300,-600 L1000,2600 L260,2600 Z', fill: '#FFF1DC', opacity: 0.7 }, wP);
+S('rect', { x: -900, y: 1900, width: 2900, height: 900, fill: '#E2C9A0' }, wP);
+const SCR = [210, 330, 660, 1300];
+S('rect', { x: 180, y: 250, width: 720, height: 1460, rx: 84, fill: NAVY, ...line, 'stroke-width': 8 }, wP);
+S('rect', { x: 470, y: 278, width: 140, height: 30, rx: 15, fill: '#000' }, wP);
+S('rect', { x: SCR[0], y: SCR[1], width: SCR[2], height: SCR[3], rx: 26 }, S('clipPath', { id: 'pscr' }, L.defs));
+const scr = S('g', { transform: `translate(${SCR[0]} ${SCR[1]})` }, S('g', { 'clip-path': 'url(#pscr)' }, wP));
+// the chat
+const chat = S('g', {}, scr);
+S('rect', { width: 660, height: 1300, fill: '#FFF4E3' }, chat);
+for (let k = 0; k < 14; k++) S('circle', { cx: (k * 173) % 640 + 10, cy: 180 + ((k * 97) % 1100), r: 10, fill: '#F6E3C4' }, chat);
+S('rect', { width: 660, height: 140, fill: NAVY }, chat);
+const hrAv = avatar(chat, 48);
+hrAv.g.setAttribute('transform', 'translate(78 72)');
+S('text', { x: 142, y: 66, 'font-size': 40, fill: '#fff' }, chat, 'HR · NextGen Tech');
+S('text', { x: 142, y: 108, 'font-size': 28, fill: '#9FB0E0', 'font-weight': 600 }, chat, 'online');
+const bubble = (y, w, h) => {
+  const g = S('g', {}, chat);
+  const b = S('g', {}, g);
+  S('path', { d: `M24,${y} L${24 + w},${y} Q${36 + w},${y} ${36 + w},${y + 12} L${36 + w},${y + h - 12} Q${36 + w},${y + h} ${24 + w},${y + h} L36,${y + h} Q24,${y + h} 24,${y + h - 12} L24,${y + 18} L8,${y} Z`, fill: '#fff', ...line, 'stroke-width': 4 }, b);
+  return { g, b, y };
+};
+const b1 = bubble(176, 520, 96);
+S('text', { x: 52, y: 238, 'font-size': 36, fill: NAVY, 'font-weight': 600 }, b1.b, 'Hello! HR, NextGen Tech.');
+const b2 = bubble(300, 470, 146);
+S('text', { x: 52, y: 362, 'font-size': 40, fill: NAVY }, b2.b, 'Congratulations!');
+S('text', { x: 52, y: 416, 'font-size': 36, fill: NAVY, 'font-weight': 600 }, b2.b, 'You are selected.');
+const b3 = bubble(470, 470, 126);
+S('rect', { x: 52, y: 492, width: 76, height: 82, rx: 10, fill: CORAL }, b3.b);
+S('text', { x: 90, y: 546, 'text-anchor': 'middle', 'font-size': 26, fill: '#fff' }, b3.b, 'PDF');
+S('text', { x: 148, y: 546, 'font-size': 34, fill: NAVY, 'font-weight': 700 }, b3.b, 'Offer_Letter.pdf');
+const b4 = bubble(622, 560, 154);
+S('text', { x: 52, y: 686, 'font-size': 36, fill: NAVY, 'font-weight': 600 }, b4.b, 'Training fee before joining:');
+S('text', { x: 52, y: 748, 'font-size': 52, fill: CORAL }, b4.b, '₹5,000');
+const ringFee = loopRing(b4.b, 132, 730, 96, 36, -3, 8);
+const b5 = S('g', {}, chat);
+S('rect', { x: 24, y: 798, width: 300, height: 96, rx: 48, fill: GREEN, ...line, 'stroke-width': 4 }, b5);
+S('text', { x: 174, y: 860, 'text-anchor': 'middle', 'font-size': 42, fill: '#fff' }, b5, 'Pay now');
+const feeX = S('g', { transform: 'translate(300 720)' }, chat);
+cross(feeX, 150, 22);
+const noInt = chip(wP, 'Interview? नहीं', 440, 50, CORAL, '#fff');
+// the lookup: a drawn page in the drawn phone (not who.is itself)
+const look = S('g', {}, scr);
+S('rect', { width: 660, height: 1300, fill: '#fff' }, look);
+S('rect', { width: 660, height: 140, fill: NAVY }, look);
+S('text', { x: 40, y: 88, 'font-size': 42, fill: '#fff' }, look, 'Domain lookup');
+S('rect', { x: 30, y: 176, width: 600, height: 100, rx: 22, fill: '#F2F4F8', ...line, 'stroke-width': 4 }, look);
+const typed = S('text', { x: 58, y: 240, 'font-size': 40, fill: NAVY }, look, '');
+S('text', { x: 40, y: 360, 'font-size': 36, fill: GREY, 'font-weight': 600 }, look, 'Created');
+const dots = S('text', { x: 40, y: 450, 'font-size': 72, fill: '#C9CEDA' }, look, '');
+const six = S('text', { x: 40, y: 456, 'font-size': 80, fill: CORAL }, look, '6 days ago');
+const ringSix = loopRing(look, 230, 430, 214, 62, -2, 9);
+const card = (x, top, bottom, col, fill) => {
+  const g = S('g', {}, look);
+  S('rect', { x: x - 140, y: -100, width: 280, height: 200, rx: 26, fill, stroke: col, 'stroke-width': 6 }, g);
+  S('text', { x, y: -34, 'text-anchor': 'middle', 'font-size': 32, fill: GREY, 'font-weight': 700 }, g, top);
+  S('text', { x, y: 52, 'text-anchor': 'middle', 'font-size': 62, fill: col }, g, bottom);
+  return g;
+};
+const cOld = card(0, 'असली company', '1992', '#13995F', '#E9FBF2');
+const cNew = card(0, 'NextGen Tech', '6 दिन', CORAL, '#FFECEF');
+// my hand holds the phone, from the bottom right
+const wear = OUTFITS.hoodie;
+S('path', { d: 'M1240,2100 L1010,1520 L860,1600 L1000,2140 Z', fill: wear.mid, ...line }, wP);
+S('path', { d: 'M1010,1520 L860,1600 L880,1650 L1030,1570 Z', fill: wear.band ?? wear.dark, ...line, 'stroke-width': 5 }, wP);
+S('path', { d: 'M870,1600 Q830,1500 880,1420 L930,1380 Q960,1400 940,1440 L900,1500 Q960,1520 960,1580 Z', fill: ME.skin, ...line }, wP);
+U.push((t) => {
+  const A = t >= T.wa - 0.2 && t < T.pay + 0.14;        // the chat
+  const B = t >= T.this - 0.2 && t < T.nopay + 0.14;    // the lookup, then the chat again
+  if (!show(sP, A || B)) return;
+  if (A) {
+    if (t < T.wa + 0.3) whipIn(sP, blurP, t, T.wa - 0.2, 1); else whipOut(sP, blurP, t, T.pay - 0.06, -1);
+    camP(...key(t, [[T.wa - 0.2, [540, 500, 1.6]], [T.nointerview, [540, 560, 1.55], (p) => p], [T.offer + 0.2, [540, 700, 1.5]], [T.fee, [540, 730, 1.5], (p) => p], [T.five, [540, 930, 1.55]], [T.pay, [540, 950, 1.6], (p) => p]]));
+    show(chat, true); show(look, false);
+    chat.setAttribute('transform', 'translate(0 0)');
+    hrAv.set(0);
+    show(feeX, false);
+    ringFee(eio(prog(t, T.five - 0.05, 0.4)));
+  } else {
+    if (t < T.this + 0.3) whip(sP, blurP, 0, 0); else whipOut(sP, blurP, t, T.nopay - 0.06, -1);
+    // the lookup comes in from the right of the screen, then the chat comes back
+    const back = eio(prog(t, T.never - 0.1, 0.45));
+    camP(...key(t, [[T.this - 0.2, [540, 680, 1.45]], [T.six, [540, 820, 1.5]], [T.never - 0.1, [540, 880, 1.52], (p) => p], [T.never + 0.4, [420, 520, 2.0]], [T.money - 0.25, [430, 530, 2.05], (p) => p], [T.money + 0.1, [540, 1000, 1.5]], [T.nopay, [540, 1010, 1.56], (p) => p]]));
+    show(look, back < 1); show(chat, back > 0);
+    look.setAttribute('transform', `translate(${-660 * back} 0)`);
+    chat.setAttribute('transform', `translate(${660 * (1 - back)} 0)`);
+    const name = 'nextgen-careers.in';
+    typed.textContent = name.slice(0, Math.round(prog(t, T.this + 0.1, 0.7) * name.length)) + (t < T.six && Math.floor(t * 5) % 2 ? '|' : '');
+    show(dots, t < T.six);
+    dots.textContent = '.'.repeat(1 + (Math.floor(t * 6) % 3));
+    show(six, t >= T.six);
+    six.setAttribute('transform', `translate(40 456) scale(${t < T.six + 0.2 ? lerp(1.6, 1, prog(t, T.six, 0.16) ** 2) : 1 + 0.05 * Math.max(0, bump(t - T.six - 0.2))}) translate(-40 -456)`);
+    ringSix(eio(prog(t, T.six + 0.15, 0.4)));
+    const cIn = backOut(prog(t, T.six + 0.35, 0.35));
+    show(cOld, cIn > 0); show(cNew, cIn > 0);
+    place(cOld, 180, 640, cIn, -3);
+    place(cNew, 480, 640, cIn * (1 + 0.04 * Math.max(0, bump(t - T.six - 0.7))), 3);
+    hrAv.set(backOut(prog(t, T.never + 0.35, 0.35)));
+    show(feeX, t > T.money - 0.05);
+    feeX.setAttribute('transform', `translate(300 720) scale(${t < T.money + 0.15 ? lerp(1.8, 1, prog(t, T.money - 0.05, 0.16) ** 2) : 1})`);
+    ringFee(0);
+  }
+  // bubbles arrive as the voice tells them; in B they are all there
+  const arrive = (g, at) => { const p = B ? 1 : backOut(prog(t, at, 0.3)); show(g, p > 0); g.setAttribute('transform', `translate(24 ${0}) scale(${p}) translate(-24 0)`); };
+  arrive(b1.g, T.wa + 0.1);
+  arrive(b2.g, T.nointerview + 0.05);
+  arrive(b3.g, T.offer);
+  arrive(b4.g, T.fee + 0.05);
+  arrive(b5, T.training);
+  const ni = A ? backOut(prog(t, T.nointerview + 0.05, 0.3)) * (1 - prog(t, T.offer - 0.12, 0.12)) : 0;
+  show(noInt, ni > 0);
+  place(noInt, 560, 830, ni * (1 + 0.04 * Math.sin(t * 6)), -4);
+});
+
+// ================= who.is's pages =================
+const PX = 1080 / 412;                 // frame pixels for one css pixel
+const SLIDE = 300;                     // the dates strip sits this far down the frame
+const pTop = webpage(stage, TOP, 1648);
+const pDates = webpage(stage, DATES, 1648);
+const ink = (page) => S('svg', { width: 1080, height: 10, style: 'position:absolute;left:0;top:0;overflow:visible' }, page.pins);
+const ring = (layer, cx, cy, rx, ry, rot = -3) => loopRing(layer, cx * PX, cy * PX, rx * PX, ry * PX, rot, 12);
+const inkTop = ink(pTop);
+const ringBox = ring(inkTop, 206, 300, 186, 34, -1);
+const ringDomain = ring(inkTop, 128, 467, 104, 26, -2);
+const inkDates = ink(pDates);
+const ringCreated = ring(inkDates, 70, 101, 44, 15, -3);
+const ring1992 = ring(inkDates, 89, 125, 62, 19, -2);
+const ageTag = S('g', {}, inkDates);
+S('rect', { x: -170, y: -50, width: 340, height: 100, rx: 36, fill: YEL, ...line }, ageTag);
+S('text', { y: 20, 'text-anchor': 'middle', 'font-size': 54, fill: NAVY }, ageTag, '34 साल पुरानी');
+const rise = (t, t0) => 1920 * (1 - expoOut(prog(t, t0, 0.42)));
+const drop = (t, t0) => 1920 * eio(prog(t, t0, 0.34));
+U.push((t) => {
+  // the search box, then the domain the page was opened for
+  if (t >= T.how - 0.3 && t < T.when + 0.24) {
+    const out = eio(prog(t, T.when - 0.2, 0.42));
+    pTop.set({ rect: [-1080 * out, rise(t, T.how - 0.3), 1080, 1920], scroll: key(t, [[T.name + 0.45, 0], [T.name + 0.9, 560]]), zoom: key(t, [[T.how + 0.2, 1], [T.name - 0.1, 1.12], [T.name + 0.45, 1.05], [T.when, 1.1], (p) => p]), fx: 540, fy: 790 });
+    ringBox(eio(prog(t, T.name - 0.05, 0.4)) * (1 - prog(t, T.name + 0.45, 0.15)));
+    ringDomain(eio(prog(t, T.name + 0.95, 0.4)));
+  } else pTop.hide();
+  // Important Dates: Created, then the year
+  if (t >= T.when - 0.2 && t < T.this + 0.24) {
+    const fx = 89 * PX;
+    const fy = 125 * PX + SLIDE;
+    pDates.set({ rect: [1080 * (1 - eio(prog(t, T.when - 0.2, 0.42))), drop(t, T.this - 0.12), 1080, 1920], slide: SLIDE, zoom: key(t, [[T.kab, 1.4], [T.years - 0.1, 1.44], [T.years + 0.35, 1.65], [T.this, 1.7], (p) => p]), fx, fy });
+    ringCreated(eio(prog(t, T.kab - 0.05, 0.4)) * (1 - prog(t, T.years - 0.1, 0.15)));
+    ring1992(eio(prog(t, T.years - 0.05, 0.4)));
+    const a = backOut(prog(t, T.years + 0.35, 0.35));
+    show(ageTag, a > 0);
+    place(ageTag, 236 * PX, 125 * PX, a * 0.62, -4 + 2 * Math.sin(t * 3));
+  } else pDates.hide();
+});
+
+// ================= captions, the link line, the follow card, the pointer =================
+const clean = (ws) => ws.map((x) => ({ ...x, word: x.word.replace(/[।,]+$/, '') }));
+U.push(captionsCompact(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1, whole: i === 0 }))));
+const link = linkLine(stage, 'who.is');
+const follow = followCard(stage);
+const tip = pointer(stage, NAVY, '#fff', 130);
+const TIP = [
+  [T.how - 0.1, [1160, 1400]], [T.name - 0.1, [700, 800], cubicOut], [T.name + 0.6, [700, 800]], [T.name + 1.0, [560, 760], cubicOut], [T.when - 0.2, [560, 760]],
+  [T.when + 0.1, [1100, 1300]], [T.kab, [300, 720], cubicOut], [T.years - 0.2, [300, 720]], [T.years + 0.2, [470, 800], cubicOut], [T.this - 0.12, [470, 800]],
+  [T.comment + 0.2, [1170, 1460]], [T.post - 0.08, [935, 1250], cubicOut], [T.ask - 0.08, [935, 1250]],
+  [T.send + 0.3, [1150, 900]], [T.follow - 0.06, [900, 420]], [dur, [900, 420]],
+];
+const SHOWN = [[T.how - 0.1, T.when - 0.2], [T.when + 0.1, T.this - 0.12], [T.comment + 0.2, T.ask - 0.08], [T.send + 0.3, dur + 1]];
+U.push((t) => {
+  link.set(t, { link: T.link, comment: T.comment, post: T.post, away: T.ask });
+  follow.set(t, T.send + 0.2, T.follow);
+  tip.style.visibility = SHOWN.some(([a, b]) => t >= a && t < b) ? 'visible' : 'hidden';
+  const [x, y] = key(t, TIP);
+  const click = pulse(t, T.name + 0.05, 0.07) + pulse(t, T.post + 0.02, 0.07) + pulse(t, T.follow + 0.02, 0.07);
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * click})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

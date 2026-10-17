@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#06 Text से diagram: Napkin AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #111; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: var(--paper); }
+  #paper { position: absolute; inset: -200px 0; background-image: repeating-linear-gradient(#0000 0 94px, var(--rule) 94px 97px); }
+  svg { position: absolute; left: 0; top: 0; overflow: visible; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="paper"></div>
+  <svg id="world" width="1080" height="1920"></svg>
+  <div id="caps"></div>
+</div>
+<script type="module">
+// Reference reel for the TOOL lane. The real web page (captured by capture.mjs, no sign-in) scrolls
+// inside a phone on the left; the right column shows one step at a time; the mascot reacts.
+// Order: big hook on frame 0, steps on the page, the last line, then the 1.5 s follow tag.
+import { $, boot, bump, clamp, createKit, eio, header, lerp, loadImage, preview, prog } from '/brand/kagaz.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const brand = await boot(stage);
+const vo = await (await fetch('vo.json')).json();
+const meta = await (await fetch('script.json')).json();
+const home = (await (await fetch('shots/shots.json')).json()).shots.find((s) => s.name === 'home');
+const shot = await loadImage('shots/home.jpg');
+const { dur, L, T } = build(vo);
+const kit = createKit(brand);
+const { stroke, pop, card, sunburst, sticker, mascot, U, PAPER, CARD, INK, RED, BLUE, PINK, YELLOW, MINT, ORANGE } = kit;
+header(stage, brand, 'TOOL', null, meta.title);
+
+const text = (parent, x, y, str, a = {}) => {
+  const e = $('text', { x, y, 'font-family': '"Baloo 2"', 'font-weight': 800, 'font-size': 80, fill: INK, 'text-anchor': 'middle', ...a }, parent);
+  e.textContent = str;
+  return e;
+};
+const MUK = { 'font-family': 'Mukta', 'font-weight': 700 };
+const root = $('g', {}, document.getElementById('world'));
+sunburst(root, 420, 1100);
+const scene = $('g', {}, root); // everything that shrinks when the follow tag arrives
+kit.lift(scene, T.tag, { y: 785, s: 0.46 });
+
+// ---------- the page, inside a phone ----------
+const hd = (needle) => home.headings.find((h) => h.text.includes(needle));
+const rect = (h) => [h.x, h.y, h.w, h.h];
+const H1 = hd('Get visuals');
+const P1 = hd('Pasting');
+const P2 = hd('generate visuals');
+const P3 = hd('Take it anywhere');
+const EX = hd('Presentations'); // a finished diagram on a slide: the result, shown first and last
+const slide = [EX.x, EX.y + 200, EX.w, 400];
+// Scroll positions, chosen after LOOKING at shots/home.jpg: the page's animated demos were
+// captured as empty boxes, so each stop frames the parts that have content.
+const R = EX.y - 150;
+const S1 = hd('How it works').y - 90;
+const S2 = P2.y - 440;
+const S3 = P3.y - 130;
+const phone = kit.screen(scene, shot, {
+  x: 400, w: 600, h: 980, t: -0.22, bar: 'napkin.ai',
+  keys: [[0, R], [T.rise - 0.1, R], [T.rise + 0.45, 0], [T.s1 - 0.5, 0], [T.s1 + 0.1, S1], [T.s2 - 0.5, S1], [T.s2 + 0.1, S2], [T.s3 - 0.5, S2], [T.s3 + 0.15, S3], [T.pay - 0.45, S3], [T.pay + 0.15, R]],
+  pose: (t) => {
+    const p = eio(prog(t, T.rise, 0.45));
+    return { y: lerp(1430, 1060, p), rot: lerp(-4, -2, p), s: 1 + 0.03 * bump(t - T.click) };
+  },
+});
+phone.mark(slide, T.mark0, { out: T.rise });
+phone.mark(rect(H1), T.rise + 0.5, { out: T.s1 - 0.4 });
+phone.mark(rect(P1), T.s1 + 0.2);
+phone.mark(rect(P2), T.s2 + 0.2);
+phone.mark(rect(P3), T.s3 + 0.25);
+phone.mark(slide, T.yes);
+
+// ---------- the right column: one thing at a time ----------
+const X = 892;
+const chip = (parent, x, y, str, col, t, o = {}) => {
+  const g = pop(parent, x, y, { t, rot: o.rot ?? 0, out: o.out ?? null });
+  const w = o.w ?? str.length * 34 + 70;
+  $('rect', { x: -w / 2 + 9, y: -42, width: w, height: 104, rx: 26, fill: INK }, g);
+  $('rect', { x: -w / 2, y: -52, width: w, height: 104, rx: 26, fill: col, stroke: INK, 'stroke-width': 8 }, g);
+  text(g, 0, 24, str, { 'font-size': o.size ?? 66, fill: col === BLUE || col === PINK ? PAPER : INK });
+  return g;
+};
+const step = (n, t, out) => {
+  const g = pop(scene, X, 700, { t, out, rot: -6 });
+  $('circle', { cx: 8, cy: 10, r: 88, fill: INK }, g);
+  $('circle', { r: 88, fill: YELLOW, stroke: INK, 'stroke-width': 10 }, g);
+  text(g, 0, -30, 'STEP', { ...MUK, 'font-size': 34, 'letter-spacing': '0.12em' });
+  text(g, 0, 60, String(n), { 'font-size': 104 });
+};
+const tile = (x, y, t, out, rot = 4) => card(scene, x, y, 200, 230, rot, t, { out, rx: 18, sw: 8, shadow: [10, 12] });
+
+// hook: what you get
+{
+  const s = sticker(scene, 'star', X - 10, 1010, 135, ORANGE, { t: -0.3, out: T.rise, rot: -8 });
+  text(s, 0, 4, '1', { 'font-size': 120 });
+  text(s, 0, 62, 'click', { 'font-size': 60 });
+  chip(scene, X - 22, 668, 'Napkin AI', PINK, T.name, { w: 310, size: 58, rot: -4, out: T.s1 - 0.35 });
+}
+// step 1: paste your text, no prompt
+{
+  const out = T.s2 - 0.35;
+  step(1, T.s1 + 0.1, out);
+  const c = tile(X, 925, T.s1 + 0.2, out);
+  text(c, 0, -10, 'Aa', { 'font-size': 100 });
+  $('path', { d: 'M-62 34 H62 M-62 68 H26', stroke: INK, 'stroke-width': 10, 'stroke-linecap': 'round' }, c);
+  const p = chip(scene, X, 1140, 'prompt', CARD, T.noPrompt - 0.3, { w: 250, size: 60, rot: 3, out });
+  stroke(p, [[-105, -45], [105, 55]], { t: T.noPrompt, d: 0.12, w: 24, color: RED, amp: 4, out });
+  stroke(p, [[105, -45], [-105, 55]], { t: T.noPrompt + 0.1, d: 0.12, w: 24, color: RED, amp: 4, out });
+}
+// step 2: press one button, pick one
+{
+  const out = T.s3 - 0.35;
+  step(2, T.s2 + 0.1, out);
+  const b = $('g', {}, pop(scene, X, 925, { t: T.s2 + 0.2, out }));
+  $('circle', { cx: 9, cy: 11, r: 96, fill: INK }, b);
+  $('circle', { r: 96, fill: PINK, stroke: INK, 'stroke-width': 10 }, b);
+  $('path', { d: 'M12 -58 L-34 8 H-4 L-14 58 L34 -10 H4Z', fill: PAPER, stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round' }, b);
+  U.push((t) => {
+    const down = Math.exp(-(((t - T.click - 0.04) / 0.07) ** 2));
+    b.setAttribute('transform', `translate(${9 * down} ${11 * down}) scale(${1 + 0.14 * bump(t - T.click - 0.08)})`);
+  });
+  for (let i = 0; i < 10; i++) {
+    const a = (i / 10) * Math.PI * 2 + 0.3;
+    stroke(scene, [[X + Math.cos(a) * 128, 925 + Math.sin(a) * 128], [X + Math.cos(a) * 172, 925 + Math.sin(a) * 172]], { t: T.click + 0.04, d: 0.14, w: 13, color: ORANGE, amp: 2, out: T.click + 0.5 });
+  }
+  const ok = pop(scene, X, 1145, { t: T.pick, out });
+  $('circle', { cx: 7, cy: 9, r: 64, fill: INK }, ok);
+  $('circle', { r: 64, fill: MINT, stroke: INK, 'stroke-width': 9 }, ok);
+  $('path', { d: 'M-28 2 L-8 24 L30 -24', fill: 'none', stroke: INK, 'stroke-width': 14, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, ok);
+}
+// step 3: export, free too
+{
+  const out = T.pay - 0.35;
+  step(3, T.s3 + 0.1, out);
+  chip(scene, X, 862, 'PNG', MINT, T.files[0], { w: 230, rot: -4, out });
+  chip(scene, X, 976, 'PDF', YELLOW, T.files[1], { w: 230, rot: 3, out });
+  const f = sticker(scene, 'star', X, 1098, 92, PINK, { t: T.free, out, rot: 8 });
+  text(f, 0, 6, 'FREE', { 'font-size': 56, fill: PAPER });
+  text(f, 0, 50, '₹0', { ...MUK, 'font-size': 46, fill: PAPER });
+}
+// last line: not notes, a diagram
+{
+  const n = tile(X, 760, T.pay + 0.05, null, -4);
+  [-50, -16, 18, 52].forEach((y, i) => $('path', { d: `M-66 ${y} H${i === 3 ? 10 : 66}`, stroke: INK, 'stroke-width': 10, 'stroke-linecap': 'round' }, n));
+  text(n, 0, 100, 'notes', { ...MUK, 'font-size': 40 });
+  stroke(n, [[-80, -90], [80, 90]], { t: T.no, d: 0.12, w: 26, color: RED, amp: 4 });
+  stroke(n, [[80, -90], [-80, 90]], { t: T.no + 0.1, d: 0.12, w: 26, color: RED, amp: 4 });
+  const d = tile(X, 1030, T.yes - 0.15, null, 4);
+  $('path', { d: 'M0 -52 L-52 16 M0 -52 L52 16 M-52 16 H52', fill: 'none', stroke: INK, 'stroke-width': 8 }, d);
+  [[0, -52, PINK], [-52, 16, MINT], [52, 16, YELLOW]].forEach(([x, y, col]) => $('circle', { cx: x, cy: y, r: 24, fill: col, stroke: INK, 'stroke-width': 7 }, d));
+  text(d, 0, 100, 'diagram', { ...MUK, 'font-size': 40 });
+  stroke(scene, [[X + 60, 1010], [X + 86, 1040], [X + 132, 972]], { t: T.yes + 0.12, d: 0.14, w: 22, color: RED, amp: 2 });
+}
+
+// ---------- the mascot watches the page and reacts ----------
+mascot(scene, X, 1560, 0.3, {
+  t: -0.3,
+  pose: (t) => ({
+    look: t < T.rise ? [400, 1200] : t < T.pay ? [500, 900] : [X, 1030],
+    mouth: 0.35 + 0.55 * Math.max(Math.exp(-(((t - T.click - 0.1) / 0.2) ** 2)), Math.exp(-(((t - T.free - 0.1) / 0.2) ** 2)), t > T.yes ? 1 : 0, t < 0.9 ? 1 : 0),
+    wave: t > T.yes || t < T.rise ? 1 : 0,
+    hop: 50 * Math.max(0, bump(t - T.click - 0.05)) + 50 * Math.max(0, bump(t - T.yes)),
+  }),
+});
+
+// ---------- the follow tag ----------
+kit.followTag(root, T.tag, { press: T.press });
+
+// ---------- captions ----------
+const hl = { hook: ['diagram', 'Napkin AI'], s1: ['paste', 'Prompt'], s2: ['button', 'चुनो'], s3: ['export', 'free plan'], pay: ['diagram'] };
+const caps = [];
+for (const id of Object.keys(hl)) L[id].s.forEach((s, i) => caps.push({ ...s, hl: hl[id][i] }));
+// the hook is large and fully readable on frame 0
+caps[0].big = true;
+caps[0].words = caps[0].text.split(' ').map((word) => ({ word, t: -1 }));
+kit.captions(document.getElementById('caps'), caps, dur);
+
+// ---------- seek ----------
+await kit.settled();
+window.DUR = dur;
+window.seek = (t) => kit.frame(t);
+window.seek(0);
+window.ready = true;
+if (!new URLSearchParams(location.search).has('render')) preview(stage, window.seek);
+</script>
+</body>
+</html>

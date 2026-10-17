@@ -1,0 +1,19 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 1.514,
+  "lines": [
+    {
+      "id": "h",
+      "text": "ये अपने college group में भेजो।",
+      "sentences": [
+        "ये अपने college group में भेजो।"
+      ],
+      "file": "vo/h.wav",
+      "start": 0,
+      "duration": 1.264,
+      "pauses": []
+    }
+  ]
+}

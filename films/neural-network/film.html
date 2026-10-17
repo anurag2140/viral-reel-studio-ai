@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#03 Neural network = दिमाग़ की copy?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #111; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: var(--paper); }
+  #paper { position: absolute; inset: -200px 0; background-image: repeating-linear-gradient(#0000 0 94px, var(--rule) 94px 97px); }
+  svg { position: absolute; left: 0; top: 0; overflow: visible; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="paper"></div>
+  <svg id="world" width="1080" height="1920"></svg>
+  <div id="caps"></div>
+</div>
+<script type="module">
+// Hero weird image: one "neuron" of the network is opened up, and inside it there is no cell,
+// only a small sum (numbers in, multiply, add). The mascot ends with that sum in its belly.
+import { $, boot, bump, clamp, createKit, ei, eio, eo, header, lerp, mulberry32, preview, prog, sp } from '/brand/kagaz.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const brand = await boot(stage);
+const vo = await (await fetch('vo.json')).json();
+const meta = await (await fetch('script.json')).json();
+const { dur, L, T } = build(vo);
+const kit = createKit(brand);
+const { stroke, pop, txt, card, sunburst, sticker, mascot, U, PAPER, CARD, INK, RED, BLUE, PINK, YELLOW, MINT, ORANGE } = kit;
+header(stage, brand, 'AI', meta.number, meta.title);
+
+const text = (parent, x, y, str, a = {}) => {
+  const e = $('text', { x, y, 'font-family': '"Baloo 2"', 'font-weight': 800, 'font-size': 80, fill: INK, 'text-anchor': 'middle', ...a }, parent);
+  e.textContent = str;
+  return e;
+};
+const MUK = { 'font-family': 'Mukta', 'font-weight': 700 };
+const root = $('g', {}, document.getElementById('world'));
+
+// A scene group: hidden before tIn, flies off at tOut.
+function scene(tOut, dir = -1, tIn = -9) {
+  const g = $('g', {}, root);
+  U.push((t) => {
+    const q = ei(prog(t, tOut, 0.3));
+    g.style.display = q >= 1 || t < tIn ? 'none' : '';
+    g.setAttribute('transform', `translate(${dir * 1300 * q} ${-300 * q}) rotate(${dir * 8 * q} 540 960)`);
+  });
+  return g;
+}
+const cross = (g, r, t, w = 34) => {
+  stroke(g, [[-r, -r], [r, r]], { t, d: 0.12, w, color: RED, amp: 5 });
+  stroke(g, [[r, -r], [-r, r]], { t: t + 0.1, d: 0.12, w, color: RED, amp: 5 });
+};
+function stamp(parent, x, y, rot, str, t, o = {}) {
+  const { color = PINK, w = 330, size = 70 } = o;
+  const g = $('g', {}, parent);
+  $('rect', { x: -w / 2 + 10, y: -46, width: w, height: 112, rx: 14, fill: INK }, g);
+  $('rect', { x: -w / 2, y: -56, width: w, height: 112, rx: 14, fill: color, stroke: INK, 'stroke-width': 9 }, g);
+  text(g, 0, 28, str, { 'font-size': size, fill: color === YELLOW || color === MINT ? INK : PAPER });
+  U.push((time) => {
+    const q = time - t;
+    const k = q < 0 ? 0 : lerp(2.6, 1, eo(clamp(q / 0.12))) * (1 + 0.06 * bump(q - 0.12));
+    g.style.display = k <= 0.002 ? 'none' : '';
+    g.setAttribute('transform', `translate(${x} ${y}) rotate(${rot}) scale(${k})`);
+  });
+  return g;
+}
+// A pink brain sticker, about 300 x 250 at scale 1.
+function brain(parent, x, y, s, t = -1) {
+  const g = pop(parent, x, y, { t });
+  const b = $('g', { transform: `scale(${s})` }, g);
+  const d = 'M-130 25 C-165 -55 -100 -125 -35 -108 C0 -155 85 -145 100 -92 C158 -82 168 0 126 42 C136 96 62 126 20 98 C-32 128 -118 104 -130 25Z';
+  $('path', { d, fill: INK, transform: 'translate(10 12)' }, b);
+  $('path', { d, fill: PINK, stroke: INK, 'stroke-width': 9, 'stroke-linejoin': 'round' }, b);
+  $('path', { d: 'M-10 -105 C-30 -50 20 -30 -5 20 C-25 60 10 80 5 100 M-90 -30 q30 -25 55 5 M-95 45 q35 -20 60 12 M45 -70 q35 -5 45 30 M40 30 q35 -15 60 15', fill: 'none', stroke: INK, 'stroke-width': 7, 'stroke-linecap': 'round' }, b);
+  U.push((time) => b.setAttribute('transform', `rotate(${Math.sin(time * 2.1 + x) * 3}) scale(${s})`));
+  return g;
+}
+// A small network of yellow nodes. Edges draw on from `t`, layer by layer.
+function net(parent, cx, cy, dx, dy, counts, t, o = {}) {
+  const { r = 30, w = 5, gap = 0.3, signals = 0 } = o;
+  const g = $('g', {}, parent);
+  const node = (l, i) => [cx + (l - (counts.length - 1) / 2) * dx, cy + (i - (counts[l] - 1) / 2) * dy];
+  for (let l = 0; l < counts.length - 1; l++) {
+    for (let i = 0; i < counts[l]; i++) for (let k = 0; k < counts[l + 1]; k++) stroke(g, [node(l, i), node(l + 1, k)], { t: t + l * gap, d: 0.3, w, amp: 1.5, step: 300, op: 0.6 });
+  }
+  const rnd = mulberry32(9);
+  for (let s = 0; s < signals; s++) {
+    const route = counts.map((n) => Math.floor(rnd() * n)).map((n, l) => node(l, n));
+    const p = $('circle', { r: r * 0.55, fill: PINK, stroke: INK, 'stroke-width': 4 }, g);
+    U.push((time) => {
+      const x = time - (t + counts.length * gap + s * 0.25);
+      p.style.display = x >= 0 ? '' : 'none';
+      if (x < 0) return;
+      const ph = ((x / 1.0) % 1) * (counts.length - 1);
+      const k = Math.min(counts.length - 2, Math.floor(ph));
+      const f = eio(ph - k);
+      p.setAttribute('cx', lerp(route[k][0], route[k + 1][0], f));
+      p.setAttribute('cy', lerp(route[k][1], route[k + 1][1], f));
+    });
+  }
+  for (let l = 0; l < counts.length; l++) for (let i = 0; i < counts[l]; i++) {
+    const [x, y] = node(l, i);
+    const n = pop(g, x, y, { t: t + l * gap + i * 0.03 - 0.05 });
+    $('circle', { cx: r * 0.12, cy: r * 0.15, r, fill: INK }, n);
+    $('circle', { r, fill: YELLOW, stroke: INK, 'stroke-width': Math.max(5, r * 0.2) }, n);
+  }
+  return g;
+}
+const chip = (parent, x, y, str, col, t, o = {}) => {
+  const g = pop(parent, x, y, { t, rot: o.rot ?? 0 });
+  const w = o.w ?? str.length * 34 + 70;
+  $('rect', { x: -w / 2 + 9, y: -42, width: w, height: 104, rx: 26, fill: INK }, g);
+  $('rect', { x: -w / 2, y: -52, width: w, height: 104, rx: 26, fill: col, stroke: INK, 'stroke-width': 8 }, g);
+  const tx = text(g, 0, 24, str, { 'font-size': o.size ?? 66, fill: col === BLUE || col === PINK ? PAPER : INK });
+  return { g, tx };
+};
+
+// ---------- 1. hook: brain = network? No. ----------
+{
+  const S = scene(T.toMyth, -1);
+  sunburst(S, 540, 900);
+  sticker(S, 'circle', 60, 1570, 100, MINT);
+  brain(S, 250, 880, 1.45, -0.3);
+  const nc = card(S, 830, 880, 370, 350, 3, -0.26);
+  net(nc, 0, 0, 105, 92, [2, 3, 2], -0.4, { r: 24, w: 5, gap: 0.05 });
+  const eq = $('g', { transform: 'translate(540 880)' }, S);
+  text(eq, 0, 60, '=', { 'font-size': 200 });
+  cross(eq, 78, T.cross, 36);
+  stamp(S, 540, 1130, -5, 'copy नहीं', T.cross + 0.12, { color: PINK, w: 440, size: 84 });
+  mascot(S, 300, 1530, 0.36, { t: -0.3, pose: (t) => ({ look: t < T.q ? [540, 880] : [760, 1330], mouth: t < T.cross ? 0.3 : 0.8, wave: t >= T.q ? 1 : 0, hop: 40 * Math.max(0, bump(t - T.cross)) }) });
+  const tag = card(S, 300, 1250, 330, 104, -4, T.q);
+  text(tag, 0, 26, 'ChatGPT', { 'font-size': 70 });
+  const wig = $('g', {}, S);
+  txt(wig, 760, 1440, '?', { size: 300, color: PINK, t: T.q + 0.1 });
+  U.push((t) => wig.setAttribute('transform', `rotate(${Math.sin(t * 5.2) * 6} 760 1340)`));
+}
+
+// ---------- 2. where the name comes from: a neuron is a cell that sends signals ----------
+{
+  const S = scene(T.toFact, 1, T.toMyth);
+  sunburst(S, 540, 1050, { t: T.toMyth + 0.05 });
+  brain(S, 200, 740, 1.0, T.toMyth + 0.05);
+  const CELLS = [[330, 1080, 105], [850, 900, 70], [840, 1330, 70]];
+  // axon from the first cell to the other two
+  const AX = [[[330, 1080], [520, 1040], [700, 960], [850, 900]], [[330, 1080], [520, 1150], [700, 1270], [840, 1330]]];
+  AX.forEach((pts, i) => stroke(S, pts, { t: T.toMyth + 0.3 + i * 0.1, d: 0.4, w: 20, color: ORANGE, smooth: true, amp: 3 }));
+  CELLS.forEach(([x, y, r], i) => {
+    const c = pop(S, x, y, { t: T.toMyth + 0.15 + i * 0.12 });
+    for (let k = 0; k < 7; k++) {
+      const a = (k / 7) * Math.PI * 2 + i;
+      $('path', { d: `M${Math.cos(a) * r * 0.8} ${Math.sin(a) * r * 0.8} L${Math.cos(a) * r * 1.55} ${Math.sin(a) * r * 1.55}`, stroke: INK, 'stroke-width': r * 0.3, 'stroke-linecap': 'round' }, c);
+      $('path', { d: `M${Math.cos(a) * r * 0.8} ${Math.sin(a) * r * 0.8} L${Math.cos(a) * r * 1.55} ${Math.sin(a) * r * 1.55}`, stroke: ORANGE, 'stroke-width': r * 0.16, 'stroke-linecap': 'round' }, c);
+    }
+    $('circle', { r, fill: ORANGE, stroke: INK, 'stroke-width': 10 }, c);
+    $('circle', { cx: -r * 0.15, cy: -r * 0.1, r: r * 0.38, fill: INK, opacity: 0.85 }, c);
+    U.push((t) => c.setAttribute('transform', `translate(${x} ${y}) scale(${sp(t - T.toMyth - 0.15 - i * 0.12) * (1 + 0.05 * Math.sin(t * 6 + i))})`));
+  });
+  // signals run along the axons
+  AX.forEach((pts, i) => [0, 1].forEach((n) => {
+    const p = $('circle', { r: 20, fill: PINK, stroke: INK, 'stroke-width': 6 }, S);
+    U.push((t) => {
+      const x = t - T.signal - n * 0.35 - i * 0.12;
+      p.style.display = x >= 0 ? '' : 'none';
+      if (x < 0) return;
+      const ph = ((x / 0.7) % 1) * 3;
+      const k = Math.min(2, Math.floor(ph));
+      p.setAttribute('cx', lerp(pts[k][0], pts[k + 1][0], ph - k));
+      p.setAttribute('cy', lerp(pts[k][1], pts[k + 1][1], ph - k));
+    });
+  }));
+  chip(S, 420, 870, 'neuron', YELLOW, T.name, { rot: -5 });
+  stamp(S, 660, 700, 4, '= एक cell', T.cell, { color: BLUE, w: 400, size: 78 });
+  chip(S, 600, 1460, 'signal', MINT, T.signal, { rot: 3 });
+}
+
+// ---------- 3. in the network, a neuron is one small sum ----------
+{
+  const S = scene(T.toNet, -1, T.toFact);
+  sunburst(S, 640, 1040, { t: T.toFact + 0.05 });
+  const NX = 640;
+  const NY = 1040;
+  const IN = [[170, 800, '2'], [150, 1040, '5'], [170, 1280, '3']];
+  IN.forEach(([x, y], i) => stroke(S, [[x, y], [NX, NY]], { t: T.toFact + 0.2 + i * 0.06, d: 0.3, w: 12, amp: 2 }));
+  stroke(S, [[NX, NY], [990, NY]], { t: T.add + 0.1, d: 0.2, w: 12, amp: 2 });
+  const node = pop(S, NX, NY, { t: T.toFact + 0.05 });
+  $('circle', { cx: 14, cy: 16, r: 170, fill: INK }, node);
+  $('circle', { r: 170, fill: YELLOW, stroke: INK, 'stroke-width': 12 }, node);
+  txt(node, 0, 36, 'neuron', { size: 80, t: T.toFact + 0.15, out: T.mul });
+  txt(node, -62, 46, '×', { size: 150, color: PINK, t: T.mul });
+  txt(node, 62, 50, '+', { size: 170, color: BLUE, t: T.add });
+  U.push((t) => node.setAttribute('transform', `translate(${NX} ${NY}) scale(${sp(t - T.toFact - 0.05) * (1 + 0.08 * bump(t - T.add))})`));
+  IN.forEach(([x, y, n], i) => chip(S, x, y, n, CARD, T.nums + i * 0.1, { w: 130, size: 84 }));
+  IN.forEach(([x, y], i) => {
+    const g = pop(S, lerp(x, NX, 0.47), lerp(y, NY, 0.47), { t: T.mul + i * 0.08 });
+    $('circle', { r: 40, fill: PINK, stroke: INK, 'stroke-width': 7 }, g);
+    text(g, 0, 22, '×', { 'font-size': 66, fill: PAPER });
+  });
+  chip(S, 940, NY - 110, '= 31', MINT, T.add + 0.3, { w: 230, size: 80, rot: 5 });
+  stamp(S, 540, 640, -3, 'छोटा हिसाब', T.calc, { color: BLUE, w: 470, size: 84 });
+  mascot(S, 900, 1500, 0.28, { t: T.toFact + 0.2, pose: (t) => ({ look: [NX, NY], mouth: t > T.add ? 0.9 : 0.3, hop: 50 * Math.max(0, bump(t - T.add - 0.3)) }) });
+}
+
+// ---------- 4. crores of these sums, joined in layers ----------
+{
+  const S = scene(T.toDiff, 1, T.toNet);
+  sunburst(S, 540, 1010, { t: T.toNet + 0.05 });
+  net(S, 540, 1010, 235, 132, [3, 5, 5, 3], T.toNet + 0.15, { r: 40, w: 6, gap: 0.32, signals: 4 });
+  const st = sticker(S, 'star', 880, 660, 125, ORANGE, { t: T.many, rot: 8 });
+  text(st, 0, 26, 'करोड़ों', { 'font-size': 70 });
+  stamp(S, 540, 1420, -3, 'neural network', T.netStamp, { color: PINK, w: 620, size: 84 });
+}
+
+// ---------- 5. the brain thinks and feels; the network only changes numbers ----------
+{
+  const S = scene(T.toPay, -1, T.toDiff);
+  sunburst(S, 540, 1000, { t: T.toDiff + 0.05 });
+  stroke(S, [[540, 620], [548, 900], [536, 1180], [544, 1440]], { t: T.toDiff + 0.1, d: 0.4, w: 12, smooth: true, amp: 4 });
+  brain(S, 265, 930, 1.35, T.toDiff + 0.05);
+  text(S, 265, 1250, 'दिमाग़', { 'font-size': 84 });
+  chip(S, 250, 680, 'सोचता है', CARD, T.think, { rot: -4, size: 62, w: 330 });
+  const h = pop(S, 420, 1090, { t: T.feel });
+  $('path', { d: 'M0 44 C-92 -24 -44 -102 0 -50 C44 -102 92 -24 0 44Z', fill: PINK, stroke: INK, 'stroke-width': 9, 'stroke-linejoin': 'round' }, h);
+  U.push((t) => h.setAttribute('transform', `translate(420 1090) scale(${sp(t - T.feel) * (1 + 0.12 * Math.max(0, Math.sin((t - T.feel) * 10)))})`));
+  const nc = card(S, 815, 930, 420, 420, 3, T.toDiff + 0.1);
+  net(nc, 0, 0, 120, 100, [2, 3, 2], T.toDiff + 0.2, { r: 26, w: 5, gap: 0.08 });
+  text(S, 815, 1250, 'network', { 'font-size': 84 });
+  // numbers that keep changing
+  [[690, 700], [830, 670], [950, 720]].forEach(([x, y], i) => {
+    const c = chip(S, x, y, '0.0', YELLOW, T.nums2 + i * 0.08, { w: 150, size: 56, rot: [-5, 2, 6][i] });
+    U.push((t) => {
+      const n = Math.floor((t - T.nums2) / 0.12);
+      c.tx.textContent = (((n * 37 + i * 53) % 90) / 100 + 0.1).toFixed(1 + (i % 2));
+    });
+  });
+}
+
+// ---------- 6. payoff: the idea came from the brain, but this is maths ----------
+{
+  const S = scene(Infinity, 1, T.toPay);
+  sunburst(S, 760, 1000, { t: T.toPay + 0.05 });
+  sticker(S, 'plus', 80, 1440, 30, ORANGE, { t: T.toPay + 0.2 });
+  const bg = $('g', {}, S);
+  brain(bg, 230, 800, 1.15, T.toPay + 0.05);
+  cross(pop(bg, 230, 800, { t: T.notBrain - 0.02 }), 120, T.notBrain, 38);
+  // the idea travels from the brain to the machine
+  const ARC = [[370, 740], [480, 640], [600, 640], [690, 760]];
+  stroke(S, ARC, { t: T.idea, d: 0.35, w: 14, smooth: true, amp: 3 });
+  stroke(S, [[640, 742], [692, 766], [704, 706]], { t: T.idea + 0.3, d: 0.1, w: 14, amp: 1 });
+  chip(S, 530, 590, 'idea', YELLOW, T.idea + 0.1, { rot: -4, w: 220 });
+  const m = mascot(S, 770, 1300, 0.46, {
+    t: T.toPay + 0.1, belly: true,
+    pose: (t) => ({ look: t < T.maths ? [230, 800] : [540, 1440], mouth: t >= T.maths ? 1 : 0.4, wave: t >= T.maths ? 1 : 0, hop: 50 * Math.max(0, bump(t - T.maths)) }),
+  });
+  text(m.belly, 0, 34, '× +', { 'font-size': 96, fill: PINK });
+  const fin = card(S, 540, 1415, 920, 150, -2, T.maths - 0.05, { fill: YELLOW });
+  text(fin, 0, 30, 'दिमाग़ नहीं, maths है।', { 'font-size': 88 });
+}
+
+// ---------- captions ----------
+const hl = {
+  hook: ['copy नहीं', 'ChatGPT'], myth: ['neuron', 'cell'], fact: ['छोटा हिसाब'], calc: ['गुणा'],
+  layers: ['करोड़ों', 'neural network'], diff: ['महसूस', 'numbers'], pay: ['दिमाग़ नहीं'], maths: ['maths'],
+};
+const caps = [];
+for (const id of Object.keys(hl)) L[id].s.forEach((s, i) => caps.push({ ...s, hl: hl[id][i] }));
+// the hook is fully readable on frame 0
+caps[0].words = caps[0].text.split(' ').map((word) => ({ word, t: -1 }));
+kit.captions(document.getElementById('caps'), caps, dur);
+
+// ---------- seek ----------
+const paperEl = document.getElementById('paper');
+const cuts = [T.toMyth, T.toFact, T.toNet, T.toDiff, T.toPay];
+window.DUR = dur;
+window.seek = (t) => {
+  let rot = 0;
+  let shift = 0;
+  cuts.forEach((c, i) => {
+    const p = prog(t, c, 0.44);
+    rot += (i % 2 ? -3 : 3) * Math.sin(Math.PI * p);
+    shift += eio(p) * 62;
+  });
+  root.setAttribute('transform', `rotate(${rot} 540 960)`);
+  paperEl.style.transform = `translateY(${-shift % 97}px) rotate(${rot * 0.3}deg)`;
+  kit.frame(t);
+};
+window.seek(0);
+window.ready = true;
+if (!new URLSearchParams(location.search).has('render')) preview(stage, window.seek);
+</script>
+</body>
+</html>

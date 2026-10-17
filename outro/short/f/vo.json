@@ -1,0 +1,24 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 2.716,
+  "lines": [
+    {
+      "id": "f",
+      "text": "मुश्किल topics अपनी भाषा में, follow करो।",
+      "sentences": [
+        "मुश्किल topics अपनी भाषा में, follow करो।"
+      ],
+      "file": "vo/f.wav",
+      "start": 0,
+      "duration": 2.466,
+      "pauses": [
+        [
+          1.62,
+          1.83
+        ]
+      ]
+    }
+  ]
+}

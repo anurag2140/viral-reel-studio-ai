@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&family=Baloo+2:wght@500;700;800&family=Hind:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Mukta:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&family=Rozha+One&display=block" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #d9d9d6; font-family: Mukta, sans-serif; color: #151515; padding: 36px 36px 30px; width: 1720px; }
+  .sheet { display: grid; grid-template-columns: repeat(4, 360px); gap: 56px; justify-content: center; }
+  .name { font: 700 26px/1.1 Mukta; margin-bottom: 4px; }
+  .sub { font: 500 15px/1.3 Mukta; color: #555; margin-bottom: 14px; height: 40px; }
+  .frame { width: 360px; height: 640px; position: relative; overflow: hidden; border-radius: 6px; }
+  .spec { margin-top: 14px; font: 500 14px/1.45 Mukta; color: #333; }
+  .sw { display: flex; gap: 6px; margin-bottom: 8px; }
+  .sw i { width: 44px; height: 26px; border-radius: 4px; border: 1px solid rgba(0,0,0,.18); }
+  .spec b { font-weight: 700; }
+  .abs { position: absolute; }
+
+  /* A  Kagaz */
+  .a { background: #F4EEE1; color: #1B1A17; font-family: Mukta;
+       background-image: repeating-linear-gradient(#0000 0 31px, #1b1a1714 31px 32px); }
+  .a .tag { left: 26px; top: 96px; font: 700 12px/1 Mukta; letter-spacing: .14em; border: 1.5px solid #1B1A17; padding: 6px 9px 5px; border-radius: 99px; }
+  .a h1 { left: 26px; top: 136px; width: 310px; font: 800 47px/1.12 "Baloo 2"; }
+  .a mark { background: #E8452C; color: #F4EEE1; padding: 0 8px; border-radius: 5px; display: inline-block; transform: rotate(-1.5deg); }
+  .a .note { left: 30px; top: 318px; width: 196px; background: #FFFDF6; border: 1.5px solid #1B1A17; border-radius: 10px; padding: 12px 16px; transform: rotate(-2.2deg); box-shadow: 5px 6px 0 #1B1A17; font: 600 19px/1.75 Mukta; }
+  .a .note s { text-decoration-color: #E8452C; text-decoration-thickness: 2.5px; color: #1b1a1790; }
+  .a .note em { font-style: normal; border: 2.5px solid #E8452C; border-radius: 50%; padding: 1px 10px; margin-left: -10px; }
+  .a .big { right: 18px; top: 372px; font: 800 34px/1 "Baloo 2"; color: #E8452C; transform: rotate(5deg); text-align: center; }
+  .a .big small { display: block; font: 600 13px/1.3 Mukta; color: #1B1A17; }
+
+  /* B  Terminal */
+  .b { background: #0B0C0B; color: #ECECE4; font-family: "IBM Plex Mono"; }
+  .b .tag { left: 24px; top: 98px; font: 500 12px/1 "IBM Plex Mono"; letter-spacing: .08em; color: #B9FF2E; }
+  .b h1 { left: 24px; top: 124px; width: 320px; font: 800 58px/1.08 "Anek Devanagari"; font-stretch: 78%; }
+  .b h1 span { color: #B9FF2E; }
+  .b .term { left: 24px; top: 334px; width: 312px; font: 400 16px/1.8 "IBM Plex Mono"; color: #ecece480; border-top: 1px solid #ecece430; padding-top: 12px; }
+  .b .term b { color: #0B0C0B; background: #B9FF2E; font-weight: 600; padding: 0 6px; }
+  .b .term u { float: right; text-decoration: none; }
+  .b .cnt { left: 24px; top: 474px; font: 600 27px/1 "IBM Plex Mono"; letter-spacing: -.02em; }
+  .b .cnt small { display: block; font: 600 17px/1.5 "Anek Devanagari"; font-stretch: 90%; color: #ecece490; letter-spacing: 0; margin-top: 4px; }
+
+  /* C  Blueprint */
+  .c { background: #0F2C63; color: #E3ECFF; font-family: Mukta;
+       background-image: linear-gradient(#e3ecff12 1px, #0000 1px), linear-gradient(90deg, #e3ecff12 1px, #0000 1px); background-size: 24px 24px; }
+  .c .tag { left: 24px; top: 98px; font: 600 13px/1 Rajdhani; letter-spacing: .22em; }
+  .c h1 { left: 24px; top: 122px; width: 320px; font: 700 46px/1.14 Rajdhani; }
+  .c h1 span { color: #FFC83A; }
+  .c .box { border: 1.5px solid #E3ECFF; border-radius: 3px; font: 600 16px/1 Rajdhani; letter-spacing: .08em; display: grid; place-items: center; text-align: center; }
+  .c .dim { font: 500 12px/1.2 Mukta; color: #e3ecffa0; }
+  .c svg { left: 0; top: 0; }
+
+  /* D  Poster */
+  .d { background: #FFD60A; color: #111; font-family: Hind; }
+  .d .tag { left: 24px; top: 96px; font: 600 12px/1 Hind; letter-spacing: .16em; background: #111; color: #FFD60A; padding: 7px 9px 5px; }
+  .d h1 { left: 22px; top: 132px; width: 330px; font: 400 55px/1.12 "Rozha One"; }
+  .d h1 span { color: #2437E6; }
+  .d .block { left: 0; top: 352px; width: 300px; height: 150px; background: #2437E6; color: #fff; padding: 20px 24px; }
+  .d .block .n { font: 400 60px/1 "Rozha One"; }
+  .d .block .l { font: 500 17px/1.35 Hind; margin-top: 6px; }
+  .d .pill { right: 20px; font: 600 14px/1 Hind; background: #111; color: #FFD60A; padding: 8px 12px 6px; border-radius: 99px; }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div>
+    <div class="name">A · Kagaz</div>
+    <div class="sub">Notebook of a smart senior. Warm, friendly, hand-made.</div>
+    <div class="frame a">
+      <div class="abs tag">CYBERSECURITY</div>
+      <h1 class="abs">आपका password <mark>secret नहीं</mark> है।</h1>
+      <div class="abs note"><s>123456</s><br><s>qwerty@123</s><br><s>iloveyou</s><br><em>rahul@2004</em></div>
+      <div class="abs big">10 अरब<small>passwords<br>की list</small></div>
+    </div>
+    <div class="spec">
+      <div class="sw"><i style="background:#F4EEE1"></i><i style="background:#1B1A17"></i><i style="background:#E8452C"></i></div>
+      <b>Display:</b> Baloo 2 &nbsp; <b>UI:</b> Mukta<br>
+      <b>Motion:</b> marker strokes draw on, cards drop and tilt, stamps.<br>
+      <b>Sound:</b> pencil, paper, soft lo-fi beat.
+    </div>
+  </div>
+
+  <div>
+    <div class="name">B · Terminal</div>
+    <div class="sub">Hacker screen. Sharp, fast, technical.</div>
+    <div class="frame b">
+      <div class="abs tag">// CYBERSECURITY</div>
+      <h1 class="abs">आपका password <span>secret नहीं</span> है।</h1>
+      <div class="abs term">&gt; 123456 <u>FAIL</u><br>&gt; qwerty@123 <u>FAIL</u><br>&gt; iloveyou <u>FAIL</u><br>&gt; rahul@2004 <u><b>MATCH</b></u></div>
+      <div class="abs cnt">10,000,000,000<small>passwords की list। कुछ ही seconds।</small></div>
+    </div>
+    <div class="spec">
+      <div class="sw"><i style="background:#0B0C0B"></i><i style="background:#ECECE4"></i><i style="background:#B9FF2E"></i></div>
+      <b>Display:</b> Anek Devanagari Condensed &nbsp; <b>UI:</b> IBM Plex Mono<br>
+      <b>Motion:</b> type-on text, hard cuts, counters, scan wipes.<br>
+      <b>Sound:</b> key clicks, sub bass, tight electronic beat.
+    </div>
+  </div>
+
+  <div>
+    <div class="name">C · Blueprint</div>
+    <div class="sub">Engineering drawing. Calm, exact, trustworthy.</div>
+    <div class="frame c">
+      <div class="abs tag">CYBERSECURITY</div>
+      <h1 class="abs">आपका password <span>secret नहीं</span> है।</h1>
+      <svg class="abs" width="360" height="640" fill="none" stroke="#E3ECFF" stroke-width="1.5">
+        <path d="M128 372 H222" stroke-dasharray="5 5"/><path d="M128 398 H222" stroke-dasharray="5 5"/>
+        <path d="M128 424 H222" stroke="#FFC83A" stroke-width="2.5"/><path d="M214 417 l9 7 -9 7" stroke="#FFC83A" stroke-width="2.5"/>
+        <rect x="262" y="384" width="36" height="28" rx="2"/><path d="M269 384 v-9 a11 11 0 0 1 22 0 v9"/>
+        <path d="M24 470 H336" stroke="#e3ecff60" stroke-width="1"/><path d="M24 465 v10 M336 465 v10" stroke="#e3ecff60" stroke-width="1"/>
+      </svg>
+      <div class="abs box" style="left:24px;top:352px;width:104px;height:92px">ATTACKER</div>
+      <div class="abs box" style="left:232px;top:352px;width:104px;height:92px;align-items:end;padding-bottom:8px">LOGIN</div>
+      <div class="abs dim" style="left:138px;top:354px">123456</div>
+      <div class="abs dim" style="left:138px;top:380px">iloveyou</div>
+      <div class="abs dim" style="left:134px;top:432px;color:#FFC83A">rahul@2004</div>
+      <div class="abs dim" style="left:24px;top:480px;width:312px;text-align:center;font-size:15px">10 अरब passwords की list · कुछ ही seconds</div>
+    </div>
+    <div class="spec">
+      <div class="sw"><i style="background:#0F2C63"></i><i style="background:#E3ECFF"></i><i style="background:#FFC83A"></i></div>
+      <b>Display:</b> Rajdhani &nbsp; <b>UI:</b> Mukta<br>
+      <b>Motion:</b> lines draw, boxes assemble, camera moves along the diagram.<br>
+      <b>Sound:</b> soft clicks, warm pads, slow pulse.
+    </div>
+  </div>
+
+  <div>
+    <div class="name">D · Poster</div>
+    <div class="sub">Street poster. Loud, bold, stops the scroll.</div>
+    <div class="frame d">
+      <div class="abs tag">CYBERSECURITY</div>
+      <h1 class="abs">आपका password <span>secret नहीं</span> है।</h1>
+      <div class="abs block"><div class="n">10 अरब</div><div class="l">passwords की list।<br>कुछ ही seconds में try।</div></div>
+      <div class="abs pill" style="top:372px">123456 ✕</div>
+      <div class="abs pill" style="top:412px;right:34px">iloveyou ✕</div>
+      <div class="abs pill" style="top:452px;background:#2437E6;color:#fff">rahul@2004 ✓</div>
+    </div>
+    <div class="spec">
+      <div class="sw"><i style="background:#FFD60A"></i><i style="background:#111"></i><i style="background:#2437E6"></i></div>
+      <b>Display:</b> Rozha One &nbsp; <b>UI:</b> Hind<br>
+      <b>Motion:</b> colour blocks slam and wipe, big type scales, snap cuts.<br>
+      <b>Sound:</b> drum hits, claps, punchy hip-hop beat.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

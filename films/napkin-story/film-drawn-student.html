@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Napkin AI: the story reel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #11143A; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// A story in three places: the classroom (the day after), the student's room at 2 AM, and the
+// real Napkin pages, which fill the frame whenever the tool is on.
+import { H, S, backOut, bump, camera, captions, cubicOut, eio, expoOut, key, lerp, person, pointer, prog, project, pulse, setup, start, webpage } from '/brand/story.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const TOP = 'shots/top.jpg';      // napkin.ai, page 0 to 1900 css px, 4x
+const CASES = 'shots/cases.jpg';  // napkin.ai, page 4150 to 5800 css px, 4x
+const FREE = 'shots/free.jpg';    // napkin.ai/pricing, page 150 to 900 css px, 4x
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"'], [TOP, CASES, FREE, '/logo.png']);
+const U = [];
+const NAVY = '#0F1230';
+const BLUE = '#2F5BFF';
+const CORAL = '#FF4D6D';
+const PX = 1080 / 412;            // frame pixels for one css pixel of a page
+const FULL = [0, 0, 1080, 1920];
+const defs = S('defs', {}, svg);
+const show = (e, on) => { e.style.display = on ? '' : 'none'; return on; };
+const star = (parent, x, y, r, fill) => S('path', { d: `M0,${-r} Q0,0 ${r},0 Q0,0 0,${r} Q0,0 ${-r},0 Q0,0 0,${-r} Z`, fill, transform: `translate(${x} ${y})` }, parent);
+const blurOf = (id) => S('feGaussianBlur', { stdDeviation: '0 0' }, S('filter', { id, x: '-30%', width: '160%', y: '0', height: '100%' }, defs));
+// a scene leaves or arrives in a fast sideways move, blurred along the move
+const whip = (g, fe, id, x, speed) => {
+  g.setAttribute('transform', `translate(${x} 0)`);
+  if (speed > 2) { fe.setAttribute('stdDeviation', `${speed} 0`); g.setAttribute('filter', `url(#${id})`); } else g.removeAttribute('filter');
+};
+const grad = (id, kind, attrs, stops) => { const g = S(kind, { id, ...attrs }, defs); stops.forEach(([o, c, a]) => S('stop', { offset: o, 'stop-color': c, 'stop-opacity': a }, g)); };
+grad('glow', 'radialGradient', {}, [[0, '#8EA6FF', 0.62], [1, '#8EA6FF', 0]]);
+grad('cone', 'linearGradient', { x1: 0, y1: 0, x2: 0, y2: 1 }, [[0, '#FFC94A', 0.5], [1, '#FFC94A', 0]]);
+grad('beam', 'linearGradient', { x1: 0, y1: 1, x2: 0, y2: 0 }, [[0, '#8EA6FF', 0.55], [1, '#8EA6FF', 0]]);
+
+// the wall of the room at night: window with the moon, and the clock at 2:00
+function nightWall(w) {
+  S('rect', { x: -500, y: -500, width: 2080, height: 3000, fill: '#1A1F4B' }, w);
+  const win = S('g', { transform: 'translate(64 300)' }, w);
+  S('rect', { width: 380, height: 300, rx: 16, fill: '#343E80' }, win);
+  S('rect', { x: 16, y: 16, width: 348, height: 268, rx: 6, fill: '#0A0F33' }, win);
+  S('circle', { cx: 270, cy: 104, r: 52, fill: '#FFE7A3' }, win);
+  S('circle', { cx: 294, cy: 86, r: 46, fill: '#0A0F33' }, win);
+  const stars = [[64, 70, 9], [128, 196, 7], [176, 58, 6], [318, 226, 8], [84, 246, 6]].map(([x, y, r]) => ({ e: star(win, 0, 0, r, '#fff'), x, y }));
+  S('rect', { x: 182, y: 16, width: 16, height: 268, fill: '#343E80' }, win);
+  S('rect', { x: 16, y: 142, width: 348, height: 16, fill: '#343E80' }, win);
+  const clock = S('g', { transform: 'translate(846 446)' }, w);
+  S('circle', { r: 108, fill: '#343E80' }, clock);
+  S('circle', { r: 90, fill: '#F3EFE6' }, clock);
+  for (let i = 0; i < 12; i++) S('path', { d: 'M0,-80 L0,-68', stroke: '#1A1F4B', 'stroke-width': i % 3 ? 4 : 8, 'stroke-linecap': 'round', transform: `rotate(${i * 30})` }, clock);
+  S('path', { d: 'M0,0 L0,-44', stroke: '#1A1F4B', 'stroke-width': 11, 'stroke-linecap': 'round', transform: 'rotate(60)' }, clock);
+  S('path', { d: 'M0,0 L0,-66', stroke: '#1A1F4B', 'stroke-width': 8, 'stroke-linecap': 'round' }, clock);
+  const second = S('path', { d: 'M0,14 L0,-72', stroke: CORAL, 'stroke-width': 4, 'stroke-linecap': 'round' }, clock);
+  S('circle', { r: 9, fill: '#1A1F4B' }, clock);
+  return (t) => {
+    stars.forEach((s, i) => s.e.setAttribute('transform', `translate(${s.x} ${s.y}) scale(${0.7 + 0.4 * Math.sin(t * 5 + i * 2)})`));
+    second.setAttribute('transform', `rotate(${t * 40})`);
+  };
+}
+
+// ================= the classroom, the day after =================
+const s1 = S('g', {}, svg);
+const w1 = S('g', {}, s1);
+const cam1 = camera(w1);
+const fe1 = blurOf('mb1');
+S('rect', { x: -400, y: -400, width: 1880, height: 2800, fill: '#FFE7C4' }, w1);
+S('path', { d: 'M640,-400 L1100,-400 L800,1330 L340,1330 Z', fill: '#FFF4DE', opacity: 0.8 }, w1);
+S('rect', { x: -400, y: 1330, width: 1880, height: 1100, fill: '#F3CC98' }, w1);
+S('rect', { x: -400, y: 1318, width: 1880, height: 18, fill: '#E2B273' }, w1);
+// the projector screen shows the finished diagram: a cut from the real page
+S('rect', { x: 206, y: 322, width: 700, height: 406, fill: '#B98646', opacity: 0.28 }, w1);
+S('rect', { x: 190, y: 296, width: 700, height: 406, fill: '#fff' }, w1);
+S('image', { href: CASES, width: 1648, height: 8000 },S('svg', { x: 206, y: 312, width: 668, height: 374, viewBox: '354 1342 966 541', preserveAspectRatio: 'xMidYMid slice' }, w1));
+S('rect', { x: 164, y: 256, width: 752, height: 48, rx: 24, fill: '#4B5368' }, w1);
+S('path', { d: 'M540,702 L540,742', stroke: '#4B5368', 'stroke-width': 5 }, w1);
+S('circle', { cx: 540, cy: 752, r: 12, fill: '#4B5368' }, w1);
+const shine = [[148, 344, 30], [934, 326, 38], [946, 664, 26], [140, 640, 34]].map(([x, y, r]) => ({ e: star(w1, 0, 0, r, '#FFB800'), x, y }));
+const teacher = person(w1, { kind: 'teacher', skin: '#D9996E', shade: '#BF8058', hair: '#2A1C1A', top: '#12A594', topShade: '#0E8C7E', accent: '#FFD166' });
+const kid = person(w1);
+const phone = S('g', {}, w1);
+S('rect', { x: -34, y: -58, width: 68, height: 116, rx: 14, fill: NAVY }, phone);
+S('rect', { x: -27, y: -48, width: 54, height: 92, rx: 6, fill: '#BFD0FF' }, phone);
+const trail = S('path', { d: 'M672,1250 Q480,700 1240,560', fill: 'none', stroke: '#fff', 'stroke-width': 8, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': '0.03 0.04', opacity: 0.9 }, w1);
+const plane = S('path', { d: 'M46,0 L-40,-34 L-22,0 L-40,34 Z', fill: '#fff', stroke: NAVY, 'stroke-width': 6, 'stroke-linejoin': 'round' }, w1);
+const bubble = (text, w, size, flip) => {
+  const g = S('g', {}, w1);
+  S('path', { d: `M${-w / 2},-70 Q${-w / 2},-130 ${-w / 2 + 60},-130 L${w / 2 - 60},-130 Q${w / 2},-130 ${w / 2},-70 L${w / 2},-40 Q${w / 2},20 ${w / 2 - 60},20 L${-w / 2 + 130},20 L${-w / 2 + 84},74 L${-w / 2 + 88},20 L${-w / 2 + 60},20 Q${-w / 2},20 ${-w / 2},-40 Z`, fill: '#fff', transform: flip ? 'scale(-1 1)' : '' }, g);
+  S('text', { y: -55 + size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: NAVY }, g, text);
+  return g;
+};
+const wah = bubble('वाह!', 270, 92, true);
+const who = bubble('यह किसने बनाया?', 520, 66, false);
+const think = S('g', {}, w1);
+S('ellipse', { cx: 0, cy: 0, rx: 172, ry: 112, fill: NAVY }, think);
+S('circle', { cx: -118, cy: 122, r: 24, fill: NAVY }, think);
+S('circle', { cx: -160, cy: 172, r: 13, fill: NAVY }, think);
+S('circle', { cx: -62, cy: -4, r: 54, fill: '#FFE7A3' }, think);
+S('circle', { cx: -38, cy: -22, r: 48, fill: NAVY }, think);
+star(think, 46, -46, 18, '#fff');
+star(think, 112, 14, 12, '#fff');
+S('text', { x: 62, y: 60, 'text-anchor': 'middle', 'font-size': 66, fill: '#FFE7A3' }, think, '2 AM');
+U.push((t) => {
+  const first = t < T.room + 0.1;
+  if (!show(s1, first || t >= T.next - 0.14)) return;
+  shine.forEach((s, i) => s.e.setAttribute('transform', `translate(${s.x} ${s.y}) rotate(${t * 40 + i * 30}) scale(${0.7 + 0.45 * Math.sin(t * 7 + i * 1.7)})`));
+  const beat = Math.sin(t * 5.2);
+  show(wah, first);
+  show(think, first && t > T.night - 0.3);
+  show(who, !first && t > T.who - 0.1 && t < T.smile + 0.5);
+  show(phone, t > T.ask + 0.05);
+  show(plane, t > T.ask + 0.4 && t < T.send + 0.25);
+  show(trail, t > T.ask + 0.4);
+  if (first) {
+    // amazed at the screen; then she turns to the student, who winks on "पूरी रात"
+    cam1(...key(t, [[0, [540, 1010, 1.07, -1.2]], [0.9, [540, 990, 1, 0], expoOut], [T.room, [540, 980, 1.08, 0.6], (p) => p]]));
+    const out = prog(t, T.room - 0.36, 0.3);
+    whip(s1, fe1, 'mb1', -1500 * out ** 3, 90 * out * out);
+    const turn = eio(prog(t, Q[0].words[3].t - 0.08, 0.3));
+    teacher.pose({
+      x: 312, y: 1630 - 10 * Math.max(0, beat), s: 1.32, lean: lerp(-2, 2, turn), tilt: lerp(-7, 5, turn),
+      look: [lerp(0.55, 1, turn), lerp(-0.95, 0, turn)], eye: 1.32, brow: [-8, 8], browY: -14 - 3 * beat,
+      open: lerp(1, 0.55, turn), smile: 1, mw: 24,
+      handL: [-104, -352 - 6 * beat], handR: [lerp(104, 212, backOut(turn)), lerp(-352, -236, turn) - 6 * beat],
+    });
+    const wink = pulse(t, T.night + 0.2, 0.16);
+    kid.pose({
+      x: 792, y: 1630 - 40 * Math.max(0, bump(t - T.night)), s: 1.3, lean: 2, tilt: 4 + 6 * wink, look: [-1, -0.15], eye: 1, eyeR: 1 - wink,
+      brow: [-7, 7 + 8 * wink], browY: -10 - 6 * wink, smile: 1.1, open: 0.25 + 0.35 * wink, mw: 30,
+      handL: [-128, -70], handR: [92 + 6 * Math.sin(t * 9), -452 + 10 * Math.sin(t * 9)], backR: true,
+    });
+    wah.setAttribute('transform', `translate(172 892) rotate(${-6 + 2 * Math.sin(t * 4)}) scale(${1 + 0.05 * Math.sin(t * 6)})`);
+    think.setAttribute('transform', `translate(668 808) scale(${0.92 * backOut(prog(t, T.night - 0.3, 0.3))}) rotate(${3 * Math.sin(t * 3)})`);
+    return;
+  }
+  // the day after: she asks who made it; the camera goes to the student's smile; then the ask
+  whip(s1, fe1, 'mb1', 0, 0);
+  cam1(...key(t, [[T.next, [540, 990, 1, 0]], [T.smile - 0.1, [540, 985, 1.06, 0], (p) => p], [T.smile + 0.5, [770, 1105, 1.72, 0]], [T.ask - 0.05, [776, 1100, 1.8, 0], (p) => p], [T.ask + 0.5, [600, 1010, 1.16, 0]], [dur, [600, 1000, 1.2, 0], (p) => p]]));
+  const speak = t > Q[12].words[2].t && t < Q[12].b ? 0.2 + 0.4 * Math.abs(Math.sin(t * 15)) : 0;
+  const clap = prog(t, T.ask, 0.3);
+  const point = eio(prog(t, T.next + 0.1, 0.35)) * (1 - clap);
+  teacher.pose({
+    x: 312, y: 1630 - 8 * Math.max(0, beat), s: 1.32, lean: 2, tilt: 5, look: [1, 0.05], eye: 1.1, brow: [-6, 6], browY: -12,
+    open: speak, smile: 1, mw: 24,
+    handL: [lerp(-120, -30 - 14 * Math.abs(Math.sin(t * 12)), clap), lerp(-110, -236, clap)],
+    handR: [lerp(lerp(130, 176, point), 30 + 14 * Math.abs(Math.sin(t * 12)), clap), lerp(lerp(-64, -478, point), -236, clap)],
+  });
+  const near = eio(prog(t, T.smile, 0.4));
+  const wink = pulse(t, T.grin + 0.22, 0.17);
+  const lift = backOut(prog(t, T.ask + 0.05, 0.35));
+  const hop = 30 * Math.max(0, bump(t - T.grin));
+  const hand = [lerp(-60, -92, lift), lerp(-30, -250, lift)];
+  kid.pose({
+    x: 792, y: 1630 - hop, s: 1.3, lean: 2 * Math.sin(t * 2.4), tilt: 3 + 7 * wink,
+    look: [lerp(-1, lift ? -0.5 : 0, near), lerp(-0.1, lift ? 0.5 * (1 - prog(t, T.send, 0.3)) : 0, near)], eye: 1.05, eyeR: 1 - wink,
+    brow: [-7, 7 + 8 * wink], browY: -10 - 5 * wink, smile: 1.25, open: 0.1 + 0.45 * wink + 0.3 * prog(t, T.send, 0.2), mw: 30,
+    handL: hand, handR: [60, -30], backL: lift < 0.05, backR: true,
+  });
+  phone.setAttribute('transform', `translate(${792 + (hand[0] - 4) * 1.3} ${1630 - hop + (hand[1] - 46) * 1.3}) rotate(${-8 + 3 * Math.sin(t * 5)}) scale(1.25)`);
+  // the paper plane leaves the phone
+  const fly = cubicOut(prog(t, T.ask + 0.4, T.send - T.ask - 0.15));
+  const at = (p) => [lerp(lerp(672, 480, p), lerp(480, 1240, p), p), lerp(lerp(1250, 700, p), lerp(700, 560, p), p)];
+  const [px, py] = at(fly);
+  const [qx, qy] = at(Math.min(1, fly + 0.02));
+  plane.setAttribute('transform', `translate(${px} ${py}) rotate(${(Math.atan2(qy - py, qx - px) * 180) / Math.PI || -40}) scale(1.5)`);
+  trail.setAttribute('stroke-dasharray', `${fly} 2`);
+  who.setAttribute('transform', `translate(436 814) rotate(${-3 + 2 * Math.sin(t * 4)}) scale(${backOut(prog(t, T.who - 0.1, 0.28))})`);
+});
+
+// ================= the desk at 2 AM, from the front =================
+const s3 = S('g', {}, svg);
+const w3 = S('g', {}, s3);
+const cam3 = camera(w3);
+const fe3 = blurOf('mb3');
+const night3 = nightWall(w3);
+const glow3 = S('ellipse', { cx: 540, cy: 1150, rx: 620, ry: 560, fill: 'url(#glow)' }, w3);
+S('path', { d: 'M-40,720 L90,700 L260,1500 L-200,1500 Z', fill: 'url(#cone)' }, w3);
+S('path', { d: 'M-70,600 L96,566 L130,712 L-60,720 Z', fill: '#FFC94A' }, w3);
+const beam = S('path', { d: 'M300,1250 L780,1250 L960,620 L120,620 Z', fill: 'url(#beam)' }, w3);
+const zz = ['z', 'Z'].map((ch, i) => S('text', { 'font-size': 60 + i * 34, fill: '#C9D4FF' }, w3, ch));
+const kid3 = person(w3);
+S('rect', { x: -500, y: 1500, width: 2080, height: 1200, fill: '#2A2150' }, w3);
+S('rect', { x: -500, y: 1500, width: 2080, height: 16, fill: '#43387F' }, w3);
+S('path', { d: 'M296,1250 L784,1250 Q806,1250 806,1272 L806,1504 L274,1504 L274,1272 Q274,1250 296,1250 Z', fill: '#B4BCD6' }, w3);
+S('rect', { x: 240, y: 1500, width: 600, height: 24, rx: 10, fill: '#8D97B9' }, w3);
+star(w3, 540, 1380, 44, '#FFD166');
+S('path', { d: 'M938,1436 q44,26 0,58', fill: 'none', stroke: '#FF6B4A', 'stroke-width': 16 }, w3);
+S('rect', { x: 846, y: 1400, width: 98, height: 108, rx: 16, fill: '#FF6B4A' }, w3);
+// what waits tomorrow: a note on the wall
+const note = S('g', {}, w3);
+S('rect', { x: -150, y: -120, width: 300, height: 250, rx: 18, fill: '#FFF8E7' }, note);
+S('rect', { x: -150, y: -120, width: 300, height: 78, rx: 18, fill: CORAL }, note);
+S('rect', { x: -150, y: -70, width: 300, height: 28, fill: CORAL }, note);
+S('text', { y: -60, 'text-anchor': 'middle', 'font-size': 60, fill: '#fff' }, note, 'कल');
+S('text', { y: 30, 'text-anchor': 'middle', 'font-size': 37, fill: NAVY, 'letter-spacing': 1 }, note, 'PRESENTATION');
+S('text', { y: 92, 'text-anchor': 'middle', 'font-size': 46, fill: NAVY }, note, '9 AM');
+const noteRing = S('ellipse', { cx: 0, cy: 16, rx: 150, ry: 46, fill: 'none', stroke: CORAL, 'stroke-width': 9, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: 'rotate(-4)' }, note);
+U.push((t) => {
+  const first = t >= T.desk + 0.02 && t < T.slide - 0.06;
+  const second = t >= T.twist - 0.14 && t < T.design + 0.12;
+  if (!show(s3, first || second)) return;
+  night3(t);
+  glow3.setAttribute('opacity', 0.85 + 0.06 * Math.sin(t * 7) + (second ? 0.4 : 0));
+  beam.setAttribute('opacity', (second ? 1 : 0.7) + 0.08 * Math.sin(t * 9));
+  show(note, first && t > T.tomorrow - 0.06);
+  if (first) {
+    // pull back from the clock to the student; then the note about tomorrow
+    cam3(...key(t, [[T.desk + 0.02, [846, 446, 3.6]], [T.desk + 0.8, [540, 1010, 1.24]], [T.tomorrow, [540, 1005, 1.3], (p) => p], [T.tomorrow + 0.4, [450, 985, 1.4]], [T.slide, [440, 980, 1.46], (p) => p]]));
+    const out = prog(t, T.slide - 0.36, 0.3);
+    whip(s3, fe3, 'mb3', 1500 * out ** 3, 90 * out * out);
+    const panic = prog(t, T.tomorrow - 0.02, 0.16);
+    const yawn = pulse(t, T.desk + 0.95, 0.3) * (1 - panic);
+    const shake = 7 * Math.sin(t * 46) * Math.exp(-Math.max(0, t - T.tomorrow) * 3) * panic;
+    kid3.pose({
+      x: 540, y: 1640, s: 1.5, tilt: lerp(6 + 2 * Math.sin(t * 2), -3, panic), hx: shake, hy: lerp(8 + 6 * Math.sin(t * 2), -8, panic),
+      look: [lerp(0, -0.9, panic), lerp(0.7, -0.45, panic)], eye: lerp(0.5 * (1 - yawn), 1.35, panic),
+      brow: [lerp(-9, -15, panic), lerp(9, 15, panic)], browY: lerp(2, -18, panic), smile: lerp(0.1, -0.6, panic), open: Math.max(yawn, panic), mw: lerp(20, 15, panic),
+      handL: [lerp(-70, -112, backOut(panic)), lerp(-200, -500, backOut(panic))], handR: [lerp(70, 112, backOut(panic)), lerp(-200, -500, backOut(panic))],
+    });
+    zz.forEach((z, i) => {
+      const p = (t * 0.7 + i * 0.5) % 1;
+      show(z, !panic && t > T.desk + 0.7);
+      z.setAttribute('transform', `translate(${690 + i * 50 + 20 * Math.sin(p * 6)} ${880 - p * 150 - i * 60})`);
+    });
+    note.setAttribute('transform', `translate(236 880) rotate(${-7 + 2 * Math.sin(t * 3)}) scale(${backOut(prog(t, T.tomorrow - 0.06, 0.3))})`);
+    noteRing.setAttribute('stroke-dashoffset', 1 - eio(prog(t, T.pres, 0.45)));
+    return;
+  }
+  // "लेकिन असली बात अब आती है": close on the face, lit by the screen
+  whip(s3, fe3, 'mb3', 0, 0);
+  zz.forEach((z) => show(z, false));
+  cam3(...key(t, [[T.twist - 0.14, [540, 1060, 1.5]], [T.design, [540, 1040, 1.9], cubicOut]]));
+  const up = eio(prog(t, T.now - 0.1, 0.3));
+  const j = Math.max(0, bump(t - T.now));
+  kid3.pose({
+    x: 540, y: 1640 - 26 * j, s: 1.5, tilt: lerp(-4, 3, up), look: [0, lerp(0.75, 0, up)], eye: lerp(1.15, 1.32, up),
+    brow: [-6, 6], browY: lerp(-6, -16, up), smile: 1.3, open: lerp(0.15, 0.6, up), mw: 30,
+    handL: [lerp(-70, -150, backOut(up)), lerp(-200, -430, backOut(up))], handR: [lerp(70, 150, backOut(up)), lerp(-200, -430, backOut(up))],
+  });
+});
+
+// ================= the room, over the student's shoulder =================
+const s2 = S('g', {}, svg);
+const w2 = S('g', {}, s2);
+const cam2 = camera(w2);
+const fe2 = blurOf('mb2');
+const SCREEN = [176, 586, 728, 500];
+const night2 = nightWall(w2);
+const glow = S('ellipse', { cx: 540, cy: 860, rx: 760, ry: 660, fill: 'url(#glow)' }, w2);
+S('path', { d: 'M1000,690 L1130,700 L1260,1190 L820,1190 Z', fill: 'url(#cone)' }, w2);
+S('path', { d: 'M1100,580 L1150,250', stroke: '#8088B8', 'stroke-width': 16, 'stroke-linecap': 'round' }, w2);
+S('path', { d: 'M968,610 L1110,560 L1150,706 L996,700 Z', fill: '#FFC94A' }, w2);
+S('rect', { x: -500, y: 1180, width: 2080, height: 1500, fill: '#2A2150' }, w2);
+S('rect', { x: -500, y: 1180, width: 2080, height: 16, fill: '#43387F' }, w2);
+S('path', { d: 'M118,1120 q44,26 0,58', fill: 'none', stroke: '#FF6B4A', 'stroke-width': 16 }, w2);
+S('rect', { x: 26, y: 1084, width: 98, height: 108, rx: 16, fill: '#FF6B4A' }, w2);
+const steam = [52, 92].map((x) => S('path', { d: `M${x},1064 q-14,-22 0,-44 q14,-22 0,-44`, fill: 'none', stroke: '#fff', 'stroke-width': 7, 'stroke-linecap': 'round', opacity: 0.4 }, w2));
+S('rect', { x: 150, y: 560, width: 780, height: 566, rx: 30, fill: '#0B0E24' }, w2);
+S('rect', { x: SCREEN[0], y: SCREEN[1], width: SCREEN[2], height: SCREEN[3], rx: 8 }, S('clipPath', { id: 'scr' }, defs));
+const scr = S('g', { transform: `translate(${SCREEN[0]} ${SCREEN[1]})` }, S('g', { 'clip-path': 'url(#scr)' }, w2));
+S('rect', { width: 728, height: 500, fill: '#fff' }, scr);
+// screen 1, the hook: a drawn editor, one button, a diagram
+const ed = S('g', {}, scr);
+S('rect', { width: 728, height: 48, fill: '#ECEEF4' }, ed);
+['#FF5F57', '#FEBC2E', '#28C840'].forEach((f, i) => S('circle', { cx: 28 + i * 26, cy: 24, r: 8, fill: f }, ed));
+const bars = [560, 630, 480, 600, 390].map((w, i) => S('rect', { x: 40, y: 88 + i * 52, width: w, height: 26, rx: 13, fill: i ? '#D8DCE6' : '#AEB4C4' }, ed));
+const nodes = [['Notes', '#1A1F4B', 254, 80], ['Idea', '#FFB020', 40, 232], ['Plan', '#19C37D', 254, 232], ['Result', BLUE, 468, 232]].map(([label, fill, x, y]) => {
+  const n = S('g', {}, ed);
+  S('rect', { x: -110, y: -42, width: 220, height: 84, rx: 22, fill }, n);
+  S('text', { y: 15, 'text-anchor': 'middle', 'font-size': 44, fill: '#fff' }, n, label);
+  return { n, x: x + 110, y: y + 42 };
+});
+const links = [['M364,164 L364,196', 0], ['M150,196 L578,196', 1], ['M150,196 L150,232', 2], ['M364,196 L364,232', 2], ['M578,196 L578,232', 2]]
+  .map(([d, i]) => ({ e: S('path', { d, fill: 'none', stroke: '#1A1F4B', 'stroke-width': 8, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1 }, ed), i }));
+const btn = S('g', {}, ed);
+S('rect', { x: -150, y: -46, width: 300, height: 92, rx: 24, fill: BLUE }, btn);
+S('text', { y: 16, 'text-anchor': 'middle', 'font-size': 48, fill: '#fff' }, btn, '✦ Generate');
+const flash = S('rect', { width: 728, height: 500, fill: '#fff' }, ed);
+// screen 2, the trouble: a slide that is only text
+const wall = S('g', {}, scr);
+S('rect', { width: 728, height: 500, fill: '#F4F5F9' }, wall);
+S('rect', { width: 728, height: 92, fill: '#39405C' }, wall);
+S('rect', { x: 36, y: 30, width: 330, height: 32, rx: 16, fill: '#fff' }, wall);
+const lines = [640, 600, 650, 570, 630, 610, 655, 520, 640, 590, 300].map((w, i) => S('rect', { x: 36, y: 118 + i * 34, width: w, height: 17, rx: 8, fill: '#9AA1B5', transform: `translate(36 0) scale(0 1) translate(-36 0)` }, wall));
+S('path', { d: 'M96,1126 L984,1126 L1054,1218 L26,1218 Z', fill: '#B4BCD6' }, w2);
+for (let r = 0; r < 3; r++) for (let k = 0; k < 11; k++) S('rect', { x: 150 - r * 20 + k * (71.5 + r * 3.6), y: 1140 + r * 24, width: 56 + r * 3, height: 15, rx: 5, fill: '#8D97B9' }, w2);
+const ring = S('circle', { cx: 366, cy: 1004, r: 40, fill: 'none', stroke: BLUE }, w2);
+const cur = S('path', { d: 'M0 0 L0 110 L30 82 L52 132 L74 122 L52 74 L92 74Z', fill: NAVY, stroke: '#fff', 'stroke-width': 9, 'stroke-linejoin': 'round' }, w2);
+const back = S('g', {}, w2);
+S('path', { d: 'M-120,2000 Q-90,1730 110,1700 L430,1700 Q630,1730 660,2000 Z', fill: '#FF6B4A' }, back);
+S('path', { d: 'M96,1716 Q270,1820 444,1716 Q270,1650 96,1716 Z', fill: '#E0502F' }, back);
+S('rect', { x: 206, y: 1620, width: 128, height: 96, fill: '#C98B60' }, back);
+S('ellipse', { cx: 64, cy: 1530, rx: 28, ry: 42, fill: '#E3A678' }, back);
+S('ellipse', { cx: 476, cy: 1530, rx: 28, ry: 42, fill: '#E3A678' }, back);
+S('ellipse', { cx: 270, cy: 1500, rx: 204, ry: 218, fill: '#1F1A24' }, back);
+S('path', { d: 'M150,1310 C190,1240 300,1230 330,1300 Z', fill: '#1F1A24' }, back);
+S('path', { d: 'M318,1296 Q470,1330 470,1470', fill: 'none', stroke: '#9DB2FF', 'stroke-width': 12, 'stroke-linecap': 'round', opacity: 0.6 }, back);
+// the camera of the room; `grow` is how far the laptop screen has become the whole frame
+const roomCam = (t) => {
+  if (t < T.desk + 0.02) return [...key(t, [[T.room - 0.2, [540, 990, 1]], [T.desk - 0.2, [540, 880, 1.22], cubicOut], [T.desk + 0.02, [846, 446, 3.6], (p) => p * p * p]]), 0];
+  const c = key(t, [[T.slide - 0.2, [540, 980, 1.04]], [T.napkin + 0.4, [540, 880, 1.22], cubicOut]]);
+  const grow = eio(prog(t, T.napkin + 0.4, 0.55));
+  return [c[0], lerp(c[1], 836, grow), c[2] + 0.5 * grow, grow];
+};
+U.push((t) => {
+  const first = t >= T.room - 0.2 && t < T.desk + 0.02;
+  const second = t >= T.slide - 0.2 && t < T.name + 0.9;
+  if (!show(s2, first || second)) return;
+  const [cx, cy, z] = roomCam(t);
+  cam2(cx, cy, z);
+  night2(t);
+  steam.forEach((s, i) => s.setAttribute('transform', `translate(${6 * Math.sin(t * 3 + i * 2)} ${-8 * ((t * 0.9 + i * 0.5) % 1)})`));
+  show(ed, first);
+  show(wall, second);
+  show(cur, first);
+  if (first) {
+    const into = prog(t, T.room - 0.2, 0.42);
+    whip(s2, fe2, 'mb2', 1500 * (1 - expoOut(into)), into < 1 ? 80 * (1 - into) ** 2 : 0);
+    // one click: the lines of text turn into a diagram
+    const q = t - T.click;
+    const press = pulse(q, 0.02, 0.07);
+    btn.setAttribute('transform', `translate(190 418) scale(${1 - 0.1 * press})`);
+    bars.forEach((b, i) => b.setAttribute('transform', `translate(40 0) scale(${1 - expoOut(prog(q, 0.05 + i * 0.03, 0.22))} 1) translate(-40 0)`));
+    nodes.forEach((n, i) => {
+      const p = prog(q, i ? 0.2 + i * 0.05 : 0.08, 0.26);
+      show(n.n, p > 0);
+      n.n.setAttribute('transform', `translate(${n.x} ${n.y}) scale(${lerp(0.3, 1, backOut(p))})`);
+    });
+    links.forEach((l) => l.e.setAttribute('stroke-dashoffset', 1 - expoOut(prog(q, 0.13 + l.i * 0.05, 0.2))));
+    flash.setAttribute('opacity', q > 0 ? 0.9 * Math.exp(-q * 9) : 0);
+    glow.setAttribute('opacity', 0.8 + (q > 0 ? 0.5 * Math.exp(-q * 5) : 0) + 0.04 * Math.sin(t * 7));
+    const a = eio(prog(t, T.room + 0.1, T.click - T.room - 0.18));
+    cur.setAttribute('transform', `translate(${lerp(1020, 372, a)} ${lerp(1380, 1010, a)}) scale(${0.72 - 0.1 * press})`);
+    const rp = prog(q, 0.03, 0.5);
+    show(ring, rp > 0 && rp < 1);
+    ring.setAttribute('r', lerp(20, 150, cubicOut(rp)));
+    ring.setAttribute('stroke-width', lerp(14, 1, rp));
+    back.setAttribute('transform', `translate(${5 * Math.sin(t * 1.7)} ${-46 * Math.max(0, bump(q - 0.12)) + 6 * Math.sin(t * 2.3)})`);
+    return;
+  }
+  // the slide fills with text, line after line, and the head sinks
+  const into = prog(t, T.slide - 0.2, 0.42);
+  whip(s2, fe2, 'mb2', -1500 * (1 - expoOut(into)), into < 1 ? 80 * (1 - into) ** 2 : 0);
+  show(ring, false);
+  glow.setAttribute('opacity', 0.75 + 0.04 * Math.sin(t * 7));
+  lines.forEach((l, i) => l.setAttribute('transform', `translate(36 0) scale(${expoOut(prog(t, T.slide + 0.05 + i * 0.1, 0.3))} 1) translate(-36 0)`));
+  const sink = eio(prog(t, T.text - 0.08, 0.45)) * (1 - eio(prog(t, T.napkin + 0.1, 0.4)));
+  back.setAttribute('transform', `translate(${5 * Math.sin(t * 1.7)} ${40 * sink}) rotate(${7 * sink} 270 1720)`);
+});
+
+// ================= the real pages =================
+const pTop = webpage(stage, TOP, 1648);
+const pCases = webpage(stage, CASES, 1648);
+const pFree = webpage(stage, FREE, 1648);
+const ink = (page) => S('svg', { width: 1080, height: 10, style: 'position:absolute;left:0;top:0;overflow:visible' }, page.pins);
+// a marker ring at a page position (css pixels of the strip), drawn on by p
+const loop = (layer, cx, cy, rx, ry, rot = -3) => {
+  const e = S('ellipse', { cx: cx * PX, cy: cy * PX, rx: rx * PX, ry: ry * PX, fill: 'none', stroke: CORAL, 'stroke-width': 13, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: `rotate(${rot} ${cx * PX} ${cy * PX})` }, layer);
+  return (p) => { show(e, p > 0); e.setAttribute('stroke-dashoffset', 1 - p); };
+};
+const inkTop = ink(pTop);
+const ringName = loop(inkTop, 196, 157, 126, 54);
+const ringPaste = loop(inkTop, 150, 1035, 112, 30, -2);
+const tap = S('circle', { cx: 160.6 * PX, cy: 1535 * PX, r: 30, fill: 'none', stroke: BLUE }, inkTop);
+// the notes that are pasted: a drawn card over the empty part of the page
+const card = H('div', `position:absolute;left:240px;top:${1150 * PX}px;width:600px;height:250px;background:#fff;border-radius:30px;box-shadow:0 14px 0 rgba(15,18,48,.2);box-sizing:border-box;padding:34px 40px`, pTop.pins,
+  `<div style="display:inline-block;background:#FFD23F;color:${NAVY};font:800 34px/1 'Anek Devanagari';padding:12px 20px 6px;border-radius:12px">notes</div>` +
+  [500, 440, 520, 300].map((w) => `<div style="height:20px;width:${w}px;border-radius:10px;background:#C9CEDA;margin-top:18px"></div>`).join(''));
+const inkCases = ink(pCases);
+const sparks = [[78, 330, 16], [338, 322, 22], [344, 478, 14], [74, 470, 18]].map(([x, y, r]) => ({ e: star(inkCases, 0, 0, r * PX, '#FFB800'), x: x * PX, y: y * PX }));
+const ringPng = loop(ink(pFree), 180, 543, 112, 22, -1);
+
+U.push((t) => {
+  // ---- napkin.ai, top of the page ----
+  if (t >= T.napkin - 0.14 && t < T.magic + 0.38) {
+    const [cx, cy, z, grow] = roomCam(t);
+    const r0 = project(cx, cy, z, SCREEN);
+    const rect = r0.map((v, i) => lerp(v, FULL[i], grow));
+    rect[1] -= 1920 * eio(prog(t, T.magic - 0.05, 0.42));
+    const up = expoOut(prog(t, T.napkin - 0.14, 0.3));
+    const hero = t < T.paste + 0.25;
+    const zoom = key(t, [[T.napkin + 1, 1], [T.paste - 0.3, 1.15], [T.paste + 0.22, 1], [T.button + 0.3, 1], [T.press - 0.12, 1.5], [T.magic - 0.1, 1.5], [T.magic + 0.2, 1]]);
+    const scroll = key(t, [[T.paste - 0.28, 0], [T.paste + 0.3, 800], [T.button - 0.2, 800], [T.button + 0.32, 1330], [T.magic - 0.12, 1330], [T.magic + 0.34, 1760]]);
+    pTop.set({ rect, radius: 8 * z * (1 - grow), slide: (1 - up) * (rect[3] / (rect[2] / 1080)), zoom, fx: hero ? 300 : 160.6 * PX, fy: hero ? 420 : (1535 - 1330) * PX, scroll: scroll * 4 });
+    ringName(eio(prog(t, T.name + 0.3, 0.5)));
+    ringPaste(eio(prog(t, T.paste + 0.35, 0.4)));
+    const fly = cubicOut(prog(t, T.paste + 0.15, T.drop - T.paste - 0.13));
+    card.style.visibility = fly > 0 ? 'visible' : 'hidden';
+    card.style.transform = `translate(${(1 - fly) * 760}px,${(1 - fly) * 620}px) rotate(${lerp(20, -3, fly)}deg) scale(${1 + 0.1 * Math.max(0, bump(t - T.drop))},${1 - 0.1 * Math.max(0, bump(t - T.drop))})`;
+    const rp = prog(t, T.press + 0.02, 0.45);
+    show(tap, rp > 0 && rp < 1);
+    tap.setAttribute('r', lerp(14, 70, cubicOut(rp)));
+    tap.setAttribute('stroke-width', lerp(10, 1, rp));
+  } else pTop.hide();
+
+  // ---- napkin.ai, the use cases: the finished diagram, then the other designs ----
+  const showA = t >= T.magic - 0.05 && t < T.twist + 0.24;
+  const showB = t >= T.design - 0.3 && t < T.png + 0.22;
+  if (showA) {
+    const y = 1920 * (1 - eio(prog(t, T.magic - 0.05, 0.42))) + 1920 * eio(prog(t, T.twist - 0.12, 0.34));
+    const scroll = key(t, [[T.magic, 30], [T.diagram, 70, (p) => p]]);
+    const m = expoOut(prog(t, T.diagram - 0.22, 0.6));
+    const fy = (403.5 - scroll) * PX;
+    pCases.set({ rect: [0, y, 1080, 1920], scroll: scroll * 4, zoom: lerp(1, 1.62, m) + 0.04 * prog(t, T.diagram, 1.2), fx: 209 * PX, fy, slide: m * (800 - fy) });
+    sparks.forEach((s, i) => {
+      const p = prog(t, T.diagram + 0.05 + i * 0.06, 0.3);
+      show(s.e, p > 0);
+      s.e.setAttribute('transform', `translate(${s.x} ${s.y}) rotate(${t * 50 + i * 40}) scale(${backOut(p) * (0.8 + 0.3 * Math.sin(t * 8 + i))})`);
+    });
+  } else if (showB) {
+    const y = 1920 * (1 - expoOut(prog(t, T.design - 0.3, 0.42)));
+    const x = -1080 * eio(prog(t, T.png - 0.2, 0.42));
+    const scroll = key(t, [[T.colour - 0.14, 403], [T.colour + 0.3, 760], [T.self - 0.06, 760], [T.self + 0.38, 1070]]);
+    pCases.set({ rect: [x, y, 1080, 1920], scroll: scroll * 4, zoom: 1.06 + 0.04 * Math.sin(t * 1.3), fx: 540, fy: 780 });
+    sparks.forEach((s) => show(s.e, false));
+  } else pCases.hide();
+
+  // ---- napkin.ai/pricing, the free plan ----
+  if (t >= T.png - 0.2 && t < T.next + 0.24) {
+    const x = 1080 * (1 - eio(prog(t, T.png - 0.2, 0.42)));
+    const y = 1920 * eio(prog(t, T.next - 0.12, 0.34));
+    pFree.set({ rect: [x, y, 1080, 1920], scroll: key(t, [[T.png, 84], [T.next, 100, (p) => p]]) * 4, zoom: key(t, [[T.free - 0.6, 1], [T.free - 0.05, 1.13]]), fx: 470, fy: 1190 });
+    ringPng(eio(prog(t, T.free - 0.12, 0.42)));
+  } else pFree.hide();
+});
+
+// ================= captions, the follow card, the pointer =================
+const clean = (words) => words.map((x) => ({ ...x, word: x.word.replace(/[।,]+$/, '') }));
+U.push(captions(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1 })), { size: 80 }));
+
+const follow = H('div', 'position:absolute;left:50px;top:286px;width:980px;height:236px;background:#fff;border-radius:64px;box-shadow:0 16px 0 rgba(15,18,48,.22);display:flex;align-items:center;gap:28px;padding:0 34px;box-sizing:border-box', stage,
+  `<img src="/logo.png" style="width:156px;height:156px;border-radius:50%;object-fit:cover;border:8px solid #FFD23F;box-sizing:border-box">` +
+  `<div style="flex:1;white-space:nowrap"><div style="font:800 56px/1.15 'Anek Devanagari';font-stretch:88%;color:${NAVY}">@vipulsingh_ai</div><div style="font:600 36px/1.2 'Anek Devanagari';color:#5B6070">AI tools, आसान हिंदी में</div></div>`);
+const fbtn = H('div', `font:800 50px/1 'Anek Devanagari';color:#fff;background:${BLUE};padding:32px 44px 22px;border-radius:999px;white-space:nowrap`, follow, 'Follow');
+const tip = pointer(stage, NAVY, '#fff', 130);
+const TIP = [
+  [T.name - 0.25, [1160, 1500]], [T.name + 0.25, [860, 600], cubicOut], [T.paste - 0.2, [860, 600]], [T.paste + 0.14, [1200, 1760]],
+  [T.drop, [780, 1160], cubicOut], [T.button - 0.1, [780, 1160]], [T.press - 0.12, [431, 548]], [T.magic - 0.02, [431, 548]],
+  [T.design - 0.1, [1150, 1200]], [T.design + 0.3, [900, 1010], cubicOut], [T.png + 0.1, [900, 1000]], [T.free - 0.1, [742, 1222]], [T.next - 0.1, [742, 1222]],
+  [T.send + 0.05, [1150, 900]], [T.follow - 0.06, [900, 420]], [dur, [900, 420]],
+];
+U.push((t) => {
+  const p = backOut(prog(t, T.send - 0.12, 0.4));
+  follow.style.visibility = p > 0 ? 'visible' : 'hidden';
+  const press = pulse(t, T.follow + 0.02, 0.07);
+  follow.style.transform = `translateY(${(1 - p) * -620}px) rotate(${(1 - p) * -5}deg) scale(${1 + 0.03 * Math.max(0, bump(t - T.follow))})`;
+  const done = t >= T.follow + 0.02;
+  fbtn.textContent = done ? 'Following ✓' : 'Follow';
+  fbtn.style.background = done ? NAVY : BLUE;
+  fbtn.style.transform = `scale(${1 - 0.1 * press})`;
+  const on = (t >= T.name - 0.25 && t < T.magic - 0.02) || (t >= T.design - 0.1 && t < T.next - 0.1) || t >= T.send + 0.05;
+  tip.style.visibility = on ? 'visible' : 'hidden';
+  const [x, y] = key(t, TIP);
+  const click = pulse(t, T.press + 0.02, 0.07) + press;
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * click})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

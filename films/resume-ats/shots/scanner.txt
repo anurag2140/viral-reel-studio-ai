@@ -1,0 +1,107 @@
+RESUME WORDED
+
+SCORE MY RESUME - FREE ATS RESUME SCAN
+
+How good is your resume?
+Find out instantly. Upload your resume and our free resume scanner will evaluate it against key criteria hiring managers and applicant tracking systems (ATS) look for. Get actionable feedback on how to improve your resume's success rate.
+Drop your resume here or choose a file.
+English resumes in PDF or DOCX only. Max 2MB file size.
+   100% privacy
+
+Trusted by over one million professionals globally.
+
+Excellent 
+Rated 4.9 out of 5 based on 1000+ reviews on 
+
+ 
+
+LEARN MORE
+↓
+Get a free ATS resume scan, powered by Artifical Intelligence
+Companies often receive hundreds of resumes for every job posting they put out. They and their hiring managers don't have the time to go through each resume individually, so they use software, often called Applicant Tracking Systems (ATS), to filter through all the resumes they receive.
+
+You need to make sure your resume is read correctly by these ATS and resume screening software. If it is not, your resume could get instantly rejected by these systems and never make its way to a recruiter or hiring manager.
+
+Our resume scanner evaluates whether your resume will be read correctly by ATS, i.e. if it is ATS compliant. In addition, it also gives you detailed feedback on key criteria recruiters and hiring managers look for, for free.
+
+Start the ATS resume test  »
+How do I make sure my resume is ATS-compliant?
+Here are some guidelines you should follow to ensure your resume gets correctly scanned by all applicant tracking systems.
+
+Use standard section titles: Label your work experience and education sections with conventional section titles. For example, use "Professional Experience" instead of "My career in a nutshell".
+
+Use standard fonts: Some newer fonts convert letters to special characters which often get scanned incorrectly by ATS. Where possible, stick to a standard font (Garamond, Arial, Calibri) where possible.
+
+Single-column layouts: Modern ATS are better at scanning multi-column layout but there are several ATS that fail at reading multi-column resumes in the way you'd expect it to.
+
+No tables: Tables rarely get parsed correctly. Use tabs and right/left aligns to structure your resume instead.
+
+No scanned documents, pictures or diagrams: Your resume's text must be highlightable and readable. Avoid using images or diagrams in your resume - this includes pie charts and graphs too!
+
+Find out if your resume passes the ATS resume test
+💡  Tip: Score My Resume was built with all applicant tracking systems in mind and acts as a powerful ATS resume test. If it is scanned correctly by our platform, you can be confident it will also be processed correctly by all ATS.
+
+Get your free ATS resume scan  »
+
+Want to use this template? Download it here  »
+An example of an ATS friendly resume template that is readable by ATS and resume scanners
+Here are the guidelines we outlined above in practice.
+
+Notice the clean single-column design and how fancy formatting like tables, diagrams and graphs have been stripped out. ATS resume scanners either ignore these or read them incorrectly. You want to make sure you stick to text and a standard font with minimal use of special characters.
+
+Similarly, notice how this resume also uses standard section titles, such as "Experience" and "Education". Resume scanners specifically look out for these core sections and you want to make sure they're easy to find.
+
+Bonus tip: Use reverse chronological order for your dates. Many applicant tracking systems try to find your most recent work experience and assumes your resume is in reverse chronological order (i.e. most recent first).
+
+Get an ATS resume test »
+The importance of resume keywords
+If you're reading until this point, you've understood how to make your resume readable and scanned correctly by applicant tracking systems, or ATS. This is a great start - well done!
+
+However, you're not done yet. You need to now make sure these resume scanners actually rank your resume highly. Let's back up for a bit.
+
+If you recall at the start of this page, we discussed that companies use ATS to filter down the number of applicants they receive. They filter resumes by looking for keywords that match the job description. Fortunately for you, our resume keyword scanner helps you identify the right keywords to include on your resume. This tool helps you test your resume against a specific job description, enabling you to optimize for that posting (and of course, dramatically increase your success rate).
+
+Target Your Resume
+
+What tests does our ATS resume scanner run?
+We'll scan your resume in 30 seconds and evaluate it against a range of criteria that recruiters and hiring managers consider important.
+
+Our resume test goes even deeper than an ATS scan, and gives you feedback on many other areas of your resume such as impact, soft skills and brevity. This enables you to identify gaps on your resume so you can fix them.
+
+Test your resume through an ATS  »
+Unlimited ATS resume scans
+You get several free uploads to our resume scanner. If you have different versions of your resumes (and you should, especially if you are applying to different industries!), you can test each of your resumes through our resume scanner.
+
+This allows you to evaluate all versions of your resume for not only ATS friendliness, but also other key criteria (like impact, hard skills and core competencies), to make sure you get as many interviews as possible.
+
+To get started, upload your resume in PDF. If you're wondering if PDFs can be read by ATS, the answer is yes! Unless specified, always use PDF. All ATS can read them perfectly as long as you stick to the guidelines we've outlined above - i.e. ensure your resume is not a scan, is not an image and uses standard formatting (it should ideally have been exported by Google Docs or Microsoft Word).
+
+Get a free ATS resume scan  »
+
+An effective free resume scanner
+
+As of 2026, our free resume scanner has supported 5 million job seekers globally. It's an effective platform to determine:
+
+Whether you have a scannable resume: Find out if your resume will be scanned correctly by an applicant tracking system. Are your achievements read correctly? Find out instantly.
+
+Your ATS readability: Check that your work experience and skills are identified correctly. Note that if your work experience isn't detected correctly, an ATS may auto-flag you as unemployed — you want to avoid this since you might automatically get rejected.
+
+How well your resume matches the job description: You will be given a resume score, which will help you understand if your resume covers all the right keywords and recruiter checks. A good score is 85 or above, and ideally 90 or above — a resume that scores 90+ passes every check we run.
+
+You'll also get access to our advanced AI resume writer, which will enhance your resume's existing content and turn it into professional content you can use on your resume. You'll never have to ever ask, "Is my resume good enough?". You'll know it is.
+
+Scan your resume  »
+
+What does the resume scanner check?
+The scanner runs 30+ checks on every resume. The exact set adapts to your career level — senior resumes are held to more standards, up to around 40 checks — and the checks fall into four groups.
+
+1. ATS parse simulation: We parse your file the way an applicant tracking system does and show you the extracted text. This covers section detection (does software find your Experience, Education and Skills under the titles you used), contact details (name, email, phone, location), work history and dates — including reverse-chronological order — and formatting an ATS cannot read: tables, multi-column layouts, images, charts and scanned documents.
+
+2. Keyword and skills coverage: Hard skills and industry keywords, checked against a database of 250,000+ skills and phrases across industries; whether your skills section matches what your bullet points show; and soft-skill signals — leadership, communication, teamwork, analytical thinking — checked as demonstrated in your accomplishments rather than as words in a list, because recruiters read a bare "teamwork" as filler.
+
+3. Formatting traps: Resume length and page density; bullet point count and length; paragraph blocks that should be bullet points; consistency in date formats, punctuation and verb tense; spelling; unnecessary sections; and whether the sections a recruiter expects (summary, experience, education, skills) are present and complete.
+
+4. Impact and style: Quantified impact — bullet points with measurable results; weak, repeated or wrong-tense action verbs; passive voice and personal pronouns; buzzwords, clichés and filler words; repetition across bullets; and growth and leadership signals across your roles.
+
+What an ATS actually sees
+An applicant tracking system does not look at your resume. It converts the file to plain text and works from that. Below: the same resume as a designed two-column file, t

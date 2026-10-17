@@ -1,0 +1,170 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 38.061,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "तुम्हारी hostel वाली selfie अब LinkedIn वाली professional photo है। बिना photographer और बिना blazer के।",
+      "sentences": [
+        "तुम्हारी hostel वाली selfie अब LinkedIn वाली professional photo है।",
+        "बिना photographer और बिना blazer के।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 4.937,
+      "pauses": [
+        [
+          3.1,
+          3.28
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "कल placement का form भरना है। Formal photo चाहिए और phone में बस ऐसी selfies हैं।",
+      "sentences": [
+        "कल placement का form भरना है।",
+        "Formal photo चाहिए और phone में बस ऐसी selfies हैं।"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 5.192,
+      "duration": 4.356,
+      "pauses": [
+        [
+          1.51,
+          1.79
+        ]
+      ]
+    },
+    {
+      "id": "turn",
+      "text": "तभी Rohan बोलता है कि Gemini में डाल दे। वहाँ photo editing free है।",
+      "sentences": [
+        "तभी Rohan बोलता है कि Gemini में डाल दे।",
+        "वहाँ photo editing free है।"
+      ],
+      "file": "vo/turn.wav",
+      "start": 9.808,
+      "duration": 3.274,
+      "pauses": [
+        [
+          1.96,
+          2.15
+        ]
+      ]
+    },
+    {
+      "id": "how",
+      "text": "अपनी selfie upload करो। और बस यह एक line लिखो।",
+      "sentences": [
+        "अपनी selfie upload करो।",
+        "और बस यह एक line लिखो।"
+      ],
+      "file": "vo/how.wav",
+      "start": 13.269,
+      "duration": 2.547,
+      "pauses": [
+        [
+          1.17,
+          1.47
+        ]
+      ]
+    },
+    {
+      "id": "magic",
+      "text": "चेहरा तुम्हारा ही है पर अब blazer और studio वाली light में।",
+      "sentences": [
+        "चेहरा तुम्हारा ही है पर अब blazer और studio वाली light में।"
+      ],
+      "file": "vo/magic.wav",
+      "start": 16.154,
+      "duration": 3.521,
+      "pauses": []
+    },
+    {
+      "id": "follow",
+      "text": "ऐसे और AI जुगाड़ के लिए follow कर लो।",
+      "sentences": [
+        "ऐसे और AI जुगाड़ के लिए follow कर लो।"
+      ],
+      "file": "vo/follow.wav",
+      "start": 19.904,
+      "duration": 1.804,
+      "pauses": []
+    },
+    {
+      "id": "twist",
+      "text": "लेकिन असली जुगाड़ अब है। एक line और लिखो और यही photo हर size में तैयार है।",
+      "sentences": [
+        "लेकिन असली जुगाड़ अब है।",
+        "एक line और लिखो और यही photo हर size में तैयार है।"
+      ],
+      "file": "vo/twist.wav",
+      "start": 21.923,
+      "duration": 4.661,
+      "pauses": [
+        [
+          1.41,
+          1.9
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "Interview में Priya Ma'am ने पहले यही पूछा कि photo कहाँ खिंचवाई। तुमने मुस्कुराकर कहा कि एक जुगाड़ है।",
+      "sentences": [
+        "Interview में Priya Ma'am ने पहले यही पूछा कि photo कहाँ खिंचवाई।",
+        "तुमने मुस्कुराकर कहा कि एक जुगाड़ है।"
+      ],
+      "file": "vo/end.wav",
+      "start": 26.827,
+      "duration": 5.268,
+      "pauses": [
+        [
+          2.83,
+          3.14
+        ],
+        [
+          3.15,
+          3.29
+        ]
+      ]
+    },
+    {
+      "id": "link",
+      "text": "इस tool का link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "इस tool का link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 32.308,
+      "duration": 2.801,
+      "pauses": [
+        [
+          1.08,
+          1.57
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "पूरा prompt caption में है। Placement वाले दोस्त को भेज दो।",
+      "sentences": [
+        "पूरा prompt caption में है।",
+        "Placement वाले दोस्त को भेज दो।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 35.481,
+      "duration": 2.48,
+      "pauses": [
+        [
+          1.06,
+          1.29
+        ]
+      ]
+    }
+  ]
+}

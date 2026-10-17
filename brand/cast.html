@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cast sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #F6EEDF; }
+  svg { display: block; }
+  text { font-family: "Anek Devanagari"; }
+</style>
+</head>
+<body>
+<svg id="sheet" viewBox="0 0 2400 2560" width="2400" height="2560"></svg>
+<script type="module">
+// The supporting cast on one page: each person in two poses, the monkey and the macaw in three.
+// Render it with: node sheet.mjs brand/cast.html brand/cast-sheet.png
+import { CAST, cast, macaw, monkey } from './cast.js';
+
+const NS = 'http://www.w3.org/2000/svg';
+const S = (tag, attrs = {}, parent, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
+const svg = document.getElementById('sheet');
+await document.fonts.ready;
+S('rect', { width: 2400, height: 2560, fill: '#F6EEDF' }, svg);
+S('text', { x: 60, y: 76, 'font-size': 46, 'font-weight': 800, fill: '#2A1A12' }, svg, 'Supporting cast (brand/cast.js)');
+S('text', { x: 60, y: 118, 'font-size': 28, 'font-weight': 500, fill: '#6B5A4C' }, svg, 'Five people and two animals. Rows 1 and 2: each person in two poses. Row 3: Chintu the monkey and Mitthu the macaw.');
+const shadow = (x, y, w = 120) => S('ellipse', { cx: x, cy: y, rx: w, ry: 18, fill: '#2A1A12', opacity: 0.12 }, svg);
+
+const PEOPLE = [
+  ['priya', { face: 'neutral', handL: [-112, -96], handR: [112, -96], gripL: 'fist', gripR: 'fist' }, { face: 'angry', handR: [222, -296], gripR: 'point' }],
+  ['meera', { face: 'grin', handR: [196, -430], tilt: 4 }, { face: 'worried', handL: [-150, -560], handR: [150, -560] }],
+  ['rohan', { face: 'grin', handR: [176, -318], gripR: 'thumb', tilt: 3 }, { face: 'thinking', handR: [70, -322], gripR: 'fist', tilt: -4 }],
+  ['ananya', { face: 'talk', handL: [-290, -200], handR: [290, -200], sway: 8 }, { face: 'amazed', handL: [-80, -330], handR: [80, -330], sway: -10 }],
+  ['sharma', { face: 'talk', handR: [222, -296], gripR: 'point' }, { face: 'smirk', handL: [-112, -96], handR: [112, -96], gripL: 'fist', gripR: 'fist', tilt: -3 }],
+];
+PEOPLE.forEach(([name, a, b], i) => {
+  const x = 250 + i * 470;
+  for (const [row, pose] of [[0, a], [1, b]]) {
+    const y = 640 + row * 820;
+    shadow(x, y + 250);
+    cast(svg, name).pose({ x, y, s: 0.7, ...pose });
+  }
+  S('text', { x, y: 640 + 820 + 316, 'text-anchor': 'middle', 'font-size': 36, 'font-weight': 800, fill: '#2A1A12' }, svg, CAST[name].name);
+  S('text', { x, y: 640 + 820 + 356, 'text-anchor': 'middle', 'font-size': 24, 'font-weight': 500, fill: '#6B5A4C' }, svg, CAST[name].role);
+});
+const y3 = 2240;
+[[{ face: 'cheeky' }], [{ face: 'grin', handL: [-160, -400], handR: [160, -400], crouch: 0.6, tail: 1.5 }], [{ face: 'amazed', handL: [-70, -120], handR: [126, -392], tail: 3, tilt: -8 }]].forEach(([pose], i) => {
+  const x = 230 + i * 330;
+  shadow(x, y3, 100);
+  monkey(svg).pose({ x, y: y3, s: 0.85, ...pose });
+});
+S('text', { x: 560, y: y3 + 290, 'text-anchor': 'middle', 'font-size': 36, 'font-weight': 800, fill: '#2A1A12' }, svg, 'Chintu (monkey): mischief, copies, presses the wrong button');
+[[{}], [{ talk: 1, tilt: -8 }], [{ flap: 1, talk: 0.5, tilt: 6 }]].forEach(([pose], i) => {
+  const x = 1380 + i * 330;
+  S('rect', { x: x - 150, y: y3 - 6, width: 240, height: 22, rx: 11, fill: '#8A5A35', stroke: '#2A1A12', 'stroke-width': 4 }, svg);
+  macaw(svg).pose({ x, y: y3, s: 0.95, ...pose });
+});
+S('text', { x: 1710, y: y3 + 290, 'text-anchor': 'middle', 'font-size': 36, 'font-weight': 800, fill: '#2A1A12' }, svg, 'Mitthu (macaw): repeats what it hears, says yes to everything');
+window.ready = true;
+</script>
+</body>
+</html>

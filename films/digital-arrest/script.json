@@ -1,0 +1,26 @@
+{
+  "title": "Police video call पर arrest नहीं करती",
+  "number": 8,
+  "lane": "SCAM",
+  "setting": "both",
+  "look": "illustrated story (brand/story.js, brand/scenes.js), my face and body as the main character (brand/face, brand/body.js)",
+  "sendTo": "मम्मी-पापा",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a short true-to-life story and then gives you clear advice. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "Indian Cyber Crime Coordination Centre (I4C) public advisory, as reported by Deccan Herald and The Tribune: 'CBI/Police/Custom/ED/Judges DO NOT arrest you on video call'; report at helpline 1930 or www.cybercrime.gov.in",
+    "https://www.deccanherald.com/india/amid-rise-in-digital-arrest-cases-indian-cyber-crime-coordination-centre-issues-advisory-for-citizens-3221509"
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["आंटी दस लाख रुपये भेजने ही वाली थीं।", "तभी तुमने phone काट दिया।"] },
+    { "id": "call", "sentences": ["एक video call आया था।", "वर्दी में एक आदमी बोला, आपके parcel में drugs मिले हैं।", "आप digital arrest में हैं, camera बंद मत करना।"] },
+    { "id": "fear", "sentences": ["आंटी डर गईं।", "और वो यही चाहता था।"] },
+    { "id": "truth", "sentences": ["लेकिन सच यह है।", "Police, CBI या कोई भी agency, video call पर arrest नहीं करती।"] },
+    { "id": "steps", "sentences": ["ऐसा call आए तो तीन काम करो।", "Phone काटो, पैसे मत भेजो, और एक नौ तीन शून्य पर call करो।"] },
+    { "id": "end", "sentences": ["आंटी के दस लाख बच गए।"] },
+    { "id": "ask", "sentences": ["यह reel अभी मम्मी-पापा को भेजो।"] }
+  ]
+}

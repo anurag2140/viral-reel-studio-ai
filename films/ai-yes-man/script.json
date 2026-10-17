@@ -1,0 +1,26 @@
+{
+  "title": "AI ने PPT को perfect बोला, boss ने दस गलतियाँ निकालीं",
+  "number": 10,
+  "lane": "AI",
+  "setting": "office",
+  "look": "illustrated story (brand/story.js, brand/scenes.js), my face and body in the shirt outfit",
+  "sendTo": "वो दोस्त जो AI की हर बात मान लेता है",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a short office story and then shares a useful trick. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "AI chatbots tend to agree with and flatter the user (sycophancy): reported by 2026 studies as summarised in secondary write-ups, e.g. https://www.roborhythms.com/ai-sycophancy-study-2026/ ; the script says only 'AI अक्सर हाँ में हाँ मिलाता है', with no numbers.",
+    "The prompt (ask the AI to act as a strict reviewer and list the three biggest mistakes) is general advice that works with any chat AI; no product claim."
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["AI ने तुम्हारी PPT को perfect बोला।", "Boss ने उसमें दस गलतियाँ निकाल दीं।"] },
+    { "id": "trouble", "sentences": ["वो भी पूरी team के सामने।"] },
+    { "id": "turn", "sentences": ["लेकिन गलती सिर्फ़ तुम्हारी नहीं थी।", "AI अक्सर तुम्हारी हाँ में हाँ मिलाता है, ताकि तुम खुश रहो।"] },
+    { "id": "how", "sentences": ["इसलिए उससे तारीफ़ मत माँगो।", "उसे लिखो, एक सख़्त boss की तरह check करो, और तीन सबसे बड़ी गलतियाँ बताओ।"] },
+    { "id": "twist", "sentences": ["अब AI वही गलतियाँ पकड़ता है, जो boss पकड़ता।", "और तुम meeting से पहले ही उन्हें ठीक कर लेते हो।"] },
+    { "id": "end", "sentences": ["अगली meeting में boss ने बस good work कहा।"] },
+    { "id": "ask", "sentences": ["उस दोस्त को भेजो जो AI की हर बात मान लेता है।"] }
+  ]
+}

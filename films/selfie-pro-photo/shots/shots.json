@@ -1,0 +1,161 @@
+{
+  "captured": "2026-10-16",
+  "shots": [
+    {
+      "name": "home",
+      "url": "https://gemini.google/overview/image-generation/",
+      "file": "shots/home.jpg",
+      "media": {
+        "videos": 11,
+        "playing": 4,
+        "canvases": 0
+      },
+      "title": "Nano Banana 2 – Gemini AI image generator and photo editor",
+      "finalUrl": "https://gemini.google/overview/image-generation/",
+      "w": 824,
+      "h": 14000,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Nano Banana 2.1 is here.",
+          "x": 133,
+          "y": 504,
+          "w": 559,
+          "h": 154
+        },
+        {
+          "tag": "h2",
+          "text": "Dial in every detail with Nano Banana.",
+          "x": 95,
+          "y": 1932,
+          "w": 633,
+          "h": 154
+        },
+        {
+          "tag": "h2",
+          "text": "Style applied in seconds.",
+          "x": 40,
+          "y": 3392,
+          "w": 744,
+          "h": 154
+        },
+        {
+          "tag": "h2",
+          "text": "One visual, many sizes.",
+          "x": 40,
+          "y": 4828,
+          "w": 744,
+          "h": 154
+        },
+        {
+          "tag": "h2",
+          "text": "Your words, placed just right.",
+          "x": 40,
+          "y": 6048,
+          "w": 744,
+          "h": 154
+        },
+        {
+          "tag": "h2",
+          "text": "Get inspired: Nano Banana",
+          "x": 40,
+          "y": 7412,
+          "w": 744,
+          "h": 154
+        },
+        {
+          "tag": "h3",
+          "text": "Make impossible selfies with Gemini",
+          "x": 40,
+          "y": 8806,
+          "w": 744,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "Combine photos with Gemini",
+          "x": 832,
+          "y": 8806,
+          "w": 744,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Turn your photos into figurines with Gemini",
+          "x": 1624,
+          "y": 8806,
+          "w": 744,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "Try out different looks with Gemini",
+          "x": 2416,
+          "y": 8806,
+          "w": 744,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "Create nostalgic mall pics with Gemini",
+          "x": 3208,
+          "y": 8806,
+          "w": 744,
+          "h": 96
+        },
+        {
+          "tag": "h3",
+          "text": "Try out infinite hairstyles with Gemini",
+          "x": 4000,
+          "y": 8806,
+          "w": 744,
+          "h": 96
+        },
+        {
+          "tag": "h2",
+          "text": "Choose the right model for your needs",
+          "x": 40,
+          "y": 9278,
+          "w": 744,
+          "h": 128
+        },
+        {
+          "tag": "h2",
+          "text": "Frequently asked questions",
+          "x": 40,
+          "y": 13252,
+          "w": 744,
+          "h": 144
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "plans",
+      "url": "https://gemini.google/subscriptions/",
+      "file": "shots/plans.jpg",
+      "media": {
+        "videos": 3,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "Google AI Pro & Ultra — get access to Gemini 3.1 Pro & more",
+      "finalUrl": "https://gemini.google/subscriptions/",
+      "w": 824,
+      "h": 14000,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Get more out of Gemini",
+          "x": 40,
+          "y": 458,
+          "w": 744,
+          "h": 192
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

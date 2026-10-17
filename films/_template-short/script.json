@@ -1,0 +1,22 @@
+{
+  "title": "TEMPLATE: short loop (experiment E3, under 15 s)",
+  "number": null,
+  "lane": "TOOL",
+  "experiment": "E3: a reel under 15 seconds that loops",
+  "series": null,
+  "look": "illustrated story (brand/story.js, brand/scenes.js), my face as the main character (brand/face)",
+  "setting": "both",
+  "sendTo": "the friend whose notes are always a mess",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who shows you a quick trick. English words in Indian English. Confident, clear and brisk, one even tone, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [],
+  "lines": [
+    { "id": "hook", "sentences": ["तुम्हारे गंदे notes, दस second में साफ़।"] },
+    { "id": "how", "sentences": ["Photo खींचो।", "Tool में डालो।", "एक button, और बस।"] },
+    { "id": "link", "sentences": ["इस tool का link चाहिए?", "Comment में कुछ भी लिख दो।"] },
+    { "id": "back", "sentences": ["अब से"] }
+  ]
+}

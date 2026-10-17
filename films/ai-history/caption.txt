@@ -1,0 +1,14 @@
+TITLE
+AI नया नहीं है: यह 70 साल पुराना है, और दो बार fail भी हुआ
+
+DESCRIPTION
+1956 में इसे नाम मिला: Artificial Intelligence। वादा बड़ा था, पर computer कमज़ोर थे और पैसा रुक गया।
+इसे AI winter कहते हैं, और ऐसा दो बार हुआ।
+फिर 1997 में chess, 2012 में deep learning, और 2022 में ChatGPT।
+याद रखो: AI एक रात में नहीं बना, यह 70 साल की मेहनत है।
+
+ये तो बस शुरुआत है। आगे: ChatGPT कैसे सोचता है, prompt कैसे लिखें, AI agents क्या हैं।
+कोई video miss न हो, इसलिए follow करो: @vipulsingh_ai
+
+HASHTAGS
+#AI #AIHistory #ChatGPT #AIinHindi #LearnAI

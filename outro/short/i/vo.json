@@ -1,0 +1,19 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 2.084,
+  "lines": [
+    {
+      "id": "i",
+      "text": "Exam से पहले ये दोस्तों को भेज देना।",
+      "sentences": [
+        "Exam से पहले ये दोस्तों को भेज देना।"
+      ],
+      "file": "vo/i.wav",
+      "start": 0,
+      "duration": 1.834,
+      "pauses": []
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 22.036,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "AI भी खाना खाता है। और ग़लत खाना खाए तो ग़लत जवाब देता है।",
+      "sentences": [
+        "AI भी खाना खाता है।",
+        "और ग़लत खाना खाए तो ग़लत जवाब देता है।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 3.268,
+      "pauses": [
+        [
+          1.11,
+          1.43
+        ]
+      ]
+    },
+    {
+      "id": "def",
+      "text": "AI का खाना है data। Data यानी examples: text, photos, आवाज़ और numbers।",
+      "sentences": [
+        "AI का खाना है data।",
+        "Data यानी examples: text, photos, आवाज़ और numbers।"
+      ],
+      "file": "vo/def.wav",
+      "start": 3.438,
+      "duration": 5.829,
+      "pauses": [
+        [
+          1.32,
+          1.73
+        ],
+        [
+          2.9,
+          3.21
+        ],
+        [
+          3.73,
+          3.9
+        ]
+      ]
+    },
+    {
+      "id": "good",
+      "text": "अच्छा और सही data मिले तो AI सही सीखता है।",
+      "sentences": [
+        "अच्छा और सही data मिले तो AI सही सीखता है।"
+      ],
+      "file": "vo/good.wav",
+      "start": 9.375,
+      "duration": 2.35,
+      "pauses": []
+    },
+    {
+      "id": "bad",
+      "text": "पर data ग़लत हो या एक ही तरह का हो तो AI भी ग़लत सीखता है।",
+      "sentences": [
+        "पर data ग़लत हो या एक ही तरह का हो तो AI भी ग़लत सीखता है।"
+      ],
+      "file": "vo/bad.wav",
+      "start": 11.875,
+      "duration": 3.113,
+      "pauses": []
+    },
+    {
+      "id": "ex",
+      "text": "मान लो उसने सिर्फ़ सफ़ेद बिल्लियाँ देखीं। तो काली बिल्ली को वह पहचान नहीं पाएगा।",
+      "sentences": [
+        "मान लो उसने सिर्फ़ सफ़ेद बिल्लियाँ देखीं।",
+        "तो काली बिल्ली को वह पहचान नहीं पाएगा।"
+      ],
+      "file": "vo/ex.wav",
+      "start": 15.313,
+      "duration": 3.916,
+      "pauses": [
+        [
+          1.84,
+          2.11
+        ]
+      ]
+    },
+    {
+      "id": "pay",
+      "text": "याद रखो: जैसा data, वैसा AI।",
+      "sentences": [
+        "याद रखो: जैसा data, वैसा AI।"
+      ],
+      "file": "vo/pay.wav",
+      "start": 19.375,
+      "duration": 2.561,
+      "pauses": [
+        [
+          0.81,
+          0.98
+        ],
+        [
+          1.74,
+          1.9
+        ]
+      ]
+    }
+  ]
+}

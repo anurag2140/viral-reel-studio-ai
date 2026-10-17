@@ -1,0 +1,30 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 4.706,
+  "lines": [
+    {
+      "id": "send",
+      "text": "ये video उस दोस्त को भेजो, जो AI से डरता है।",
+      "sentences": [
+        "ये video उस दोस्त को भेजो, जो AI से डरता है।"
+      ],
+      "file": "vo/send.wav",
+      "start": 0,
+      "duration": 2.526,
+      "pauses": []
+    },
+    {
+      "id": "ask",
+      "text": "और अगला topic, comment में बताओ।",
+      "sentences": [
+        "और अगला topic, comment में बताओ।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 2.813,
+      "duration": 1.774,
+      "pauses": []
+    }
+  ]
+}

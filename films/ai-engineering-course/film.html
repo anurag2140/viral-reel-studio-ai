@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#07 AI सीखना है? यह रहा पूरा नक़्शा</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #11143A; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// A story in three places: the map (a tower of twenty phases), my room at 2 AM, and the real
+// pages of the course, which fill the frame whenever the voice talks about it.
+import { H, S, backOut, bump, camera, captions, cubicOut, eio, expoOut, key, lerp, person, pointer, prog, project, pulse, setup, start, webpage } from '/brand/story.js';
+import { BLUE, CORAL, INK, NAVY, desk, followCard, lights, linkLine, paperPlane, room, show, star, whip, whipIn, whipOut } from '/brand/scenes.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const GH = 'shots/gh.jpg';       // github.com/rohitg00/ai-engineering-from-scratch, page 0 to 800 css px, 4x
+const HERO = 'shots/hero.jpg';   // aiengineeringfromscratch.com, page 0 to 900 css px, 4x
+const STATS = 'shots/stats.jpg'; // the same site, page 4300 to 6160 css px, 4x
+const FACE = { dir: '/brand/face/', meta: await (await fetch('/brand/face/face.json')).json() };
+const ME = { face: FACE, skin: FACE.meta.cheek, shade: '#D98A52', outline: INK };
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"'], [GH, HERO, STATS, '/logo.png', ...FACE.meta.names.map((n) => `${FACE.dir}${n}.png`)]);
+// a short squash of the head at each time in `at`, so that a change of face lands
+const pop = (t, at) => 1 - 0.07 * at.reduce((v, a) => v + Math.max(0, bump(t - a)), 0);
+const mix = (a, b, p) => a.map((v, i) => lerp(v, b[i], p));
+const U = [];
+const PX = 1080 / 412;            // frame pixels for one css pixel of a page
+const FULL = [0, 0, 1080, 1920];
+const L = lights(svg);
+
+// ================= the map: twenty phases, one on top of the other =================
+const sM = S('g', {}, svg);
+const wM = S('g', {}, sM);
+const camM = camera(wM);
+const blurM = L.blurOf('mbMap');
+S('rect', { x: -600, y: -900, width: 2280, height: 3600, fill: '#151A40' }, wM);
+const sky = [[120, 300, 10], [330, 170, 7], [900, 110, 9], [1030, 430, 6], [60, 640, 6], [410, 500, 5]].map(([x, y, r]) => ({ e: star(wM, 0, 0, r, '#fff'), x, y }));
+S('rect', { x: -600, y: 1240, width: 2280, height: 1600, fill: '#0F1333' }, wM);
+S('rect', { x: 440, y: 1234, width: 640, height: 14, rx: 7, fill: '#2A3166' }, wM);
+const NAMES = ['SETUP', 'MATH', 'ML', 'DEEP LEARNING', 'VISION', 'NLP', 'SPEECH', 'TRANSFORMERS', 'GEN AI', 'RL', 'LLMs', 'LLM ENGINEERING', 'MULTIMODAL', 'TOOLS', 'AGENTS', 'AUTONOMOUS', 'MULTI-AGENT', 'PRODUCTION', 'SAFETY', 'CAPSTONE'];
+const ROMAN = ['0', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX'];
+const floors = NAMES.map((name, i) => {
+  const g = S('g', { transform: `translate(500 ${1190 - i * 50})` }, wM);
+  S('rect', { width: 520, height: 44, rx: 10, fill: '#262C5E' }, g);
+  const lit = S('rect', { width: 520, height: 44, rx: 10, fill: i % 2 ? '#4A6BFF' : '#3558FF' }, g);
+  const hot = S('rect', { width: 520, height: 44, rx: 10, fill: '#FFD23F' }, g);
+  const num = S('text', { x: 20, y: 32, 'font-size': 26 }, g, ROMAN[i]);
+  const txt = S('text', { x: 112, y: 32, 'font-size': 27, 'letter-spacing': 1 }, g, name);
+  return { lit, hot, num, txt };
+});
+// lit(i) and hot(i) are 0..1: how far a floor is switched on, and whether it is the one named
+const paint = (lit, hot) => floors.forEach((f, i) => {
+  const a = lit(i);
+  const h = hot(i);
+  show(f.lit, a > 0);
+  f.lit.setAttribute('transform', `scale(${a} 1)`);
+  show(f.hot, h > 0);
+  f.hot.setAttribute('opacity', h);
+  const c = h > 0.5 ? NAVY : a > 0.5 ? '#fff' : '#6D78C4';
+  f.num.setAttribute('fill', c);
+  f.txt.setAttribute('fill', c);
+});
+const flag = S('g', {}, wM);
+S('path', { d: 'M760,240 L760,140', stroke: '#C9D4FF', 'stroke-width': 8, 'stroke-linecap': 'round' }, flag);
+S('path', { d: 'M760,142 L856,174 L760,206 Z', fill: '#FFD23F', stroke: INK, 'stroke-width': 5, 'stroke-linejoin': 'round' }, flag);
+// a tag with an arrow that points right; its tip is the origin
+const tag = (text, w, size) => {
+  const g = S('g', {}, wM);
+  S('path', { d: `M${-w - 26},-46 L-26,-46 L-26,-20 L0,0 L-26,20 L-26,46 L${-w - 26},46 Z`, fill: '#FFD23F', stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round' }, g);
+  S('text', { x: -w / 2 - 26, y: size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: NAVY }, g, text);
+  return g;
+};
+const mathTag = tag('MATH', 220, 66);
+const agentsTag = tag('AI AGENTS', 290, 56);
+const meM = person(wM, ME);
+// where the tutor tells you to start: a pin on one floor
+const pin = S('g', {}, wM);
+S('path', { d: 'M0,0 C-74,-92 -64,-176 0,-176 C64,-176 74,-92 0,0 Z', fill: CORAL, stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round' }, pin);
+S('circle', { cx: 0, cy: -114, r: 27, fill: '#fff' }, pin);
+const pinTag = S('g', {}, wM);
+S('rect', { x: 0, y: -44, width: 330, height: 88, rx: 22, fill: '#FFD23F', stroke: INK, 'stroke-width': 6 }, pinTag);
+S('text', { x: 165, y: 19, 'text-anchor': 'middle', 'font-size': 54, fill: NAVY }, pinTag, 'यहाँ से शुरू');
+// "बिल्कुल free"
+const free = S('g', {}, wM);
+S('rect', { x: -180, y: -84, width: 360, height: 168, rx: 30, fill: '#FFD23F', stroke: INK, 'stroke-width': 7 }, free);
+S('text', { y: 48, 'text-anchor': 'middle', 'font-size': 136, fill: NAVY }, free, 'FREE');
+// the forty tabs: seven of them float in front of the map and hide it
+const TABS = [['▶ Playlist 1 / 84', '#FF5A5A', 20, 430], ['AI roadmap 2026', '#19C37D', 330, 300], ['ML in 30 days', '#FFB020', 640, 400], ['Course · ₹₹₹', BLUE, 760, 640], ['Top 10 AI tools', '#B14BFF', 520, 800], ['Where do I start?', '#FF7A1A', 740, 1010], ['Maths for AI?', '#12A594', 400, 570]].map(([label, c, x, y], i) => {
+  const g = S('g', {}, wM);
+  S('rect', { width: 310, height: 176, rx: 18, fill: '#fff', stroke: INK, 'stroke-width': 5 }, g);
+  S('path', { d: 'M3,48 L3,20 Q3,3 20,3 L290,3 Q307,3 307,20 L307,48 Z', fill: c }, g);
+  [0, 1, 2].forEach((k) => S('circle', { cx: 26 + k * 24, cy: 26, r: 7, fill: '#fff', opacity: 0.85 }, g));
+  S('text', { x: 20, y: 98, 'font-size': 31, fill: NAVY }, g, label);
+  S('rect', { x: 20, y: 120, width: 220, height: 13, rx: 6, fill: '#D5DAE6' }, g);
+  S('rect', { x: 20, y: 144, width: 150, height: 13, rx: 6, fill: '#D5DAE6' }, g);
+  return { g, x, y, i };
+});
+const qs = [[410, 930, 14], [40, 900, -16]].map(([x, y, r]) => ({ e: S('text', { 'font-size': 190, fill: '#FFD23F', stroke: INK, 'stroke-width': 6, 'paint-order': 'stroke' }, wM, '?'), x, y, r }));
+
+U.push((t) => {
+  const A = t < T.trouble + 0.02;
+  const B = t >= T.floors - 0.14 && t < T.n528 + 0.14;
+  const C = t >= T.start - 0.32 && t < T.end + 0.02;
+  if (!show(sM, A || B || C)) return;
+  sky.forEach((s, i) => s.e.setAttribute('transform', `translate(${s.x} ${s.y}) scale(${0.7 + 0.4 * Math.sin(t * 5 + i * 2)})`));
+  const gone = prog(t, T.map - 0.06, 0.6);
+  TABS.forEach((c) => show(c.g, A && gone < 1));
+  qs.forEach((q) => show(q.e, A && t < T.map));
+  show(free, A && t > T.free - 0.05);
+  show(mathTag, B && t > T.math - 0.08);
+  show(agentsTag, B && t > T.agents - 0.08);
+  show(pin, C);
+  show(pinTag, C && t > T.start + 0.25);
+  show(flag, !A || t > T.map + 1.0);
+  flag.setAttribute('transform', `translate(760 240) scale(${A ? backOut(prog(t, T.map + 1.0, 0.3)) : 1}) rotate(${3 * Math.sin(t * 4)}) translate(-760 -240)`);
+  if (A) {
+    // the question, then the map: the tabs blow away and the floors light up from the ground
+    whipOut(sM, blurM, t, T.trouble - 0.06, -1);
+    camM(...key(t, [[0, [540, 1000, 1.08]], [T.map, [540, 985, 1.02], (p) => p], [T.map + 0.95, [640, 650, 1.14]], [T.free - 0.1, [540, 965, 0.98]], [T.trouble, [540, 960, 1.01], (p) => p]]));
+    paint((i) => expoOut(prog(t, T.map + 0.1 + i * 0.04, 0.2)), () => 0);
+    TABS.forEach((c) => {
+      const dx = c.x + 155 - 540;
+      const dy = c.y + 88 - 800;
+      const d = Math.hypot(dx, dy) || 1;
+      const out = gone ** 2 * 1900;
+      c.g.setAttribute('transform', `translate(${c.x + 14 * Math.sin(t * 2.1 + c.i) + (dx / d) * out} ${c.y + 12 * Math.cos(t * 1.7 + c.i * 2) + (dy / d) * out}) rotate(${5 * Math.sin(t * 1.3 + c.i * 1.7) + gone * 160 * (c.i % 2 ? 1 : -1)} 155 88)`);
+    });
+    qs.forEach((q, i) => q.e.setAttribute('transform', `translate(${q.x} ${q.y + 12 * Math.sin(t * 3 + i * 2)}) rotate(${q.r + 5 * Math.sin(t * 2.4 + i)})`));
+    free.setAttribute('transform', `translate(250 610) rotate(${-8 + 2 * Math.sin(t * 5)}) scale(${backOut(prog(t, T.free - 0.05, 0.3))})`);
+    const yes = backOut(prog(t, T.free, 0.3));
+    const see = eio(prog(t, T.map, 0.25));
+    meM.pose({
+      x: 250, y: 1610 - 34 * Math.max(0, bump(t - T.free)), s: 1.15, tilt: 2 * Math.sin(t * 2.4) - 4 * see,
+      face: t < T.map ? 'thinking' : t < T.free ? 'look-right' : 'grin', pop: pop(t, [T.map, T.free]),
+      handL: [lerp(-128, -185, yes), lerp(-70, -410, yes)],
+      handR: t < T.map ? [92 + 6 * Math.sin(t * 9), -470 + 10 * Math.sin(t * 9)] : [lerp(150, 190, yes), lerp(-250, -410, yes)], backR: t < T.map,
+    });
+    return;
+  }
+  whip(sM, blurM, 0, 0);
+  if (B) {
+    // "सबसे नीचे math, सबसे ऊपर AI agents": the camera climbs the tower
+    camM(...key(t, [[T.floors - 0.14, [540, 1060, 1.3]], [T.math, [540, 1010, 1.45], cubicOut], [T.up - 0.1, [540, 1000, 1.47], (p) => p], [T.agents, [500, 480, 1.4]], [T.n528, [500, 460, 1.45], (p) => p]]));
+    const m = prog(t, T.math - 0.08, 0.2);
+    const a = prog(t, T.agents - 0.08, 0.2);
+    paint(() => 1, (i) => (i === 1 ? m : i >= 14 && i <= 16 ? a : 0));
+    mathTag.setAttribute('transform', `translate(${492 - 10 * Math.abs(Math.sin(t * 5))} 1162) scale(${backOut(prog(t, T.math - 0.08, 0.28))})`);
+    agentsTag.setAttribute('transform', `translate(${492 - 10 * Math.abs(Math.sin(t * 5))} 462) scale(${backOut(prog(t, T.agents - 0.08, 0.28))})`);
+    meM.pose({ x: -700, y: 1610, s: 1.15, face: 'look-right' });
+    return;
+  }
+  // the tutor tells you where to start: a pin drops on one floor
+  whipOut(sM, blurM, t, T.end - 0.06, -1);
+  camM(...key(t, [[T.start - 0.32, [560, 1030, 1.12]], [T.end, [575, 1020, 1.2], cubicOut]]));
+  const land = prog(t, T.start - 0.1, 0.22);
+  const hit = Math.max(0, bump(t - T.start - 0.12));
+  paint(() => 1, (i) => (i === 2 ? prog(t, T.start + 0.1, 0.15) : 0));
+  pin.setAttribute('transform', `translate(650 ${1092 - (1 - land ** 2) * 900}) scale(${1 + 0.18 * hit} ${1 - 0.18 * hit})`);
+  pinTag.setAttribute('transform', `translate(500 850) rotate(${-3 + 2 * Math.sin(t * 4)}) scale(${backOut(prog(t, T.start + 0.25, 0.28))})`);
+  const yes = backOut(prog(t, T.start + 0.12, 0.3));
+  meM.pose({
+    x: 250, y: 1610 - 30 * hit, s: 1.15, face: t < T.start + 0.12 ? 'look-right' : 'grin', pop: pop(t, [T.start + 0.12]),
+    handL: [lerp(-128, -185, yes), lerp(-70, -410, yes)], handR: [lerp(150, 190, yes), lerp(-250, -410, yes)],
+  });
+});
+
+// ================= the desk at 2 AM, from the front =================
+const D = desk(svg, L, ME);
+const pile = (x, y, c, n) => {
+  const g = S('g', {}, D.props);
+  for (let k = 2; k >= 0; k--) S('rect', { x: -95 + k * 15, y: -62 - k * 15, width: 190, height: 124, rx: 16, fill: k ? '#E6E9F2' : '#fff', stroke: INK, 'stroke-width': 5 }, g);
+  S('path', { d: 'M-93,-26 L-93,-46 Q-93,-60 -79,-60 L79,-60 Q93,-60 93,-46 L93,-26 Z', fill: c }, g);
+  S('circle', { cx: 86, cy: -72, r: 46, fill: '#FFD23F', stroke: INK, 'stroke-width': 5 }, g);
+  S('text', { x: 86, y: -52, 'text-anchor': 'middle', 'font-size': 58, fill: NAVY }, g, n);
+  return { g, x, y };
+};
+const lists = pile(245, 770, '#FF5A5A', '10');
+S('path', { d: 'M-22,-8 L-22,44 L26,18 Z', fill: '#FF5A5A' }, lists.g);
+const courses = pile(835, 770, BLUE, '5');
+[0, 1, 2].forEach((k) => S('rect', { x: -70, y: -8 + k * 22, width: [130, 100, 116][k], height: 12, rx: 6, fill: '#C9CEDA' }, courses.g));
+const sheet = S('g', {}, D.props);
+S('rect', { x: -150, y: -86, width: 300, height: 172, rx: 16, fill: '#FFF8E7', stroke: INK, 'stroke-width': 5 }, sheet);
+S('text', { x: -126, y: -30, 'font-size': 48, fill: NAVY }, sheet, 'PLAN');
+[0, 1].forEach((k) => { S('rect', { x: -126, y: -6 + k * 40, width: 26, height: 26, rx: 6, fill: 'none', stroke: NAVY, 'stroke-width': 5 }, sheet); S('rect', { x: -86, y: 2 + k * 40, width: 200, height: 12, rx: 6, fill: '#D9D2BD' }, sheet); });
+const cross = ['M-120,-70 L120,70', 'M120,-70 L-120,70'].map((d) => S('path', { d, fill: 'none', stroke: CORAL, 'stroke-width': 16, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1 }, sheet));
+const phone = S('g', {}, D.props);
+S('rect', { x: -34, y: -58, width: 68, height: 116, rx: 14, fill: NAVY }, phone);
+S('rect', { x: -27, y: -48, width: 54, height: 92, rx: 6, fill: '#BFD0FF' }, phone);
+const plane = paperPlane(D.props, [330, 1090], [110, 470], [1260, 380]);
+
+U.push((t) => {
+  const A = t >= T.ten - 0.2 && t < T.turn + 0.02;
+  const B = t >= T.twist - 0.14 && t < T.tutor + 0.16;
+  const C = t >= T.link - 0.2;
+  if (!show(D.s, A || B || C)) return;
+  D.tick(t, B ? 1 : 0);
+  [lists, courses].forEach((p) => show(p.g, A));
+  show(sheet, A && t > T.plan - 0.08);
+  show(phone, C && t > T.ask + 0.05);
+  plane(t, C ? T.ask + 0.4 : 1e9, T.send + 0.35);
+  if (A) {
+    // ten playlists, five courses, and no plan
+    if (t < T.ten + 0.3) whipIn(D.s, D.blur, t, T.ten - 0.2, 1); else whipOut(D.s, D.blur, t, T.turn - 0.06, 1);
+    D.cam(...key(t, [[T.ten - 0.2, [540, 1010, 1.2]], [T.turn, [540, 1000, 1.3], (p) => p]]));
+    lists.g.setAttribute('transform', `translate(${lists.x} ${lists.y + 8 * Math.sin(t * 3)}) rotate(${-7 + 2 * Math.sin(t * 2)}) scale(${backOut(prog(t, T.ten + 0.02, 0.28))})`);
+    courses.g.setAttribute('transform', `translate(${courses.x} ${courses.y + 8 * Math.sin(t * 3 + 2)}) rotate(${6 + 2 * Math.sin(t * 2 + 1)}) scale(${backOut(prog(t, T.five - 0.03, 0.28))})`);
+    sheet.setAttribute('transform', `translate(540 545) rotate(${-3 + 1.5 * Math.sin(t * 3)}) scale(${backOut(prog(t, T.plan - 0.08, 0.28))})`);
+    cross.forEach((c, i) => c.setAttribute('stroke-dashoffset', 1 - eio(prog(t, T.none - 0.05 + i * 0.12, 0.18))));
+    const grab = backOut(prog(t, T.plan, 0.3));
+    const shake = 7 * Math.sin(t * 46) * Math.exp(-Math.max(0, t - T.none) * 3) * (t > T.none ? 1 : 0);
+    D.kid.pose({
+      x: 540, y: 1640, s: 1.5, tilt: 2 * Math.sin(t * 2.2), hx: shake, face: t < T.none ? 'worried' : 'sad', pop: pop(t, [T.none]),
+      handL: [lerp(-70, -150, grab), lerp(-200, -560, grab)], handR: [lerp(70, 150, grab), lerp(-200, -560, grab)],
+    });
+    return;
+  }
+  whip(D.s, D.blur, 0, 0);
+  if (B) {
+    // "और अब सबसे काम की बात": close on the face
+    D.cam(...key(t, [[T.twist - 0.14, [540, 1010, 1.3]], [T.tutor, [540, 985, 1.58], cubicOut]]));
+    const up = backOut(prog(t, T.useful - 0.05, 0.3));
+    D.kid.pose({
+      x: 540, y: 1640 - 26 * Math.max(0, bump(t - T.useful)), s: 1.5, tilt: lerp(-4, 3, prog(t, T.useful - 0.05, 0.3)),
+      face: t < T.useful - 0.05 ? 'talk' : 'grin', pop: pop(t, [T.useful - 0.05]),
+      handL: [lerp(-70, -190, up), lerp(-200, -400, up)], handR: [lerp(70, 190, up), lerp(-200, -400, up)],
+    });
+    return;
+  }
+  // the link line, then the ask: the reel goes to a friend and the Follow button is pressed
+  if (t < T.link + 0.3) whipIn(D.s, D.blur, t, T.link - 0.2, 1);
+  D.cam(...key(t, [[T.link - 0.2, [540, 1015, 1.2]], [dur, [540, 1005, 1.27], (p) => p]]));
+  const offer = eio(prog(t, T.link, 0.3));
+  const lift = backOut(prog(t, T.ask + 0.05, 0.35));
+  const hop = 26 * Math.max(0, bump(t - T.send));
+  const hand = mix([lerp(-70, -215, offer), lerp(-200, -360, offer) - 8 * offer * Math.sin(t * 6)], [-150, -335], lift);
+  D.kid.pose({
+    x: 540, y: 1640 - hop, s: 1.5, tilt: 2 * Math.sin(t * 2.4),
+    face: t < T.comment - 0.1 ? 'talk' : t < T.send ? 'grin' : t < T.send + 0.6 ? 'wink' : 'grin', pop: pop(t, [T.comment - 0.1, T.send, T.send + 0.6]),
+    handL: hand, handR: [70, -200],
+  });
+  phone.setAttribute('transform', `translate(${540 + (hand[0] - 4) * 1.5} ${1640 - hop + (hand[1] - 46) * 1.5}) rotate(${-8 + 3 * Math.sin(t * 5)}) scale(1.4)`);
+});
+
+// ================= the room, over my shoulder =================
+const R = room(svg, L, ME);
+// on the laptop: forty tabs and a pile of windows; at the end one tab, with the course in it
+const site = S('svg', { x: 0, y: 44, width: 728, height: 456, viewBox: '0 0 1648 1032', preserveAspectRatio: 'xMidYMin slice' }, R.scr);
+S('image', { href: HERO, width: 1648, height: 3600 }, site);
+S('rect', { width: 728, height: 44, fill: '#D5DAE6' }, R.scr);
+const slivers = Array.from({ length: 40 }, (_, i) => S('rect', { x: 4 + i * 18.05, y: 9, width: 15, height: 35, rx: 5, fill: '#fff' }, R.scr));
+const oneTab = S('g', {}, R.scr);
+S('path', { d: 'M4,44 L4,18 Q4,8 14,8 L250,8 Q260,8 260,18 L260,44 Z', fill: '#fff' }, oneTab);
+S('rect', { x: 18, y: 19, width: 14, height: 14, fill: BLUE }, oneTab);
+S('text', { x: 44, y: 34, 'font-size': 22, fill: NAVY }, oneTab, 'AI / FROM SCRATCH');
+const wins = [[40, 84, '#FF5A5A'], [300, 62, '#19C37D'], [440, 196, '#FFB020'], [110, 236, BLUE], [262, 306, '#B14BFF'], [470, 336, '#FF7A1A']].map(([x, y, c]) => {
+  const g = S('g', {}, R.scr);
+  S('rect', { width: 240, height: 150, rx: 12, fill: '#fff', stroke: INK, 'stroke-width': 4 }, g);
+  S('path', { d: 'M2,34 L2,14 Q2,2 14,2 L226,2 Q238,2 238,14 L238,34 Z', fill: c }, g);
+  [190, 150, 170].forEach((w, k) => S('rect', { x: 16, y: 54 + k * 28, width: w, height: 14, rx: 7, fill: '#D5DAE6' }, g));
+  return { g, x, y };
+});
+// the camera of the room while the page takes over; `grow` is how far the screen fills the frame
+const roomCam = (t) => {
+  const c = key(t, [[T.turn - 0.2, [540, 980, 1.04]], [T.turn + 0.3, [540, 880, 1.22], cubicOut]]);
+  const grow = eio(prog(t, T.turn + 0.3, 0.55));
+  return [540, lerp(c[1], 836, grow), c[2] + 0.5 * grow, grow];
+};
+U.push((t) => {
+  const A = t >= T.trouble - 0.2 && t < T.ten + 0.02;
+  const B = t >= T.turn - 0.2 && t < T.repo + 0.3;
+  const C = t >= T.end - 0.2 && t < T.link + 0.02;
+  if (!show(R.s, A || B || C)) return;
+  let sink = 0;
+  let jump = 0;
+  if (A) {
+    if (t < T.trouble + 0.3) whipIn(R.s, R.blur, t, T.trouble - 0.2, 1); else whipOut(R.s, R.blur, t, T.ten - 0.06, -1);
+    R.cam(...key(t, [[T.trouble - 0.2, [540, 990, 1]], [T.ten, [540, 900, 1.17], cubicOut]]));
+    sink = eio(prog(t, T.forty + 0.1, 0.5));
+  } else if (B) {
+    whipIn(R.s, R.blur, t, T.turn - 0.2, -1);
+    const [cx, cy, z] = roomCam(t);
+    R.cam(cx, cy, z);
+    sink = 1 - eio(prog(t, T.turn + 0.05, 0.3));
+  } else {
+    if (t < T.end + 0.3) whipIn(R.s, R.blur, t, T.end - 0.2, 1); else whipOut(R.s, R.blur, t, T.link - 0.06, -1);
+    R.cam(...key(t, [[T.end - 0.2, [540, 960, 1.08]], [T.link, [540, 890, 1.22], cubicOut]]));
+    jump = Math.max(0, bump(t - T.one - 0.05));
+  }
+  // the tabs come one by one; at the end they close from the right until one is left
+  const left = C && t > T.shut + 0.12;
+  slivers.forEach((e, i) => show(e, C ? !left && t < T.close + (39 - i) * 0.027 + (i ? 0 : 9) : A ? t >= T.trouble + 0.05 + i * 0.03 : true));
+  wins.forEach((w, j) => {
+    const p = C ? 1 - prog(t, T.close + 0.05 + j * 0.15, 0.16) : A ? backOut(prog(t, T.trouble + 0.2 + j * 0.2, 0.26)) : 1;
+    show(w.g, p > 0);
+    w.g.setAttribute('transform', `translate(${w.x + 120} ${w.y + 75}) scale(${p}) rotate(${(j % 2 ? 3 : -3) + 1.5 * Math.sin(t * 2 + j)}) translate(-120 -75)`);
+  });
+  show(site, left);
+  show(oneTab, left);
+  oneTab.setAttribute('transform', `scale(${left ? lerp(0.3, 1, backOut(prog(t, T.shut + 0.12, 0.3))) : 1} 1)`);
+  R.tick(t, { sink, jump });
+});
+
+// ================= the real pages =================
+const pGh = webpage(stage, GH, 1648);
+const pHero = webpage(stage, HERO, 1648);
+const pStats = webpage(stage, STATS, 1648);
+// a marker ring at a page position (css pixels of the strip), drawn on by p
+const ink = (page) => S('svg', { width: 1080, height: 10, style: 'position:absolute;left:0;top:0;overflow:visible' }, page.pins);
+const loop = (layer, cx, cy, rx, ry, rot = -3) => {
+  const e = S('ellipse', { cx: cx * PX, cy: cy * PX, rx: rx * PX, ry: ry * PX, fill: 'none', stroke: CORAL, 'stroke-width': 12, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: `rotate(${rot} ${cx * PX} ${cy * PX})` }, layer);
+  return (p) => { show(e, p > 0); e.setAttribute('stroke-dashoffset', 1 - p); };
+};
+const ringStars = loop(ink(pGh), 88, 733, 66, 21, -2);
+const inkHero = ink(pHero);
+const ringName = loop(inkHero, 142, 170, 150, 58);
+const ringMit = loop(inkHero, 76, 101, 74, 17, -2);
+const ringQuiz = loop(inkHero, 263, 803, 60, 14, -2);
+const ringPath = loop(inkHero, 351, 803, 45, 14, 2);
+const inkStats = ink(pStats);
+const ringTwenty = loop(inkStats, 166, 598, 52, 16, -2);
+const ring528 = loop(inkStats, 56, 266, 48, 18, -3);
+const pushIn = (t, t0) => 1080 * (1 - eio(prog(t, t0, 0.42)));   // x of a page that comes from the right
+const pushOut = (t, t0) => -1080 * eio(prog(t, t0, 0.42));       // x of the page it pushes away
+const rise = (t, t0) => 1920 * (1 - expoOut(prog(t, t0, 0.42))); // y of a page that comes up
+const drop = (t, t0) => 1920 * eio(prog(t, t0, 0.34));           // y of a page that falls away
+
+U.push((t) => {
+  // ---- the repo on GitHub: it comes up on the laptop and the screen becomes the frame ----
+  if (t >= T.turn - 0.14 && t < T.name + 0.24) {
+    const [cx, cy, z, grow] = roomCam(t);
+    const rect = mix(project(cx, cy, z, R.SCREEN), FULL, grow);
+    rect[0] += pushOut(t, T.name - 0.2);
+    const up = expoOut(prog(t, T.turn - 0.14, 0.3));
+    pGh.set({ rect, radius: 8 * z * (1 - grow), slide: (1 - up) * (rect[3] / (rect[2] / 1080)), scroll: key(t, [[T.turn + 0.75, 0], [T.repo + 0.12, 300]]) * 4, zoom: key(t, [[T.repo + 0.1, 1], [T.name - 0.2, 1.12]]), fx: 230, fy: 1140 });
+    ringStars(eio(prog(t, T.repo + 0.3, 0.42)));
+  } else pGh.hide();
+
+  // ---- the site: its name, "open source · MIT", and the tutor ----
+  if (t >= T.name - 0.2 && t < T.how + 0.24) {
+    pHero.set({ rect: [pushIn(t, T.name - 0.2) + pushOut(t, T.how - 0.2), 0, 1080, 1920], scroll: 0, zoom: key(t, [[T.name + 0.3, 1], [T.how, 1.12]]), fx: 300, fy: 450 });
+    ringName(eio(prog(t, T.name + 0.3, 0.5)));
+    ringMit(0); ringQuiz(0); ringPath(0);
+  } else if (t >= T.allfree - 0.2 && t < T.twist + 0.24) {
+    pHero.set({ rect: [pushIn(t, T.allfree - 0.2), drop(t, T.twist - 0.12), 1080, 1920], scroll: 0, zoom: key(t, [[T.allfree + 0.15, 1], [T.free2, 1.75]]), fx: 40, fy: 265 });
+    ringMit(eio(prog(t, T.free2 - 0.08, 0.4)));
+    ringName(0); ringQuiz(0); ringPath(0);
+  } else if (t >= T.tutor - 0.3 && t < T.start + 0.04) {
+    pHero.set({ rect: [0, rise(t, T.tutor - 0.3) + drop(t, T.start - 0.3), 1080, 1920], scroll: 470 * 4, zoom: key(t, [[T.tutor, 1], [T.start, 1.05], (p) => p]), fx: 540, fy: 900 });
+    ringQuiz(eio(prog(t, T.test - 0.05, 0.35)));
+    ringPath(eio(prog(t, T.tells - 0.05, 0.35)));
+    ringName(0); ringMit(0);
+  } else pHero.hide();
+
+  // ---- the site: twenty phases in a list, and 528 lessons ----
+  if (t >= T.how - 0.2 && t < T.floors + 0.24) {
+    pStats.set({ rect: [pushIn(t, T.how - 0.2), drop(t, T.floors - 0.12), 1080, 1920], scroll: key(t, [[T.stack - 0.12, 500], [T.floors - 0.1, 1180]]) * 4 });
+    ringTwenty(eio(prog(t, T.twenty - 0.02, 0.4)));
+    ring528(0);
+  } else if (t >= T.n528 - 0.3 && t < T.allfree + 0.24) {
+    pStats.set({ rect: [pushOut(t, T.allfree - 0.2), rise(t, T.n528 - 0.3), 1080, 1920], scroll: 90 * 4, zoom: key(t, [[T.n528 + 0.1, 1], [T.n528 + 0.75, 1.5]]), fx: 130, fy: 470 });
+    ring528(eio(prog(t, T.n528 + 0.5, 0.42)));
+    ringTwenty(0);
+  } else pStats.hide();
+});
+
+// ================= captions, the link line, the follow card, the pointer =================
+const clean = (words) => words.map((x) => ({ ...x, word: x.word.replace(/[।,]+$/, '') }));
+U.push(captions(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1 })), { size: 80 }));
+const link = linkLine(stage, 'GitHub repo');
+const follow = followCard(stage);
+const tip = pointer(stage, NAVY, '#fff', 130);
+const TIP = [
+  [T.repo - 0.1, [1160, 1500]], [T.repo + 0.32, [430, 1175], cubicOut], [T.name - 0.25, [430, 1175]],
+  [T.name + 0.45, [760, 500]], [T.how - 0.15, [770, 510]],
+  [T.twenty + 0.1, [600, 300]], [T.stack, [600, 300]], [T.floors - 0.15, [900, 1040]],
+  [T.n528 - 0.1, [1160, 1300]], [T.n528 + 0.5, [330, 520], cubicOut], [T.allfree - 0.1, [330, 520]], [T.free2, [560, 300]], [T.twist - 0.12, [560, 300]],
+  [T.tutor + 0.1, [1160, 1300]], [T.test, [850, 915], cubicOut], [T.tells - 0.1, [850, 915]], [T.tells + 0.2, [1010, 935]], [T.start - 0.3, [1010, 935]],
+  [T.comment + 0.2, [1170, 1460]], [T.post - 0.08, [935, 1250], cubicOut], [T.ask - 0.08, [935, 1250]],
+  [T.send + 0.3, [1150, 900]], [T.follow - 0.06, [900, 420]], [dur, [900, 420]],
+];
+const SHOWN = [[T.repo - 0.1, T.floors - 0.15], [T.n528 - 0.1, T.twist - 0.12], [T.tutor + 0.1, T.start - 0.3], [T.comment + 0.2, T.ask - 0.08], [T.send + 0.3, dur + 1]];
+U.push((t) => {
+  link.set(t, { link: T.link, comment: T.comment, post: T.post, away: T.ask });
+  follow.set(t, T.send + 0.2, T.follow);
+  tip.style.visibility = SHOWN.some(([a, b]) => t >= a && t < b) ? 'visible' : 'hidden';
+  const [x, y] = key(t, TIP);
+  const click = pulse(t, T.post + 0.02, 0.07) + pulse(t, T.follow + 0.02, 0.07);
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * click})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

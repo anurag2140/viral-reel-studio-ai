@@ -1,0 +1,19 @@
+{
+  "number": 3,
+  "title": "Neural network = दिमाग़ की copy?",
+  "voice": "Orus",
+  "bpm": 96,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friendly college senior who explains to a junior. English words in Indian English. Warm and clear, one even tone from start to end, brisk pace with only a short breath between sentences. No acting, no exaggeration.",
+  "lines": [
+    { "id": "hook", "sentences": ["Neural network दिमाग़ की copy नहीं है।", "फिर ChatGPT चलता किससे है?"] },
+    { "id": "myth", "sentences": ["नाम दिमाग़ के neuron से आया।", "दिमाग़ में neuron एक cell है जो दूसरे cells को signal भेजता है।"] },
+    { "id": "fact", "sentences": ["Neural network में neuron बस एक छोटा हिसाब है।"] },
+    { "id": "calc", "sentences": ["वह numbers लेता है, उन्हें गुणा करता है, और जोड़ता है।"] },
+    { "id": "layers", "sentences": ["ऐसे करोड़ों हिसाब layers में जुड़ते हैं।", "यही जाल neural network है।"] },
+    { "id": "diff", "sentences": ["दिमाग़ सोचता और महसूस करता है।", "यह network सिर्फ़ numbers बदलता है।"] },
+    { "id": "pay", "sentences": ["तो idea दिमाग़ से लिया गया, पर यह दिमाग़ नहीं है।"] },
+    { "id": "maths", "sentences": ["यह maths है।"] }
+  ]
+}

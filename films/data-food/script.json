@@ -1,0 +1,17 @@
+{
+  "number": 5,
+  "title": "Data: AI का खाना",
+  "voice": "Orus",
+  "bpm": 96,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friendly college senior who explains to a junior. English words in Indian English. Warm and clear, one even tone from start to end, brisk pace with only a short breath between sentences. No acting, no exaggeration.",
+  "lines": [
+    { "id": "hook", "sentences": ["AI भी खाना खाता है।", "और ग़लत खाना खाए तो ग़लत जवाब देता है।"] },
+    { "id": "def", "sentences": ["AI का खाना है data।", "Data यानी examples: text, photos, आवाज़ और numbers।"] },
+    { "id": "good", "sentences": ["अच्छा और सही data मिले तो AI सही सीखता है।"] },
+    { "id": "bad", "sentences": ["पर data ग़लत हो या एक ही तरह का हो तो AI भी ग़लत सीखता है।"] },
+    { "id": "ex", "sentences": ["मान लो उसने सिर्फ़ सफ़ेद बिल्लियाँ देखीं।", "तो काली बिल्ली को वह पहचान नहीं पाएगा।"] },
+    { "id": "pay", "sentences": ["याद रखो: जैसा data, वैसा AI।"] }
+  ]
+}

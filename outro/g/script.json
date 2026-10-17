@@ -1,0 +1,17 @@
+{
+  "voice": "Orus",
+  "bpm": 96,
+  "grid": 0.5,
+  "gap": 0.12,
+  "style": "Natural conversational Hindi as spoken in India, like a friendly college senior who talks to a junior. English words in Indian English. Warm, relaxed and clear, one even tone from start to end, medium pace. No acting, no exaggeration.",
+  "lines": [
+    {
+      "id": "save",
+      "sentences": ["ये video save कर लो, बाद में काम आएगा।"]
+    },
+    {
+      "id": "cta",
+      "sentences": ["अगला topic comment में बताओ, और follow करो।"]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "title": "पचास applications के बाद offer आया, और वो तुम्हें लूटने आया था",
+  "number": 13,
+  "lane": "SCAM",
+  "setting": "both",
+  "look": "illustrated story by day (brand/story.js, brand/scenes.js), my face and body in the hoodie, a drawn WhatsApp-style chat with a fake HR whose mask comes off, Ananya as the friend at the end, compact captions",
+  "sequelOf": 11,
+  "experiment": "E5",
+  "playbook": [],
+  "sendTo": "उस दोस्त को जो अभी job ढूँढ रहा है",
+  "link": "https://who.is/",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a short true-to-life story and lets you in on a useful check. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://who.is/whois/infosys.com (captured 2026-10-17, no sign-in): 'WHOIS Domain Lookup. Look up registration details, contacts, and nameservers for any domain name'; 'Important Dates: Created July 17, 1992'. Shown as an example of an old, real company website; the voice does not name the company.",
+    "Fake job offers in India: a request for money (registration, training, laptop, deposit) is the main warning sign; offers without a real interview and contact only on WhatsApp are others; report at 1930 or cybercrime.gov.in. https://pulseofnoida.com/education/skill-development-careers/job-internship-scams-india-red-flags-3122/ , https://the420.in/ai-trap-fake-job-offers-india-job-seekers-scams-how-to-avoid/",
+    "The company in the story (NextGen Tech, nextgen-careers.in) and its age of six days are invented for the story and shown only on the drawn laptop, never on the real who.is page."
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["पचास applications के बाद offer आया, और वो तुम्हें लूटने आया था।"] },
+    { "id": "trouble", "sentences": ["WhatsApp पर HR का message आया।", "Interview हुआ ही नहीं, फिर भी सीधा offer letter।", "बस joining से पहले पाँच हज़ार की training fee भरनी थी।"] },
+    { "id": "stake", "sentences": ["पहली job थी, तुम pay करने ही वाले थे।", "लेकिन तभी नज़र letter पर लिखी website पर गई।"] },
+    { "id": "how", "sentences": ["who.is पर किसी भी website का नाम डालो।", "यह बताता है कि website कब बनी थी।", "असली companies की website सालों पुरानी होती है।"] },
+    { "id": "twist", "sentences": ["और इस company की website?", "सिर्फ़ छह दिन पुरानी।", "असली company job देने के पैसे कभी नहीं माँगती।"] },
+    { "id": "end", "sentences": ["तुमने pay नहीं किया।", "अगले दिन उस HR का number बंद था।"] },
+    { "id": "link", "sentences": ["इस website का link चाहिए?", "Comment में कुछ भी लिख दो।"] },
+    { "id": "ask", "sentences": ["उस दोस्त को भेजो जो अभी job ढूँढ रहा है।"] }
+  ]
+}

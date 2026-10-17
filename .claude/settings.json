@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "bash",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/create-reel.mjs\"",
+            "timeout": 240,
+            "statusMessage": "Pulling Instagram numbers and reviewing experiments..."
+          }
+        ]
+      }
+    ]
+  }
+}

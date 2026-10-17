@@ -1,0 +1,41 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 6.236,
+  "lines": [
+    {
+      "id": "ask",
+      "text": "अगला video किस topic पर चाहिए? Comment में बताओ।",
+      "sentences": [
+        "अगला video किस topic पर चाहिए?",
+        "Comment में बताओ।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 0,
+      "duration": 2.546,
+      "pauses": [
+        [
+          1.45,
+          1.72
+        ]
+      ]
+    },
+    {
+      "id": "follow",
+      "text": "और AI को अपनी भाषा में समझना है, तो follow करो।",
+      "sentences": [
+        "और AI को अपनी भाषा में समझना है, तो follow करो।"
+      ],
+      "file": "vo/follow.wav",
+      "start": 3.125,
+      "duration": 2.961,
+      "pauses": [
+        [
+          1.99,
+          2.27
+        ]
+      ]
+    }
+  ]
+}

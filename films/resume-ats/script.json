@@ -1,0 +1,29 @@
+{
+  "title": "पचास जगह apply किया, एक भी call नहीं",
+  "number": 11,
+  "lane": "TOOL",
+  "setting": "both",
+  "look": "illustrated story (brand/story.js, brand/scenes.js day scenes), my face and body in the hoodie, Prof. Sharma as the recruiter, compact captions",
+  "sendTo": "वो दोस्त जो हर दिन job apply कर रहा है",
+  "link": "https://resumeworded.com/",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a short story and lets you in on a useful find. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://resumeworded.com/ (captured 2026-10-16): 'Free Resume Review: Upload your resume to our resume checker and get a resume score out of 100, with line-by-line feedback built from the 30+ checks recruiters actually use'; 'Re-upload free, as many times as you want'; 'Our resume scanner pins every flag to the exact line, with the reason named'; English resumes, PDF or DOCX.",
+    "https://resumeworded.com/resume-scanner (captured 2026-10-16): 'Companies often receive hundreds of resumes ... they use software, often called Applicant Tracking Systems (ATS), to filter through all the resumes'; 'your resume could get instantly rejected by these systems and never make its way to a recruiter'; 'We'll scan your resume in 30 seconds'.",
+    "Not claimed: that the keyword checker (Smart Target) or AutoFix is free; the pages do not say so."
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["तुमने पचास जगह apply किया, और एक भी call नहीं आया।", "क्योंकि तुम्हारा resume किसी इंसान ने पढ़ा ही नहीं।"] },
+    { "id": "trouble", "sentences": ["Companies पहले एक software से resume छाँटती हैं।", "इसे ATS कहते हैं।", "और यह software बहुत से resume पढ़ने से पहले ही reject कर देता है।"] },
+    { "id": "turn", "sentences": ["तभी तुम्हें एक free tool मिलता है।", "Resume Worded।"] },
+    { "id": "how", "sentences": ["अपना resume upload करो।", "तीस second में सौ में से score मिलता है।", "और हर कमज़ोर line पर बताता है कि गलती क्या है।"] },
+    { "id": "twist", "sentences": ["लेकिन असली trick अब है।", "Lines ठीक करो और दोबारा upload करो, जितनी बार चाहो, free में।", "Score बढ़ता जाता है।"] },
+    { "id": "end", "sentences": ["अगले हफ़्ते, पहली interview call आ गई।"] },
+    { "id": "link", "sentences": ["इस tool का link चाहिए?", "Comment में कुछ भी लिख दो।"] },
+    { "id": "ask", "sentences": ["उस दोस्त को भेजो जो हर दिन job apply कर रहा है।"] }
+  ]
+}

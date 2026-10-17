@@ -1,0 +1,28 @@
+{
+  "title": "AI सीखना है? यह रहा पूरा नक़्शा",
+  "number": 7,
+  "lane": "TOOL",
+  "setting": "both",
+  "look": "illustrated story (brand/story.js, brand/scenes.js), my face as the main character (brand/face)",
+  "sendTo": "वो दोस्त जो रोज़ कहता है, AI सीखना है",
+  "link": "https://github.com/rohitg00/ai-engineering-from-scratch",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a short story and lets you in on a useful find. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://aiengineeringfromscratch.com/ (captured 2026-10-12: '528 lessons. 20 phases.', 'OPEN SOURCE · MIT', 'No paywall, no account required', curriculum list from '0. SETUP & TOOLING' and 'I. MATH FOUNDATIONS' to 'XIX. CAPSTONE PROJECTS', 'Your agent becomes your tutor: placement quiz, personalized path, lessons taught interactively in your terminal')",
+    "https://github.com/rohitg00/ai-engineering-from-scratch (captured 2026-10-12: 67.9k stars, MIT license, 'Free, open source, MIT', 'Math is the floor. Agents and production are the roof.')"
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["AI सीखना है, पर शुरू कहाँ से करें?", "यह रहा पूरा नक़्शा, बिल्कुल free।"] },
+    { "id": "trouble", "sentences": ["तुम्हारे laptop में चालीस tab खुले हैं।", "दस playlist, पाँच course, और plan एक भी नहीं।"] },
+    { "id": "turn", "sentences": ["तभी GitHub पर एक repo मिलता है।", "AI Engineering from Scratch।"] },
+    { "id": "how", "sentences": ["इसमें बीस phase हैं, एक के ऊपर एक।", "सबसे नीचे math, सबसे ऊपर AI agents।", "पाँच सौ अट्ठाईस lesson, और सब free।"] },
+    { "id": "twist", "sentences": ["और अब सबसे काम की बात।", "इसका AI tutor पहले तुम्हारा test लेता है और फिर बताता है कि शुरू कहाँ से करना है।"] },
+    { "id": "end", "sentences": ["अब चालीस tab बंद।", "सिर्फ़ एक खुला है।"] },
+    { "id": "link", "sentences": ["इस course का link चाहिए?", "Comment में कुछ भी लिख दो।"] },
+    { "id": "ask", "sentences": ["उस दोस्त को भेजो जो रोज़ कहता है, AI सीखना है।"] }
+  ]
+}

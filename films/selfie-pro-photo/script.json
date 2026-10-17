@@ -1,0 +1,40 @@
+{
+  "title": "Hostel वाली selfie से LinkedIn वाली photo",
+  "number": 12,
+  "lane": "TOOL",
+  "setting": "both",
+  "series": "AI जुगाड़ #1",
+  "experiment": "E1 visible magic: the result is a before and after the eye sees in one second (my selfie in a hoodie, then the same face in a blazer under studio light). Also the first reel of channel test T2 (the series and the follow line after the first payoff).",
+  "look": "illustrated story (brand/story.js, brand/scenes.js), my face and body (hoodie, then blazer), Rohan as the friend, Priya Ma'am as the interviewer, compact captions",
+  "sendTo": "placement वाला दोस्त",
+  "link": "https://gemini.google.com/",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a short story and lets you in on a useful find. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://gemini.google/overview/image-generation/ (captured 2026-10-16, India): 'Bring your wildest ideas to life ... with Nano Banana. Available for free. Upgrade to a Google AI Plan to unlock Nano Banana 2.1'; model table: 'Nano Banana 2, Image generation and editing model, Free of charge'; 'One visual, many sizes. Make your creations look professional everywhere that you share them. Instantly resize them to fit whatever format you require'; 'Try out different looks with Gemini. Ready for a makeover?'; 'Upload a pic to Gemini & prompt'; footnote 'Compatibility and availability vary. Limits apply. 18+.'",
+    "https://gemini.google/subscriptions/ (captured 2026-10-16, India): 'Free of charge ... ₹0 INR/month with a Google Account'; Gemini app: 'Image generation and editing'."
+  ],
+  "claims": [
+    "Photo editing in Gemini is free: both pages (free of charge, ₹0, with limits; the caption says 'limits के साथ').",
+    "Upload a selfie and write one line: the page shows 'Upload a pic to Gemini & prompt'.",
+    "Any size: 'Instantly resize them to fit whatever format you require'.",
+    "Not claimed: that it works for passports or government ID (Indian passport photos must not be digitally altered), any number of free images per day, or the paid model."
+  ],
+  "prompt": "Turn this selfie into a professional LinkedIn headshot. Keep my face exactly the same. Navy blazer, white shirt, plain grey background, soft studio light, chest up.",
+  "prompt2": "Now give me the same photo as a square profile picture and as a resume photo.",
+  "lines": [
+    { "id": "hook", "sentences": ["तुम्हारी hostel वाली selfie अब LinkedIn वाली professional photo है।", "बिना photographer और बिना blazer के।"] },
+    { "id": "trouble", "sentences": ["कल placement का form भरना है।", "Formal photo चाहिए और phone में बस ऐसी selfies हैं।"] },
+    { "id": "turn", "sentences": ["तभी Rohan बोलता है कि Gemini में डाल दे।", "वहाँ photo editing free है।"] },
+    { "id": "how", "sentences": ["अपनी selfie upload करो।", "और बस यह एक line लिखो।"] },
+    { "id": "magic", "sentences": ["चेहरा तुम्हारा ही है पर अब blazer और studio वाली light में।"] },
+    { "id": "follow", "sentences": ["ऐसे और AI जुगाड़ के लिए follow कर लो।"] },
+    { "id": "twist", "sentences": ["लेकिन असली जुगाड़ अब है।", "एक line और लिखो और यही photo हर size में तैयार है।"] },
+    { "id": "end", "sentences": ["Interview में Priya Ma'am ने पहले यही पूछा कि photo कहाँ खिंचवाई।", "तुमने मुस्कुराकर कहा कि एक जुगाड़ है।"] },
+    { "id": "link", "sentences": ["इस tool का link चाहिए?", "Comment में कुछ भी लिख दो।"] },
+    { "id": "ask", "sentences": ["पूरा prompt caption में है।", "Placement वाले दोस्त को भेज दो।"] }
+  ]
+}

@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#08 Police video call पर arrest नहीं करती</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #11143A; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// A story in three places: home in the evening (mummy, the phone, me), the video call on
+// the phone (a man in uniform), and a board with the three things to do.
+import { S, backOut, bump, camera, captions, cubicOut, eio, expoOut, key, lerp, person, pointer, prog, pulse, setup, start } from '/brand/story.js';
+import { BLUE, CORAL, INK, NAVY, followCard, lights, paperPlane, show, star, whip, whipIn, whipOut } from '/brand/scenes.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const FACE = { dir: '/brand/face/', meta: await (await fetch('/brand/face/face.json')).json() };
+const ME = { face: FACE, skin: FACE.meta.cheek, outfit: 'hoodie' };
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"'], ['/logo.png', ...FACE.meta.names.map((n) => `${FACE.dir}${n}.png`)]);
+const pop = (t, at) => 1 - 0.07 * at.reduce((v, a) => v + Math.max(0, bump(t - a)), 0);
+const U = [];
+const L = lights(svg);
+const YEL = '#FFD23F';
+const line = { stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round' };
+// a yellow or red tag with a word on it; its middle is the origin
+const chip = (parent, text, w, size, fill = YEL, ink = NAVY) => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -size * 0.75, width: w, height: size * 1.5, rx: size * 0.36, fill, ...line }, g);
+  S('text', { y: size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, text);
+  return g;
+};
+const place = (g, x, y, s = 1, r = 0) => g.setAttribute('transform', `translate(${x} ${y}) rotate(${r}) scale(${s})`);
+
+// ================= home, in the evening =================
+const sH = S('g', {}, svg);
+const wH = S('g', {}, sH);
+const camH = camera(wH);
+const blurH = L.blurOf('mbHome');
+S('rect', { x: -500, y: -500, width: 2080, height: 3000, fill: '#F6DDBD' }, wH);
+S('path', { d: 'M560,-500 L1100,-500 L860,1330 L320,1330 Z', fill: '#FBE9CF', opacity: 0.8 }, wH);
+S('rect', { x: 90, y: 330, width: 300, height: 220, rx: 14, fill: '#fff', ...line }, wH);
+S('path', { d: 'M110,530 L190,430 L250,490 L300,440 L370,530 Z', fill: '#F3A65A' }, wH);
+S('circle', { cx: 320, cy: 392, r: 26, fill: YEL }, wH);
+S('path', { d: 'M860,300 L860,560', stroke: '#8A6A4A', 'stroke-width': 10 }, wH);
+S('path', { d: 'M780,560 L940,560 L900,700 L820,700 Z', fill: '#FFB84A', ...line }, wH);
+S('rect', { x: -500, y: 1330, width: 2080, height: 1200, fill: '#D9B48A' }, wH);
+S('rect', { x: 40, y: 1010, width: 1000, height: 560, rx: 70, fill: '#C9695A', ...line }, wH);
+S('rect', { x: 40, y: 1230, width: 1000, height: 340, rx: 50, fill: '#B8574A', ...line }, wH);
+const mummy = person(wH, { kind: 'teacher', skin: '#D9996E', shade: '#BF8058', hair: '#2A1C1A', top: '#7A4BC2', topShade: '#63399F', accent: '#FFD166', outline: INK });
+const me = person(wH, ME);
+// the phone in her hand, the money that was about to go, and the badge when the call is cut
+const phone = S('g', {}, wH);
+S('rect', { x: -52, y: -88, width: 104, height: 176, rx: 20, fill: NAVY, ...line }, phone);
+const phScreen = S('rect', { x: -42, y: -72, width: 84, height: 144, rx: 10, fill: '#C23B3B' }, phone);
+const money = chip(wH, '₹10,00,000', 430, 78);
+const ended = S('g', {}, wH);
+S('circle', { r: 70, fill: CORAL, ...line }, ended);
+S('path', { d: 'M-34,10 C-20,-18 20,-18 34,10 L22,22 L10,10 L-10,10 L-22,22 Z', fill: '#fff', transform: 'rotate(0)' }, ended);
+const shield = S('g', {}, wH);
+S('path', { d: 'M0,-70 L58,-46 C58,10 40,50 0,72 C-40,50 -58,10 -58,-46 Z', fill: '#19C37D', ...line }, shield);
+S('path', { d: 'M-26,0 L-6,22 L30,-22', fill: 'none', stroke: '#fff', 'stroke-width': 14, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, shield);
+const myPhone = S('g', {}, wH);
+S('rect', { x: -34, y: -58, width: 68, height: 116, rx: 14, fill: NAVY, ...line }, myPhone);
+S('rect', { x: -27, y: -48, width: 54, height: 92, rx: 6, fill: '#BFD0FF' }, myPhone);
+const plane = paperPlane(wH, [700, 1240], [520, 700], [1260, 520]);
+
+U.push((t) => {
+  const A = t < T.call + 0.02;                              // the hook
+  const B = t >= T.fear - 0.2 && t < T.wants + 0.02;        // she is afraid
+  const C = t >= T.truth - 0.2 && t < T.police + 0.02;      // "लेकिन सच यह है"
+  const D = t >= T.saved - 0.2;                             // saved, and the ask
+  if (!show(sH, A || B || C || D)) return;
+  const beat = Math.sin(t * 5);
+  show(money, A || B || (D && t < T.ask));
+  show(ended, (A && t > T.cut - 0.05) || D);
+  show(shield, (A && t > T.cut + 0.2) || (D && t > T.safe - 0.05 && t < T.ask));
+  show(me.g, A || C || D);
+  show(myPhone, D && t > T.ask + 0.05);
+  plane(t, D ? T.ask + 0.4 : 1e9, T.send + 0.35);
+  let fright = 0;   // 0 calm, 1 terrified
+  let mx = 320;
+  if (A) {
+    whipOut(sH, blurH, t, T.call - 0.06, -1);
+    camH(...key(t, [[0, [540, 1010, 1.08, -1]], [0.8, [540, 990, 1, 0], expoOut], [T.call, [540, 985, 1.07, 0], (p) => p]]));
+    const cutP = prog(t, T.cut - 0.12, 0.14);
+    fright = 1 - 0.7 * prog(t, T.cut, 0.4);
+    place(money, 320 + 4 * beat, 840 + 6 * Math.sin(t * 3), backOut(prog(t, T.lakh - 0.3, 0.3)) * (t < 0.01 ? 1 : 1), -5);
+    money.setAttribute('transform', `translate(${320 + 4 * beat} ${840 + 6 * Math.sin(t * 3)}) rotate(-5) scale(${1 + 0.1 * Math.max(0, bump(t - T.lakh))})`);
+    place(ended, 470, 1190, backOut(prog(t, T.cut - 0.05, 0.25)), 135);
+    place(shield, 560, 800, backOut(prog(t, T.cut + 0.2, 0.3)));
+    // I reach across and cut the call
+    me.pose({
+      x: 790, y: 1630, s: 1.2, lean: lerp(0, -5, cutP), face: t < T.cut ? 'worried' : 'grin', pop: pop(t, [T.cut]),
+      handL: [lerp(-150, -250, cutP), lerp(-62, -330, cutP)], gripL: cutP > 0.5 ? 'point' : 'open',
+    });
+  } else if (B) {
+    whipIn(sH, blurH, t, T.fear - 0.2, 1);
+    if (t > T.wants - 0.3) whipOut(sH, blurH, t, T.wants - 0.06, -1);
+    camH(...key(t, [[T.fear - 0.2, [400, 1040, 1.3]], [T.wants, [380, 1060, 1.5], cubicOut]]));
+    fright = 1;
+    place(money, 330, 800 + 6 * Math.sin(t * 3), 1 + 0.06 * Math.abs(Math.sin(t * 9)), -5);
+  } else if (C) {
+    whipIn(sH, blurH, t, T.truth - 0.2, 1);
+    if (t > T.police - 0.3) whipOut(sH, blurH, t, T.police - 0.06, -1);
+    camH(...key(t, [[T.truth - 0.2, [600, 1010, 1.1]], [T.police, [640, 1000, 1.25], cubicOut]]));
+    fright = 0.8;
+    const say = backOut(prog(t, T.truth + 0.15, 0.3));
+    me.pose({
+      x: 790, y: 1630, s: 1.2, face: 'talk', tilt: 2 * Math.sin(t * 3),
+      handL: [lerp(-150, -200, say), lerp(-62, -330, say)], handR: [lerp(152, 190, say), lerp(-62, -300, say)],
+    });
+  } else {
+    if (t < T.saved + 0.3) whipIn(sH, blurH, t, T.saved - 0.2, 1); else whip(sH, blurH, 0, 0);
+    camH(...key(t, [[T.saved - 0.2, [540, 1010, 1.06]], [T.ask, [540, 1000, 1.12], (p) => p], [T.ask + 0.5, [600, 1000, 1.16]], [dur, [600, 995, 1.2], (p) => p]]));
+    fright = 0;
+    place(money, 320, 840 + 6 * Math.sin(t * 3), 1 + 0.1 * Math.max(0, bump(t - T.safe)), -5);
+    place(ended, 470, 1190, 1, 135);
+    place(shield, 560, 800, backOut(prog(t, T.safe - 0.05, 0.3)));
+    const lift = backOut(prog(t, T.ask + 0.05, 0.35));
+    const up = backOut(prog(t, T.safe, 0.3)) * (1 - prog(t, T.ask, 0.2));
+    const hand = [lerp(-150, -90, lift), lerp(-62, -270, lift)];
+    me.pose({
+      x: 790, y: 1630 - 24 * Math.max(0, bump(t - T.safe)), s: 1.2, tilt: 2 * Math.sin(t * 2.4),
+      face: t < T.send ? 'grin' : t < T.send + 0.6 ? 'wink' : 'grin', pop: pop(t, [T.safe, T.send, T.send + 0.6]),
+      handL: hand, gripL: lift > 0.5 ? 'fist' : 'open', handR: [lerp(152, 180, up), lerp(-62, -330, up)], gripR: up > 0.5 ? 'thumb' : 'open',
+    });
+    place(myPhone, 790 + (hand[0] - 4) * 1.2, 1630 + (hand[1] - 50) * 1.2, 1.25, -8 + 3 * Math.sin(t * 5));
+  }
+  // mummy: the phone in one hand; the more afraid, the wider the eyes and the higher the hands
+  const f = fright;
+  mummy.pose({
+    x: mx, y: 1630 - 8 * Math.max(0, beat) * f, s: 1.3, tilt: lerp(3, -4, f), hx: 5 * f * Math.sin(t * 40), look: [lerp(0.9, 0.2, f), lerp(0, 0.5, f)],
+    eye: lerp(1, 1.35, f), brow: [lerp(-4, -14, f), lerp(4, 14, f)], browY: lerp(-6, -16, f), smile: lerp(1.2, -0.6, f), open: lerp(0.15, 0.9, f), mw: lerp(26, 16, f),
+    handL: [lerp(-130, -96, f), lerp(-64, -352, f)], handR: [118, -196],
+  });
+  place(phone, mx + 118 * 1.3 + 18, 1630 - 196 * 1.3 - 70, 1, 8 + 3 * f * Math.sin(t * 30));
+  phScreen.setAttribute('fill', (A && t > T.cut) || D ? '#3B3F58' : '#C23B3B');
+});
+
+// ================= the video call on the phone =================
+const sP = S('g', {}, svg);
+const wP = S('g', {}, sP);
+const camP = camera(wP);
+const blurP = L.blurOf('mbCall');
+S('rect', { x: -500, y: -500, width: 2080, height: 3000, fill: '#14151F' }, wP);
+S('rect', { x: 60, y: 230, width: 960, height: 1500, rx: 70, fill: '#23263A', ...line }, wP);
+S('rect', { x: 60, y: 230, width: 960, height: 760, rx: 70, fill: '#2E3350' }, wP);
+// a flag-like stripe and an emblem behind him, to look official
+S('rect', { x: 120, y: 300, width: 200, height: 250, rx: 12, fill: '#3A4066' }, wP);
+S('circle', { cx: 220, cy: 425, r: 60, fill: 'none', stroke: '#8089B5', 'stroke-width': 10 }, wP);
+star(wP, 220, 425, 44, '#8089B5');
+const man = person(wP, { kind: 'student', skin: '#C98B60', shade: '#A8704A', hair: '#17141A', top: '#B39A5E', topShade: '#96804A', legs: '#6F6038', outline: INK });
+const cap = S('g', {}, wP);
+S('path', { d: 'M-104,-8 C-104,-78 104,-78 104,-8 Z', fill: '#96804A', ...line }, cap);
+S('path', { d: 'M-116,-8 L116,-8 L132,22 L-132,22 Z', fill: '#17141A', ...line }, cap);
+star(cap, 0, -40, 20, YEL);
+const tash = S('path', { d: 'M-34,0 C-18,-16 18,-16 34,0 C18,-4 -18,-4 -34,0 Z', fill: '#17141A' }, wP);
+S('rect', { x: -500, y: 1170, width: 2080, height: 900, fill: '#14151F' }, wP);
+S('rect', { x: 60, y: 1170, width: 960, height: 560, rx: 0, fill: '#23263A' }, wP);
+const rec = S('g', {}, wP);
+S('rect', { x: 0, y: 0, width: 190, height: 62, rx: 31, fill: '#0F1018' }, rec);
+const recDot = S('circle', { cx: 34, cy: 31, r: 13, fill: CORAL }, rec);
+S('text', { x: 62, y: 44, 'font-size': 36, fill: '#fff' }, rec, 'LIVE');
+const nameTag = chip(wP, 'CBI OFFICER', 380, 48, '#0F1018', '#fff');
+const parcel = S('g', {}, wP);
+S('rect', { x: -90, y: -70, width: 180, height: 140, rx: 12, fill: '#D9A566', ...line }, parcel);
+S('path', { d: 'M-90,-20 L90,-20 M0,-70 L0,70', stroke: INK, 'stroke-width': 6 }, parcel);
+const drugs = chip(wP, 'DRUGS', 250, 70, CORAL, '#fff');
+const arrest = S('g', {}, wP);
+S('rect', { x: -370, y: -92, width: 740, height: 184, rx: 24, fill: 'none', stroke: CORAL, 'stroke-width': 16 }, arrest);
+S('text', { y: 38, 'text-anchor': 'middle', 'font-size': 112, fill: CORAL, 'letter-spacing': 2 }, arrest, 'DIGITAL ARREST');
+const no = ['M-330,-150 L330,150', 'M330,-150 L-330,150'].map((d) => S('path', { d, fill: 'none', stroke: '#fff', 'stroke-width': 34, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1 }, arrest));
+const camIcon = S('g', {}, wP);
+S('rect', { x: -80, y: -52, width: 116, height: 104, rx: 20, fill: '#fff', ...line }, camIcon);
+S('path', { d: 'M36,-16 L84,-44 L84,44 L36,16 Z', fill: '#fff', ...line }, camIcon);
+const camOn = S('circle', { cx: -22, cy: 0, r: 20, fill: CORAL }, camIcon);
+const notes = [0, 1, 2].map(() => { const g = S('g', {}, wP); S('rect', { x: -70, y: -40, width: 140, height: 80, rx: 10, fill: '#7BC67B', ...line }, g); S('text', { y: 20, 'text-anchor': 'middle', 'font-size': 52, fill: '#1F5A2A' }, g, '₹'); return g; });
+const badges = [['POLICE', 250], ['CBI', 540], ['AGENCY', 830]].map(([text, x]) => {
+  const g = S('g', {}, wP);
+  S('path', { d: 'M0,-96 L100,-62 C100,20 70,84 0,116 C-70,84 -100,20 -100,-62 Z', fill: '#3558FF', ...line }, g);
+  S('text', { y: 18, 'text-anchor': 'middle', 'font-size': text.length > 5 ? 36 : 46, fill: '#fff' }, g, text);
+  return { g, x };
+});
+U.push((t) => {
+  const A = t >= T.call - 0.2 && t < T.fear + 0.02;      // the call
+  const B = t >= T.wants - 0.2 && t < T.truth + 0.02;    // "वो यही चाहता था"
+  const C = t >= T.police - 0.2 && t < T.steps + 0.02;   // the truth
+  if (!show(sP, A || B || C)) return;
+  const t0 = A ? T.call : B ? T.wants : T.police;
+  const t1 = A ? T.fear : B ? T.truth : T.steps;
+  if (t < t0 + 0.3) whipIn(sP, blurP, t, t0 - 0.2, 1); else whipOut(sP, blurP, t, t1 - 0.06, -1);
+  camP(...(A ? key(t, [[T.call - 0.2, [540, 980, 1]], [T.arrest, [540, 900, 1.12], cubicOut], [T.fear, [540, 880, 1.18], (p) => p]])
+    : B ? key(t, [[T.wants - 0.2, [540, 760, 1.4]], [T.truth, [540, 740, 1.55], cubicOut]])
+      : key(t, [[T.police - 0.2, [540, 960, 1.02]], [T.steps, [540, 950, 1.08], (p) => p]])));
+  recDot.setAttribute('opacity', Math.floor(t * 2.5) % 2 ? 1 : 0.25);
+  place(rec, 110, 280);
+  place(nameTag, 540, 1100);
+  // the man in uniform: stern while he speaks, pleased when she is afraid
+  const glad = B ? 1 : 0;
+  const talk = A && t > T.man && t < Q[4].b ? 0.2 + 0.5 * Math.abs(Math.sin(t * 14)) : 0;
+  const mxy = [540, 1330 + 4 * Math.sin(t * 2)];
+  man.pose({
+    x: mxy[0], y: mxy[1], s: 1.5, tilt: 2 * Math.sin(t * 1.8), look: [0, 0.1], eye: glad ? 0.7 : 1.05,
+    brow: glad ? [8, -8] : [14, -14], browY: glad ? -2 : 6, smile: glad ? 1.4 : -0.5, open: glad ? 0.3 : talk, mw: glad ? 30 : 22,
+    handL: [-150, -40], handR: C ? [150, -40] : [lerp(150, 120, prog(t, T.stamp - 0.2, 0.2)), lerp(-40, -330, backOut(prog(t, T.stamp - 0.2, 0.2)))],
+  });
+  place(cap, mxy[0], mxy[1] - (405 + 96) * 1.5, 1.5, 2 * Math.sin(t * 1.8));
+  place(tash, mxy[0], mxy[1] - (405 - 40) * 1.5, 1.5);
+  show(parcel, A && t > T.parcel - 0.06);
+  show(drugs, A && t > T.drugs - 0.06);
+  show(arrest, (A && t > T.stamp - 0.06) || C);
+  show(camIcon, A && t > T.camera - 0.06);
+  place(parcel, 210, 640, backOut(prog(t, T.parcel - 0.06, 0.28)), -8 + 2 * Math.sin(t * 3));
+  place(drugs, 250, 560, backOut(prog(t, T.drugs - 0.06, 0.28)), -12);
+  const slam = prog(t, T.stamp - 0.06, 0.14);
+  place(arrest, 540, C ? 430 : 1010, C ? 0.92 : 0.86 * lerp(2.2, 1, slam ** 2) * (1 + 0.06 * Math.max(0, bump(t - T.stamp - 0.08))), -6);
+  place(camIcon, 860, 620, backOut(prog(t, T.camera - 0.06, 0.28)) * (1 + 0.08 * Math.abs(Math.sin(t * 8))));
+  camOn.setAttribute('opacity', Math.floor(t * 5) % 2 ? 1 : 0.3);
+  notes.forEach((n, i) => {
+    const p = prog(t, T.wants + 0.1 + i * 0.22, 0.7);
+    show(n, B && p > 0 && p < 1);
+    place(n, lerp(1150, 560, eio(p)), lerp(1500 - i * 60, 900, eio(p)), 1.2 - 0.5 * p, 20 - 90 * p);
+  });
+  badges.forEach((b, i) => {
+    const at = [T.police, T.cbi, T.agency][i];
+    show(b.g, C && t > at - 0.06);
+    place(b.g, b.x, 1010 + 6 * Math.sin(t * 3 + i), backOut(prog(t, at - 0.06, 0.28)) * 1.05);
+  });
+  no.forEach((e, i) => e.setAttribute('stroke-dashoffset', C ? 1 - eio(prog(t, T.never - 0.05 + i * 0.14, 0.2)) : 1));
+});
+
+// ================= the three things to do =================
+const sT = S('g', {}, svg);
+const wT = S('g', {}, sT);
+const camT = camera(wT);
+const blurT = L.blurOf('mbSteps');
+S('rect', { x: -500, y: -500, width: 2080, height: 3000, fill: '#151A40' }, wT);
+const sky = [[120, 300, 10], [930, 260, 8], [1000, 620, 6], [80, 760, 6]].map(([x, y, r]) => ({ e: star(wT, 0, 0, r, '#fff'), x, y }));
+const card = (y, n, draw) => {
+  const g = S('g', {}, wT);
+  S('rect', { x: -330, y: -105, width: 660, height: 210, rx: 44, fill: '#fff', ...line }, g);
+  S('circle', { cx: -330, cy: -105, r: 50, fill: YEL, ...line }, g);
+  S('text', { x: -330, y: -84, 'text-anchor': 'middle', 'font-size': 62, fill: NAVY }, g, n);
+  draw(g);
+  return { g, y };
+};
+const cards = [
+  card(400, '1', (g) => {
+    S('circle', { cx: -200, cy: 0, r: 64, fill: CORAL, ...line }, g);
+    S('path', { d: 'M-232,10 C-218,-16 -182,-16 -168,10 L-180,22 L-190,10 L-210,10 L-220,22 Z', fill: '#fff', transform: 'rotate(135 -200 4)' }, g);
+    S('text', { x: -100, y: 26, 'font-size': 76, fill: NAVY }, g, 'Phone काटो');
+  }),
+  card(650, '2', (g) => {
+    S('circle', { cx: -200, cy: 0, r: 64, fill: '#7BC67B', ...line }, g);
+    S('text', { x: -200, y: 26, 'text-anchor': 'middle', 'font-size': 80, fill: '#1F5A2A' }, g, '₹');
+    S('path', { d: 'M-250,-50 L-150,50', stroke: CORAL, 'stroke-width': 16, 'stroke-linecap': 'round' }, g);
+    S('text', { x: -100, y: 26, 'font-size': 70, fill: NAVY }, g, 'पैसे मत भेजो');
+  }),
+  card(910, '3', (g) => {
+    S('rect', { x: -330, y: -105, width: 660, height: 210, rx: 44, fill: YEL, ...line }, g);
+    S('text', { x: 0, y: 44, 'text-anchor': 'middle', 'font-size': 168, fill: NAVY, 'letter-spacing': 6 }, g, '1930');
+  }),
+];
+const site = chip(wT, 'cybercrime.gov.in', 520, 50, '#0F1230', '#fff');
+const meT = person(wT, ME);
+U.push((t) => {
+  if (!show(sT, t >= T.steps - 0.2 && t < T.saved + 0.02)) return;
+  if (t < T.steps + 0.3) whipIn(sT, blurT, t, T.steps - 0.2, 1); else whipOut(sT, blurT, t, T.saved - 0.06, -1);
+  camT(...key(t, [[T.steps - 0.2, [540, 990, 1.04]], [T.saved, [540, 960, 1.1], (p) => p]]));
+  sky.forEach((s, i) => s.e.setAttribute('transform', `translate(${s.x} ${s.y}) scale(${0.7 + 0.4 * Math.sin(t * 5 + i * 2)})`));
+  cards.forEach((c, i) => {
+    const at = [T.hang, T.money, T.dial][i];
+    const p = prog(t, at - 0.08, 0.3);
+    show(c.g, p > 0);
+    place(c.g, 640 + (1 - expoOut(p)) * 900, c.y, 1 + 0.06 * Math.max(0, bump(t - at - 0.1)) + (i === 2 ? 0.03 * Math.sin(t * 6) : 0), [-2, 2, -1][i]);
+  });
+  show(site, t > T.dial + 0.5);
+  place(site, 640, 1075, backOut(prog(t, T.dial + 0.5, 0.28)));
+  const at = t < T.money ? 400 : t < T.dial ? 650 : 910;
+  meT.pose({
+    x: 160, y: 1700, s: 1.05, face: t < T.hang ? 'talk' : 'look-right', pop: pop(t, [T.hang, T.money, T.dial]), tilt: 2 * Math.sin(t * 2.4),
+    handR: [210, lerp(-300, (at - 1700) / 1.05 + 60, 0.35) - 60], gripR: 'point',
+  });
+});
+
+// ================= captions, the follow card, the pointer =================
+const clean = (words) => words.map((x) => ({ ...x, word: x.word.replace(/[।,]+$/, '') }));
+U.push(captions(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1 })), { size: 80 }));
+const follow = followCard(stage, { line: 'AI और online safety' });
+const tip = pointer(stage, NAVY, '#fff', 130);
+U.push((t) => {
+  follow.set(t, T.send + 0.2, T.follow);
+  tip.style.visibility = t >= T.send + 0.3 ? 'visible' : 'hidden';
+  const [x, y] = key(t, [[T.send + 0.3, [1150, 900]], [T.follow - 0.06, [900, 420]], [dur, [900, 420]]]);
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * pulse(t, T.follow + 0.02, 0.07)})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

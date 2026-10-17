@@ -1,0 +1,201 @@
+{
+  "captured": "2026-10-15",
+  "shots": [
+    {
+      "name": "home",
+      "url": "https://resumeworded.com/",
+      "file": "shots/home.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "Resume Worded - Free instant feedback on your resume and LinkedIn profile",
+      "finalUrl": "https://resumeworded.com/",
+      "w": 824,
+      "h": 14000,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "RESUME WORDED",
+          "x": 32,
+          "y": 0,
+          "w": 390,
+          "h": 131
+        },
+        {
+          "tag": "h1",
+          "text": "Improve your resume and LinkedIn profile",
+          "x": 40,
+          "y": 200,
+          "w": 744,
+          "h": 164
+        },
+        {
+          "tag": "h2",
+          "text": "Designed by top recruiters, our AI-powered platform instantly gives you tailored feedback on your resume and LinkedIn pr",
+          "x": 40,
+          "y": 418,
+          "w": 744,
+          "h": 320
+        },
+        {
+          "tag": "h2",
+          "text": "Your personal resume and LinkedIn coach",
+          "x": 40,
+          "y": 4418,
+          "w": 744,
+          "h": 115
+        },
+        {
+          "tag": "h2",
+          "text": "Real scores, backed by real hiring criteria",
+          "x": 40,
+          "y": 7930,
+          "w": 744,
+          "h": 115
+        },
+        {
+          "tag": "h3",
+          "text": "A real score, not an opinion",
+          "x": 86,
+          "y": 8949,
+          "w": 652,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "AutoFix, your AI resume agent",
+          "x": 86,
+          "y": 9711,
+          "w": 652,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "ATS templates that actually parse",
+          "x": 86,
+          "y": 10474,
+          "w": 652,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Keyword targeting for every job",
+          "x": 86,
+          "y": 11188,
+          "w": 652,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Proven bullets from real resumes",
+          "x": 86,
+          "y": 11951,
+          "w": 652,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Watch your score climb",
+          "x": 86,
+          "y": 12616,
+          "w": 652,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "What happens after the score goes up",
+          "x": 40,
+          "y": 13252,
+          "w": 744,
+          "h": 115
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "scanner",
+      "url": "https://resumeworded.com/resume-scanner",
+      "file": "shots/scanner.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "Resume Scanner - Get a Free ATS Resume Scan",
+      "finalUrl": "https://resumeworded.com/resume-scanner",
+      "w": 824,
+      "h": 14000,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "RESUME WORDED",
+          "x": 32,
+          "y": 0,
+          "w": 390,
+          "h": 131
+        },
+        {
+          "tag": "h1",
+          "text": "How good is your resume?",
+          "x": 40,
+          "y": 408,
+          "w": 744,
+          "h": 82
+        },
+        {
+          "tag": "h2",
+          "text": "Find out instantly. Upload your resume and our free resume scanner will evaluate it against key criteria hiring managers",
+          "x": 40,
+          "y": 544,
+          "w": 744,
+          "h": 320
+        },
+        {
+          "tag": "h2",
+          "text": "Get a free ATS resume scan, powered by Artifical Intelligence",
+          "x": 30,
+          "y": 3410,
+          "w": 764,
+          "h": 296
+        },
+        {
+          "tag": "h2",
+          "text": "How do I make sure my resume is ATS-compliant?",
+          "x": 0,
+          "y": 5039,
+          "w": 824,
+          "h": 224
+        },
+        {
+          "tag": "h2",
+          "text": "Find out if your resume passes the ATS resume test",
+          "x": 0,
+          "y": 7085,
+          "w": 824,
+          "h": 224
+        },
+        {
+          "tag": "h2",
+          "text": "An example of an ATS friendly resume template that is readable by ATS and resume scanners",
+          "x": 30,
+          "y": 9291,
+          "w": 764,
+          "h": 368
+        },
+        {
+          "tag": "h2",
+          "text": "The importance of resume keywords",
+          "x": 30,
+          "y": 11193,
+          "w": 764,
+          "h": 224
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

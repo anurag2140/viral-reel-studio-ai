@@ -1,0 +1,274 @@
+Skip to content
+Navigation Menu
+Sign in
+rohitg00
+ai-engineering-from-scratch
+Repository navigation
+Code
+Issues
+17
+ (17)
+Pull requests
+53
+ (53)
+More
+items
+ai-engineering-from-scratch
+Public
+Sponsor
+Notifications
+Fork11.9k
+ (11.9k)
+Star67.9k
+ (67.9k)
+About
+
+Learn AI Engineering! Learn it. Build it. Ship it for others.
+
+aiengineeringfromscratch.com
+Topics
+agents
+ai
+ai-agents
+ai-engineering
+computer-vision
+course
+deep-learning
+from-scratch
+generative-ai
+llm
+machine-learning
+mcp
+nlp
+python
+reinforcement-learning
+rust
+swarm-intelligence
+transformers
+tutorial
+typescript
+Resources
+Readme
+MIT license
+Code of conduct
+Code of conduct
+Contributing
+Contributing
+Activity
+Stars
+67.9k stars
+Watchers
+433 watching
+Forks
+11.9k forks
+Report repository
+main
+Code
+Latest commit
+github-actions[bot]
+History
+Folders and files
+Name	Last commit date
+
+.claude/skills
+	
+
+.github
+	
+
+api
+	
+
+assets
+	
+
+book
+	
+
+certifications
+	
+
+docs
+	
+
+glossary
+	
+
+i18n
+	
+
+learning-paths
+	
+
+View all files
+Repository files navigation
+README
+Code of conduct
+More
+items
+
+Implement model internals, retrieval pipelines, and agent runtimes. Test them, inspect failures, and keep the code and evaluation results.
+
+Start learning · Choose a path · Try a lab · Build a project · Browse the curriculum
+
+Free, open source, MIT. Learn on the website, with a coding agent, or by running local code.
+
+528 lessons. 20 phases. Python, TypeScript, Rust, Julia.
+
+    
+
+Read in your language
+Sponsors
+
+ 
+
+Your support keeps every lesson free and open source. See all supporters · Become a sponsor
+
+Learning paths
+Route	Starting lesson
+Model foundations	Setup and tooling
+LLM systems	Prompt engineering
+Agents and delivery	The agent loop
+
+Compare career paths · Prerequisites and study time
+
+Gradient descent
+
+Twenty starting points follow gradient descent on a quadratic loss. The graph shows their positions and mean loss after each update.
+
+Adjust the learning rate in the lesson · Compare GD, momentum, and Adam in code
+
+Projects
+
+Three projects with staged starters, reference implementations, and local graders. Run commands from the repository root after setup. Starters fail until you implement the stages.
+
+01 · Retrieval Evaluation Lab · Python · Ranking metrics and regression checks
+02 · Agent Trace Debugger · TypeScript · Trace parsing and timing
+03 · Tool Call Firewall · Rust · Role checks and approval receipts
+
+Browse all projects · Career practice guide
+
+Choose how to learn
+On the website
+
+Open any completed lesson on aiengineeringfromscratch.com or expand a phase under Contents. No setup, no cloning.
+
+With an AI tutor
+
+If Node.js, npx, and a skill-capable coding agent are already installed, your coding agent can become your tutor. A repository clone is not needed to install or read the tutor. Runnable focused-path labs need python3. Agent Skills host labs also need a selected host and a writable user or project skill scope.
+
+npx skills add rohitg00/ai-engineering-from-scratch
+
+Choose the host and scope when the installer asks. Use start-learning in Codex, /start-learning in Claude Code, or ask your host to use the skill by name.
+
+Tutor setup and host commands
+
+Run local code
+git clone https://github.com/rohitg00/ai-engineering-from-scratch.git
+cd ai-engineering-from-scratch
+python3 phases/00-setup-and-tooling/01-dev-environment/code/verify.py --route beginner
+python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
+
+The preflight separates requirements needed now from tools needed later. Every required failure includes the detected reason and a corrective command. The vectors.py command is a dependency-free lesson and ends by showing that a matrix times a vector is the operation inside a neural network layer. Save that terminal output as your first evidence.
+
+Use every lesson the same way
+
+Choose a learning path
+
+You do not need to scan 528 lessons before beginning. Pick one goal. Each link opens the same curriculum on GitHub or the website, and both versions use the same lesson code.
+
+Your goal	Learn on GitHub	Learn on the website
+I am new and want the complete foundation	Phase 0: Setup and Tooling	Dev Environment
+I know Python and want math plus ML foundations	Phase 1: Math Foundations	Linear Algebra Intuition
+I want to build production LLM applications	Phase 11: LLM Engineering	Prompt Engineering
+I want to build agents	Phase 14: Agent Engineering	The Agent Loop
+I want to use coding agents on real repositories	Agent-Assisted Engineering path	Agent-Assisted Engineering
+I want to shape the right build before implementation	Product Judgment and Delivery path	Product Judgment and Delivery
+
+Not sure where you fit? Use the start-learning placement tutor or the website prerequisites guide.
+
+Compare four core domains and six career routes in the AI Engineering Learning Paths.
+
+Focused MCP and Agent Skills paths
+Prerequisites and study time
+The shape of the curriculum
+
+Twenty phases stack on top of each other. Math is the floor. Agents and production are the roof. Skip ahead if you already know the lower layers, but don't skip and then wonder why something at the top is breaking.
+
+Contents
+
+Twenty phases. Click any phase to expand its lesson list.
+
+Phase 0: Setup & Tooling 13 lessons
+
+Get your environment ready for everything that follows.
+
+#	Lesson	Type	Lang
+01	Dev Environment	Build	Python
+02	Git & Collaboration	Learn	—
+03	GPU Setup & Cloud	Build	Python
+04	APIs & Keys	Build	Python
+05	Jupyter Notebooks	Build	Python
+06	Python Environments	Build	Shell
+07	Docker for AI	Build	Docker
+08	Editor Setup	Build	—
+09	Data Management	Build	Python
+10	Terminal & Shell	Learn	—
+11	Linux for AI	Learn	—
+12	Debugging & Profiling	Build	Python
+13	Python for AI Engineering	Build	Python
+Phase 1 — Math Foundations  22 lessons  The intuition behind every AI algorithm, through code.
+Phase 2 — ML Fundamentals  21 lessons  Classical ML — still the backbone of most production AI.
+Phase 3 — Deep Learning Core  13 lessons  Neural networks from first principles. No frameworks until you build one.
+Phase 4 — Computer Vision  28 lessons  From pixels to understanding — image, video, 3D, VLMs, and world models.
+Phase 5 — NLP: Foundations to Advanced  29 lessons  Language is the interface to intelligence.
+Phase 6 — Speech & Audio  17 lessons  Hear, understand, speak.
+Phase 7 — Transformers Deep Dive  16 lessons  The architecture that changed everything.
+Phase 8 — Generative AI  15 lessons  Create images, video, audio, 3D, and more.
+Phase 9 — Reinforcement Learning  12 lessons  The foundation of RLHF and game-playing AI.
+Phase 10 — LLMs from Scratch  24 lessons  Build, train, and understand large language models.
+Phase 11 — LLM Engineering  17 lessons  Put LLMs to work in production.
+Phase 12 — Multimodal AI  25 lessons  See, hear, read, and reason across modalities — from ViT patches to computer-use agents.
+Phase 13 — Tools & Protocols  31 lessons  The interfaces between AI and the real world.
+Phase 14 — Agent Engineering  54 lessons  Build agents from first principles, use coding agents reliably, and shape the work before implementation.
+Phase 15 — Autonomous Systems  22 lessons  Long-horizon agents, self-improvement, and the 2026 safety stack.
+Phase 16 — Multi-Agent & Swarms  25 lessons  Coordination, emergence, and collective intelligence.
+Phase 17 — Infrastructure & Production  29 lessons  Ship AI to the real world.
+Phase 18 — Ethics, Safety & Alignment  30 lessons  Build AI that helps humanity. Not optional.
+Phase 19 — Capstone Projects  85 lessons  17 end-to-end products + 9 deep-build tracks. 20-40 hours per project; 4-12 lessons per track.
+Books and certifications
+Read the core curriculum as a book
+Prepare for Claude certifications
+Prepare for MCP Associate (MCPA)
+The toolkit
+
+Every lesson produces a reusable artifact. Install one in your agent or use the scripts below from the repository root.
+
+Lesson structure and reusable artifacts
+Install lesson artifacts
+Drop the agent workbench into your own repo
+Browse the entire course as JSON
+Smoke-check every lesson's Python code
+Foundational papers and protocols
+Contributing
+Goal	Read
+Contribute a lesson or fix	CONTRIBUTING.md
+Fork for your team or school	FORKING.md
+Lesson template	LESSON_TEMPLATE.md
+Track progress	ROADMAP.md
+Glossary	glossary/terms.md
+Code of conduct	CODE_OF_CONDUCT.md
+
+Before submitting a lesson, run the invariant check:
+
+python3 scripts/audit_lessons.py           # full curriculum
+python3 scripts/audit_lessons.py --phase 14  # single phase
+python3 scripts/audit_lessons.py --json    # CI-friendly output
+
+Exit code is non-zero when any rule fails. Rules (L001–L010) validate directory shape, docs/en.md presence + H1, code/ non-emptiness, quiz.json schema (rejects the legacy q/choices/answer keys that caused issue #102), and relative links inside lesson docs.
+
+Sponsor the work
+
+114,584 readers  ·  181,995 page views in the last 30 days  ·  as of 2026-08-29
+
+Free, MIT-licensed, 528 lessons. Thank you to the sponsors and backers who make the work possible. See all 

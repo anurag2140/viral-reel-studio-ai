@@ -1,0 +1,26 @@
+{
+  "name": "Kagaz",
+  "canvas": { "width": 1080, "height": 1920, "fps": 30, "safeTop": 250, "safeBottom": 400, "headerTop": 160 },
+  "color": {
+    "paper": "#F4EEE1",
+    "card": "#FFFDF6",
+    "ink": "#1B1A17",
+    "accent": "#E8452C",
+    "rule": "rgba(27,26,23,0.08)"
+  },
+  "pop": {
+    "blue": "#3D5AFE",
+    "blueLight": "#7C93FF",
+    "pink": "#FF4F9A",
+    "yellow": "#FFD23F",
+    "mint": "#2EE6A6",
+    "orange": "#FF7A1A"
+  },
+  "font": {
+    "display": { "family": "Baloo 2", "weights": [700, 800] },
+    "ui": { "family": "Mukta", "weights": [500, 600, 700] },
+    "source": "https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700&display=block"
+  },
+  "voice": { "hi": "Orus", "en": "Charon" },
+  "topics": ["AI", "CYBERSECURITY", "CLOUD"]
+}

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#05 Data: AI का खाना</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #111; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: var(--paper); }
+  #paper { position: absolute; inset: -200px 0; background-image: repeating-linear-gradient(#0000 0 94px, var(--rule) 94px 97px); }
+  svg { position: absolute; left: 0; top: 0; overflow: visible; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="paper"></div>
+  <svg id="world" width="1080" height="1920"></svg>
+  <div id="caps"></div>
+</div>
+<script type="module">
+// Hero weird image: the AI is a monster that eats data. What goes into its mouth shows up in
+// its belly: good data gives a tick, wrong or one-sided data gives a cross.
+import { $, boot, bump, clamp, createKit, ei, eio, eo, header, lerp, preview, prog, sp } from '/brand/kagaz.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const brand = await boot(stage);
+const vo = await (await fetch('vo.json')).json();
+const meta = await (await fetch('script.json')).json();
+const { dur, L, T } = build(vo);
+const kit = createKit(brand);
+const { stroke, pop, txt, card, sunburst, sticker, mascot, U, PAPER, CARD, INK, RED, BLUE, PINK, YELLOW, MINT, ORANGE } = kit;
+header(stage, brand, 'AI', meta.number, meta.title);
+
+const text = (parent, x, y, str, a = {}) => {
+  const e = $('text', { x, y, 'font-family': '"Baloo 2"', 'font-weight': 800, 'font-size': 80, fill: INK, 'text-anchor': 'middle', ...a }, parent);
+  e.textContent = str;
+  return e;
+};
+const MUK = { 'font-family': 'Mukta', 'font-weight': 700 };
+const root = $('g', {}, document.getElementById('world'));
+
+function scene(tOut, dir = -1, tIn = -9) {
+  const g = $('g', {}, root);
+  U.push((t) => {
+    const q = ei(prog(t, tOut, 0.3));
+    g.style.display = q >= 1 || t < tIn ? 'none' : '';
+    g.setAttribute('transform', `translate(${dir * 1300 * q} ${-300 * q}) rotate(${dir * 8 * q} 540 960)`);
+  });
+  return g;
+}
+function stamp(parent, x, y, rot, str, t, o = {}) {
+  const { color = PINK, w = 330, size = 70, out = null } = o;
+  const g = $('g', {}, parent);
+  $('rect', { x: -w / 2 + 10, y: -46, width: w, height: 112, rx: 14, fill: INK }, g);
+  $('rect', { x: -w / 2, y: -56, width: w, height: 112, rx: 14, fill: color, stroke: INK, 'stroke-width': 9 }, g);
+  text(g, 0, 28, str, { 'font-size': size, fill: color === YELLOW || color === MINT ? INK : PAPER });
+  U.push((time) => {
+    const q = time - t;
+    let k = q < 0 ? 0 : lerp(2.6, 1, eo(clamp(q / 0.12))) * (1 + 0.06 * bump(q - 0.12));
+    if (out != null) k *= 1 - ei(prog(time, out, 0.15));
+    g.style.display = k <= 0.002 ? 'none' : '';
+    g.setAttribute('transform', `translate(${x} ${y}) rotate(${rot}) scale(${k})`);
+  });
+  return g;
+}
+// small food cards: what is drawn on a 190 x 220 card
+const tile = (g, fill = CARD) => {
+  $('rect', { x: -85, y: -98, width: 190, height: 220, rx: 18, fill: INK }, g);
+  $('rect', { x: -95, y: -110, width: 190, height: 220, rx: 18, fill, stroke: INK, 'stroke-width': 8 }, g);
+};
+const badge = (g, ok) => {
+  $('circle', { cx: 76, cy: -92, r: 32, fill: ok ? MINT : RED, stroke: INK, 'stroke-width': 6 }, g);
+  $('path', { d: ok ? 'M61 -92 L72 -80 L92 -105' : 'M63 -105 L89 -79 M89 -105 L63 -79', fill: 'none', stroke: ok ? INK : PAPER, 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', transform: '' }, g);
+};
+const FOOD = {
+  text: (g) => { tile(g); text(g, 0, 10, 'Aa', { 'font-size': 100 }); $('path', { d: 'M-60 50 H60 M-60 82 H30', stroke: INK, 'stroke-width': 10, 'stroke-linecap': 'round' }, g); },
+  photo: (g) => { tile(g); $('circle', { cx: 40, cy: -50, r: 26, fill: YELLOW, stroke: INK, 'stroke-width': 6 }, g); $('path', { d: 'M-75 80 L-20 -10 L15 45 L40 15 L78 80Z', fill: MINT, stroke: INK, 'stroke-width': 7, 'stroke-linejoin': 'round' }, g); },
+  sound: (g) => { tile(g); [-56, -28, 0, 28, 56].forEach((x, i) => $('path', { d: `M${x} ${-[30, 62, 44, 70, 26][i]} V${[30, 62, 44, 70, 26][i]}`, stroke: PINK, 'stroke-width': 16, 'stroke-linecap': 'round' }, g)); },
+  nums: (g) => { tile(g); text(g, 0, 32, '123', { 'font-size': 92, fill: BLUE }); },
+  good: (g, i) => { [FOOD.text, FOOD.photo, FOOD.sound, FOOD.nums][i % 4](g); badge(g, true); },
+  bad: (g, i) => {
+    tile(g, i < 2 ? CARD : YELLOW);
+    if (i < 2) text(g, 0, 28, ['2+2=5', 'बिल्ली?'][i], { 'font-size': 52 });
+    else $('circle', { r: 46, fill: ORANGE, stroke: INK, 'stroke-width': 7 }, g); // the same thing again and again
+    badge(g, false);
+  },
+  cat: (g, dark) => {
+    tile(g);
+    $('path', { d: 'M-50 -18 L-42 -76 L-6 -46Z M50 -18 L42 -76 L6 -46Z', fill: dark ? INK : CARD, stroke: INK, 'stroke-width': 7, 'stroke-linejoin': 'round' }, g);
+    $('circle', { r: 54, fill: dark ? INK : CARD, stroke: INK, 'stroke-width': 7 }, g);
+    $('circle', { cx: -20, cy: -6, r: 9, fill: dark ? YELLOW : INK }, g);
+    $('circle', { cx: 20, cy: -6, r: 9, fill: dark ? YELLOW : INK }, g);
+    $('path', { d: 'M-12 22 q6 9 12 0 q6 9 12 0', fill: 'none', stroke: dark ? PAPER : INK, 'stroke-width': 5, 'stroke-linecap': 'round' }, g);
+  },
+};
+// A food card that flies in an arc into the mouth and is gone.
+function feed(parent, t0, from, mouth, draw, s = 1) {
+  const o = $('g', {}, parent);
+  draw(o);
+  U.push((t) => {
+    const e = prog(t, t0, 0.34);
+    o.style.display = t < t0 || e >= 1 ? 'none' : '';
+    const x = lerp(from[0], mouth[0], eo(e));
+    const y = lerp(from[1], mouth[1], e) - Math.sin(Math.PI * e) * 240;
+    o.setAttribute('transform', `translate(${x} ${y}) rotate(${e * 300 - 20}) scale(${s * lerp(1, 0.3, e * e)})`);
+  });
+}
+const chompAt = (times) => (t) => Math.max(0, ...times.map((a) => Math.exp(-(((t - a - 0.34) / 0.09) ** 2))));
+
+// ---------- 1. hook: AI eats too; wrong food, wrong answer ----------
+{
+  const S = scene(T.toDef, -1);
+  sunburst(S, 420, 1150);
+  sticker(S, 'circle', 1030, 1570, 100, MINT);
+  const MX = 400;
+  const MY = 1500;
+  const MS = 0.66;
+  const mouth = [MX, MY - 550 * MS];
+  const all = [...T.eat0, T.rotten];
+  const ch = chompAt(all);
+  const m = mascot(S, MX, MY, MS, {
+    t: -0.3, belly: true,
+    pose: (t) => ({ look: t < T.wrongAns ? [1000, 760] : [760, 760], mouth: 0.35 + 0.65 * ch(t - 0.1), squash: -0.05 * ch(t) + (t > T.rotten + 0.4 ? 0.02 * Math.sin(t * 30) : 0) }),
+  });
+  text(m.belly, 0, 30, 'AI', { 'font-size': 100 });
+  T.eat0.forEach((t0, i) => feed(S, t0, [1250, 820 + i * 60], mouth, (g) => [FOOD.text, FOOD.photo, FOOD.nums][i](g)));
+  feed(S, T.rotten, [1250, 900], mouth, (g) => FOOD.bad(g, 0));
+  // a plate that waits to the right, with the rotten card on it until it is eaten
+  const b = pop(S, 770, 760, { t: T.wrongAns, rot: 4 });
+  $('path', { d: 'M-190 92 L-262 176 L-110 92Z', fill: INK, transform: 'translate(12 14)' }, b);
+  $('rect', { x: -238, y: -86, width: 500, height: 196, rx: 40, fill: INK }, b);
+  $('path', { d: 'M-190 92 L-262 176 L-110 92Z', fill: CARD, stroke: INK, 'stroke-width': 10, 'stroke-linejoin': 'round' }, b);
+  $('rect', { x: -250, y: -100, width: 500, height: 196, rx: 40, fill: CARD, stroke: INK, 'stroke-width': 10 }, b);
+  $('rect', { x: -186, y: 82, width: 74, height: 14, fill: CARD }, b);
+  text(b, 0, 36, '2 + 2 = 5', { 'font-size': 104 });
+  stroke(b, [[-190, -70], [190, 70]], { t: T.wrongAns + 0.12, d: 0.12, w: 30, color: RED, amp: 4 });
+  stroke(b, [[190, -70], [-190, 70]], { t: T.wrongAns + 0.22, d: 0.12, w: 30, color: RED, amp: 4 });
+}
+
+// ---------- 2. AI's food is data: text, photos, sound, numbers ----------
+{
+  const S = scene(T.toFeed, 1, T.toDef);
+  sunburst(S, 540, 1000, { t: T.toDef + 0.05 });
+  // the plate
+  const plate = pop(S, 540, 1010, { t: T.toDef + 0.1 });
+  $('ellipse', { cx: 14, cy: 18, rx: 470, ry: 400, fill: INK }, plate);
+  $('ellipse', { rx: 470, ry: 400, fill: CARD, stroke: INK, 'stroke-width': 12 }, plate);
+  $('ellipse', { rx: 360, ry: 300, fill: 'none', stroke: INK, 'stroke-width': 6, opacity: 0.25 }, plate);
+  stamp(S, 540, 640, -4, 'data', T.data, { color: PINK, w: 330, size: 100 });
+  [[-190, -180, FOOD.text, 'text'], [190, -180, FOOD.photo, 'photos'], [-190, 135, FOOD.sound, 'आवाज़'], [190, 135, FOOD.nums, 'numbers']].forEach(([x, y, draw, name], i) => {
+    const c = card(S, 540 + x, 1010 + y, 10, 10, [-5, 4, 3, -4][i], T.kinds[i], { sw: 0, shadow: [0, 0] });
+    draw($('g', {}, c));
+    text(c, 5, 168, name, { ...MUK, 'font-size': 50 });
+  });
+  mascot(S, 965, 1640, 0.24, { t: T.toDef + 0.2, pose: (t) => ({ look: [540, 1010], mouth: 0.7 }) });
+  // until the food arrives, the plate asks what goes on it
+  const pq = $('g', {}, S);
+  txt(pq, 540, 1130, '?', { size: 420, color: PINK, t: T.toDef + 0.2, out: T.kinds[0] });
+  U.push((t) => pq.setAttribute('transform', `rotate(${Math.sin(t * 5.2) * 6} 540 1000)`));
+}
+
+// ---------- 3. good data, bad data, and the white cats ----------
+{
+  const S = scene(T.toPay, -1, T.toFeed);
+  sunburst(S, 330, 1150, { t: T.toFeed + 0.05 });
+  const MX = 330;
+  const MY = 1500;
+  const MS = 0.62;
+  const mouth = [MX, MY - 550 * MS];
+  const all = [...T.goodEat, ...T.badEat, ...T.whiteEat];
+  const ch = chompAt(all);
+  const sick = (t) => t > T.badNo && t < T.exIn;
+  const m = mascot(S, MX, MY, MS, {
+    t: T.toFeed + 0.05, belly: true,
+    pose: (t) => ({
+      look: t < T.black ? [1000, 800] : [790, 1020],
+      mouth: sick(t) ? 0.08 : 0.35 + 0.65 * ch(t - 0.1),
+      squash: -0.05 * ch(t) + (sick(t) ? 0.03 * Math.sin(t * 34) : 0),
+      wave: t > T.goodOk && t < T.badEat[0] ? 1 : 0,
+      hop: 50 * Math.max(0, bump(t - T.goodOk)),
+    }),
+  });
+  // what the food did, shown in the belly
+  stroke(m.belly, [[-46, 0], [-12, 36], [56, -46]], { t: T.goodOk, d: 0.16, w: 30, color: MINT, amp: 2, out: T.badEat[1] });
+  stroke(m.belly, [[-46, 0], [-12, 36], [56, -46]], { t: T.goodOk, d: 0.16, w: 14, color: INK, amp: 2, out: T.badEat[1], op: 0.0 });
+  stroke(m.belly, [[-44, -44], [44, 44]], { t: T.badNo, d: 0.12, w: 30, color: RED, amp: 3, out: T.exIn });
+  stroke(m.belly, [[44, -44], [-44, 44]], { t: T.badNo + 0.1, d: 0.12, w: 30, color: RED, amp: 3, out: T.exIn });
+  T.goodEat.forEach((t0, i) => feed(S, t0, [1250, 780 + (i % 2) * 120], mouth, (g) => FOOD.good(g, i)));
+  T.badEat.forEach((t0, i) => feed(S, t0, [1250, 780 + (i % 2) * 120], mouth, (g) => FOOD.bad(g, i)));
+  T.whiteEat.forEach((t0, i) => feed(S, t0, [1250, 780 + (i % 2) * 120], mouth, (g) => FOOD.cat(g, false)));
+  stamp(S, 760, 700, 4, 'सही data', T.goodEat[0], { color: MINT, w: 430, size: 86, out: T.badEat[0] - 0.1 });
+  stamp(S, 760, 700, -4, 'ग़लत data', T.badEat[0], { color: RED, w: 440, size: 86, out: T.exIn });
+  stamp(S, 760, 700, 3, 'सिर्फ़ सफ़ेद', T.exIn + 0.1, { color: YELLOW, w: 460, size: 84, out: T.black });
+  const star = sticker(S, 'star', 800, 1000, 150, YELLOW, { t: T.goodOk, out: T.badEat[0] });
+  text(star, 0, 34, 'सही!', { 'font-size': 92 });
+  // the black cat it has never seen
+  const bc = card(S, 800, 1040, 10, 10, 4, T.black, { sw: 0, shadow: [0, 0] });
+  FOOD.cat($('g', { transform: 'scale(1.9)' }, bc), true);
+  const q = $('g', {}, S);
+  txt(q, 800, 760, '?', { size: 260, color: PINK, t: T.black + 0.15 });
+  U.push((t) => q.setAttribute('transform', `rotate(${Math.sin(t * 5.2) * 6} 800 680)`));
+  stroke(S, [[650, 880], [950, 1200]], { t: T.blackNo, d: 0.12, w: 36, color: RED, amp: 5 });
+  stroke(S, [[950, 880], [650, 1200]], { t: T.blackNo + 0.1, d: 0.12, w: 36, color: RED, amp: 5 });
+}
+
+// ---------- 4. payoff: as the data, so the AI ----------
+{
+  const S = scene(Infinity, 1, T.toPay);
+  sunburst(S, 540, 1000, { t: T.toPay + 0.05 });
+  const good = card(S, 250, 940, 10, 10, -5, T.toPay + 0.1, { sw: 0, shadow: [0, 0] });
+  FOOD.good($('g', { transform: 'scale(1.5)' }, good), 1);
+  const bad = card(S, 250, 1320, 10, 10, 4, T.toPay + 0.18, { sw: 0, shadow: [0, 0] });
+  FOOD.bad($('g', { transform: 'scale(1.5)' }, bad), 0);
+  [[940, T.like], [1320, T.like + 0.12]].forEach(([y, t]) => {
+    stroke(S, [[430, y], [600, y]], { t, d: 0.15, w: 16, amp: 2 });
+    stroke(S, [[566, y - 34], [604, y], [566, y + 34]], { t: t + 0.12, d: 0.08, w: 16, amp: 1 });
+  });
+  const a = mascot(S, 820, 1100, 0.34, { t: T.toPay + 0.15, belly: true, pose: () => ({ look: [250, 940], mouth: 0.9, wave: 1 }) });
+  stroke(a.belly, [[-46, 0], [-12, 36], [56, -46]], { t: T.like + 0.15, d: 0.16, w: 30, color: MINT, amp: 2 });
+  const b = mascot(S, 820, 1480, 0.34, { t: T.toPay + 0.22, belly: true, pose: (t) => ({ look: [250, 1320], mouth: 0.08, squash: 0.03 * Math.sin(t * 34) }) });
+  stroke(b.belly, [[-44, -44], [44, 44]], { t: T.like + 0.27, d: 0.12, w: 30, color: RED, amp: 3 });
+  stroke(b.belly, [[44, -44], [-44, 44]], { t: T.like + 0.35, d: 0.12, w: 30, color: RED, amp: 3 });
+  const fin = card(S, 540, 668, 900, 150, -2, T.final, { fill: YELLOW });
+  text(fin, 0, 32, 'जैसा data, वैसा AI', { 'font-size': 96 });
+}
+
+// ---------- captions ----------
+const hl = { hook: ['खाना', 'ग़लत जवाब'], def: ['data', 'examples'], good: ['सही data'], bad: ['ग़लत'], ex: ['सफ़ेद बिल्लियाँ', 'काली बिल्ली'], pay: ['जैसा data'] };
+const caps = [];
+for (const id of Object.keys(hl)) L[id].s.forEach((s, i) => caps.push({ ...s, hl: hl[id][i] }));
+// the hook is fully readable on frame 0
+caps[0].words = caps[0].text.split(' ').map((word) => ({ word, t: -1 }));
+kit.captions(document.getElementById('caps'), caps, dur);
+
+// ---------- seek ----------
+const paperEl = document.getElementById('paper');
+const cuts = [T.toDef, T.toFeed, T.toPay];
+window.DUR = dur;
+window.seek = (t) => {
+  let rot = 0;
+  let shift = 0;
+  cuts.forEach((c, i) => {
+    const p = prog(t, c, 0.44);
+    rot += (i % 2 ? -3 : 3) * Math.sin(Math.PI * p);
+    shift += eio(p) * 62;
+  });
+  root.setAttribute('transform', `rotate(${rot} 540 960)`);
+  paperEl.style.transform = `translateY(${-shift % 97}px) rotate(${rot * 0.3}deg)`;
+  kit.frame(t);
+};
+window.seek(0);
+window.ready = true;
+if (!new URLSearchParams(location.search).has('render')) preview(stage, window.seek);
+</script>
+</body>
+</html>

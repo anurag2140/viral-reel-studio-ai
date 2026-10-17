@@ -1,0 +1,19 @@
+{
+  "number": 2,
+  "title": "Machine कैसे सीखती है?",
+  "share": "ये उस दोस्त को भेजो जो ChatGPT use करता है।",
+  "voice": "Orus",
+  "bpm": 96,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friendly college senior who explains to a junior. English words in Indian English. Warm and clear, one even tone from start to end, brisk pace with only a short breath between sentences. No acting, no exaggeration.",
+  "lines": [
+    { "id": "hook", "sentences": ["ChatGPT को किसी ने rules नहीं सिखाए।", "तो वह सीखा कैसे?"] },
+    { "id": "kid", "sentences": ["एक बच्चा बिल्ली को कैसे पहचानता है?", "तुम उसे rules नहीं देते।", "तुम उसे बिल्लियाँ दिखाते हो।"] },
+    { "id": "kid2", "sentences": ["कुछ बिल्लियों के बाद वह नई बिल्ली खुद पहचान लेता है।"] },
+    { "id": "machine", "sentences": ["Machine भी यही करती है।", "हम उसे हज़ारों photos देते हैं और हर photo का सही जवाब बताते हैं।", "इन photos को examples कहते हैं।"] },
+    { "id": "loop", "sentences": ["Machine अंदाज़ा लगाती है।", "जवाब ग़लत हो तो वह खुद को थोड़ा बदलती है।"] },
+    { "id": "pattern", "sentences": ["हज़ारों बार के बाद उसे pattern मिल जाता है।", "Pattern यानी वह बात जो हर बिल्ली में मिलती है।"] },
+    { "id": "payoff", "sentences": ["Machine rules से नहीं सीखती।", "वह examples से pattern निकालती है।", "ChatGPT ने भी यही किया।"] }
+  ]
+}

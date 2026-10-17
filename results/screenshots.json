@@ -1,0 +1,46 @@
+{
+  "about": "Which reels I have sent insights screenshots for (from 2026-10-18). After every delivered reel Claude asks for exactly one reel, chosen by `node ig.mjs review` (the ASK AFTER DELIVERY line): 48 hours old or more, and not listed here. When I send them, Claude records the reel here and the numbers in VIDEOS.md (Results), and an English reel's tier-1 share in results/countries.json. Per-reel follows and profile visits (the \"Profile activity\" part) go into follows, visits and reach (accounts reached when the screenshot was taken); node ig.mjs report ranks what drives follows once 5 reels have them.",
+  "reels": {
+    "01": {
+      "date": "2026-10-12",
+      "got": "skip rate"
+    },
+    "02": {
+      "date": "2026-10-12",
+      "got": "retention graph"
+    },
+    "03": {
+      "date": "2026-10-12",
+      "got": "retention graph"
+    },
+    "04": {
+      "date": "2026-10-12",
+      "got": "retention graph"
+    },
+    "05": {
+      "date": "2026-10-12",
+      "got": "retention graph"
+    },
+    "06": {
+      "date": "2026-10-15",
+      "got": "overview, retention graph, skip rate, audience",
+      "follows": 30,
+      "visits": 35,
+      "reach": 42726
+    },
+    "07": {
+      "date": "2026-10-15",
+      "got": "overview, retention graph, skip rate, audience",
+      "follows": 0,
+      "visits": 1,
+      "reach": 177
+    },
+    "08": {
+      "date": "2026-10-15",
+      "got": "overview, retention graph, skip rate, audience",
+      "follows": 0,
+      "visits": 3,
+      "reach": 384
+    }
+  }
+}

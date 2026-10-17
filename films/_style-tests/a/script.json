@@ -1,0 +1,11 @@
+{
+  "title": "Look test: the first seconds of the Napkin AI reel",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who lets you in on a clever trick. English words in Indian English. Confident, clear and brisk, one even tone, with a short breath between sentences. No acting, no exaggeration.",
+  "lines": [
+    { "id": "hook", "sentences": ["Teacher को लगेगा तुमने पूरी रात मेहनत की।", "असल में सिर्फ़ एक click लगा।", "यह है Napkin AI।"] }
+  ]
+}

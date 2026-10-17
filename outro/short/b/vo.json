@@ -1,0 +1,24 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 2.08,
+  "lines": [
+    {
+      "id": "b",
+      "text": "और हाँ, follow करना मत भूलना।",
+      "sentences": [
+        "और हाँ, follow करना मत भूलना।"
+      ],
+      "file": "vo/b.wav",
+      "start": 0,
+      "duration": 1.83,
+      "pauses": [
+        [
+          0.44,
+          0.74
+        ]
+      ]
+    }
+  ]
+}

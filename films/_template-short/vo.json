@@ -1,0 +1,73 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 8.95,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "तुम्हारे गंदे notes, दस second में साफ़।",
+      "sentences": [
+        "तुम्हारे गंदे notes, दस second में साफ़।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 1.958,
+      "pauses": []
+    },
+    {
+      "id": "how",
+      "text": "Photo खींचो। Tool में डालो। एक button, और बस।",
+      "sentences": [
+        "Photo खींचो।",
+        "Tool में डालो।",
+        "एक button, और बस।"
+      ],
+      "file": "vo/how.wav",
+      "start": 2.308,
+      "duration": 3.059,
+      "pauses": [
+        [
+          0.71,
+          1.06
+        ],
+        [
+          1.62,
+          1.85
+        ],
+        [
+          2.37,
+          2.58
+        ]
+      ]
+    },
+    {
+      "id": "link",
+      "text": "इस tool का link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "इस tool का link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 5.481,
+      "duration": 2.598,
+      "pauses": [
+        [
+          1.01,
+          1.34
+        ]
+      ]
+    },
+    {
+      "id": "back",
+      "text": "अब से",
+      "sentences": [
+        "अब से"
+      ],
+      "file": "vo/back.wav",
+      "start": 8.365,
+      "duration": 0.485,
+      "pauses": []
+    }
+  ]
+}

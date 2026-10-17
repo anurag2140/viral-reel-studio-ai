@@ -1,0 +1,5 @@
+# Creators for the radar (node ig.mjs radar). One Instagram handle per line, with or without @.
+# A profile link works too. Lines starting with # are ignored.
+# Pick creators whose viewers are like mine: AI tools, study hacks, career and office tips,
+# Hindi or Hinglish, from small to big. They must be business or creator accounts.
+# (Empty until I send the handles; added 2026-10-16.)

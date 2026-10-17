@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#10 AI ने PPT को perfect बोला</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #FFF1DC; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// Three places, all in the office by day: the meeting room (the boss, me, my slide on the
+// screen, the team), the yes-man AI (a robot that nods at everything) and my desk, where the
+// strict AI finds the mistakes before the meeting.
+import { H, S, backOut, bump, camera, captionsCompact, cubicOut, eio, expoOut, key, lerp, person, pointer, prog, pulse, setup, start } from '/brand/story.js';
+import { BLUE, CORAL, INK, NAVY, followCard, lights, paperPlane, show, star, whip, whipIn, whipOut } from '/brand/scenes.js';
+import { cast } from '/brand/cast.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const FACE = { dir: '/brand/face/', meta: await (await fetch('/brand/face/face.json')).json() };
+const ME = { face: FACE, skin: FACE.meta.cheek, outfit: 'shirt' };
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"'], ['/logo.png', ...FACE.meta.names.map((n) => `${FACE.dir}${n}.png`)]);
+const pop = (t, at) => 1 - 0.07 * at.reduce((v, a) => v + Math.max(0, bump(t - a)), 0);
+const U = [];
+const L = lights(svg);
+const YEL = '#FFD23F';
+const MINT = '#2EE6A6';
+const GREEN = '#19C37D';
+const line = { stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+const place = (g, x, y, s = 1, r = 0) => g.setAttribute('transform', `translate(${x} ${y}) rotate(${r}) scale(${s})`);
+const BOSS = { kind: 'teacher', skin: '#D9996E', shade: '#BF8058', hair: '#2A1C1A', top: '#2E3A5E', topShade: '#232D4A', accent: '#C9D4FF', outline: INK };
+
+// ---------- shared drawings ----------
+// my slide: a title, three bullet lines and a small chart; marks(p[]) draws the red marks
+function slide(parent, w, h) {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 14, fill: '#fff', ...line }, g);
+  S('rect', { x: -w / 2 + 30, y: -h / 2 + 30, width: w * 0.55, height: h * 0.11, rx: 10, fill: BLUE }, g);
+  [0, 1, 2].forEach((k) => {
+    S('circle', { cx: -w / 2 + 44, cy: -h / 2 + h * (0.36 + k * 0.16), r: 9, fill: NAVY }, g);
+    S('rect', { x: -w / 2 + 66, y: -h / 2 + h * (0.33 + k * 0.16), width: w * [0.42, 0.36, 0.4][k], height: h * 0.06, rx: 8, fill: '#C9CEDA' }, g);
+  });
+  [0.5, 0.8, 0.35, 0.65].forEach((v, k) => S('rect', { x: w * (0.12 + k * 0.08), y: h / 2 - 30 - h * 0.5 * v, width: w * 0.055, height: h * 0.5 * v, rx: 4, fill: ['#FFB020', BLUE, GREEN, CORAL][k] }, g));
+  return g;
+}
+// a red mark (ring or cross) that pops in, and a green tick that can replace it
+function mark(parent, x, y, kind, r = 34) {
+  const g = S('g', {}, parent);
+  const red = kind === 'ring'
+    ? S('ellipse', { rx: r * 1.5, ry: r, fill: 'none', stroke: CORAL, 'stroke-width': 8 }, g)
+    : S('path', { d: `M${-r * 0.7},${-r * 0.7} L${r * 0.7},${r * 0.7} M${r * 0.7},${-r * 0.7} L${-r * 0.7},${r * 0.7}`, stroke: CORAL, 'stroke-width': 10, 'stroke-linecap': 'round' }, g);
+  const tick = S('path', { d: `M${-r * 0.7},0 L${-r * 0.15},${r * 0.55} L${r * 0.8},${-r * 0.6}`, fill: 'none', stroke: GREEN, 'stroke-width': 12, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
+  return { g, red, tick, x, y };
+}
+// a speech bubble with a word; tail at the bottom left (or right with flip)
+function bubble(parent, text, w, size, fill = '#fff', ink = NAVY, flip = false) {
+  const g = S('g', {}, parent);
+  const m = flip ? -1 : 1;
+  S('path', { d: `M${-w / 2},-60 Q${-w / 2},-110 ${-w / 2 + 50},-110 L${w / 2 - 50},-110 Q${w / 2},-110 ${w / 2},-60 L${w / 2},-30 Q${w / 2},20 ${w / 2 - 50},20 L${m * (-w / 2 + 120)},20 L${m * (-w / 2 + 70)},70 L${m * (-w / 2 + 78)},20 L${-w / 2 + 50},20 Q${-w / 2},20 ${-w / 2},-30 Z`, fill, ...line }, g);
+  S('text', { y: -45 + size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, text);
+  return g;
+}
+// the AI: a friendly robot. set({ x, y, s, nod, stern, talk, thumb }) draws one frame.
+function robot(parent) {
+  const g = S('g', {}, parent);
+  S('path', { d: 'M-130,40 Q-130,0 -90,0 L90,0 Q130,0 130,40 L130,230 L-130,230 Z', fill: '#DCE5FF', ...line }, g);
+  S('circle', { cx: 0, cy: 100, r: 34, fill: MINT, ...line }, g);
+  const armL = S('path', { fill: 'none', stroke: INK, 'stroke-width': 30, 'stroke-linecap': 'round' }, g);
+  const armL2 = S('path', { fill: 'none', stroke: '#DCE5FF', 'stroke-width': 18, 'stroke-linecap': 'round' }, g);
+  const armR = S('path', { fill: 'none', stroke: INK, 'stroke-width': 30, 'stroke-linecap': 'round' }, g);
+  const armR2 = S('path', { fill: 'none', stroke: '#DCE5FF', 'stroke-width': 18, 'stroke-linecap': 'round' }, g);
+  const thumb = S('g', {}, g);
+  S('circle', { r: 30, fill: '#DCE5FF', ...line }, thumb);
+  S('rect', { x: -11, y: -62, width: 22, height: 40, rx: 11, fill: '#DCE5FF', ...line }, thumb);
+  const pen = S('g', {}, g);
+  S('circle', { r: 30, fill: '#DCE5FF', ...line }, pen);
+  S('rect', { x: -9, y: -96, width: 18, height: 90, rx: 6, fill: CORAL, ...line, transform: 'rotate(25)' }, pen);
+  const head = S('g', {}, g);
+  S('path', { d: 'M0,-250 L0,-300', ...line }, head);
+  S('circle', { cx: 0, cy: -312, r: 18, fill: CORAL, ...line }, head);
+  S('circle', { cx: -160, cy: -125, r: 26, fill: '#B9C6F2', ...line }, head);
+  S('circle', { cx: 160, cy: -125, r: 26, fill: '#B9C6F2', ...line }, head);
+  S('rect', { x: -150, y: -250, width: 300, height: 240, rx: 60, fill: '#EEF3FF', ...line }, head);
+  S('rect', { x: -118, y: -218, width: 236, height: 170, rx: 40, fill: NAVY }, head);
+  const happy = S('g', {}, head);
+  S('path', { d: 'M-80,-140 Q-55,-175 -30,-140 M30,-140 Q55,-175 80,-140', fill: 'none', stroke: MINT, 'stroke-width': 12, 'stroke-linecap': 'round' }, happy);
+  const smile = S('path', { d: 'M-45,-95 Q0,-60 45,-95', fill: 'none', stroke: MINT, 'stroke-width': 11, 'stroke-linecap': 'round' }, happy);
+  S('circle', { cx: -88, cy: -100, r: 10, fill: CORAL, opacity: 0.7 }, happy);
+  S('circle', { cx: 88, cy: -100, r: 10, fill: CORAL, opacity: 0.7 }, happy);
+  const stern = S('g', {}, head);
+  S('path', { d: 'M-88,-178 L-28,-162 M88,-178 L28,-162', stroke: CORAL, 'stroke-width': 11, 'stroke-linecap': 'round' }, stern);
+  S('rect', { x: -78, y: -150, width: 44, height: 14, rx: 7, fill: MINT }, stern);
+  S('rect', { x: 34, y: -150, width: 44, height: 14, rx: 7, fill: MINT }, stern);
+  S('path', { d: 'M-40,-85 L40,-85', stroke: MINT, 'stroke-width': 11, 'stroke-linecap': 'round' }, stern);
+  S('circle', { cx: -56, cy: -143, r: 40, fill: 'none', stroke: '#fff', 'stroke-width': 7 }, stern);
+  S('circle', { cx: 56, cy: -143, r: 40, fill: 'none', stroke: '#fff', 'stroke-width': 7 }, stern);
+  S('path', { d: 'M-16,-143 L16,-143', stroke: '#fff', 'stroke-width': 7 }, stern);
+  const tie = S('path', { d: 'M-18,4 L18,4 L12,24 L26,110 L0,140 L-26,110 L-12,24 Z', fill: CORAL, ...line }, g);
+  return (o) => {
+    const q = { x: 0, y: 0, s: 1, nod: 0, stern: false, talk: 0, thumb: false, pen: false, handL: [-200, 120], handR: [200, 120], ...o };
+    g.setAttribute('transform', `translate(${q.x} ${q.y}) scale(${q.s})`);
+    head.setAttribute('transform', `rotate(${q.nod * 0.4}) translate(0 ${Math.max(0, q.nod) * 1.4})`);
+    show(happy, !q.stern);
+    show(stern, q.stern);
+    show(tie, q.stern);
+    smile.setAttribute('d', `M-45,-95 Q0,${-60 + 30 * q.talk} 45,-95`);
+    const arm = (a, b, hand) => { const d = `M${hand[0] < 0 ? -120 : 120},50 Q${hand[0] * 0.8},${(50 + hand[1]) / 2 + 40} ${hand[0]},${hand[1]}`; a.setAttribute('d', d); b.setAttribute('d', d); };
+    arm(armL, armL2, q.handL);
+    arm(armR, armR2, q.handR);
+    show(thumb, q.thumb);
+    show(pen, q.pen);
+    place(thumb, q.handR[0], q.handR[1]);
+    place(pen, q.handR[0], q.handR[1]);
+  };
+}
+// a colleague seen from behind: head and shoulders
+function backOf(parent, hair, shirt) {
+  const g = S('g', {}, parent);
+  S('path', { d: 'M-200,260 Q-190,120 -90,100 L90,100 Q190,120 200,260 Z', fill: shirt, ...line }, g);
+  S('ellipse', { cx: 0, cy: 0, rx: 110, ry: 125, fill: hair, ...line }, g);
+  return g;
+}
+
+// ================= the meeting room =================
+const sM = S('g', {}, svg);
+const wM = S('g', {}, sM);
+const camM = camera(wM);
+const blurM = L.blurOf('mbMeet');
+S('rect', { x: -500, y: -500, width: 2080, height: 3000, fill: '#FFF1DC' }, wM);
+S('path', { d: 'M640,-500 L1100,-500 L860,1330 L380,1330 Z', fill: '#FFF8EC', opacity: 0.9 }, wM);
+S('rect', { x: -500, y: 1330, width: 2080, height: 1200, fill: '#E2C9A0' }, wM);
+S('rect', { x: -500, y: 1318, width: 2080, height: 18, fill: '#CFAF7E' }, wM);
+S('rect', { x: 960, y: 900, width: 60, height: 300, rx: 10, fill: '#7FB77E', ...line }, wM);
+S('ellipse', { cx: 990, cy: 880, rx: 90, ry: 60, fill: GREEN, ...line }, wM);
+S('rect', { x: 166, y: 316, width: 748, height: 444, rx: 22, fill: '#3B4256', ...line }, wM);
+const scr = slide(wM, 700, 396);
+place(scr, 540, 538);
+const MARKS = [[-250, -150, 'ring'], [120, -120, 'cross'], [-120, -60, 'ring'], [200, 20, 'cross'], [-200, 40, 'cross'], [40, 70, 'ring'], [250, -40, 'ring'], [-60, 140, 'cross'], [160, 140, 'ring'], [-260, 130, 'ring']];
+const marks = MARKS.map(([x, y, k]) => mark(scr, x, y, k, 26));
+const counter = S('g', {}, wM);
+S('circle', { r: 64, fill: CORAL, ...line }, counter);
+const countText = S('text', { y: 30, 'text-anchor': 'middle', 'font-size': 84, fill: '#fff' }, counter, '0');
+const boss = cast(wM, 'priya');
+const me = person(wM, ME);
+const perfect = S('g', {}, wM);
+S('path', { d: 'M-190,-70 Q-190,-120 -140,-120 L140,-120 Q190,-120 190,-70 L190,-10 Q190,40 140,40 L-20,40 L-60,92 L-56,40 L-140,40 Q-190,40 -190,-10 Z', fill: '#fff', ...line }, perfect);
+S('rect', { x: -168, y: -100, width: 70, height: 60, rx: 16, fill: NAVY }, perfect);
+S('path', { d: 'M-150,-74 q10,-12 20,0 M-118,-74 q10,-12 20,0', fill: 'none', stroke: MINT, 'stroke-width': 6, 'stroke-linecap': 'round' }, perfect);
+S('text', { x: -80, y: -48, 'font-size': 64, fill: NAVY }, perfect, 'Perfect!');
+[0, 1, 2, 3, 4].forEach((k) => star(perfect, -150 + k * 60, 6, 22, YEL));
+const good = bubble(wM, 'Good work!', 400, 66, '#fff', NAVY, true);
+const team = [[70, 1560, '#2A1C1A', '#7A4BC2'], [1010, 1560, '#1F1A24', GREEN], [-60, 1520, '#3A2A20', '#FFB020']].map(([x, y, hair, shirt]) => ({ g: backOf(wM, hair, shirt), x, y }));
+const phone = S('g', {}, wM);
+S('rect', { x: -34, y: -58, width: 68, height: 116, rx: 14, fill: NAVY, ...line }, phone);
+S('rect', { x: -27, y: -48, width: 54, height: 92, rx: 6, fill: '#BFD0FF' }, phone);
+const plane = paperPlane(wM, [660, 1230], [470, 760], [1260, 560]);
+
+U.push((t) => {
+  const A = t < T.turn + 0.02;
+  const D = t >= T.next - 0.2;
+  if (!show(sM, A || D)) return;
+  const beat = Math.sin(t * 5);
+  if (A) {
+    whipOut(sM, blurM, t, T.turn - 0.06, -1);
+    camM(...key(t, [[0, [600, 930, 1.12, -1]], [0.9, [570, 900, 1.06, 0], expoOut], [T.team - 0.05, [560, 880, 1.1, 0], (p) => p], [T.team + 0.35, [540, 1010, 0.98, 0]], [T.turn, [540, 1000, 0.96, 0], (p) => p]]));
+    marks.forEach((m, i) => {
+      const p = prog(t, T.marks[i] - 0.04, 0.22);
+      show(m.g, p > 0);
+      show(m.tick, false);
+      place(m.g, m.x, m.y, backOut(p) * (1 + 0.15 * Math.max(0, bump(t - T.marks[i]))), i * 7);
+    });
+    const n = T.marks.filter((m) => t >= m).length;
+    show(counter, n > 0);
+    countText.textContent = String(n);
+    place(counter, 175, 330, backOut(prog(t, T.marks[0] - 0.05, 0.25)) * (1 + 0.12 * Math.max(0, bump(t - T.marks[Math.max(0, n - 1)]))), -8);
+    show(perfect, t < T.boss + 0.3);
+    place(perfect, 830, 845 + 6 * Math.sin(t * 3), (t < 0.02 ? 1 : 1) * (1 - prog(t, T.boss, 0.3)) * (1 + 0.08 * Math.max(0, bump(t - T.perfect))), -4);
+    show(good, false);
+    const frown = 1;
+    const point = backOut(prog(t, T.ten - 0.2, 0.3));
+    boss.pose({
+      x: 290, y: 1640 - 6 * Math.max(0, beat), s: 1.25, tilt: -4, look: [0.9, -0.4 * point], eye: 0.95,
+      brow: [14 * frown, -14 * frown], browY: 4, smile: -0.7, open: t > T.boss && t < Q[1].b ? 0.25 + 0.35 * Math.abs(Math.sin(t * 14)) : 0, mw: 20,
+      handL: [-60, -240], handR: [lerp(60, 160, point), lerp(-240, -520, point)],
+    });
+    const team0 = backOut(prog(t, T.team - 0.1, 0.35));
+    team.forEach((c, i) => { show(c.g, team0 > 0); place(c.g, c.x, c.y + (1 - team0) * 400 - 8 * Math.abs(Math.sin(t * 6 + i)), 1.15); });
+    me.pose({
+      x: 800, y: 1640 - 28 * Math.max(0, bump(t - T.perfect)), s: 1.2, tilt: 2 * Math.sin(t * 2.4),
+      face: t < T.boss ? 'grin' : t < T.team ? 'worried' : 'sad', pop: pop(t, [T.boss, T.team]),
+      handR: t < T.boss ? [176, -318] : [152, -62], gripR: t < T.boss ? 'thumb' : 'open', handL: t >= T.team ? [-80, -300] : [-152, -62], gripL: 'open',
+    });
+    show(phone, false);
+    plane(t, 1e9, 1e9 + 1);
+    return;
+  }
+  // the next meeting: the slide is clean, the boss smiles, the team claps; then the ask
+  if (t < T.next + 0.3) whipIn(sM, blurM, t, T.next - 0.2, 1); else whip(sM, blurM, 0, 0);
+  camM(...key(t, [[T.next - 0.2, [540, 980, 1.02]], [T.ask, [540, 970, 1.08], (p) => p], [T.ask + 0.5, [600, 990, 1.12]], [dur, [600, 985, 1.16], (p) => p]]));
+  marks.forEach((m, i) => { show(m.g, i < 3); show(m.red, false); show(m.tick, true); place(m.g, m.x, m.y, 1, 0); });
+  show(counter, false);
+  show(perfect, false);
+  show(good, t > T.good - 0.1 && t < T.ask + 0.3);
+  place(good, 310, 860 + 6 * Math.sin(t * 3), backOut(prog(t, T.good - 0.1, 0.3)), 4);
+  const thumbs = backOut(prog(t, T.good - 0.1, 0.3));
+  boss.pose({
+    x: 290, y: 1640 - 6 * Math.max(0, beat), s: 1.25, tilt: 3, look: [0.9, 0], eye: 1.1, brow: [-6, 6], browY: -10, smile: 1.3,
+    open: t > T.good - 0.05 && t < Q[9].b ? 0.4 : 0.1, mw: 28, handL: [-128, -64], handR: [lerp(128, 190, thumbs), lerp(-64, -330, thumbs)],
+  });
+  team.forEach((c, i) => { show(c.g, true); place(c.g, c.x, c.y - 14 * Math.abs(Math.sin(t * 9 + i * 1.3)) * prog(t, T.good, 0.2), 1.15); });
+  const lift = backOut(prog(t, T.ask + 0.05, 0.35));
+  const hand = [lerp(-152, -92, lift), lerp(-62, -270, lift)];
+  me.pose({
+    x: 800, y: 1640 - 26 * Math.max(0, bump(t - T.good)), s: 1.2, tilt: 2 * Math.sin(t * 2.4),
+    face: t < T.good ? 'neutral' : t < T.good + 0.6 ? 'wink' : 'grin', pop: pop(t, [T.good, T.good + 0.6, T.send]),
+    handL: hand, gripL: lift > 0.5 ? 'fist' : 'open', handR: [152, -62],
+  });
+  show(phone, t > T.ask + 0.05);
+  place(phone, 800 + (hand[0] - 4) * 1.2, 1640 + (hand[1] - 50) * 1.2, 1.25, -8 + 3 * Math.sin(t * 5));
+  plane(t, T.ask + 0.4, T.send + 0.35);
+});
+
+// ================= the yes-man AI =================
+const sY = S('g', {}, svg);
+const wY = S('g', {}, sY);
+const camY = camera(wY);
+const blurY = L.blurOf('mbYes');
+S('rect', { x: -500, y: -500, width: 2080, height: 3000, fill: '#E7EEFF' }, wY);
+for (let k = 0; k < 9; k++) S('path', { d: `M540,780 L${540 + 1600 * Math.cos((k / 9) * Math.PI * 2)},${780 + 1600 * Math.sin((k / 9) * Math.PI * 2)} L${540 + 1600 * Math.cos(((k + 0.5) / 9) * Math.PI * 2)},${780 + 1600 * Math.sin(((k + 0.5) / 9) * Math.PI * 2)} Z`, fill: YEL, opacity: 0.5 }, wY);
+S('rect', { x: -500, y: 1330, width: 2080, height: 1200, fill: '#C9D4F5' }, wY);
+const bot = robot(wY);
+const yesBubbles = [['हाँ!', 270, 470, -8], ['Perfect!', 800, 420, 6], ['Amazing!', 250, 700, 5], ['100/100', 830, 680, -6], ['हाँ जी!', 540, 300, -3]].map(([text, x, y, r]) => ({ g: bubble(wY, text, text.length > 4 ? 330 : 230, 62, '#fff', NAVY, x > 540), x, y, r }));
+const praise = S('g', {}, wY);
+S('rect', { x: -230, y: -80, width: 460, height: 160, rx: 40, fill: '#fff', ...line }, praise);
+S('text', { y: 26, 'text-anchor': 'middle', 'font-size': 76, fill: NAVY }, praise, 'Perfect है ना?');
+const noX = ['M-200,-90 L200,90', 'M200,-90 L-200,90'].map((d) => S('path', { d, fill: 'none', stroke: CORAL, 'stroke-width': 22, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1 }, praise));
+const meY = person(wY, ME);
+// the prompt card (HTML, so that the Hindi text sets well); its words appear as they are said
+const card = H('div', `position:absolute;left:70px;top:330px;width:940px;padding:34px 44px 38px;box-sizing:border-box;background:#fff;border:7px solid ${INK};border-radius:44px;box-shadow:0 18px 0 rgba(15,18,48,.18);font:800 68px/1.3 'Anek Devanagari';font-stretch:90%;color:${NAVY};transform-origin:50% 0;visibility:hidden`, stage);
+const head = H('div', `display:flex;align-items:center;gap:16px;margin-bottom:14px;font:700 40px/1 'Anek Devanagari';color:#5B6070`, card, `<span style="background:${YEL};color:${NAVY};padding:12px 22px 6px;border-radius:999px;border:4px solid ${INK}">Prompt</span><span style="padding-top:6px">copy करो, AI को दो</span>`);
+const PROMPT = [['एक', 'strict'], ['सख़्त', 'strict'], ['boss', 'strict'], ['की', 'strict'], ['तरह', 'strict'], ['check', 'check'], ['करो।', 'check'], ['तीन', 'three'], ['सबसे', 'three'], ['बड़ी', 'three'], ['गलतियाँ', 'wrong'], ['बताओ।', 'tell']];
+const body = H('div', '', card);
+const ROWS = [[0, 5], [5, 7], [7, 12]].map(() => H('div', 'white-space:nowrap', body));
+const words = PROMPT.map(([w], i) => H('span', 'display:inline-block;padding:0 .12em;margin:0 .02em;border-radius:12px', ROWS[i < 5 ? 0 : i < 7 ? 1 : 2], w));
+const wordAt = PROMPT.map(([, k], i) => {
+  const base = { strict: T.prompt + 0.5, check: T.check - 0.05, three: T.three - 0.05, wrong: T.wrong - 0.05, tell: T.tell - 0.05 }[k];
+  return base + (k === 'strict' ? i * 0.12 : k === 'three' ? (i - 7) * 0.12 : 0);
+});
+const HOT = [1, 2, 7, 8, 9, 10];
+U.push((t) => {
+  const on = t >= T.turn - 0.2 && t < T.catches + 0.02;
+  // the prompt card stays on screen from "उसे लिखो" until the scene changes
+  const cp = expoOut(prog(t, T.prompt - 0.1, 0.4));
+  const out = prog(t, T.catches - 0.3, 0.3);
+  card.style.visibility = on && cp > 0 && out < 1 ? 'visible' : 'hidden';
+  card.style.transform = `translate(${-(out ** 3) * 1300}px,${(1 - cp) * -700}px) rotate(${(1 - cp) * -4 - 1.2}deg)`;
+  words.forEach((e, i) => {
+    e.style.visibility = t >= wordAt[i] ? 'visible' : 'hidden';
+    const hot = HOT.includes(i) && t >= (i <= 2 ? T.strict : T.three) + 0.05;
+    e.style.background = hot ? YEL : 'transparent';
+  });
+  if (!show(sY, on)) return;
+  if (t < T.turn + 0.3) whipIn(sY, blurY, t, T.turn - 0.2, 1); else whipOut(sY, blurY, t, T.catches - 0.06, -1);
+  const ask = t >= T.prompt - 0.1;
+  camY(...(ask ? key(t, [[T.prompt - 0.1, [540, 1000, 1]], [T.catches, [540, 990, 1.05], (p) => p]])
+    : key(t, [[T.turn - 0.2, [540, 940, 1.08]], [T.yes, [540, 900, 1.12], cubicOut], [T.noPraise, [540, 880, 1.18], (p) => p]])));
+  // the robot nods at everything; when the prompt arrives it moves down and waits
+  const nodding = t >= T.yes - 0.2 && t < T.noPraise;
+  const nod = nodding ? 14 * Math.sin(t * 13) : 2 * Math.sin(t * 3);
+  const down = eio(prog(t, T.prompt - 0.15, 0.45));
+  bot({
+    x: lerp(620, 760, down), y: lerp(1010, 1290, down), s: lerp(1.25, 0.95, down), nod, talk: nodding ? Math.abs(Math.sin(t * 13)) : 0,
+    thumb: nodding, handL: [-200, 120], handR: nodding ? [210, -40 + 10 * Math.sin(t * 13)] : [200, 120],
+  });
+  yesBubbles.forEach((b, i) => {
+    const at = [T.haan1, T.haan1 + 0.25, T.haan2, T.haan2 + 0.4, T.happy][i] - 0.05;
+    const p = prog(t, at, 0.28);
+    show(b.g, p > 0 && t < T.noPraise + 0.1);
+    place(b.g, b.x, b.y + 6 * Math.sin(t * 4 + i), backOut(p) * (1 - prog(t, T.noPraise - 0.15, 0.2)), b.r);
+  });
+  show(praise, t > T.praise - 0.15 && t < T.prompt);
+  place(praise, 540, 560, backOut(prog(t, T.praise - 0.15, 0.3)) * (1 - prog(t, T.prompt - 0.2, 0.2)), -3);
+  noX.forEach((e, i) => e.setAttribute('stroke-dashoffset', 1 - eio(prog(t, T.mat - 0.05 + i * 0.12, 0.18))));
+  // me: puzzled by the praise, then I type the prompt
+  const typing = t >= T.prompt;
+  meY.pose({
+    x: lerp(240, 230, down), y: 1660, s: lerp(1.05, 1.0, down), tilt: 2 * Math.sin(t * 2.4),
+    face: t < T.yes ? 'thinking' : t < T.noPraise ? 'look-right' : t < T.prompt ? 'talk' : t < T.tell ? 'neutral' : 'grin', pop: pop(t, [T.yes, T.noPraise, T.prompt, T.tell]),
+    handL: [-152, -62], handR: typing ? [190 + 10 * Math.sin(t * 20), -260] : t >= T.noPraise ? [190, -360] : [152, -62], gripR: !typing && t >= T.noPraise ? 'point' : 'open',
+  });
+});
+
+// ================= my desk: the strict AI finds the mistakes =================
+const sF = S('g', {}, svg);
+const wF = S('g', {}, sF);
+const camF = camera(wF);
+const blurF = L.blurOf('mbFix');
+S('rect', { x: -500, y: -500, width: 2080, height: 3000, fill: '#FFF1DC' }, wF);
+S('rect', { x: 80, y: 260, width: 300, height: 220, rx: 16, fill: '#BFD9F2', ...line }, wF);
+S('path', { d: 'M230,260 L230,480 M80,370 L380,370', stroke: INK, 'stroke-width': 6 }, wF);
+S('rect', { x: -500, y: 1330, width: 2080, height: 1200, fill: '#E2C9A0' }, wF);
+const big = slide(wF, 720, 420);
+place(big, 600, 560);
+const fixes = [[-250, -150, 'ring'], [120, -60, 'cross'], [200, 140, 'ring']].map(([x, y, k]) => mark(big, x, y, k, 34));
+const list = S('g', {}, wF);
+S('rect', { x: -230, y: -140, width: 460, height: 280, rx: 30, fill: '#fff', ...line }, list);
+const rows = [0, 1, 2].map((k) => {
+  const r = S('g', {}, list);
+  S('circle', { cx: -180, cy: -80 + k * 80, r: 26, fill: CORAL, ...line }, r);
+  S('text', { x: -180, y: -68 + k * 80, 'text-anchor': 'middle', 'font-size': 36, fill: '#fff' }, r, String(k + 1));
+  S('rect', { x: -130, y: -94 + k * 80, width: [300, 250, 280][k], height: 26, rx: 13, fill: '#C9CEDA' }, r);
+  return r;
+});
+const botF = robot(wF);
+const meF = person(wF, ME);
+U.push((t) => {
+  if (!show(sF, t >= T.catches - 0.2 && t < T.next + 0.02)) return;
+  if (t < T.catches + 0.3) whipIn(sF, blurF, t, T.catches - 0.2, 1); else whipOut(sF, blurF, t, T.next - 0.06, -1);
+  camF(...key(t, [[T.catches - 0.2, [560, 980, 1.02]], [T.fix, [560, 960, 1.08], cubicOut], [T.next, [560, 950, 1.12], (p) => p]]));
+  fixes.forEach((m, i) => {
+    const at = T.same + 0.2 + i * 0.35;
+    const p = prog(t, at - 0.04, 0.22);
+    const ok = t >= T.fixWord - 0.1 + i * 0.22;
+    show(m.g, p > 0);
+    show(m.red, !ok);
+    show(m.tick, ok);
+    place(m.g, m.x, m.y, backOut(p) * (1 + 0.18 * Math.max(0, bump(t - (ok ? T.fixWord - 0.1 + i * 0.22 : at)))), 0);
+  });
+  rows.forEach((r, i) => { const p = prog(t, T.same + 0.2 + i * 0.35, 0.25); show(r, p > 0); r.setAttribute('transform', `translate(${(1 - expoOut(p)) * 300} 0)`); });
+  show(list, t > T.same + 0.1);
+  place(list, 300, 950 + 6 * Math.sin(t * 3), backOut(prog(t, T.same + 0.1, 0.3)), -3);
+  const pen = Math.sin(t * 10) * (t < T.fix ? 1 : 0);
+  botF({ x: 800, y: 1130, s: 0.85, stern: t < T.fix + 0.4, nod: t < T.fix ? 3 * Math.sin(t * 4) : 10 * Math.sin(t * 13) * (t < T.fix + 0.8 ? 1 : 0), pen: t < T.fix, thumb: t >= T.fix + 0.4, handR: t < T.fix ? [200, -60 + 20 * pen] : [210, -40], handL: [-200, 120] });
+  const fix = t >= T.fix;
+  meF.pose({
+    x: 210, y: 1690, s: 0.95, tilt: 2 * Math.sin(t * 2.4),
+    face: t < T.same ? 'look-right' : t < T.fixWord ? 'thinking' : 'grin', pop: pop(t, [T.same, T.fixWord]),
+    handL: [-152, -62], handR: fix ? [200 + 8 * Math.sin(t * 18), -380] : [152, -62], gripR: fix ? 'point' : 'open',
+  });
+});
+
+// ================= captions, the follow card, the pointer =================
+const clean = (ws) => ws.map((x) => ({ ...x, word: x.word.replace(/[।,]+$/, '') }));
+U.push(captionsCompact(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1, whole: i === 0 }))));
+stage.appendChild(card);
+const follow = followCard(stage);
+const tip = pointer(stage, NAVY, '#fff', 130);
+U.push((t) => {
+  follow.set(t, T.send + 0.2, T.follow);
+  tip.style.visibility = t >= T.send + 0.3 ? 'visible' : 'hidden';
+  const [x, y] = key(t, [[T.send + 0.3, [1150, 900]], [T.follow - 0.06, [900, 420]], [dur, [900, 420]]]);
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * pulse(t, T.follow + 0.02, 0.07)})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

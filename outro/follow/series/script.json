@@ -1,0 +1,11 @@
+{
+  "voice": "Orus",
+  "bpm": 96,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friendly college senior who talks to a junior. English words in Indian English. Warm, confident and clear, one even tone from start to end, brisk pace with only a short breath between sentences. No acting, no exaggeration.",
+  "lines": [
+    { "id": "series-pitch", "sentences": ["ये तो बस शुरुआत है।", "आगे सीखोगे, ChatGPT कैसे सोचता है, prompt कैसे लिखें, और AI agents क्या हैं।"] },
+    { "id": "series-cta", "sentences": ["कोई video miss न हो, इसलिए follow करो।"] }
+  ]
+}

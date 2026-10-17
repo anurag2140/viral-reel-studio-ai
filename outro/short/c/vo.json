@@ -1,0 +1,24 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 1.989,
+  "lines": [
+    {
+      "id": "c",
+      "text": "Doubt हो तो comment करो, और follow करो।",
+      "sentences": [
+        "Doubt हो तो comment करो, और follow करो।"
+      ],
+      "file": "vo/c.wav",
+      "start": 0,
+      "duration": 1.739,
+      "pauses": [
+        [
+          1,
+          1.15
+        ]
+      ]
+    }
+  ]
+}

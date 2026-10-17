@@ -1,0 +1,13 @@
+TITLE
+AI, ML, Deep Learning और GenAI में फ़र्क़ क्या है? 40 seconds में समझो
+
+DESCRIPTION
+ये चारों एक चीज़ नहीं हैं, ये एक के अंदर एक हैं।
+AI सबसे बड़ा घेरा है। उसके अंदर Machine Learning, उसके अंदर Deep Learning, और सबसे अंदर GenAI।
+याद रखो: हर GenAI, AI है। पर हर AI, GenAI नहीं।
+
+अगला video किस topic पर चाहिए? Comment में बताओ।
+AI को अपनी भाषा में समझने के लिए follow करो: @vipulsingh_ai
+
+HASHTAGS
+#AI #MachineLearning #DeepLearning #GenAI #AIinHindi

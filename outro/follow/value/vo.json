@@ -1,0 +1,40 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 7.644,
+  "lines": [
+    {
+      "id": "value-pitch",
+      "text": "AI मुश्किल लगता है? यहाँ हर video में एक ही चीज़ समझो, बिना coding, अपनी भाषा में।",
+      "sentences": [
+        "AI मुश्किल लगता है?",
+        "यहाँ हर video में एक ही चीज़ समझो, बिना coding, अपनी भाषा में।"
+      ],
+      "file": "vo/value-pitch.wav",
+      "start": 0,
+      "duration": 5.328,
+      "pauses": [
+        [
+          1.02,
+          1.29
+        ],
+        [
+          3.36,
+          3.62
+        ]
+      ]
+    },
+    {
+      "id": "value-cta",
+      "text": "AI में आगे रहना है तो follow करो।",
+      "sentences": [
+        "AI में आगे रहना है तो follow करो।"
+      ],
+      "file": "vo/value-cta.wav",
+      "start": 5.625,
+      "duration": 1.919,
+      "pauses": []
+    }
+  ]
+}

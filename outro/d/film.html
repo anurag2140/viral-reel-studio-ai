@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Outro D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #111; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: var(--paper); --cap-top: 268px; }
+  #paper { position: absolute; inset: -200px 0; background-image: repeating-linear-gradient(#0000 0 94px, var(--rule) 94px 97px); }
+  svg { position: absolute; left: 0; top: 0; overflow: visible; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="paper"></div>
+  <svg id="world" width="1080" height="1920"></svg>
+  <div id="caps"></div>
+</div>
+<script type="module">
+import { $, boot, bump, clamp, createKit, ei, eio, eo, lerp, preview, prog, sp } from '/brand/kagaz.js';
+import { build, WORDS } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const brand = await boot(stage);
+const vo = await (await fetch('vo.json')).json();
+const { dur, L, T, reel } = build(vo);
+const kit = createKit(brand);
+const { stroke, pop, card, U, st, PAPER, CARD, INK, RED } = kit;
+const HANDLE = '@vipulsingh_ai';
+const text = (parent, x, y, str, a = {}) => {
+  const e = $('text', { x, y, 'font-family': '"Baloo 2"', 'font-weight': 800, 'font-size': 80, fill: INK, 'text-anchor': 'middle', ...a }, parent);
+  e.textContent = str;
+  return e;
+};
+const world = document.getElementById('world');
+const root = $('g', {}, world);
+
+// Sticker Pop backdrop: rays, stickers and (where there is room) the mascot
+kit.sunburst(root, 540, 1000);
+kit.sticker(root, 'circle', 1040, 1575, 110, kit.MINT);
+kit.sticker(root, 'plus', 70, 1180, 30, kit.ORANGE);
+kit.mascot(root, 890, 1144, 0.34, { t: T.roll.b, pose: (t) => ({ look: [735, 705], mouth: 0.6, hop: 50 * Math.max(0, bump(t - T.press - 0.05)) }) });
+
+// ---------- 1. one word: a reel of topics spins and stops on "?" ----------
+{
+  const S = $('g', {}, root);
+  U.push((t) => {
+    const q = ei(prog(t, T.toFollow, 0.34));
+    S.style.display = q >= 1 ? 'none' : '';
+    S.setAttribute('transform', `translate(0 ${-1500 * q}) rotate(${-8 * q} 540 900)`);
+  });
+  const CY = 930;
+  const slot = $('g', {}, S);
+  card(slot, 0, 0, 920, 330, 0);
+  U.push((t) => slot.setAttribute('transform', `translate(540 ${CY + 10 * bump(t - T.stop)}) rotate(-2) scale(${1 + 0.05 * bump(t - T.stop)})`));
+  $('rect', { x: -400, y: -125, width: 800, height: 250, rx: 16 }, $('clipPath', { id: 'win' }, $('defs', {}, world)));
+  const win = $('g', { 'clip-path': 'url(#win)' }, slot);
+  const STEP = 250;
+  const items = WORDS.map((w, i) => {
+    const g = $('g', {}, win);
+    const last = i === WORDS.length - 1;
+    text(g, 0, last ? 78 : 50, w, { 'font-size': last ? 240 : 140, fill: last ? RED : INK });
+    return g;
+  });
+  U.push((t) => {
+    const { o, v } = reel(t);
+    items.forEach((g, i) => {
+      const d = i - o;
+      g.style.display = Math.abs(d) > 1.1 ? 'none' : '';
+      const wig = i === WORDS.length - 1 ? Math.sin(t * 5) * 6 * clamp((t - T.stop) * 4) : 0;
+      g.setAttribute('transform', `translate(0 ${d * STEP}) rotate(${wig}) scale(1 ${1 + Math.min(0.7, v * 0.035)})`);
+    });
+  });
+  // reel markers
+  $('path', { d: 'M-446 -30 L-410 0 L-446 30Z', fill: RED }, slot);
+  $('path', { d: 'M446 -30 L410 0 L446 30Z', fill: RED }, slot);
+
+  // "one word" stamp
+  const stp = $('g', {}, S);
+  $('rect', { x: -170, y: -56, width: 340, height: 112, rx: 12, fill: PAPER, stroke: RED, 'stroke-width': 10 }, stp);
+  text(stp, 0, 32, 'एक word', { 'font-size': 72, fill: RED });
+  U.push((t) => {
+    const k = lerp(2.6, 1, eo(clamp((t + 0.08) / 0.16))) * (1 + 0.06 * bump(t - 0.08));
+    stp.setAttribute('transform', `translate(262 ${CY - 190}) rotate(-8) scale(${k})`);
+  });
+
+  // where the word goes: the comment box
+  const c = card(S, 540, 1300, 900, 190, 2, T.box);
+  $('image', { href: '/logo.png', x: -428, y: -76, width: 152, height: 152 }, c);
+  text(c, -250, 22, 'एक word लिखो…', { 'font-family': 'Mukta', 'font-weight': 600, 'font-size': 62, 'text-anchor': 'start', opacity: 0.45 });
+  const caret = $('rect', { x: -264, y: -48, width: 9, height: 92, rx: 4, fill: RED }, c);
+  U.push((t) => { caret.style.display = Math.sin(t * 20) > 0 ? '' : 'none'; });
+  const send = pop(c, 368, 0, { t: T.box + 0.22 });
+  $('circle', { r: 56, fill: RED, stroke: INK, 'stroke-width': 8 }, send);
+  $('path', { d: 'M-22 0 H22 M4 -20 L24 0 L4 20', fill: 'none', stroke: PAPER, 'stroke-width': 12, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, send);
+  stroke(S, [[905, CY + 185], [935, CY + 240], [900, CY + 290], [840, CY + 300]], { t: T.hint, d: 0.25, w: 15, color: RED, smooth: true, amp: 3 });
+  stroke(S, [[872, CY + 268], [838, CY + 300], [880, CY + 326]], { t: T.hint + 0.2, d: 0.1, w: 15, color: RED, amp: 2 });
+}
+
+// ---------- 2. follow: the logo rolls in and speaks ----------
+{
+  const LX = 330;
+  const LY = 935;
+  const R = 205;
+  stroke(root, [[50, LY + R + 6], [1030, LY + R + 2]], { t: T.ground, d: 0.3, w: 12, amp: 3 });
+  const logo = $('g', {}, root);
+  $('image', { href: '/logo.png', x: -R - 8, y: -R - 8, width: R * 2 + 16, height: R * 2 + 16 }, logo);
+  U.push((t) => {
+    logo.style.display = t < T.roll.a ? 'none' : '';
+    const e = eo(prog(t, T.roll.a, T.roll.b - T.roll.a));
+    const x = lerp(-R - 60, LX, e);
+    const hop = 18 * Math.max(0, bump(t - T.roll.b)) + 20 * Math.max(0, bump(t - T.press - 0.05));
+    // rolling without slipping: angle follows the distance travelled
+    logo.setAttribute('transform', `translate(${x} ${LY - hop}) rotate(${((x - LX) / R) * 57.3 - 3})`);
+  });
+
+  // speech bubble
+  const b = pop(root, 735, 705, { t: T.bubble, rot: 3 });
+  $('path', { d: 'M-180 96 L-262 196 L-90 110Z', fill: INK, transform: 'translate(14 16)' }, b);
+  $('rect', { x: -266, y: -92, width: 560, height: 220, rx: 40, fill: INK }, b);
+  $('rect', { x: -280, y: -110, width: 560, height: 220, rx: 40, fill: CARD, stroke: INK, 'stroke-width': 10 }, b);
+  $('path', { d: 'M-180 104 L-262 196 L-90 104Z', fill: CARD, stroke: INK, 'stroke-width': 10, 'stroke-linejoin': 'round' }, b);
+  $('rect', { x: -176, y: 92, width: 84, height: 14, fill: CARD }, b);
+  text(b, 0, -18, 'AI, अपनी', { 'font-size': 82 });
+  text(b, 0, 68, 'भाषा में', { 'font-size': 82, fill: RED });
+
+  const h = card(root, 540, 1272, 760, 196, 2, T.user);
+  text(h, 0, 0, HANDLE, { 'font-size': 84 });
+  text(h, 0, 62, 'Instagram  ·  YouTube', { 'font-family': 'Mukta', 'font-weight': 700, 'font-size': 46, opacity: 0.75 });
+
+  const BY = 1448;
+  const btn = $('g', {}, root);
+  $('rect', { x: -268, y: -48, width: 560, height: 124, rx: 62, fill: INK }, btn);
+  const face = $('g', {}, btn);
+  const body = $('rect', { x: -280, y: -62, width: 560, height: 124, rx: 62, stroke: INK, 'stroke-width': 8 }, face);
+  const label = text(face, 0, 26, '', { 'font-size': 76 });
+  stroke(face, [[150, 0], [176, 28], [226, -34]], { t: T.press + 0.1, d: 0.16, w: 18, color: RED, amp: 2 });
+  U.push((t) => {
+    const x = t - T.btn;
+    btn.style.display = x < 0 ? 'none' : '';
+    const e = eo(clamp(x / 0.3));
+    const down = Math.exp(-(((t - T.press - 0.05) / 0.07) ** 2));
+    const done = t >= T.press + 0.06;
+    body.setAttribute('fill', done ? kit.MINT : kit.PINK);
+    label.setAttribute('fill', done ? INK : PAPER);
+    label.setAttribute('x', done ? -40 : 0);
+    label.textContent = done ? 'Following' : 'Follow करो';
+    face.setAttribute('transform', `translate(${12 * down} ${14 * down})`);
+    btn.setAttribute('transform', `translate(540 ${BY + (1 - e) * 300}) rotate(${-2 + (1 - e) * 10}) scale(${1 + 0.06 * bump(x - 0.3) + 0.07 * bump(t - T.press - 0.1) + 0.03 * bump(t - T.recap)})`);
+  });
+  for (let i = 0; i < 10; i++) {
+    const a = (i / 10) * Math.PI * 2 + 0.3;
+    if (Math.sin(a) < -0.45) continue; // keep clear of the handle card
+    stroke(root, [[540 + Math.cos(a) * 330, BY + Math.sin(a) * 112], [540 + Math.cos(a) * 376, BY + Math.sin(a) * 152]], { t: T.press + 0.05, d: 0.14, w: 14, color: kit.ORANGE, amp: 2, out: T.press + 0.55 });
+  }
+}
+
+// ---------- captions ----------
+kit.captions(document.getElementById('caps'), [
+  { ...L.ask.s[0], hl: 'एक word' },
+  { ...L.follow.s[0], hl: 'follow करो' },
+], dur);
+
+// ---------- seek ----------
+const paperEl = document.getElementById('paper');
+window.DUR = dur;
+window.seek = (t) => {
+  const b = prog(t, T.toFollow, 0.46);
+  const rot = 3 * Math.sin(Math.PI * b);
+  root.setAttribute('transform', `rotate(${rot} 540 960)`);
+  paperEl.style.transform = `translateY(${-(eio(b) * 62 + reel(t).o * 20) % 97}px) rotate(${rot * 0.3}deg)`;
+  kit.frame(t);
+};
+window.seek(0);
+window.ready = true;
+if (!new URLSearchParams(location.search).has('render')) preview(stage, window.seek);
+</script>
+</body>
+</html>

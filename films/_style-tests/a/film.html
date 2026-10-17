@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Look A: Midnight</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #0B0B10; font-family: "Anek Devanagari"; color: #fff; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script type="module">
+// Look A, "Midnight": near-black, one lime accent, huge condensed type that rises out of masks,
+// whip moves with blur, the web page as a window that swings in with depth.
+import { bump, clamp, clean, cubicOut, el, expoOut, fitWidth, lerp, maskLine, pageCrop, pointer, prog, reveal, setup, start } from '../lib.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const vo = await (await fetch('vo.json')).json();
+const { dur, S, T } = build(vo);
+const SHOT = '/films/napkin-ai/shots/home.jpg';
+await setup(['800 100px "Anek Devanagari"', '600 40px "Anek Devanagari"'], [SHOT]);
+const U = [];
+const LIME = '#C8FF2E';
+const INK = '#0B0B10';
+const HEAD = 'font-weight:800;font-stretch:78%;line-height:1.04';
+
+// ---------- backdrop: a slow grid and the hour ----------
+const grid = el('div', 'position:absolute;inset:-300px;background-image:linear-gradient(rgba(255,255,255,.055) 2px,transparent 2px),linear-gradient(90deg,rgba(255,255,255,.055) 2px,transparent 2px);background-size:135px 135px', stage);
+U.push((t) => { grid.style.transform = `translate(${-t * 16}px,${-t * 24}px)`; });
+const hour = el('div', 'position:absolute;left:-30px;top:1400px;font:800 600px/1 "Anek Devanagari";font-stretch:76%;color:transparent;-webkit-text-stroke:4px rgba(255,255,255,.22);white-space:nowrap', stage, '2:00<span style="font-size:210px"> AM</span>');
+U.push((t) => { hour.style.transform = `translateX(${-t * 34 - expoOut(prog(t, T.s2 - 0.3, 0.45)) * 1500}px)`; });
+el('div', `position:absolute;left:66px;top:168px;font:700 34px/1 "Anek Devanagari";letter-spacing:.14em;color:${INK};background:${LIME};padding:15px 22px 9px;border-radius:10px`, stage, 'AI TOOL');
+
+// a block leaves fast, with blur: dir 'up' or 'left'
+const whip = (block, t, t0, dir) => {
+  const q = prog(t, t0, 0.32);
+  block.style.visibility = q >= 1 ? 'hidden' : 'visible';
+  const e = q * q * q;
+  block.style.transform = dir === 'up' ? `translateY(${-e * 1500}px) skewY(${-4 * e}deg)` : `translateX(${-e * 1500}px) skewX(${8 * e}deg)`;
+  block.style.filter = q > 0 && q < 1 ? `blur(${q * q * 26}px)` : 'none';
+};
+
+// ---------- 1. "Teacher को लगेगा तुमने पूरी रात मेहनत की।" ----------
+const b1 = el('div', `position:absolute;left:66px;top:330px;${HEAD}`, stage);
+const W1 = clean(S[0].words);
+const lines1 = [[0, 1], [2, 3], [4, 5], [6, 7]].map((ix, n) => maskLine(b1, ix.map((i) => W1[i]), n === 2 ? `color:${LIME}` : ''));
+fitWidth(b1, 950, 280);
+// the hook is complete on the first frame, then each word is hit again as it is spoken
+U.push((t) => {
+  lines1.flat().forEach((x) => { x.w.style.transform = `translateY(${-18 * Math.max(0, bump(t - x.t))}px)`; });
+  whip(b1, t, T.s2 - 0.32, 'up');
+});
+
+// ---------- 2. "असल में सिर्फ़ एक click लगा।" ----------
+const b2 = el('div', `position:absolute;left:66px;top:400px;width:960px;${HEAD};line-height:1`, stage);
+const W2 = clean(S[1].words);
+const l21 = maskLine(b2, [W2[0], W2[1]], 'font-size:100px;color:rgba(255,255,255,.62);font-weight:600;font-stretch:92%');
+const l22 = maskLine(b2, [W2[2], W2[3]], 'font-size:214px;margin-top:30px');
+const big = el('div', `display:table;font-size:470px;line-height:.92;color:${LIME};margin-top:4px;white-space:nowrap;transform-origin:0 60%`, b2, 'click');
+fitWidth(big, 940, 470, 300);
+const l24 = maskLine(b2, [W2[5]], 'font-size:160px;margin-top:6px');
+const rings = [0, 1].map(() => el('div', `position:absolute;width:200px;height:200px;margin:-100px 0 0 -100px;border:12px solid ${LIME};border-radius:50%`, stage));
+const cur = pointer(stage, '#fff', INK, 150);
+U.push((t) => {
+  [l21, l22, l24].forEach((l) => reveal(l, t));
+  const q = t - T.click;
+  big.style.visibility = q < -0.02 ? 'hidden' : 'visible';
+  big.style.transform = `scale(${lerp(2.3, 1, expoOut(clamp((q + 0.02) / 0.3))) * (1 + 0.05 * bump(q - 0.3))})`;
+  whip(b2, t, T.s3 - 0.32, 'left');
+  // the pointer flies in, presses on "click", and leaves with the block
+  const r = big.getBoundingClientRect();
+  const s = stage.getBoundingClientRect();
+  const k = 1080 / s.width;
+  const tx = (r.left - s.left) * k + big.offsetWidth * 0.66;
+  const ty = (r.top - s.top) * k + big.offsetHeight * 0.62;
+  const a = cubicOut(prog(t, T.click - 0.55, 0.5));
+  const out = prog(t, T.s3 - 0.32, 0.32) ** 3;
+  const on = t > T.click - 0.55 && out < 1;
+  cur.style.visibility = on ? 'visible' : 'hidden';
+  cur.style.transform = `translate(${lerp(1180, tx, a) - out * 1500}px,${lerp(1640, ty, a)}px) scale(${1 - 0.16 * Math.exp(-(((q - 0.03) / 0.07) ** 2))})`;
+  rings.forEach((ring, i) => {
+    const p = prog(t, T.click + 0.03 + i * 0.12, 0.5);
+    ring.style.visibility = p > 0 && p < 1 && out === 0 ? 'visible' : 'hidden';
+    ring.style.transform = `translate(${tx}px,${ty}px) scale(${lerp(0.2, 2.4, cubicOut(p))})`;
+    ring.style.borderWidth = `${lerp(14, 2, p)}px`;
+  });
+});
+
+// ---------- 3. "यह है Napkin AI।" ----------
+const b3 = el('div', `position:absolute;left:66px;top:300px;${HEAD};line-height:1`, stage);
+const W3 = clean(S[2].words);
+const l31 = maskLine(b3, [W3[0], W3[1]], 'font-size:100px;color:rgba(255,255,255,.62);font-weight:600;font-stretch:92%');
+const l32 = maskLine(b3, [W3[2], W3[3]], 'font-size:236px;margin-top:20px');
+const rule = el('div', `height:22px;width:720px;margin-top:2px;background:${LIME};transform-origin:0 50%`, b3);
+const space = el('div', 'position:absolute;inset:0;perspective:1500px;perspective-origin:50% 42%', stage);
+const win = el('div', 'position:absolute;left:130px;top:720px;width:820px;height:960px', space);
+el('div', `position:absolute;inset:0;background:${LIME};border-radius:42px;transform:translate(26px,30px)`, win);
+const body = el('div', `position:absolute;inset:0;background:#fff;border-radius:42px;overflow:hidden;border:4px solid ${INK}`, win);
+el('div', 'height:86px;background:#17171F;display:flex;align-items:center;gap:14px;padding:0 32px;font:600 36px/1 "Anek Devanagari";color:rgba(255,255,255,.8)', body,
+  '<i style="width:20px;height:20px;border-radius:50%;background:#FF5F57"></i><i style="width:20px;height:20px;border-radius:50%;background:#FEBC2E"></i><i style="width:20px;height:20px;border-radius:50%;background:#28C840"></i><span style="margin-left:18px;padding-top:6px">napkin.ai</span>');
+const page = pageCrop(body, SHOT, 'position:absolute;left:0;top:86px;right:0;bottom:0', 812);
+const SLIDE = [120, 8867, 584, 400]; // the finished diagram on the page, in image pixels
+const box = el('div', `position:absolute;border:9px solid ${LIME};border-radius:16px;box-sizing:border-box`, body);
+U.push((t) => {
+  [l31, l32].forEach((l) => reveal(l, t));
+  rule.style.transform = `scaleX(${expoOut(prog(t, T.name + 0.2, 0.5))})`;
+  const p = expoOut(prog(t, T.s3 - 0.12, 0.95));
+  win.style.visibility = t < T.s3 - 0.12 ? 'hidden' : 'visible';
+  win.style.transform = `translateY(${(1 - p) * 1400}px) rotateX(${lerp(36, 9, p)}deg) rotateY(${lerp(-32, -11, p) + Math.sin(t * 0.9) * 1.6}deg) rotateZ(${lerp(7, 1.5, p)}deg) scale(${lerp(0.8, 1, p)})`;
+  const scroll = lerp(8330, 8560, cubicOut(prog(t, T.s3, 2.4)));
+  page.set(scroll);
+  const m = expoOut(prog(t, T.name + 0.35, 0.4));
+  box.style.visibility = m > 0 ? 'visible' : 'hidden';
+  box.style.left = `${SLIDE[0] * page.k - 14}px`;
+  box.style.top = `${(SLIDE[1] - scroll) * page.k + 86 - 14}px`;
+  box.style.width = `${SLIDE[2] * page.k + 28}px`;
+  box.style.height = `${SLIDE[3] * page.k + 28}px`;
+  box.style.transform = `scale(${lerp(1.25, 1, m)})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

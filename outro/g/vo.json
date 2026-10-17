@@ -1,0 +1,40 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 5.194,
+  "lines": [
+    {
+      "id": "save",
+      "text": "ये video save कर लो, बाद में काम आएगा।",
+      "sentences": [
+        "ये video save कर लो, बाद में काम आएगा।"
+      ],
+      "file": "vo/save.wav",
+      "start": 0,
+      "duration": 2.216,
+      "pauses": [
+        [
+          1.02,
+          1.25
+        ]
+      ]
+    },
+    {
+      "id": "cta",
+      "text": "अगला topic comment में बताओ, और follow करो।",
+      "sentences": [
+        "अगला topic comment में बताओ, और follow करो।"
+      ],
+      "file": "vo/cta.wav",
+      "start": 2.5,
+      "duration": 2.574,
+      "pauses": [
+        [
+          1.34,
+          1.78
+        ]
+      ]
+    }
+  ]
+}

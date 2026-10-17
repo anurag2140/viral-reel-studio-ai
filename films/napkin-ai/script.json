@@ -1,0 +1,18 @@
+{
+  "number": 6,
+  "lane": "tool",
+  "title": "Text से diagram: Napkin AI",
+  "sources": ["https://www.napkin.ai/", "https://www.napkin.ai/pricing"],
+  "voice": "Orus",
+  "bpm": 96,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friendly college senior who shows a useful trick to a junior. English words in Indian English. Warm and clear, one even tone from start to end, brisk pace with only a short breath between sentences. No acting, no exaggeration.",
+  "lines": [
+    { "id": "hook", "sentences": ["अपने notes को diagram में बदलो, एक click में।", "Tool का नाम है Napkin AI।"] },
+    { "id": "s1", "sentences": ["पहले अपना text paste करो।", "Prompt लिखने की ज़रूरत नहीं।"] },
+    { "id": "s2", "sentences": ["फिर एक button दबाओ, और visuals बन जाते हैं।", "जो पसंद आए, वह चुनो।"] },
+    { "id": "s3", "sentences": ["आख़िर में PNG या PDF में export करो।", "यह free plan में भी होता है।"] },
+    { "id": "pay", "sentences": ["अगली presentation में notes नहीं, diagram दिखाओ।"] }
+  ]
+}

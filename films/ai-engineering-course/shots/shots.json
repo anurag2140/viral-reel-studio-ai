@@ -1,0 +1,305 @@
+{
+  "captured": "2026-10-12",
+  "shots": [
+    {
+      "name": "home",
+      "url": "https://aiengineeringfromscratch.com/",
+      "file": "shots/home.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "AI Engineering from Scratch | Free AI Engineering Course",
+      "finalUrl": "https://aiengineeringfromscratch.com/",
+      "w": 824,
+      "h": 14000,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "AI ENGINEERING FROM SCRATCH",
+          "x": 36,
+          "y": 250,
+          "w": 752,
+          "h": 176
+        },
+        {
+          "tag": "h2",
+          "text": "Learn AI from scratch. Stay ahead of what’s next.",
+          "x": 78,
+          "y": 2338,
+          "w": 672,
+          "h": 106
+        },
+        {
+          "tag": "h2",
+          "text": "CHOOSE THE WORK YOU WANT TO DO",
+          "x": 36,
+          "y": 4510,
+          "w": 752,
+          "h": 128
+        },
+        {
+          "tag": "h3",
+          "text": "FOUNDATIONS",
+          "x": 38,
+          "y": 12892,
+          "w": 748,
+          "h": 34
+        },
+        {
+          "tag": "h3",
+          "text": "DEEP LEARNING",
+          "x": 38,
+          "y": 13251,
+          "w": 748,
+          "h": 34
+        },
+        {
+          "tag": "h3",
+          "text": "LANGUAGE",
+          "x": 38,
+          "y": 13568,
+          "w": 748,
+          "h": 34
+        },
+        {
+          "tag": "h3",
+          "text": "LARGE LANGUAGE MODELS",
+          "x": 38,
+          "y": 13884,
+          "w": 748,
+          "h": 34
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "repo",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
+      "file": "shots/repo.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "GitHub - rohitg00/ai-engineering-from-scratch: Learn AI Engineering! Learn it. Build it. Ship it for others. · GitHub",
+      "finalUrl": "https://github.com/rohitg00/ai-engineering-from-scratch",
+      "w": 824,
+      "h": 14000,
+      "headings": [
+        {
+          "tag": "h2",
+          "text": "Navigation Menu",
+          "x": 0,
+          "y": 32,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h2",
+          "text": "Repository navigation",
+          "x": 0,
+          "y": 128,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h2",
+          "text": "About",
+          "x": 32,
+          "y": 560,
+          "w": 760,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Topics",
+          "x": 32,
+          "y": 818,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h3",
+          "text": "Resources",
+          "x": 32,
+          "y": 1137,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h3",
+          "text": "Code of conduct",
+          "x": 32,
+          "y": 1253,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h3",
+          "text": "Contributing",
+          "x": 32,
+          "y": 1311,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h3",
+          "text": "Stars",
+          "x": 32,
+          "y": 1455,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h3",
+          "text": "Watchers",
+          "x": 32,
+          "y": 1455,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h3",
+          "text": "Forks",
+          "x": 32,
+          "y": 1455,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h2",
+          "text": "Latest commit",
+          "x": 58,
+          "y": 1774,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h2",
+          "text": "History",
+          "x": 626,
+          "y": 1747,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h2",
+          "text": "Folders and files",
+          "x": 32,
+          "y": 1829,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h2",
+          "text": "Repository files navigation",
+          "x": 2,
+          "y": 2809,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "tag": "h3",
+          "text": "Sponsors",
+          "x": 66,
+          "y": 3986,
+          "w": 692,
+          "h": 50
+        },
+        {
+          "tag": "h2",
+          "text": "Learning paths",
+          "x": 66,
+          "y": 4729,
+          "w": 692,
+          "h": 76
+        },
+        {
+          "tag": "h3",
+          "text": "Gradient descent",
+          "x": 66,
+          "y": 5312,
+          "w": 692,
+          "h": 50
+        },
+        {
+          "tag": "h3",
+          "text": "Projects",
+          "x": 66,
+          "y": 6166,
+          "w": 692,
+          "h": 50
+        },
+        {
+          "tag": "h2",
+          "text": "Choose how to learn",
+          "x": 66,
+          "y": 6952,
+          "w": 692,
+          "h": 76
+        },
+        {
+          "tag": "h3",
+          "text": "On the website",
+          "x": 66,
+          "y": 7076,
+          "w": 692,
+          "h": 50
+        },
+        {
+          "tag": "h3",
+          "text": "With an AI tutor",
+          "x": 66,
+          "y": 7350,
+          "w": 692,
+          "h": 50
+        },
+        {
+          "tag": "h3",
+          "text": "Run local code",
+          "x": 66,
+          "y": 8256,
+          "w": 692,
+          "h": 50
+        },
+        {
+          "tag": "h2",
+          "text": "Choose a learning path",
+          "x": 66,
+          "y": 9104,
+          "w": 692,
+          "h": 76
+        },
+        {
+          "tag": "h2",
+          "text": "The shape of the curriculum",
+          "x": 66,
+          "y": 11332,
+          "w": 692,
+          "h": 76
+        },
+        {
+          "tag": "h2",
+          "text": "Contents",
+          "x": 66,
+          "y": 12916,
+          "w": 692,
+          "h": 76
+        },
+        {
+          "tag": "h3",
+          "text": "Phase 0: Setup & Tooling 13 lessons",
+          "x": 66,
+          "y": 13169,
+          "w": 692,
+          "h": 108
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

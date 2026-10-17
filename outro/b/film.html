@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>Outro B</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Mukta:wght@500;600;700&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #111; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: var(--paper); --cap-top: 268px; }
+  #paper { position: absolute; inset: -200px 0; background-image: repeating-linear-gradient(#0000 0 94px, var(--rule) 94px 97px); }
+  svg { position: absolute; left: 0; top: 0; overflow: visible; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="paper"></div>
+  <svg id="world" width="1080" height="1920"></svg>
+  <div id="caps"></div>
+</div>
+<script type="module">
+import { $, boot, bump, box, clamp, createKit, ei, eio, eo, lerp, preview, prog, sp } from '/brand/kagaz.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const brand = await boot(stage);
+const vo = await (await fetch('vo.json')).json();
+const { dur, L, T } = build(vo);
+const kit = createKit(brand);
+const { stroke, pop, card, U, PAPER, CARD, INK, RED } = kit;
+const HANDLE = '@vipulsingh_ai';
+const text = (parent, x, y, str, a = {}) => {
+  const e = $('text', { x, y, 'font-family': '"Baloo 2"', 'font-weight': 800, 'font-size': 80, fill: INK, 'text-anchor': 'middle', ...a }, parent);
+  e.textContent = str;
+  return e;
+};
+const root = $('g', {}, document.getElementById('world'));
+
+// Sticker Pop backdrop: rays, stickers and (where there is room) the mascot
+kit.sunburst(root, 540, 1000);
+kit.sticker(root, 'circle', 1040, 1575, 110, kit.MINT);
+kit.sticker(root, 'plus', 70, 1180, 30, kit.ORANGE);
+const last = T.hops.length - 1;
+const hopCard = (k) => (k === last ? 1 : k % 3);
+
+// ---------- 1. three options slam in, one per spoken word ----------
+const OPT = [
+  { name: 'AI', y: 715, tilt: -2.5, dir: -1, size: 140 },
+  { name: 'Cloud', y: 975, tilt: 2, dir: 1, size: 140 },
+  { name: 'Cybersecurity', y: 1235, tilt: -1.5, dir: -1, size: 90 },
+];
+OPT.forEach((o, i) => {
+  const outer = $('g', {}, root);
+  const g = card(outer, 0, 0, 920, 232, 0);
+  const t0 = T.slam[i];
+  text(g, -225, o.size * 0.34, o.name, { 'font-size': o.size, 'text-anchor': 'start' });
+  if (i === 0) {
+    const s = pop(g, -340, 0, { t: t0 + 0.12, spin: 40 });
+    $('path', { d: 'M0 -70 Q10 -10 70 0 Q10 10 0 70 Q-10 10 -70 0 Q-10 -10 0 -70Z', fill: RED }, s);
+    const s2 = pop(g, -282, -52, { t: t0 + 0.22, spin: -60 });
+    $('path', { d: 'M0 -26 Q4 -4 26 0 Q4 4 0 26 Q-4 4 -26 0 Q-4 -4 0 -26Z', fill: INK }, s2);
+  } else if (i === 1) {
+    stroke(g, [[-405, 34], [-418, -6], [-388, -34], [-362, -28], [-342, -64], [-300, -60], [-284, -28], [-258, -26], [-252, 8], [-274, 34], [-405, 34]], { t: t0 + 0.12, d: 0.35, w: 11, smooth: true, amp: 2 });
+  } else {
+    stroke(g, box(-388, -18, 96, 76), { t: t0 + 0.12, d: 0.25, w: 11, amp: 2 });
+    stroke(g, [[-370, -18], [-370, -52], [-340, -72], [-310, -52], [-310, -18]], { t: t0 + 0.3, d: 0.18, w: 11, smooth: true, amp: 2 });
+    $('circle', { r: 11, fill: RED }, pop(g, -340, 20, { t: t0 + 0.42 }));
+  }
+  if (i === 1) stroke(g, [[318, 0], [352, 36], [418, -44]], { t: T.choice + 0.15, d: 0.16, w: 24, color: RED, amp: 2 });
+  U.push((t) => {
+    const x = t - (t0 - 0.18);
+    const q = ei(prog(t, T.toFollow, 0.34));
+    if (x < 0 || q >= 1) { outer.style.display = 'none'; return; }
+    outer.style.display = '';
+    const p = clamp(x / 0.18) ** 2;
+    let sc = 1 + 0.05 * bump(x - 0.18);
+    T.hops.forEach((h, k) => { if (hopCard(k) === i) sc += 0.045 * bump(t - h); });
+    const px = lerp(540 + o.dir * 1350, 540, p) + o.dir * 1500 * q;
+    outer.setAttribute('transform', `translate(${px} ${o.y}) rotate(${o.tilt + (1 - p) * o.dir * 14 + o.dir * 20 * q}) scale(${sc})`);
+  });
+});
+
+// a vote stamp tells the viewer what this is from the first frame
+{
+  const st = $('g', {}, root);
+  $('rect', { x: -150, y: -52, width: 300, height: 104, rx: 12, fill: PAPER, stroke: RED, 'stroke-width': 10 }, st);
+  text(st, 0, 30, 'VOTE करो', { 'font-size': 66, fill: RED });
+  U.push((t) => {
+    const q = ei(prog(t, T.toFollow, 0.3));
+    const k = lerp(2.6, 1, eo(clamp((t + 0.06) / 0.14))) * (1 + 0.06 * bump(t - 0.08)) * (1 - q);
+    st.style.display = k <= 0.002 ? 'none' : '';
+    st.setAttribute('transform', `translate(835 562) rotate(-9) scale(${k})`);
+  });
+}
+
+// ---------- 2. "which one?": a red marker selector hops card to card and lands on a choice ----------
+T.hops.forEach((h, k) => {
+  const o = OPT[hopCard(k)];
+  const a = (o.tilt * Math.PI) / 180;
+  const pts = box(-482, -138, 964, 276).map(([x, y]) => [540 + x * Math.cos(a) - y * Math.sin(a), o.y + x * Math.sin(a) + y * Math.cos(a)]);
+  stroke(root, pts, { t: h, d: 0.13, w: 18, color: RED, amp: 5, outD: 0.07, out: k === last ? T.toFollow - 0.05 : T.hops[k + 1] - 0.05 });
+});
+
+// ---------- "comment": the choice is typed and sent ----------
+{
+  const S = $('g', {}, root);
+  U.push((t) => {
+    const q = ei(prog(t, T.toFollow, 0.34));
+    S.style.display = q >= 1 ? 'none' : '';
+    S.setAttribute('transform', `translate(0 ${900 * q}) rotate(${6 * q} 540 1435)`);
+  });
+  const c = card(S, 540, 1432, 900, 168, 2, T.box);
+  $('image', { href: '/logo.png', x: -428, y: -74, width: 148, height: 148 }, c);
+  const typed = text(c, -250, 30, '', { 'font-size': 88, 'text-anchor': 'start' });
+  const caret = $('rect', { y: -48, width: 9, height: 92, rx: 4, fill: RED }, c);
+  const str = 'Cloud!';
+  U.push((t) => {
+    const n = Math.round(prog(t, T.type.a, T.type.b - T.type.a) * str.length);
+    typed.textContent = str.slice(0, n);
+    caret.setAttribute('x', -250 + (n ? typed.getComputedTextLength() : 0) + 10);
+    caret.style.display = t < T.type.b || Math.sin(t * 22) > 0 ? '' : 'none';
+  });
+  const send = $('g', {}, pop(c, 368, 0, { t: T.box + 0.25 }));
+  $('circle', { r: 56, fill: RED, stroke: INK, 'stroke-width': 8 }, send);
+  $('path', { d: 'M-22 0 H22 M4 -20 L24 0 L4 20', fill: 'none', stroke: PAPER, 'stroke-width': 12, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, send);
+  U.push((t) => send.setAttribute('transform', `scale(${1 + 0.3 * bump(t - T.send)})`));
+}
+
+// ---------- 3. "do not forget to follow": a pinned note swings in ----------
+{
+  const PIN = [540, 600];
+  const N = $('g', {}, root);
+  card(N, 0, 392, 800, 824, 0);
+  const logo = $('g', {}, N);
+  $('image', { href: '/logo.png', x: -205, y: -205, width: 410, height: 410 }, logo);
+  U.push((t) => logo.setAttribute('transform', `translate(0 ${250 - 20 * Math.max(0, bump(t - T.press - 0.05))}) rotate(${Math.sin(t * 1.8) * 1.5})`));
+  text(N, 0, 540, HANDLE, { 'font-size': 82 });
+  text(N, 0, 600, 'Instagram  ·  YouTube', { 'font-family': 'Mukta', 'font-weight': 700, 'font-size': 46, opacity: 0.75 });
+
+  // follow button, pressed on the last word
+  const BY = 706;
+  const btn = $('g', {}, N);
+  $('rect', { x: -248, y: -46, width: 520, height: 116, rx: 58, fill: INK }, btn);
+  const face = $('g', {}, btn);
+  const body = $('rect', { x: -260, y: -58, width: 520, height: 116, rx: 58, stroke: INK, 'stroke-width': 8 }, face);
+  const label = text(face, 0, 26, '', { 'font-size': 74 });
+  stroke(face, [[146, 0], [172, 28], [222, -34]], { t: T.press + 0.1, d: 0.16, w: 18, color: RED, amp: 2 });
+  U.push((t) => {
+    const down = Math.exp(-(((t - T.press - 0.05) / 0.07) ** 2));
+    const done = t >= T.press + 0.06;
+    body.setAttribute('fill', done ? kit.MINT : kit.PINK);
+    label.setAttribute('fill', done ? INK : PAPER);
+    label.setAttribute('x', done ? -40 : 0);
+    label.textContent = done ? 'Following' : 'Follow करो';
+    face.setAttribute('transform', `translate(${12 * down} ${14 * down})`);
+    btn.setAttribute('transform', `translate(0 ${BY}) rotate(-1.5) scale(${1 + 0.07 * bump(t - T.press - 0.1)})`);
+  });
+  // "do not forget": a marker loop around the button
+  const loop = Array.from({ length: 34 }, (_, i) => {
+    const a = -2.6 + (i / 33) * Math.PI * 2.5;
+    const grow = 1 + (i / 33) * 0.07;
+    return [6 + Math.cos(a) * 322 * grow, BY + 6 + Math.sin(a) * 96 * grow];
+  });
+  stroke(N, loop, { t: T.remind, d: 0.42, w: 13, color: RED, smooth: true, amp: 3 });
+  [[-338, -70, -384, -104], [-362, -22, -416, -30], [344, -78, 388, -114]].forEach(([x0, y0, x1, y1], i) =>
+    stroke(N, [[x0, BY + y0], [x1, BY + y1]], { t: T.remind + 0.36 + i * 0.04, d: 0.1, w: 12, color: RED, amp: 2 }));
+
+  U.push((t) => {
+    const x = t - T.note;
+    N.style.display = x < 0 ? 'none' : '';
+    const e = eo(clamp(x / 0.32));
+    const swing = 15 * Math.exp(-2.3 * x) * Math.cos(7.5 * x) + 2.5 * bump(t - T.press - 0.05);
+    N.setAttribute('transform', `translate(${PIN[0]} ${PIN[1] - (1 - e) * 1500}) rotate(${swing}) scale(${1 + 0.02 * bump(t - T.recap)})`);
+  });
+  const pin = pop(root, PIN[0], PIN[1], { t: T.note + 0.3 });
+  $('circle', { cx: 5, cy: 7, r: 32, fill: INK }, pin);
+  $('circle', { r: 32, fill: RED, stroke: INK, 'stroke-width': 8 }, pin);
+  $('circle', { cx: -10, cy: -10, r: 8, fill: PAPER }, pin);
+}
+
+// ---------- captions ----------
+const P = L.pick.s[0];
+kit.captions(document.getElementById('caps'), [
+  { a: P.a, text: P.text, words: [['AI,', T.said[0]], ['Cloud,', T.said[1]], ['या', T.said[2] - 0.15], ['Cybersecurity?', T.said[2]]].map(([word, t]) => ({ word, t })) },
+  { ...L.ask.s[0], hl: 'किस पर' },
+  { ...L.ask.s[1], hl: 'Comment' },
+  { ...L.follow.s[0], hl: 'मत भूलना' },
+], dur);
+
+// ---------- seek ----------
+const paperEl = document.getElementById('paper');
+window.DUR = dur;
+window.seek = (t) => {
+  const b = prog(t, T.toFollow, 0.46);
+  const rot = -3 * Math.sin(Math.PI * b);
+  root.setAttribute('transform', `rotate(${rot} 540 960)`);
+  paperEl.style.transform = `translateY(${-(eio(b) * 62) % 97}px) rotate(${rot * 0.3}deg)`;
+  kit.frame(t);
+};
+window.seek(0);
+window.ready = true;
+if (!new URLSearchParams(location.search).has('render')) preview(stage, window.seek);
+</script>
+</body>
+</html>

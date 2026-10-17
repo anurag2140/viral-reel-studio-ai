@@ -1,0 +1,17 @@
+{
+  "voice": "Orus",
+  "bpm": 96,
+  "gap": 0.15,
+  "lines": [
+    {
+      "id": "ask",
+      "style": "Natural conversational Hindi as spoken in India, like a friendly college senior who talks to a junior at the end of a short video. English words in Indian English. Ask the question with real curiosity and a smile, then give the short instruction with energy. Lively, medium-fast pace, a clear short pause between the two sentences.",
+      "sentences": ["अगला video किस topic पर चाहिए?", "Comment में बताओ।"]
+    },
+    {
+      "id": "follow",
+      "style": "Natural conversational Hindi as spoken in India, like a friendly college senior. English words in Indian English. Warm and confident invitation, medium-fast pace, stress 'अपनी भाषा' and land 'follow करो' firmly with a smile.",
+      "sentences": ["और AI को अपनी भाषा में समझना है, तो follow करो।"]
+    }
+  ]
+}

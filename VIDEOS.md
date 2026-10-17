@@ -1,0 +1,366 @@
+# Video log and topic bank
+
+This file is the single record of which videos exist, how they performed and what comes next.
+Claude reads it before every new reel and updates it after every finished reel.
+Results come from my insights screenshots and, from 2026-10-16, from Instagram's API
+(`node ig.mjs report`, read only). Skip rate and retention still come only from my screenshots.
+
+## Made
+
+Setting (from #06): college, office or both. See "The channel" in `CLAUDE.md`.
+
+| # | Title | Lane | Setting | Format | Finished | Length | Folder |
+|---|---|---|---|---|---|---|---|
+| 01 | AI vs ML vs DL vs GenAI | concept | none | course, first look, long outro A | 2026-10-08 | 47.5 s | `films/ai-ml-dl-genai` |
+| 02 | Machine कैसे सीखती है? | concept | none | course, own share outro | 2026-10-09 | 37.0 s | `films/machine-learns` |
+| 03 | Neural network = दिमाग़ की copy? | concept | none | course, follow outro 1 | 2026-10-10 | 35.7 s | `films/neural-network` |
+| 04 | AI का इतिहास: 1956 से 2026 | concept | none | course, follow outro 2 | 2026-10-11 | 36.9 s | `films/ai-history` |
+| 05 | Data: AI का खाना | concept | none | course, follow outro 3 | 2026-10-11 | 30.5 s | `films/data-food` |
+| 06 | Napkin AI: एक click में diagram | TOOL | college | illustrated story, my face, tool link line, follow card | 2026-10-12 | 30.7 s | `films/napkin-story` (also there: the 28.4 s version with the drawn student. The first version, 18.4 s in Sticker Pop, is in `films/napkin-ai`; I rejected its look and hook) |
+| 07 | AI सीखना है? यह रहा पूरा नक़्शा (AI Engineering from Scratch) | TOOL | both | illustrated story, my face, tool link line, follow card | 2026-10-12 | 37.3 s | `films/ai-engineering-course` |
+| 08 | Police video call पर arrest नहीं करती (digital arrest scam) | SCAM | both | illustrated story, my face and new body, follow card, no link line | 2026-10-13 | 29.8 s | `films/digital-arrest` |
+| 09 | College ID है? Google का AI plan एक साल free | TOOL | college | illustrated story, my face and body, tool link line, follow card | 2026-10-14 | 28.8 s | `films/google-ai-students` |
+| 10 | AI ने PPT को perfect बोला (AI agrees with you; the strict-boss prompt) | AI | office | illustrated story, my face and body in the shirt outfit, Priya Ma'am as the boss, compact captions, follow card, no link line | 2026-10-15 | 28.6 s | `films/ai-yes-man` |
+| 11 | पचास जगह apply किया, एक भी call नहीं (Resume Worded, ATS) | TOOL | both | illustrated story by day, my face and body, Prof. Sharma as the recruiter, ATS machine, compact captions, tool link line, follow card | 2026-10-16 | 38.1 s | `films/resume-ats` |
+| 12 | AI जुगाड़ #1: hostel वाली selfie से LinkedIn वाली photo (Gemini photo editing) | TOOL | both | illustrated story by day, my face and body (hoodie, then a navy blazer), Rohan as the friend, Priya Ma'am as the interviewer, compact captions, follow line after the first payoff, tool link line, follow card with the next number; experiment E1 | 2026-10-16 | 39.2 s | `films/selfie-pro-photo` |
+| 13 | पचास applications के बाद offer आया, और वो तुम्हें लूटने आया था (fake job offer; who.is) | SCAM | both | illustrated story by day, my face and body, sequel to #11, offer letter on a fishing hook, drawn chat with a fake HR whose mask comes off, who.is page, drawn domain lookup (6 days old), Ananya as the friend, compact captions, link line (who.is), follow card; experiment E5 | 2026-10-18 | 37.4 s | `films/fake-job-offer` |
+
+Next video number: **14**
+
+## Results
+
+Share of viewers still watching, read by Claude from my retention-graph screenshots of
+2026-10-12 (accurate to about 3 points). "not sent" means I have not sent that number.
+
+| # | Views | Left at 1 s | Left at 3 s | Mid-video | At the ending | Shares ÷ reach | Follows | What the opening did |
+|---|---|---|---|---|---|---|---|---|
+| 01 | not sent | not sent | 50% (skip rate 50%, as I reported it) | not sent | not sent | not sent | not sent | Read a list of four terms first; the claim was spoken at 3.7 s |
+| 02 | not sent | 51% | 27% | 8% | 1 to 4% | not sent | not sent | Claim from 0 s: "ChatGPT को किसी ने rules नहीं सिखाए" |
+| 03 | not sent | 42% | 26% | 7% | 4% | not sent | not sent | Claim from 0 s: "Neural network दिमाग़ की copy नहीं है" |
+| 04 | not sent | 41% | 23% | 11 to 13% | 1 to 2% | not sent | not sent | Claim from 0 s: "AI नया नहीं है"; viewers left at the recap line, before the outro |
+| 05 | not sent | 49% | 18% | 3% | 2% | not sent | not sent | "AI भी खाना खाता है"; the hook was answered at 3.4 s |
+| 06 | 48,555 (42,726 viewers) | about 85% | 70% at 2 s, about 57% at 3 s | about 22% | about 9% | 628 shares ÷ 42,726 = 1.5% (Instagram's share rate: 1.6%) | 30 | Story hook: the end of the story first ("Teacher को लगेगा तुमने पूरी रात मेहनत की"), a drawn teacher amazed at the finished diagram on frame 0, tool name held back to second 10 |
+| 07 | 407 (177 viewers) | about 35% | about 15% | about 6% | about 3% | 0 shares | 0 | Question hook: the viewer's own question ("AI सीखना है, पर शुरू कहाँ से करें?") on a dark frame full of small tab cards; the map lit at second 2; repo name held to second 12 |
+| 08 | 650 (384 viewers; still rising on 14 Oct) | about 78% | about 52% | about 20% | about 5% | 0 shares | 0 | Stake hook: "आंटी दस लाख रुपये भेजने ही वाली थीं", a bright living room with two big faces (a frightened aunty, me) and a ₹10,00,000 tag on frame 0 |
+
+#06 in detail (my insights screenshots of 2026-10-15; posted around 12 October, the version with
+my face on the first body, cross-posted to Facebook):
+- Views 48,555 (Instagram 48,370, Facebook 185), viewers 42,726, average watch time 8 s of 28 s.
+- Instagram's rates against my typical reel: skip rate 41.8% (lower, so better), share rate 1.6%
+  (higher), save rate 4.1% (higher), like rate 0.8% (lower), repost 0.1%, comment 0.1%.
+- Likes 354, comments 46, reposts 25, shares 628, saves 1,723. Profile visits 35, follows 30,
+  bio link taps 2.
+- 99.9% of views from non-followers; Reels tab 89.1%, Explore 9.3%. Age 18-24 79.9%, 25-34 12.4%.
+- Likes came most at the very start (about 14%) and at the very end (about 9%).
+- Claude's reading: the first reel to reach far beyond followers. People kept it to use later
+  (saves are almost three times the shares) more than they liked it. The opening held far better
+  than #02 to #05 (about 57% left at 3 s against 18 to 27%), but most viewers still left by second 5.
+
+#07 in detail (my insights screenshots of 2026-10-15; posted around 12 October, the same days as
+#06; cross-posted to Facebook):
+- Views 407, viewers 177, average watch time 4 s of 37 s.
+- Skip rate 92.4% (higher than my typical reel), share rate 0%, like rate 2.7%, save rate 0.5%
+  (lower), comment rate 1.1% (higher).
+- Likes 6, comments 2, saves 1, shares 0, reposts 0. Profile visits 1, follows 0.
+- Followers 13.5%, non-followers 86.5%; Reels tab 64.4%, Stories 10.6%, Explore 9.6%, Feed 9.6%.
+  Age 18-24 60.2%, 25-34 34.0%; men 94.2%; India 96.6%.
+- Claude's reading: Instagram showed it to a first small group, almost all of them swiped away
+  in the first second, and it was not shown further. Against #06 the opening was different in
+  three ways at once: a dark, busy first frame with small tab cards instead of a bright scene
+  with two big faces; a question ("शुरू कहाँ से करें?") instead of a result someone reacts to;
+  and a narrower topic (a coding course rather than a tool anyone can use tonight). Which of
+  these did it is not known from one reel.
+
+#08 in detail (my insights screenshots of 2026-10-15; posted 13 October, the आंटी version, the
+first reel with the new body; cross-posted to Facebook; only two days old):
+- Views 650 (Instagram 422, Facebook 228), viewers 384, average watch time 7 s of 30 s.
+- Skip rate 48.2% (lower than my typical reel, so better), share rate 0%, like rate 2.6%, save
+  rate 0%, comment rate 0%.
+- Likes 11, comments 0, reposts 0, shares 0, saves 0. Profile visits 3, follows 0.
+- Followers 3.6%, non-followers 96.4%; Reels tab 80.3%, Explore 11.9%, Feed 7.4%.
+  Age 18-24 68.4%, 25-34 24.5%; men 84.5%; India 94.8%.
+- Claude's reading: the opening held almost as well as #06, but nobody saved or shared it, so
+  Instagram had no reason to push it further.
+
+Latest Instagram API numbers (copied from `results/latest.md` at the start of every reel; older runs are in `results/history.jsonl`):
+
+Instagram API numbers, fetched 2026-10-17 18:13 UTC (`node ig.mjs report`). @vipulsingh_ai: 111 followers, 14 posts.
+Instagram only (no Facebook views). Skip rate and the retention curve are not in the API.
+"Times usual" = views divided by the median views of the other reels in this table.
+
+| # | Lang | Posted (India) | Days old | Views | Times usual | Reach | Saves | Shares | Saves / 1k views | Shares / 1k views | Likes | Comments | Avg watch |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 12 | HI | 2026-10-17 19:30 Sat | 0.2 | 178 | 0.8 | 155 | 0 | 0 | 0.0 | 0.0 | 3 | 0 | 6 s |
+| 11 | HI | 2026-10-16 20:09 Fri | 1.1 | 3112 | 14.3 | 2663 | 70 | 45 | 22.5 | 14.5 | 47 | 29 | 10.5 s |
+| 10 | HI | 2026-10-15 22:47 Thu | 2 | 1892 | 8.7 | 1610 | 14 | 5 | 7.4 | 2.6 | 28 | 0 | 9.7 s |
+| 09 | HI | 2026-10-14 23:55 Wed | 3 | 1671 | 7.7 | 1495 | 21 | 4 | 12.6 | 2.4 | 12 | 2 | 6.8 s |
+| 08 | HI | 2026-10-13 23:00 Tue | 4 | 438 | 2 | 386 | 0 | 0 | 0.0 | 0.0 | 10 | 0 | 7.5 s |
+| 07 | HI | 2026-10-12 23:06 Mon | 5 | 216 | 1 | 179 | 1 | 0 | 4.6 | 0.0 | 5 | 2 | 4.6 s |
+| 06 | HI | 2026-10-12 19:37 Mon | 5.2 | 68362 | 314.3 | 59473 | 2596 | 1057 | 38.0 | 15.5 | 494 | 55 | 8.9 s |
+| 05 | HI | 2026-10-11 23:06 Sun | 6 | 179 | 0.8 | 150 | 1 | 0 | 5.6 | 0.0 | 4 | 0 | 3.8 s |
+| 04 | HI | 2026-10-11 22:10 Sun | 6.1 | 160 | 0.7 | 132 | 0 | 0 | 0.0 | 0.0 | 4 | 0 | 6.1 s |
+| 03 | HI | 2026-10-10 23:53 Sat | 7 | 168 | 0.7 | 139 | 1 | 0 | 6.0 | 0.0 | 2 | 0 | 6.1 s |
+| 02 | HI | 2026-10-09 13:28 Fri | 8.4 | 214 | 0.9 | 161 | 0 | 0 | 0.0 | 0.0 | 4 | 0 | 6.8 s |
+| 01 | HI | 2026-10-09 00:16 Fri | 9 | 234 | 1.1 | 180 | 0 | 1 | 0.0 | 4.3 | 9 | 0 | 7.9 s |
+| ? | ? | 2026-07-18 23:05 Sat | 91 | 219 | 1 | 157 | 1 | 0 | 4.6 | 0.0 | 16 | 0 | 6 s |
+| ? | ? | 2026-07-17 23:05 Fri | 92 | 542 | 2.5 | 404 | 9 | 4 | 16.6 | 7.4 | 13 | 2 | 8.2 s |
+| ? | ? | 2026-06-15 05:08 Mon | 124.8 | 175 | 0.8 | 144 | 0 | 2 | 0.0 | 11.4 | 7 | 1 | 7.8 s |
+
+English test (value rule): value = views from tier-1 countries x 10 + all other views. Success: 40% of the top Hindi reel's value (#06: 68362 views, tier-1 2% assumed, value 80667, so 32267). Worth it: at least the median value of the 5 Hindi reels posted nearest in time. Read at 3 days.
+- No English reel posted yet.
+Followers by country: IN 62, US 2, PK 2; tier 1 (US, GB, CA, AU and others): 2 of 66 counted.
+
+HIT: #11 has 14.3 times our usual views and is 1.1 days old. Recommend a sequel next (CLAUDE.md, "Experiments").
+HIT: #06 has 314.3 times our usual views and is 5.2 days old. Recommend a sequel next (CLAUDE.md, "Experiments").
+
+The account day by day (Instagram days end at 12:30 PM India time; the date is the day they end):
+
+| Day | Reach | Profile visits | New followers | Visits / 1k reach | Followers / 1k reach |
+|---|---|---|---|---|---|
+| 2026-10-04 | 1 | 2 | 0 | - | - |
+| 2026-10-05 | 0 | 2 | 0 | - | - |
+| 2026-10-06 | 0 | 0 | 0 | - | - |
+| 2026-10-07 | 1 | 1 | 0 | - | - |
+| 2026-10-08 | 152 | 9 | 0 | 59.2 | 0.0 |
+| 2026-10-09 | 158 | 13 | 0 | 82.3 | 0.0 |
+| 2026-10-10 | 125 | 9 | 0 | 72.0 | 0.0 |
+| 2026-10-11 | 226 | 7 | 1 | 31.0 | 4.4 |
+| 2026-10-12 | 4754 | 13 | 6 | 2.7 | 1.3 |
+| 2026-10-13 | 35145 | 35 | 20 | 1.0 | 0.6 |
+| 2026-10-14 | 17206 | 45 | 9 | 2.6 | 0.5 |
+| 2026-10-15 | 3847 | 33 | 5 | 8.6 | 1.3 |
+| 2026-10-16 | 3131 | 30 | 4 | 9.6 | 1.3 |
+| 2026-10-17 | 1543 | 23 | 0 | 14.9 | 0.0 |
+| 14 days | 66289 | 222 | 45 | 3.3 | 0.7 |
+
+What the API added on 2026-10-17 (Claude's reading):
+1. #11 (resume ATS) is our second hit: 3,112 views at 1.1 days (14.3 times usual), 22.5 saves and
+   14.5 shares per 1,000 views, and 29 comments (the link line works). It had no visible-magic
+   moment, so Claude's guess of 2026-10-16 (only a before and after travels) is weaker. What it
+   had: a loss every job seeker feels ("पचास जगह apply किया, एक भी call नहीं") and one friend to send it to.
+2. #11 and #12 were both posted in the evening (T1); #11 is the first evening reel since #06 to beat
+   the late-night ones. Not judged until 3 days.
+3. The follow leak is unchanged: 0.7 followers per 1,000 reach over 14 days, 0 on 2026-10-17.
+
+What the API added on 2026-10-16 (Claude's reading):
+1. #09 and #10 reached about 1,500 accounts each, 8 times our usual, but were not pushed further.
+   Their saves per 1,000 views (12.7 and 7.5) are far below #06 (37.8).
+2. #10 has the best average watch time so far (9.7 s of 28.6 s): the office story and the compact
+   captions held people. One reel; not proven.
+3. The follow leak: 62,037 accounts reached in 14 days, 182 profile visits, 36 new followers. On
+   15 and 16 October, 46 visits gave no follower at all. So people come to the profile and do not
+   find a reason to stay (see "My steps" below and the AI जुगाड़ series).
+4. A hit fades fast: #06's daily reach went 35,145, 17,206, 3,847, 422. A sequel has to come
+   within days.
+
+What #06, #07 and #08 show together (Claude's reading of 2026-10-15; three reels is too few to
+prove anything, so these are working bets to test, not rules):
+1. The opening. The two reels that opened on a bright, warm scene with two big faces, one of
+   them reacting, and a hook that states a result or a stake, kept viewers through the first
+   seconds (skip rate 41.8% and 48.2%). The one that opened on a dark, busy frame with a small
+   face and a question lost almost everyone at once (92.4%).
+2. Holding viewers is not enough. #08 held its opening nearly as well as #06 but got 0 saves and
+   0 shares, and stopped at a few hundred views. #06 got 1,723 saves and 628 shares and reached
+   48,555. What travelled was a concrete thing the viewer can use today and wants to keep.
+3. Possible reasons #08 got no saves or shares: "digital arrest" warnings are already common,
+   so it told the viewer little that was new; and it asked an 18 to 24 audience to send it to
+   their parents, a smaller step than saving a tool for themselves. Neither is proven.
+4. The audience is the one aimed at: 18 to 24 is 60 to 80% of every reel's viewers, 25 to 34 is
+   12 to 34%, and most of them are men.
+
+What these showed, and why the channel changed on 2026-10-12:
+- About half the viewers left in the first second, before the spoken hook could be judged.
+- #02 to #05 did worse at 3 seconds than #01, so the hook rules and the new look of
+  2026-10-09 did not help. Which of the two is the cause is not known.
+- #04, a story along one line, held its viewers best in the middle.
+- Almost nobody reached the 6 to 9 second outros.
+
+## What is next
+
+Lanes in every five reels: TOOL, TOOL, SCAM, TOOL, AI.
+
+- #06 TOOL, college (made).
+- #07 TOOL, both (made; I gave the topic and picked the idea "the whole map" from four).
+- #08 SCAM, both (made; Claude picked the topic on "Create reel").
+- #09 TOOL, college (made; I picked "free Google AI year" from four ideas).
+- #10 AI, office (made; I picked "AI says perfect" from four ideas; the first office reel and
+  the first built on the working bets of 2026-10-15).
+- #11 TOOL, both (made; I picked the resume ATS idea from four; to be posted at 7 to 8:30 PM
+  for the posting-time test).
+- #12 TOOL, both (made; experiment E1 and the first AI जुगाड़; I picked "selfie into a professional photo" from four ideas, over a Gamma sequel of #06).
+- #13 SCAM, both (made; a sequel to the #11 hit and E5's first try; I picked "the fake job offer" from four ideas).
+- **Next: #14 TOOL**, the first English slot.
+- #14 TOOL is the first English slot (see "English reels" in `CLAUDE.md`): the ideas come with an English and a Hindi option and I pick the language; in English it is AI Hack #1, in Hindi AI जुगाड़ #2. Then #15 AI (experiment slot; E2, the funny skit, fits).
+- Review of lanes, settings, hooks, feelings and experiments: after #15 (ten reels in the new
+  format).
+
+One reel in three is an experiment: #12, #15, #18 and so on (my choice of 2026-10-16; the
+rules are in "Experiments" in `CLAUDE.md`).
+
+## Experiments
+
+Pass marks are read 3 days after posting. The same board, as numbers, is the register
+`results/experiments.json`; `node ig.mjs review` reads every try and decides (2 passes put it in
+the playbook, 2 fails retire it for 90 days, one of each means a third try; 30 days without a
+try is stale). The queue always holds at least 3 open experiments. See "Reviewing experiments
+and the playbook" in `CLAUDE.md`.
+
+Channel tests (the whole channel, over several reels):
+
+| Test | What changes | What we expect, and why | Pass mark | Since | Result |
+|---|---|---|---|---|---|
+| T1 Posting time | Post at 7 to 8:30 PM India time instead of 10:30 PM to midnight | More people are on their phones in the early evening, so the first test audience is bigger. #06 (7:37 PM) is the only evening reel and the only hit, but it also had the strongest topic | Over three evening and three late-night reels, the evening ones have the higher "times usual" | #11 (posted 2026-10-16 20:09) | |
+| T2 AI जुगाड़ series | Series number on the cover and in the title, a follow line after the first payoff, the next number on the end card | A series promises more of the same, so more viewers visit the profile and follow | Followers per 1,000 reach (the day table) at least 2.0 over the days of the first three series reels; before: 0.6 | #12 | |
+| T3 English reels | Some reels in very easy US English: one in five (the TOOL slot after SCAM: #14, #19, #24), language chosen by me at the pick | English viewers, many in tier-1 countries, are worth more to tool makers and advertisers | Each English reel at 3 days, by value (tier-1 views x 10 + other views; my rule of 2026-10-16, second version): SUCCESS at 40% of the top Hindi reel's value (#06 now about 79,000, so about 31,700); WORTH IT at the median value of the 5 nearest Hindi reels (about 2,000). Also watched: actions per 1,000 views against those Hindi reels, tier-1 followers (2 of 66 on 2026-10-16). Review after three English reels | #14 (if I pick English) | |
+
+Reel experiments (the queue, in order; Claude may add to it):
+
+| # | Experiment | The one change | What we expect, and why | Pass mark | Reel | Result |
+|---|---|---|---|---|---|---|
+| E1 | Visible magic | A tool whose result is a before and after the eye sees in one second (a sketch into a picture, a photo of notes into typed text, a plain slide into a designed one) | #06 was the only reel with such a moment and the only hit | "Times usual" 3 or more and saves per 1,000 views 20 or more | #12 (a selfie becomes a professional photo; the wipe from hoodie to blazer is the moment) | |
+| E2 | Funny | A comedy skit with the cast (Chintu presses the wrong button, Mitthu agrees with everything); the AI trick is the punchline | Funny reels get sent; every reel so far was only "useful" | Shares per 1,000 views 8 or more (#09 and #10: 2.4) | | |
+| E3 | Short loop | Under 15 seconds, the end runs into the start, no follow card (`films/_template-short/`) | A bigger share of the reel is watched, and some people watch it twice | Average watch 80% of the length or more, and "times usual" 3 or more | | |
+| E4 | Quiz | "कौन सी photo AI की है?": the viewer answers in the comments | A question the viewer can answer brings comments | Comments per 1,000 views 10 or more (so far 0 to 1) | | |
+| E5 | My own risk | A SCAM reel about the viewer's own risk (a fake internship fee, a fake job offer), sent to a friend, not to parents | #08 asked for a send to parents and got no shares | Shares per 1,000 views 5 or more | #13 (a fake job offer, sent to the friend who is job hunting; also a sequel to #11, so a pass is not E5's alone) | |
+| E6 | Fast news | An AI launch that matters to students, made within 24 hours | New things are searched and shown while they are fresh | "Times usual" 3 or more | | moves up when a big launch happens |
+| E7 | My own voice | I record the voice (`node vo.mjs <dir> --own <recording>`) instead of the AI voice | A real voice makes "तुम" a real person: more trust, more follows | Followers per 1,000 reach on the reel's days above the T2 level | | last in the queue ("maybe later", my answer of 2026-10-16) |
+
+Earlier tests: result-first against question-first hook: #06 (result) far ahead of #07
+(question), with other things changed too; it is now working bet 2. Yellow rays against a calm
+first frame: dropped with the Sticker Pop look.
+
+## Playbook (proven experiments)
+
+Proven experiments as boosts, format shares, slots and defaults. They guide the two bet slots in
+every three; experiment slots and the wild card ignore them. Each is re-checked every 60 days or
+20 reels and goes back to the queue when it stops beating the other reels. Written by
+`node ig.mjs review --apply`; the same list is in `CLAUDE.md` ("Playbook").
+
+<!-- playbook:start -->
+None yet.
+<!-- playbook:end -->
+
+## Retired experiments
+
+A failed experiment rests for 90 days, then comes back once for a re-test; a second failure
+retires it for good. Written by `node ig.mjs review --apply`.
+
+<!-- retired:start -->
+| # | Experiment | Retired | Until | Why, and what changed | Numbers |
+|---|---|---|---|---|---|
+<!-- retired:end -->
+
+## Reviews
+
+A full review every 14 days or 10 reels (`node ig.mjs review` says when).
+
+- 2026-10-16: the review system set up; nothing to decide yet (E1 waits for #12, T1 for three
+  reels in each time group, T2 for three series reels, T3 for three English reels). Next full
+  review: 2026-10-30 or at reel #22, whichever comes first.
+- 2026-10-16: decisions are now applied automatically. The create-reel hook runs the report and
+  `node ig.mjs review --apply` on every "create reel"; a confirmed experiment's rule goes into
+  "Rules from experiments" in `CLAUDE.md`, a discarded one leaves the queue, and Claude tells me
+  first. Every change is logged in `results/experiment-log.md`.
+- 2026-10-16: the playbook replaces "rules for every reel" (I saw that rules would make new
+  kinds of reel nearly impossible). A proven experiment becomes a boost, a format share (at most
+  1 in 5; all formats at most half the reels), a slot or a default, only for the two bet slots
+  in three; it is re-checked every 60 days or 20 reels. A failed one retires for 90 days, then
+  gets one re-test. The queue never drops below 3 experiments, and every idea list has a wild
+  card.
+- 2026-10-18: "What drives views and follows". Every report ranks the metrics by how closely they
+  move with views across all our numbered reels and writes the ranking into `CLAUDE.md`. First
+  ranking (11 reels): share rate 0.83, average watch time 0.82, share watched 0.79, save rate
+  0.66, skip rate -0.65; like rate goes the other way. Idea-score weights follow it (now Q6 and
+  Q7 x2, Q9 and Q3 x1.5) and switch only when a new leader is clearly ahead. Per-reel follows
+  come from the one screenshot after each reel; their own ranking starts at 5 reels (3 so far).
+
+## English reels
+
+The test T3 above, by value (see "English reels" in `CLAUDE.md`). Views and the marks come from
+`node ig.mjs report` ("English test"); the tier-1 share from my "Top countries" screenshot of
+each reel, recorded in `results/countries.json`.
+
+| # | Title | Series | Posted | Views at 3 days | Tier-1 share | Value | Share of the top Hindi value | Nearest Hindi median value | Actions per 1k (EN / HI) | Result |
+|---|---|---|---|---|---|---|---|---|---|---|
+
+## AI Hack series (English)
+
+| Series # | Reel | Title |
+|---|---|---|
+| 1 | | (the first English tool reel) |
+
+## AI जुगाड़ series
+
+| Series # | Reel | Title |
+|---|---|---|
+| 1 | #12 | तुम्हारी hostel वाली selfie अब LinkedIn वाली professional photo (Gemini) |
+
+## My steps (only I can do these)
+
+Claude's suggestions of 2026-10-16, for the follow leak:
+1. Post #11 between 7 and 8:30 PM (test T1).
+2. Pin #06 to the top of the profile; later also pin the best series reels.
+3. Make the bio one clear promise. Claude's drafts:
+   - "हर रोज़ एक AI जुगाड़, जो college और office का काम आधा कर दे। Tool का link: reel पर comment करो।"
+   - "Free AI tools और tricks, आसान हिंदी में। AI जुगाड़ series 👇"
+4. Consider archiving #01 to #05 (archive hides a post and can be undone; it does not delete).
+   They promise a course that no longer exists and are the first thing a visitor sees after
+   the newest reels. My choice.
+5. Send creator handles for the radar (`results/radar-handles.txt`).
+6. Check again for Trial Reels at 1,000 followers.
+7. Send the retention graph and skip rate of #09 to #11 when they are three days old.
+
+## Topic bank
+
+Ideas, not checked facts. Each one is fact-checked against public pages before it is built.
+When I type "Create reel", Claude also researches new topics and may pick one that is not here.
+
+Each idea has its setting: [both] works in a classroom or an office, [college], [office].
+
+### TOOL: a tool, or how to do a task with AI
+- [x] Napkin AI: text से diagram (#06) [college]
+- [ ] पूरी PPT एक minute में बन गई। (a slide-maker; Gamma's homepage shows a cookie banner, use `--hide`) [both]
+- [ ] ChatGPT बेकार जवाब देता है? ग़लती prompt में है। (the same question asked two ways) [both]
+- [ ] ChatGPT वाला resume सबका एक जैसा क्यों लगता है? (give it your real details) [both]
+- [ ] दस link मत खोलो, जवाब source के साथ लो। (an answer engine such as Perplexity) [both]
+- [ ] Interview से पहले AI से mock interview दो। (voice chat asks, then gives feedback) [both]
+- [ ] Excel formula याद नहीं? बोलकर लिखवा लो। (describe the task, get the formula) [both]
+- [ ] Sir को mail लिखना है और डर लग रहा है? (a rough Hindi line into a polite English email) [both]
+- [ ] Photo का background पाँच second में हटाओ। (a background remover) [both]
+- [ ] AI तुम्हारी हर बात पर हाँ क्यों कहता है? (ask it for three faults) [both]
+- [ ] Notes मत बनवाओ। ChatGPT से अपना test लो। (ask it to quiz you) [college]
+- [ ] अपने notes को podcast की तरह सुनो। (Google's notebook tool; its page now calls it "Gemini Notebook") [college]
+- [ ] दो घंटे का lecture, पाँच minute के notes। (a YouTube lecture link into a summary) [college]
+- [ ] Notes की photo लो, text copy हो जाएगा। (Google Lens on handwriting) [college]
+- [ ] Meeting ख़त्म, notes तैयार। (meeting notes from a recording) [office]
+- [ ] चालीस page की report, meeting से पाँच minute पहले। (a long PDF summarised) [office]
+- [ ] गंदी Excel sheet दो minute में साफ़। (clean-up steps from AI) [office]
+- [ ] LinkedIn post लिखनी है और शब्द नहीं मिल रहे? [office]
+- [ ] Salary की बात करने से पहले AI से practice करो। [office]
+- [ ] Client का ग़ुस्से वाला mail, और तुम्हारा शांत जवाब। [office]
+
+### SCAM: do not get fooled
+- [ ] यह आवाज़ तुम्हारी मम्मी की नहीं है। (voice cloning; send to parents) [both]
+- [ ] Police video call पर arrest नहीं करती। (the "digital arrest" call; send to parents) [both]
+- [ ] "ग़लती से पैसे भेज दिए" वाला UPI scam (send to the family group) [both]
+- [ ] अब scam message में spelling mistake नहीं होती। (send to parents) [both]
+- [ ] OTP किसी को क्यों नहीं बताना (send to parents) [both]
+- [ ] यह photo असली है या AI की? [both]
+- [ ] ChatGPT को ये 4 चीज़ें कभी मत बताओ। [both]
+- [ ] Internship के लिए पैसे माँगे? वह internship नहीं है। (a fake offer and a "registration fee") [college]
+- [x] Job offer आया और training fee माँगी? (#13, with the who.is check) [both]
+
+### AI: why does it do that
+- [ ] ChatGPT ने जो source दिया, वह असली है? (invented references; how to check) [both]
+- [ ] ChatGPT को आज की news क्यों नहीं पता? (training cutoff) [both]
+- [ ] लंबी chat में ChatGPT पुरानी बात क्यों भूल जाता है? (context window) [both]
+- [ ] एक ही सवाल, हर बार अलग जवाब। क्यों? (sampling) [both]
+- [ ] ChatGPT अगला शब्द चुनता है। (how an LLM works) [both]
+- [ ] AI photo बनाता नहीं, noise साफ़ करता है। (diffusion) [both]
+- [ ] ChatGPT की Hindi, English से कमज़ोर क्यों है? (data decides quality) [both]
+- [ ] AI detector ने तुम्हारा अपना लिखा AI बता दिया? (why detectors guess) [college]
+
+## Earlier plan
+
+The beginner-to-pro course roadmap (AI, Cloud, Cybersecurity) and the outro rotation are kept
+in `archive/VIDEOS-2026-10-11-course-roadmap.md`. They are no longer followed.

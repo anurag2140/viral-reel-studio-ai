@@ -1,0 +1,164 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 29.644,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "Teacher को लगेगा तुमने पूरी रात मेहनत की। असल में सिर्फ़ एक click लगा।",
+      "sentences": [
+        "Teacher को लगेगा तुमने पूरी रात मेहनत की।",
+        "असल में सिर्फ़ एक click लगा।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 4.159,
+      "pauses": [
+        [
+          0.96,
+          1.14
+        ],
+        [
+          2.32,
+          2.61
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "रात के दो बजे हैं। कल सुबह presentation है। और तुम्हारी slide पर सिर्फ़ text भरा है।",
+      "sentences": [
+        "रात के दो बजे हैं।",
+        "कल सुबह presentation है।",
+        "और तुम्हारी slide पर सिर्फ़ text भरा है।"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 4.327,
+      "duration": 4.902,
+      "pauses": [
+        [
+          1.18,
+          1.48
+        ],
+        [
+          1.53,
+          1.69
+        ],
+        [
+          2.79,
+          2.96
+        ]
+      ]
+    },
+    {
+      "id": "turn",
+      "text": "तभी तुम्हें Napkin AI मिलता है। अपने notes वहाँ paste करो। और यह छोटा button दबाओ।",
+      "sentences": [
+        "तभी तुम्हें Napkin AI मिलता है।",
+        "अपने notes वहाँ paste करो।",
+        "और यह छोटा button दबाओ।"
+      ],
+      "file": "vo/turn.wav",
+      "start": 9.519,
+      "duration": 4.467,
+      "pauses": [
+        [
+          1.61,
+          2.04
+        ],
+        [
+          3.08,
+          3.3
+        ]
+      ]
+    },
+    {
+      "id": "magic",
+      "text": "बस, तुम्हारा text अब एक diagram है।",
+      "sentences": [
+        "बस, तुम्हारा text अब एक diagram है।"
+      ],
+      "file": "vo/magic.wav",
+      "start": 14.135,
+      "duration": 2.336,
+      "pauses": [
+        [
+          0.52,
+          0.81
+        ]
+      ]
+    },
+    {
+      "id": "twist",
+      "text": "लेकिन असली बात अब आती है। Design और colour तुम ख़ुद चुनते हो। और PNG download बिल्कुल free है।",
+      "sentences": [
+        "लेकिन असली बात अब आती है।",
+        "Design और colour तुम ख़ुद चुनते हो।",
+        "और PNG download बिल्कुल free है।"
+      ],
+      "file": "vo/twist.wav",
+      "start": 16.731,
+      "duration": 5.34,
+      "pauses": [
+        [
+          1.23,
+          1.45
+        ],
+        [
+          2.52,
+          2.73
+        ],
+        [
+          3.42,
+          3.85
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "अगले दिन teacher पूछेंगी, यह किसने बनाया? तुम बस मुस्कुरा देना।",
+      "sentences": [
+        "अगले दिन teacher पूछेंगी, यह किसने बनाया?",
+        "तुम बस मुस्कुरा देना।"
+      ],
+      "file": "vo/end.wav",
+      "start": 22.212,
+      "duration": 3.127,
+      "pauses": [
+        [
+          1.85,
+          2.18
+        ]
+      ]
+    },
+    {
+      "id": "link",
+      "text": "इस tool का link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "इस tool का link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 25.673,
+      "duration": 2.194,
+      "pauses": [
+        [
+          0.95,
+          1.24
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "Presentation वाले दोस्त को यह भेज दो।",
+      "sentences": [
+        "Presentation वाले दोस्त को यह भेज दो।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 27.981,
+      "duration": 1.563,
+      "pauses": []
+    }
+  ]
+}

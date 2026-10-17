@@ -1,0 +1,298 @@
+{
+  "about": "The experiment register and the playbook (from 2026-10-16), read by `node ig.mjs review`. Each experiment has its one change, its pass mark as numbers and its outcomes. A proven experiment does not become a rule: it joins the playbook as a 'boost' (ideas with it score higher), a 'format' (at most its share of the reels), a 'slot' (a share of the slots, like the English slot) or a 'default' (the normal choice, which a reel may break with a reason). The playbook guides the two bet slots in every three only; experiment slots and the wild card ignore it. Proven entries are re-checked every 60 days or 20 reels and go back to the queue when they stop beating the other reels. A failed experiment retires for 90 days and may come back once for a re-test. `node ig.mjs review --apply` (run by the create-reel hook) applies all of this, writes the playbook into the marked blocks of CLAUDE.md and VIDEOS.md, and logs every change in results/experiment-log.md. Claude keeps the queue at 3 open experiments or more, adds a try when a reel tests an experiment, and lists in a reel's script.json (`playbook`) the proven entries it used.",
+  "rules": {
+    "readHours": 72,
+    "passesToConfirm": 2,
+    "failsToDiscard": 2,
+    "staleDays": 30,
+    "fullReviewDays": 14,
+    "fullReviewReels": 10,
+    "clearlyBetter": 1.5,
+    "recheckDays": 60,
+    "recheckReels": 20,
+    "retireDays": 90,
+    "minQueue": 3,
+    "formatShare": 0.2,
+    "playbookMaxShare": 0.5
+  },
+  "lastFullReview": {
+    "date": "2026-10-16",
+    "reel": 12
+  },
+  "experiments": [
+    {
+      "id": "E1",
+      "name": "Visible magic",
+      "kind": "reel",
+      "status": "running",
+      "since": "2026-10-16",
+      "change": "A tool whose result is a before and after the eye sees in one second",
+      "pass": [
+        [
+          "timesUsual",
+          ">=",
+          3
+        ],
+        [
+          "savesPer1k",
+          ">=",
+          20
+        ]
+      ],
+      "tries": [
+        {
+          "reel": 12,
+          "length": 39.2,
+          "note": "a selfie becomes a professional photo (Gemini)"
+        }
+      ],
+      "outcomes": {
+        "CONFIRM": {
+          "type": "boost",
+          "text": "A visible before and after (question 9) counts double in the idea score. An idea without one can still win."
+        },
+        "DISCARD": {
+          "text": "Question 9 counts like the other questions."
+        }
+      }
+    },
+    {
+      "id": "E2",
+      "name": "Funny",
+      "kind": "reel",
+      "status": "queued",
+      "since": "2026-10-16",
+      "change": "A comedy skit with the cast; the AI trick is the punchline",
+      "pass": [
+        [
+          "sharesPer1k",
+          ">=",
+          8
+        ]
+      ],
+      "tries": [],
+      "outcomes": {
+        "CONFIRM": {
+          "type": "format",
+          "share": 0.2,
+          "text": "A funny skit with the cast, with the AI trick as the punchline (feeling: funny)."
+        },
+        "DISCARD": {
+          "text": "No comedy skits until its re-test."
+        }
+      }
+    },
+    {
+      "id": "E3",
+      "name": "Short loop",
+      "kind": "reel",
+      "status": "queued",
+      "since": "2026-10-16",
+      "change": "Under 15 seconds, the end runs into the start, no follow card",
+      "pass": [
+        [
+          "watchShare",
+          ">=",
+          0.8
+        ],
+        [
+          "timesUsual",
+          ">=",
+          3
+        ]
+      ],
+      "tries": [],
+      "outcomes": {
+        "CONFIRM": {
+          "type": "format",
+          "share": 0.2,
+          "text": "A short loop under 15 seconds, built from films/_template-short/."
+        },
+        "DISCARD": {
+          "text": "No short loops until its re-test; reels keep the full story structure."
+        }
+      }
+    },
+    {
+      "id": "E4",
+      "name": "Quiz",
+      "kind": "reel",
+      "status": "queued",
+      "since": "2026-10-16",
+      "change": "The viewer answers a question in the comments",
+      "pass": [
+        [
+          "commentsPer1k",
+          ">=",
+          10
+        ]
+      ],
+      "tries": [],
+      "outcomes": {
+        "CONFIRM": {
+          "type": "format",
+          "share": 0.2,
+          "text": "A reel that ends with a question the viewer answers in the comments (a quiz)."
+        },
+        "DISCARD": {
+          "text": "No quiz endings until its re-test."
+        }
+      }
+    },
+    {
+      "id": "E5",
+      "name": "My own risk",
+      "kind": "reel",
+      "status": "running",
+      "since": "2026-10-16",
+      "change": "A SCAM reel about the viewer's own risk, sent to a friend, not to parents",
+      "pass": [
+        [
+          "sharesPer1k",
+          ">=",
+          5
+        ]
+      ],
+      "tries": [
+        {
+          "reel": 13,
+          "length": 37.4,
+          "note": "a fake job offer asks a training fee; the sequel to #11; sent to a friend who is job hunting"
+        }
+      ],
+      "outcomes": {
+        "CONFIRM": {
+          "type": "boost",
+          "text": "A SCAM idea about the viewer's own risk, sent to a friend of the viewer's age, scores one point higher."
+        },
+        "DISCARD": {
+          "text": "Own-risk SCAM ideas get no extra point."
+        }
+      }
+    },
+    {
+      "id": "E6",
+      "name": "Fast news",
+      "kind": "reel",
+      "status": "queued",
+      "since": "2026-10-16",
+      "change": "An AI launch that matters to students, made within 24 hours",
+      "pass": [
+        [
+          "timesUsual",
+          ">=",
+          3
+        ]
+      ],
+      "tries": [],
+      "outcomes": {
+        "CONFIRM": {
+          "type": "boost",
+          "text": "A big AI launch that matters to students may jump the lane plan: such an idea is offered first, made within 24 hours."
+        },
+        "DISCARD": {
+          "text": "News gets no priority: a news reel waits for its lane."
+        }
+      }
+    },
+    {
+      "id": "E7",
+      "name": "My own voice",
+      "kind": "manual",
+      "status": "queued",
+      "since": "2026-10-16",
+      "change": "I record the voice instead of the AI voice (last in the queue: 'maybe later')",
+      "pass": "Followers per 1,000 reach on the reel's days above the T2 level; Claude judges it at the full review",
+      "tries": [],
+      "outcomes": {
+        "CONFIRM": {
+          "type": "default",
+          "text": "My recorded voice is the default (node vo.mjs <dir> --own); a reel may use the synthesized voice with a reason."
+        },
+        "DISCARD": {
+          "text": "Keep the synthesized voice."
+        }
+      }
+    },
+    {
+      "id": "T1",
+      "name": "Posting time",
+      "kind": "postingTime",
+      "status": "running",
+      "since": "2026-10-16",
+      "change": "Post at 7 to 8:30 PM India time instead of 10:30 PM to midnight",
+      "groups": {
+        "evening": [
+          "19:00",
+          "20:59"
+        ],
+        "late": [
+          "22:00",
+          "23:59"
+        ]
+      },
+      "minEach": 3,
+      "fromReel": 6,
+      "outcomes": {
+        "CONFIRM": {
+          "type": "default",
+          "text": "Default posting time: 7 to 8:30 PM India time."
+        },
+        "REVERSE": {
+          "type": "default",
+          "text": "Default posting time: 10:30 PM to midnight India time."
+        },
+        "DISCARD": {
+          "text": "Posting time makes no clear difference: post when it suits me."
+        }
+      }
+    },
+    {
+      "id": "T2",
+      "name": "AI जुगाड़ series",
+      "kind": "series",
+      "status": "running",
+      "since": "2026-10-16",
+      "change": "Series number on cover and title, a follow line after the first payoff, the next number on the end card",
+      "series": "AI जुगाड़",
+      "needReels": 3,
+      "baseline": 0.6,
+      "pass": 2,
+      "outcomes": {
+        "CONFIRM": {
+          "type": "default",
+          "text": "TOOL reels and AI reels with a trick are in the AI जुगाड़ series by default (number in the title, cover badge, follow line after the first payoff, the next number on the end card)."
+        },
+        "DISCARD": {
+          "text": "Drop the AI जुगाड़ series until its re-test; Claude proposes another reason to follow as a new experiment."
+        }
+      }
+    },
+    {
+      "id": "T3",
+      "name": "English reels",
+      "kind": "english",
+      "status": "queued",
+      "since": "2026-10-16",
+      "change": "One reel in five in very easy US English, judged by value (tier-1 views x 10 + other views)",
+      "needReels": 3,
+      "outcomes": {
+        "MORE": {
+          "type": "slot",
+          "share": 0.4,
+          "text": "Two reels in every five are offered in English (both TOOL slots after the first)."
+        },
+        "KEEP": {
+          "type": "slot",
+          "share": 0.2,
+          "text": "One reel in every five is offered in English (the TOOL slot after SCAM)."
+        },
+        "DISCARD": {
+          "text": "No English slot on this account until its re-test. (A separate English account is my choice.)"
+        }
+      }
+    }
+  ],
+  "playbook": [],
+  "retired": []
+}

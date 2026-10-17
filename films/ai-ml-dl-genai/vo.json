@@ -1,0 +1,186 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 37.953,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "AI. ML. Deep Learning. GenAI. ये चारों एक चीज़ नहीं हैं।",
+      "sentences": [
+        "AI.",
+        "ML.",
+        "Deep Learning.",
+        "GenAI.",
+        "ये चारों एक चीज़ नहीं हैं।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 4.984,
+      "pauses": [
+        [
+          0.67,
+          0.99
+        ],
+        [
+          1.4,
+          1.62
+        ],
+        [
+          2.37,
+          2.6
+        ],
+        [
+          3.35,
+          3.68
+        ]
+      ]
+    },
+    {
+      "id": "nest",
+      "text": "ये एक के अंदर एक हैं।",
+      "sentences": [
+        "ये एक के अंदर एक हैं।"
+      ],
+      "file": "vo/nest.wav",
+      "start": 5.625,
+      "duration": 2.875,
+      "pauses": [
+        [
+          0.58,
+          0.95
+        ],
+        [
+          1.22,
+          1.45
+        ],
+        [
+          1.7,
+          1.88
+        ]
+      ]
+    },
+    {
+      "id": "ai",
+      "text": "सबसे बड़ा घेरा है AI। यानी, machine जो smart काम करे। जैसे chess खेलने वाला computer।",
+      "sentences": [
+        "सबसे बड़ा घेरा है AI।",
+        "यानी, machine जो smart काम करे।",
+        "जैसे chess खेलने वाला computer।"
+      ],
+      "file": "vo/ai.wav",
+      "start": 8.75,
+      "duration": 5.141,
+      "pauses": [
+        [
+          1.53,
+          1.76
+        ],
+        [
+          3.39,
+          3.65
+        ]
+      ]
+    },
+    {
+      "id": "ml",
+      "text": "उसके अंदर है Machine Learning। यहाँ machine, data से खुद सीखती है। जैसे spam filter।",
+      "sentences": [
+        "उसके अंदर है Machine Learning।",
+        "यहाँ machine, data से खुद सीखती है।",
+        "जैसे spam filter।"
+      ],
+      "file": "vo/ml.wav",
+      "start": 14.375,
+      "duration": 5.815,
+      "pauses": [
+        [
+          1.64,
+          1.94
+        ],
+        [
+          4.29,
+          4.55
+        ]
+      ]
+    },
+    {
+      "id": "dl",
+      "text": "उसके अंदर है Deep Learning। इसमें neural network की कई layers होती हैं। जैसे face unlock।",
+      "sentences": [
+        "उसके अंदर है Deep Learning।",
+        "इसमें neural network की कई layers होती हैं।",
+        "जैसे face unlock।"
+      ],
+      "file": "vo/dl.wav",
+      "start": 20.625,
+      "duration": 5.781,
+      "pauses": [
+        [
+          1.42,
+          1.85
+        ],
+        [
+          4.35,
+          4.68
+        ]
+      ]
+    },
+    {
+      "id": "gen",
+      "text": "और सबसे अंदर है GenAI। यह नया content बनाता है। जैसे ChatGPT।",
+      "sentences": [
+        "और सबसे अंदर है GenAI।",
+        "यह नया content बनाता है।",
+        "जैसे ChatGPT।"
+      ],
+      "file": "vo/gen.wav",
+      "start": 26.875,
+      "duration": 4.587,
+      "pauses": [
+        [
+          1.68,
+          1.91
+        ],
+        [
+          3.16,
+          3.33
+        ],
+        [
+          3.76,
+          3.89
+        ]
+      ]
+    },
+    {
+      "id": "payoff",
+      "text": "याद रखिए। हर GenAI, AI है। पर हर AI, GenAI नहीं।",
+      "sentences": [
+        "याद रखिए।",
+        "हर GenAI, AI है।",
+        "पर हर AI, GenAI नहीं।"
+      ],
+      "file": "vo/payoff.wav",
+      "start": 31.875,
+      "duration": 5.878,
+      "pauses": [
+        [
+          0.77,
+          1.3
+        ],
+        [
+          2.4,
+          2.59
+        ],
+        [
+          3.12,
+          3.63
+        ],
+        [
+          4.55,
+          4.8
+        ]
+      ]
+    }
+  ]
+}

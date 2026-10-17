@@ -1,0 +1,23 @@
+{
+  "voice": "Orus",
+  "bpm": 96,
+  "grid": 0.5,
+  "gap": 0.12,
+  "lines": [
+    {
+      "id": "pick",
+      "style": "Natural conversational Hindi as spoken in India, like a friendly college senior who offers three choices to a junior. English words in Indian English. Say the three options one by one with a playful rising tone and a tiny pause after each. Lively, medium-fast.",
+      "sentences": ["AI, Cloud, या Cybersecurity?"]
+    },
+    {
+      "id": "ask",
+      "style": "Natural conversational Hindi as spoken in India, like a friendly college senior. English words in Indian English. Curious question, then a short punchy instruction. Lively, medium-fast, a clear short pause between the two sentences.",
+      "sentences": ["अगला video किस पर बनाएँ?", "Comment करो।"]
+    },
+    {
+      "id": "follow",
+      "style": "Natural conversational Hindi as spoken in India, like a friendly college senior. English words in Indian English. Warm, a little teasing reminder with a smile, stress 'मत भूलना'. Medium-fast.",
+      "sentences": ["और follow करना मत भूलना।"]
+    }
+  ]
+}

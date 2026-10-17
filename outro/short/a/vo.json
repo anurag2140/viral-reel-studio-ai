@@ -1,0 +1,24 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 2.191,
+  "lines": [
+    {
+      "id": "a",
+      "text": "अगला topic comment करो, और follow करो।",
+      "sentences": [
+        "अगला topic comment करो, और follow करो।"
+      ],
+      "file": "vo/a.wav",
+      "start": 0,
+      "duration": 1.941,
+      "pauses": [
+        [
+          1.04,
+          1.33
+        ]
+      ]
+    }
+  ]
+}

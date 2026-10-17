@@ -1,0 +1,27 @@
+{
+  "title": "Napkin AI: एक click में diagram",
+  "number": 6,
+  "lane": "TOOL",
+  "look": "illustrated story (brand/story.js), my face as the main character (brand/face)",
+  "setting": "college",
+  "sendTo": "presentation वाला दोस्त",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a short story and lets you in on a clever trick. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://www.napkin.ai/ (captured 2026-10-12: 'Napkin turns your text into visuals', 'Start by Importing or Pasting your text', 'Click to generate visuals ... then you pick the one that best expresses what you have in mind', 'Pick your colors')",
+    "https://www.napkin.ai/pricing (captured 2026-10-12: FREE, Forever, Rs 0, 'Unlimited PNG & PDF export')"
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["Teacher को लगेगा तुमने पूरी रात मेहनत की।", "असल में सिर्फ़ एक click लगा।"] },
+    { "id": "trouble", "sentences": ["रात के दो बजे हैं।", "कल सुबह presentation है।", "और तुम्हारी slide पर सिर्फ़ text भरा है।"] },
+    { "id": "turn", "sentences": ["तभी तुम्हें Napkin AI मिलता है।", "अपने notes वहाँ paste करो।", "और यह छोटा button दबाओ।"] },
+    { "id": "magic", "sentences": ["बस, तुम्हारा text अब एक diagram है।"] },
+    { "id": "twist", "sentences": ["लेकिन असली बात अब आती है।", "Design और colour तुम ख़ुद चुनते हो।", "और PNG download बिल्कुल free है।"] },
+    { "id": "end", "sentences": ["अगले दिन teacher पूछेंगी, यह किसने बनाया?", "तुम बस मुस्कुरा देना।"] },
+    { "id": "link", "sentences": ["इस tool का link चाहिए?", "Comment में कुछ भी लिख दो।"] },
+    { "id": "ask", "sentences": ["Presentation वाले दोस्त को यह भेज दो।"] }
+  ]
+}

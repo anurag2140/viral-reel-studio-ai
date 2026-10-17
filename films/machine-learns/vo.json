@@ -1,0 +1,152 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 33.727,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "ChatGPT को किसी ने rules नहीं सिखाए। तो वह सीखा कैसे?",
+      "sentences": [
+        "ChatGPT को किसी ने rules नहीं सिखाए।",
+        "तो वह सीखा कैसे?"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 3.41,
+      "pauses": [
+        [
+          2.02,
+          2.2
+        ],
+        [
+          2.21,
+          2.54
+        ]
+      ]
+    },
+    {
+      "id": "kid",
+      "text": "एक बच्चा बिल्ली को कैसे पहचानता है? तुम उसे rules नहीं देते। तुम उसे बिल्लियाँ दिखाते हो।",
+      "sentences": [
+        "एक बच्चा बिल्ली को कैसे पहचानता है?",
+        "तुम उसे rules नहीं देते।",
+        "तुम उसे बिल्लियाँ दिखाते हो।"
+      ],
+      "file": "vo/kid.wav",
+      "start": 3.75,
+      "duration": 4.614,
+      "pauses": [
+        [
+          1.72,
+          2.1
+        ],
+        [
+          3.06,
+          3.36
+        ]
+      ]
+    },
+    {
+      "id": "kid2",
+      "text": "कुछ बिल्लियों के बाद वह नई बिल्ली खुद पहचान लेता है।",
+      "sentences": [
+        "कुछ बिल्लियों के बाद वह नई बिल्ली खुद पहचान लेता है।"
+      ],
+      "file": "vo/kid2.wav",
+      "start": 8.75,
+      "duration": 2.16,
+      "pauses": []
+    },
+    {
+      "id": "machine",
+      "text": "Machine भी यही करती है। हम उसे हज़ारों photos देते हैं और हर photo का सही जवाब बताते हैं। इन photos को examples कहते हैं।",
+      "sentences": [
+        "Machine भी यही करती है।",
+        "हम उसे हज़ारों photos देते हैं और हर photo का सही जवाब बताते हैं।",
+        "इन photos को examples कहते हैं।"
+      ],
+      "file": "vo/machine.wav",
+      "start": 11.25,
+      "duration": 7.545,
+      "pauses": [
+        [
+          1.16,
+          1.63
+        ],
+        [
+          3.35,
+          3.51
+        ],
+        [
+          5.36,
+          5.6
+        ],
+        [
+          5.64,
+          5.83
+        ]
+      ]
+    },
+    {
+      "id": "loop",
+      "text": "Machine अंदाज़ा लगाती है। जवाब ग़लत हो तो वह खुद को थोड़ा बदलती है।",
+      "sentences": [
+        "Machine अंदाज़ा लगाती है।",
+        "जवाब ग़लत हो तो वह खुद को थोड़ा बदलती है।"
+      ],
+      "file": "vo/loop.wav",
+      "start": 19.063,
+      "duration": 3.868,
+      "pauses": [
+        [
+          1.31,
+          1.49
+        ]
+      ]
+    },
+    {
+      "id": "pattern",
+      "text": "हज़ारों बार के बाद उसे pattern मिल जाता है। Pattern यानी वह बात जो हर बिल्ली में मिलती है।",
+      "sentences": [
+        "हज़ारों बार के बाद उसे pattern मिल जाता है।",
+        "Pattern यानी वह बात जो हर बिल्ली में मिलती है।"
+      ],
+      "file": "vo/pattern.wav",
+      "start": 23.125,
+      "duration": 5.18,
+      "pauses": [
+        [
+          1.21,
+          1.38
+        ],
+        [
+          2.19,
+          2.67
+        ]
+      ]
+    },
+    {
+      "id": "payoff",
+      "text": "Machine rules से नहीं सीखती। वह examples से pattern निकालती है। ChatGPT ने भी यही किया।",
+      "sentences": [
+        "Machine rules से नहीं सीखती।",
+        "वह examples से pattern निकालती है।",
+        "ChatGPT ने भी यही किया।"
+      ],
+      "file": "vo/payoff.wav",
+      "start": 28.438,
+      "duration": 5.189,
+      "pauses": [
+        [
+          1.54,
+          1.78
+        ],
+        [
+          3.63,
+          3.96
+        ]
+      ]
+    }
+  ]
+}

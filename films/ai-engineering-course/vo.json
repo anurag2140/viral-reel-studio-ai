@@ -1,0 +1,175 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 36.188,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "AI सीखना है, पर शुरू कहाँ से करें? यह रहा पूरा नक़्शा, बिल्कुल free।",
+      "sentences": [
+        "AI सीखना है, पर शुरू कहाँ से करें?",
+        "यह रहा पूरा नक़्शा, बिल्कुल free।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 4.564,
+      "pauses": [
+        [
+          0.78,
+          1.04
+        ],
+        [
+          1.92,
+          2.24
+        ],
+        [
+          2.74,
+          2.91
+        ],
+        [
+          3.47,
+          3.76
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "तुम्हारे laptop में चालीस tab खुले हैं। दस playlist, पाँच course, और plan एक भी नहीं।",
+      "sentences": [
+        "तुम्हारे laptop में चालीस tab खुले हैं।",
+        "दस playlist, पाँच course, और plan एक भी नहीं।"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 4.904,
+      "duration": 4.95,
+      "pauses": [
+        [
+          1.99,
+          2.16
+        ],
+        [
+          3.73,
+          3.93
+        ]
+      ]
+    },
+    {
+      "id": "turn",
+      "text": "तभी GitHub पर एक repo मिलता है। AI Engineering from Scratch।",
+      "sentences": [
+        "तभी GitHub पर एक repo मिलता है।",
+        "AI Engineering from Scratch।"
+      ],
+      "file": "vo/turn.wav",
+      "start": 10.096,
+      "duration": 3.8,
+      "pauses": [
+        [
+          1.73,
+          2.05
+        ]
+      ]
+    },
+    {
+      "id": "how",
+      "text": "इसमें बीस phase हैं, एक के ऊपर एक। सबसे नीचे math, सबसे ऊपर AI agents। पाँच सौ अट्ठाईस lesson, और सब free।",
+      "sentences": [
+        "इसमें बीस phase हैं, एक के ऊपर एक।",
+        "सबसे नीचे math, सबसे ऊपर AI agents।",
+        "पाँच सौ अट्ठाईस lesson, और सब free।"
+      ],
+      "file": "vo/how.wav",
+      "start": 14.135,
+      "duration": 7.475,
+      "pauses": [
+        [
+          1.97,
+          2.26
+        ],
+        [
+          3.12,
+          3.26
+        ],
+        [
+          4.61,
+          4.76
+        ],
+        [
+          4.79,
+          5.01
+        ],
+        [
+          6.52,
+          6.68
+        ]
+      ]
+    },
+    {
+      "id": "twist",
+      "text": "और अब सबसे काम की बात। इसका AI tutor पहले तुम्हारा test लेता है और फिर बताता है कि शुरू कहाँ से करना है।",
+      "sentences": [
+        "और अब सबसे काम की बात।",
+        "इसका AI tutor पहले तुम्हारा test लेता है और फिर बताता है कि शुरू कहाँ से करना है।"
+      ],
+      "file": "vo/twist.wav",
+      "start": 21.923,
+      "duration": 5.646,
+      "pauses": [
+        [
+          1.15,
+          1.53
+        ],
+        [
+          3.62,
+          3.91
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "अब चालीस tab बंद। सिर्फ़ एक खुला है।",
+      "sentences": [
+        "अब चालीस tab बंद।",
+        "सिर्फ़ एक खुला है।"
+      ],
+      "file": "vo/end.wav",
+      "start": 27.692,
+      "duration": 2.825,
+      "pauses": [
+        [
+          1.47,
+          1.78
+        ]
+      ]
+    },
+    {
+      "id": "link",
+      "text": "इस course का link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "इस course का link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 30.865,
+      "duration": 2.393,
+      "pauses": [
+        [
+          1.05,
+          1.37
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "उस दोस्त को भेजो जो रोज़ कहता है, AI सीखना है।",
+      "sentences": [
+        "उस दोस्त को भेजो जो रोज़ कहता है, AI सीखना है।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 33.462,
+      "duration": 2.627,
+      "pauses": []
+    }
+  ]
+}

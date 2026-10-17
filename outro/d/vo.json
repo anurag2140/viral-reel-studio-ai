@@ -1,0 +1,40 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 96,
+  "total": 5.452,
+  "lines": [
+    {
+      "id": "ask",
+      "text": "एक word में बताओ, अगला topic क्या हो?",
+      "sentences": [
+        "एक word में बताओ, अगला topic क्या हो?"
+      ],
+      "file": "vo/ask.wav",
+      "start": 0,
+      "duration": 2.083,
+      "pauses": [
+        [
+          0.81,
+          1.14
+        ]
+      ]
+    },
+    {
+      "id": "follow",
+      "text": "और अपनी भाषा में AI सीखना है, तो follow करो।",
+      "sentences": [
+        "और अपनी भाषा में AI सीखना है, तो follow करो।"
+      ],
+      "file": "vo/follow.wav",
+      "start": 2.5,
+      "duration": 2.832,
+      "pauses": [
+        [
+          1.92,
+          2.19
+        ]
+      ]
+    }
+  ]
+}

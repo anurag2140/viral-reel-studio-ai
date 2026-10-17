@@ -1,0 +1,14 @@
+TITLE
+AI भी खाना खाता है। ग़लत खाना खाए तो ग़लत जवाब देता है
+
+DESCRIPTION
+AI का खाना है data: text, photos, आवाज़ और numbers।
+सही data मिले तो AI सही सीखता है। Data ग़लत हो या एक ही तरह का हो, तो AI भी ग़लत सीखता है।
+जैसे उसने सिर्फ़ सफ़ेद बिल्लियाँ देखीं, तो काली बिल्ली को पहचान नहीं पाएगा।
+याद रखो: जैसा data, वैसा AI।
+
+AI मुश्किल लगता है? यहाँ हर video में एक ही चीज़, बिना coding, अपनी भाषा में।
+AI में आगे रहना है तो follow करो: @vipulsingh_ai
+
+HASHTAGS
+#AI #Data #MachineLearning #AIinHindi #LearnAI

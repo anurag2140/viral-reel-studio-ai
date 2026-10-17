@@ -1,0 +1,44 @@
+العربية
+简体中文
+English
+Français
+Русский
+Español
+Registration data lookup tool
+Enter a domain name or an Internet number resource (IP Network or ASN)
+Frequently Asked Questions (FAQ)
+Lookup
+By submitting any personal data, I acknowledge and agree that the personal data submitted by me will be processed in accordance with the ICANN Privacy Policy, and agree to abide by the website Terms of Service and the registration data lookup tool Terms of Use.
+For additional information on ICANN Accredited Registrars including website and contact information, please visit https://www.icann.org/en/accredited-registrars.
+About ICANN’s Registration Data Lookup Tool
+
+The ICANN registration data lookup tool gives you the ability to look up the current registration data for domain names and Internet number resources. The tool uses the Registration Data Access Protocol (RDAP) which was created as a replacement of the WHOIS (port 43) protocol. RDAP was developed by the technical community in the Internet Engineering Task Force (IETF).
+
+RDAP has several advantages over the WHOIS protocol, including more secure access to data, a standardized and user-friendly format, support for internationalization, and the ability to provide differentiated access to registration data. More information can be found here. For additional information on registration data, please visit the Registration Data at ICANN page.
+
+Nonpublic gTLD Registration Data
+
+We recommend you use the Lookup Tool first to check if the data you are seeking is publicly available. If not, you can request access to nonpublic generic top-level domain registration data via the Registration Data Request Service (RDRS). The RDRS is intended for use by those with a legitimate interest in nonpublic data like law enforcement, intellectual property professionals, consumer protection advocates, cybersecurity professionals, and government officials. For more information on the RDRS, visit https://www.icann.org/rdrs-en.
+
+REGISTRATION DATA LOOKUP TOOL TERMS OF USE
+
+The registration data lookup tool conducts Registration Data Access Protocol (RDAP) queries. ​RDAP enables users to access current registration data and was created as an eventual replacement for the WHOIS protocol. The results displayed come directly from registry operators and/or registrars in real-time. ICANN does not generate, collect, retain, or store any data associated with an RDAP compliant lookup. For domain name queries, if the queried information is not available in RDAP, the query will be redirected to the WHOIS service of the corresponding gTLD registry operator (WHOIS failover lookup). In cases of WHOIS failover lookups, ICANN may generate, collect, retain or store the domain name queried and the results for the transitory duration necessary to show results in response to real-time queries.
+
+The registration data lookup tool and WHOIS failover lookup results are shown to help users obtain information about domain name registration records, and for no other purpose. Users agree to use this data only for lawful purposes in accordance with the ICANN Privacy Policy and the website Terms of Service. ICANN reserves the right to restrict or terminate your access to the data and/or the registration data lookup tool if you fail to abide by these Terms of Use. ICANN reserves the right to change these Terms of Use at any time. Any changes we make will be posted on this page. By submitting a query, users agree to abide by these Terms of Use.
+
+Youtube
+Twitter
+Linkedin
+Flickr
+Facebook
+Newletters
+Community Wiki
+ICANN Blog
+© Internet Corporation for Assigned Names and Numbers. Privacy Policy  Terms of Service  Cookies Policy 
+A note about our privacy policies and terms of service:
+
+We have updated our privacy policies and certain website terms of service to provide greater transparency, promote simplification, and align with recent changes in privacy laws applicable to us. Learn more.
+
+This site uses cookies to deliver an efficient user experience and to help us see how the site is used. Learn more.
+
+ OK
