@@ -95,7 +95,8 @@ function filmIndex() {
     try { s = JSON.parse(readFileSync(scr, 'utf8').replace(/^﻿/, '')); } catch { /* no script */ }
     // language: 'en' for the English reels (from 2026-10-16); every earlier reel is Hindi
     // playbook: the ids of the proven playbook entries a reel used (for their re-checks)
-    list.push({ dir, title, number: s.number ?? null, language: s.language ?? 'hi', series: s.series ?? null, playbook: s.playbook ?? [] });
+    // topic: a topic test a reel belongs to ("money" for the earn-with-AI reels, T4)
+    list.push({ dir, title, number: s.number ?? null, language: s.language ?? 'hi', series: s.series ?? null, playbook: s.playbook ?? [], topic: s.topic ?? null });
   }
   return list;
 }
@@ -598,6 +599,32 @@ if (cmd === 'check') {
       const worth = useful.filter((r) => r.verdict === 'SUCCESS' || r.verdict === 'WORTH IT').length;
       decision = decided.length < need ? `WAITING (${decided.length} of ${need} English reels judged)`
         : success >= 2 ? 'MORE: make more English reels' : worth >= 2 ? 'KEEP: keep the English slot as it is' : 'DISCARD: English did not earn its slot';
+    } else if (e.kind === 'topic') {
+      // a topic test (T4, money): its reels (script.json "topic") against our other reels posted
+      // in the same weeks, each read at 3 days; a mid check after midReels, the verdict at needReels
+      const mine = films.filter((f) => f.number != null && f.topic === e.topic && postedOf(f.number) && after(f.number)).map((f) => f.number).sort((a, b) => a - b);
+      const from = mine.length ? postedOf(mine[0]).slice(0, 10) : null;
+      const others = from ? numbers.filter((n) => !mine.includes(n) && (postedOf(n) ?? '').slice(0, 10) >= from) : [];
+      const read = (list) => list.map((n) => ({ n, m: metricsOf(n, lengthOf(n)) })).filter((x) => x.m);
+      const rm = read(mine);
+      const ro = read(others);
+      const med = (l, k) => median(l.map((x) => x.m[k]));
+      const [tuM, tuO, shM, shO, svM, svO] = [med(rm, 'timesUsual'), med(ro, 'timesUsual'), med(rm, 'sharesPer1k'), med(ro, 'sharesPer1k'), med(rm, 'savesPer1k'), med(ro, 'savesPer1k')];
+      let shots = {};
+      try { shots = JSON.parse(readFileSync('results/screenshots.json', 'utf8').replace(/^﻿/, '')).reels ?? {}; } catch { /* none */ }
+      const fol = (l) => median(l.map((n) => shots[key2(n)]).filter((s) => s?.follows != null && s.reach).map((s) => (1000 * s.follows) / s.reach));
+      const f2 = (x) => (x == null ? '?' : x.toFixed(1));
+      detail.push(`${e.topic} reels posted: ${mine.length ? mine.map((n) => `#${key2(n)}`).join(', ') : 'none yet'} (planned: ${(e.slots ?? []).map((n) => `#${n}`).join(', ')}); read at 3 days: ${rm.length} of ${e.needReels ?? 6}; other reels of the same weeks read: ${ro.length}`);
+      if (rm.length) detail.push(`medians, ${e.topic} against the others: times usual ${f2(tuM)} vs ${f2(tuO)}; shares per 1k views ${f2(shM)} vs ${f2(shO)}; saves per 1k ${f2(svM)} vs ${f2(svO)}; follows per 1k reach (screenshots) ${f2(fol(mine))} vs ${f2(fol(others))}`);
+      const ratio = tuM != null && tuO ? tuM / tuO : null;
+      const need = e.needReels ?? 6;
+      const mid = e.midReels ?? 3;
+      decision = !mine.length && daysSince(e.since) > R.staleDays ? `STALE: no ${e.topic} reel in ${R.staleDays} days`
+        : rm.length < mid ? `WAITING (${rm.length} of ${mid} ${e.topic} reels read for the mid check)`
+        : rm.length < need ? (ratio != null && ratio < 0.5 ? `DISCARD: early stop, the first ${rm.length} ${e.topic} reels got ${ratio.toFixed(1)} times the views of the other reels` : `WAITING (${rm.length} of ${need} read; mid check passed at ${ratio != null ? ratio.toFixed(1) : '?'} times the other reels)`)
+        : ratio >= 2 && (shM ?? 0) >= (shO ?? 0) ? `MORE: ${e.topic} reels got ${ratio.toFixed(1)} times the views of the other reels, shares not lower`
+        : ratio >= 1.2 || (shO ? (shM ?? 0) >= 1.5 * shO : (shM ?? 0) > 0) ? `KEEP: ${e.topic} reels did better (${ratio != null ? ratio.toFixed(1) : '?'} times the views, shares ${f2(shM)} vs ${f2(shO)})`
+        : `DISCARD: ${e.topic} reels did not beat the other reels (${ratio != null ? ratio.toFixed(1) : '?'} times the views)`;
     } else {
       detail.push(typeof e.pass === 'string' ? e.pass : '');
       decision = e.tries?.length ? 'MANUAL: Claude judges it at the full review' : 'QUEUED';
@@ -766,7 +793,28 @@ if (cmd === 'check') {
   const next = lastNum + 1;
   const lane = ['TOOL', 'TOOL', 'SCAM', 'TOOL', 'AI'][(((next - 11) % 5) + 5) % 5];
   const expSlot = next >= 12 && (next - 12) % 3 === 0;
-  const enSlot = next >= 14 && (next - 14) % 5 === 0;
+  // an English slot that falls on an experiment slot (#24, #39, ...) goes to the experiment, in
+  // Hindi, so the experiment changes one thing only
+  const enSlot = next >= 14 && (next - 14) % 5 === 0 && !expSlot;
+  // a running topic test whose planned reel numbers include the next reel
+  const topicSlot = X.experiments.find((e) => e.kind === 'topic' && e.status === 'running' && (e.slots ?? []).includes(next));
+  // The experiment queue, most promising first (my request of 2026-10-21, to learn fast what
+  // works): "queue" in the register, then any other experiment in register order. The slot goes
+  // to the first open one that still needs a try. A try counts as soon as its reel is made, so
+  // two unread tries wait for their readings, and one pass with one fail asks for a third. An
+  // entry with "needs" (a launch, my recording) takes the slot only when that is there;
+  // otherwise the next one does.
+  const queueOf = (e) => (X.queue ?? []).find((q) => q.id === e.id) ?? {};
+  const queue = [...new Set([...(X.queue ?? []).map((q) => q.id), ...X.experiments.map((e) => e.id)])]
+    .map((id) => X.experiments.find((e) => e.id === id))
+    .filter((e) => e && (e.kind === 'reel' || e.kind === 'manual') && (e.status === 'queued' || e.status === 'running'));
+  const tryWord = (n) => ['first', 'second', 'third', 'fourth'][n] ?? `${n + 1}th`;
+  const dueNow = queue.filter((e) => (e.tries?.length ?? 0) < R.passesToConfirm || rows.find((r) => r.e === e)?.code === 'RUN_AGAIN');
+  const plain = dueNow.findIndex((e) => !queueOf(e).needs);
+  const dueText = (e) => `${e.id} ${e.name} (${tryWord(e.tries?.length ?? 0)} try)`;
+  const dueLine = !dueNow.length ? 'no experiment needs a try: add new ones to the queue'
+    : [...dueNow.slice(0, plain < 0 ? dueNow.length : plain).map((e) => `${dueText(e)} if there is ${queueOf(e).needs}`), ...(plain < 0 ? [] : [dueText(dueNow[plain])])].join('; otherwise ');
+  const queueLine = `Experiment queue, most promising first: ${queue.map((e) => `${e.id} ${e.name}${(e.tries?.length ?? 0) ? ` (${e.tries.length} ${e.tries.length > 1 ? 'tries' : 'try'})` : ''}`).join(', ') || 'empty'}.`;
   const openNow = X.experiments.filter((e) => (e.status === 'queued' || e.status === 'running') && e.kind !== 'manual');
   const low = R.minQueue - openNow.length;
   const lf = X.lastFullReview ?? { date: '2026-10-16', reel: 0 };
@@ -780,6 +828,8 @@ if (cmd === 'check') {
   const SHOTS = 'results/screenshots.json';
   const got = existsSync(SHOTS) ? JSON.parse(readFileSync(SHOTS, 'utf8').replace(/^﻿/, '')).reels ?? {} : {};
   const tried = new Set(X.experiments.flatMap((e) => (e.tries ?? []).map((t) => t.reel)));
+  // reels of a running topic test (T4, money) count like experiment tries
+  for (const f of films) if (f.topic && X.experiments.some((e) => e.kind === 'topic' && e.topic === f.topic && e.status === 'running')) tried.add(f.number);
   const prio = (r) => (r.language === 'en' ? 4 : tried.has(r.number) ? 3 : r.timesUsual >= 10 ? 2 : 1);
   const ask = latest.reels.filter((r) => r.number != null && r.number >= 6 && r.age >= 2 && !got[key2(r.number)])
     .sort((a, b) => prio(b) - prio(a) || b.number - a.number)[0];
@@ -790,7 +840,8 @@ if (cmd === 'check') {
     `Experiment review, ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC (\`node ig.mjs review\`), from the report of ${latest.fetched.slice(0, 16).replace('T', ' ')} UTC${age > 6 ? ' (over 6 hours old: run the report first)' : ''}.`,
     `Rules: a try is read at ${readH / 24} days; ${R.passesToConfirm} passes put an experiment in the playbook (a boost, a format share or a default, never a must), ${R.failsToDiscard} fails retire it for ${R.retireDays} days (then one re-test); proven entries are re-checked every ${R.recheckDays} days or ${R.recheckReels} reels; formats fill at most ${R.playbookMaxShare * 100}% of the reels.`,
     '',
-    `NEXT REEL #${key2(next)}: ${lane} lane; ${expSlot ? 'an EXPERIMENT slot (the playbook does not apply)' : 'a bet slot (the playbook guides it)'}; ${enSlot ? 'the ENGLISH slot (offer English and Hindi)' : 'Hindi'}. Every idea list has one wild card that fits no proven format and no queued experiment.`,
+    `NEXT REEL #${key2(next)}: ${topicSlot ? `a ${topicSlot.topic.toUpperCase()} slot (${topicSlot.id} ${topicSlot.name}: every idea is an earn-with-AI reel, "topic": "${topicSlot.topic}" in script.json)` : `${lane} lane`}; ${expSlot ? `an EXPERIMENT slot (the playbook does not apply; due: ${dueLine})` : 'a bet slot (the playbook guides it)'}; ${enSlot ? 'the ENGLISH slot (offer English and Hindi)' : 'Hindi'}. Every idea list has one wild card that fits no proven format and no queued experiment.`,
+    queueLine,
     '',
     ...(news.length ? ['CHANGES TO THE WORKFLOW TODAY (tell me first):', ...news.map((n) => `- ${n}`), ''] : apply ? ['No change to the workflow today.', ''] : []),
     askLine,

@@ -1,0 +1,241 @@
+{
+  "captured": "2026-10-18",
+  "shots": [
+    {
+      "name": "home",
+      "url": "https://gamma.app/",
+      "file": "shots/home.jpg",
+      "media": {
+        "videos": 4,
+        "playing": 4,
+        "canvases": 2
+      },
+      "title": "Gamma | Best AI Presentation Maker & Website Builder",
+      "finalUrl": "https://gamma.app/",
+      "w": 824,
+      "h": 14000,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Visual storytelling without limits.",
+          "x": 32,
+          "y": 240,
+          "w": 760,
+          "h": 192
+        },
+        {
+          "tag": "h2",
+          "text": "We rebuilt how Gamma thinks, designs, and edits.",
+          "x": 32,
+          "y": 1344,
+          "w": 760,
+          "h": 144
+        },
+        {
+          "tag": "h3",
+          "text": "Meet your new creative partner.",
+          "x": 32,
+          "y": 2489,
+          "w": 760,
+          "h": 132
+        },
+        {
+          "tag": "h3",
+          "text": "A different look for any story.",
+          "x": 32,
+          "y": 4252,
+          "w": 730,
+          "h": 66
+        },
+        {
+          "tag": "h3",
+          "text": "Edit any way you want.",
+          "x": 32,
+          "y": 5946,
+          "w": 573,
+          "h": 66
+        },
+        {
+          "tag": "h3",
+          "text": "Import. Export. Connect all your tools.",
+          "x": 32,
+          "y": 7689,
+          "w": 760,
+          "h": 132
+        },
+        {
+          "tag": "h2",
+          "text": "One idea, every format, all in your brand style.",
+          "x": 32,
+          "y": 8689,
+          "w": 760,
+          "h": 144
+        },
+        {
+          "tag": "h3",
+          "text": "Decks that wow the room.",
+          "x": 80,
+          "y": 9386,
+          "w": 572,
+          "h": 53
+        },
+        {
+          "tag": "h3",
+          "text": "Docs that draw you in.",
+          "x": 80,
+          "y": 10168,
+          "w": 487,
+          "h": 53
+        },
+        {
+          "tag": "h3",
+          "text": "Polished and ready to publish.",
+          "x": 80,
+          "y": 10886,
+          "w": 659,
+          "h": 53
+        },
+        {
+          "tag": "h3",
+          "text": "A live site in minutes.",
+          "x": 186,
+          "y": 11671,
+          "w": 451,
+          "h": 53
+        },
+        {
+          "tag": "h3",
+          "text": "Gamma, inside your product.",
+          "x": 80,
+          "y": 12414,
+          "w": 637,
+          "h": 53
+        },
+        {
+          "tag": "h3",
+          "text": "The best image models, built in.",
+          "x": 80,
+          "y": 13198,
+          "w": 664,
+          "h": 106
+        },
+        {
+          "tag": "h2",
+          "text": "Innovation guided by our customers",
+          "x": 32,
+          "y": 13860,
+          "w": 760,
+          "h": 132
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "pricing",
+      "url": "https://gamma.app/pricing",
+      "file": "shots/pricing.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 1
+      },
+      "title": "Plans and pricing | Gamma",
+      "finalUrl": "https://gamma.app/pricing",
+      "w": 824,
+      "h": 6038,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Choose the plan that’s right for you",
+          "x": 82,
+          "y": 176,
+          "w": 659,
+          "h": 132
+        },
+        {
+          "tag": "h2",
+          "text": "Free",
+          "x": 116,
+          "y": 762,
+          "w": 118,
+          "h": 66
+        },
+        {
+          "tag": "h2",
+          "text": "Plus",
+          "x": 792,
+          "y": 760,
+          "w": 111,
+          "h": 66
+        },
+        {
+          "tag": "h2",
+          "text": "Pro",
+          "x": 1469,
+          "y": 762,
+          "w": 91,
+          "h": 66
+        },
+        {
+          "tag": "h2",
+          "text": "Ultra",
+          "x": 2142,
+          "y": 760,
+          "w": 136,
+          "h": 66
+        },
+        {
+          "tag": "h2",
+          "text": "Frequently asked questions",
+          "x": 32,
+          "y": 2145,
+          "w": 760,
+          "h": 66
+        },
+        {
+          "tag": "h3",
+          "text": "Product",
+          "x": 32,
+          "y": 4388,
+          "w": 332,
+          "h": 44
+        },
+        {
+          "tag": "h3",
+          "text": "Company",
+          "x": 460,
+          "y": 4388,
+          "w": 332,
+          "h": 44
+        },
+        {
+          "tag": "h3",
+          "text": "Social",
+          "x": 32,
+          "y": 5128,
+          "w": 332,
+          "h": 44
+        },
+        {
+          "tag": "h3",
+          "text": "Legal",
+          "x": 460,
+          "y": 5128,
+          "w": 332,
+          "h": 44
+        },
+        {
+          "tag": "h3",
+          "text": "Get the app",
+          "x": 32,
+          "y": 4128,
+          "w": 760,
+          "h": 44
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

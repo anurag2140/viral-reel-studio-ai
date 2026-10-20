@@ -1,0 +1,73 @@
+{
+  "captured": "2026-10-19",
+  "shots": [
+    {
+      "name": "searching",
+      "url": "https://scholar.google.com/intl/en/scholar/help.html#searching",
+      "file": "shots/searching.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "Google Scholar Search Help",
+      "finalUrl": "https://scholar.google.com/intl/en/scholar/help.html#searching",
+      "w": 824,
+      "h": 1830,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Search",
+          "x": 0,
+          "y": 125,
+          "w": 824,
+          "h": 88
+        },
+        {
+          "tag": "h2",
+          "text": "Search Help",
+          "x": 30,
+          "y": 397,
+          "w": 764,
+          "h": 41
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "export",
+      "url": "https://scholar.google.com/intl/en/scholar/help.html#export",
+      "file": "shots/export.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "Google Scholar Search Help",
+      "finalUrl": "https://scholar.google.com/intl/en/scholar/help.html#export",
+      "w": 824,
+      "h": 1830,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Search",
+          "x": 0,
+          "y": 125,
+          "w": 824,
+          "h": 88
+        },
+        {
+          "tag": "h2",
+          "text": "Search Help",
+          "x": 30,
+          "y": 397,
+          "w": 764,
+          "h": 41
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

@@ -299,23 +299,24 @@ we will create in future, so that you can build a self improving system".
 
 ### The current ranking
 <!-- drivers:start -->
-Written by `node ig.mjs report` on 2026-10-17; do not edit by hand.
+Written by `node ig.mjs report` on 2026-10-20; do not edit by hand.
 
-Ranked by how closely each metric moves with views across 11 reels a day old or more (rank correlation, 1 = always together, 0 = no link, below 0 = the opposite; rates per account reached). "Hit reels" are our top 3 by views (#06, #11, #10): their level is the target for the next reel.
+Ranked by how closely each metric moves with views across 14 reels a day old or more (rank correlation, 1 = always together, 0 = no link, below 0 = the opposite; rates per account reached). "Hit reels" are our top 4 by views (#06, #11, #10, #09): their level is the target for the next reel.
 
 | Rank | Metric | Link with views | Without the top reel | Hit reels | Other reels | Build it with |
 |---|---|---|---|---|---|---|
-| 1 | Share rate (sends per reach) | 0.83 | 0.77 | 1.70% | 0.00% | one friend of the viewer's age to send it to, and a moment worth sending |
-| 2 | Average watch time | 0.82 | 0.80 | 9.6 s | 6.4 s | something new every 2 to 4 s; every part ends with a reason to stay |
-| 3 | Share of the reel watched | 0.79 | 0.75 | 29% | 17% | no sentence that does not move the story |
-| 4 | Save rate | 0.66 | 0.54 | 2.67% | 0.28% | a concrete thing to keep (a prompt, the steps) and a moment to use it |
-| 5 | Skip rate (leave in about 3 s) | -0.65 | -0.54 | 52% | 79% | frame 0: a big face reacting to the result; the hook a result or a loss; movement by second 3 |
-| 6 | Like rate | -0.51 | -0.38 | 1.74% | 2.63% | - |
-| - | Repost rate | 0.75 | 0.68 | 0.06% | 0.00% | too few reels have it to trust |
-| - | Comment rate | 0.55 | 0.51 | 0.09% | 0.00% | too few reels have it to trust |
+| 1 | Skip rate (leave in about 3 s) | -0.75 | -0.68 | 53% | 78% | frame 0: a big face reacting to the result; the hook a result or a loss; movement by second 3 |
+| 2 | Share rate (sends per reach) | 0.74 | 0.66 | 0.93% | 0.00% | one friend of the viewer's age to send it to, and a moment worth sending |
+| 3 | Save rate | 0.63 | 0.54 | 2.23% | 0.16% | a concrete thing to keep (a prompt, the steps) and a moment to use it |
+| 4 | Comment rate | 0.48 | 0.44 | 0.12% | 0.00% | the link line; a question the viewer can answer |
+| 5 | Share of the reel watched | 0.41 | 0.34 | 28% | 16% | no sentence that does not move the story |
+| 6 | Average watch time | 0.36 | 0.28 | 9.2 s | 6.0 s | something new every 2 to 4 s; every part ends with a reason to stay |
+| 7 | Like rate | -0.65 | -0.58 | 1.19% | 2.62% | - |
+| - | Repost rate | 0.28 | 0.15 | 0.05% | 0.00% | too few reels have it to trust |
 
-Idea score weights now: Q6, Q7 x2 (share rate (sends per reach)); Q9, Q3 x1.5 (average watch time); the other questions x1.
+Idea score weights now: Q6, Q7 x2 (share rate (sends per reach)); Q9, Q3 x1.5 (average watch time); the other questions x1. (Kept from the last run: the new leader is not clearly ahead yet.)
 What drives follows: waiting for per-reel follows from screenshots (3 of 5 reels: #08 0.0 per 1,000 reach, #07 0.0 per 1,000 reach, #06 0.7 per 1,000 reach). Until then: followers per 1,000 reach, account by day (below).
+RANKING CHANGED: the top metrics were skip, share, watch; now skip, share, save.
 <!-- drivers:end -->
 
 ## Experiments (from 2026-10-16)
@@ -332,7 +333,15 @@ changes".
   (TOOL, TOOL, SCAM, TOOL, AI) still holds, so an experiment uses the lane that is due.
 - The board is in `VIDEOS.md` ("Experiments"): the queue, what each one changes and its result.
   Claude keeps at least 3 open experiments in it ("Reviewing experiments and the playbook"),
-  and moves one up when the news gives a reason (E6).
+  in the order of promise (my request of 2026-10-21: "reorder the upcoming experiment slots
+  ... so that we can figure out quick what content is getting the maximum positive impact"):
+  `queue` in `results/experiments.json`, ranked by Claude from outside research and our
+  numbers. On 2026-10-21: E2 Funny, E6 Fast news, E1 Visible magic, E7 My own voice, E3 Short
+  loop, E5 My own risk, E4 Quiz. The review's NEXT REEL line names the experiment due in each
+  experiment slot: the first that still needs a try (a try counts once its reel is made). E6
+  takes the slot only when a big launch happened in the last 24 hours, E7 only when I have
+  recorded the script; otherwise the next one does. A new experiment joins the queue at the
+  place its promise earns, and Claude tells me where.
 - Before an experiment is built, write on the board: the one thing it changes, what we expect
   and why, and the pass mark. Default pass marks, read 72 hours after posting with
   `node ig.mjs report`: "times usual" 3 or more (views against our median), or saves per 1,000
@@ -441,7 +450,7 @@ boost raises an idea's score, a format gets at most its share of the reels, a de
 broken with a reason. Each entry is re-checked on its date and leaves when it stops working.
 
 Proven:
-- none yet
+- T1 Posting time (default; proven 2026-10-20; re-check by 2026-12-19 or reel #35): Default posting time: 7 to 8:30 PM India time.
 
 Retired (an experiment may come back once, for a re-test, after its date):
 - none yet
@@ -476,8 +485,10 @@ if an English video performs 40% when comparing it with a top performers of hind
 consider it as a successful video".
 
 - Some reels are in English, not all. One reel in every five is the English slot (Claude's
-  default): the TOOL reel after the SCAM reel, so #14, #19, #24 and so on. Tools travel across
-  countries; SCAM reels stay Hindi (UPI, digital arrest and the like are Indian).
+  default): the TOOL reel after the SCAM reel, so #14, #19, #29, #34 and so on. When it falls on
+  an experiment slot (#24, #39, ...), the experiment takes it, in Hindi, so that it changes one
+  thing only. Tools travel across countries; SCAM reels stay Hindi (UPI, digital arrest and the
+  like are Indian).
 - Choosing (my rule of 2026-10-16): when the English slot is due, the ideas in "Create reel"
   step 4 say that the reel is planned in English, and the Hindi version is offered too, so I
   pick the language when I pick the topic (a second question in the same pick). Any other
@@ -515,7 +526,8 @@ consider it as a successful video".
 - Language: very easy US English. Short, common words; one idea per sentence; short sentences;
   present tense; active voice ("you", never "one"); no idioms or slang that a learner would not
   know (ASD-STE100 in spirit). The story parts, the hook rules and the working bets stay the
-  same. Voice Charon; `style` says "natural, friendly American English". `script.json` has
+  same. Voice Orus, the same persona as the Hindi reels (my choice of 2026-10-20; #14 used
+  Charon); `style` says "natural, friendly American English". `script.json` has
   `"language": "en"`; captions and the post caption are in English, with English hashtags.
 - Settings that read anywhere: school, college, work, home. No rupees, UPI, hostel, placement
   or other Indian-only things on screen or in the voice. My face and body stay "you".
@@ -528,6 +540,42 @@ consider it as a successful video".
 - Series (Claude's default): English tool reels are "AI Hack #N" (my account name is "AI Hacks
   & Tools"), numbered on their own; "AI जुगाड़" stays Hindi. The follow line after the first
   payoff: "Follow for more AI hacks." The cover badge: `--series "AI Hack #N"`.
+
+## Earn with AI reels (T4, from 2026-10-21)
+My words: "i want to setup one more experiment in this project, creating reel related make money
+with AI. come up with a plan how frequent we will create it time span of that experiment so that
+you can track whether its really getting enormous view, follows and share".
+
+- What: real, legal ways for a student or fresher to earn with AI skills: freelance services
+  where AI does the heavy work (resumes, presentations, thumbnails, captions and subtitles,
+  translation, posts for a local shop), shown with the tool's page and the platform's public
+  page. The story parts and the working bets stay the same: "तुम" earns the first money; the
+  person to send it to is the friend who wants pocket money or a side income. `script.json`
+  has `"topic": "money"`.
+- Plan (Claude's default; I can change it): six money reels at fixed numbers, #17, #20, #22,
+  #25, #26 and #31 (about 2 in every 5 reels, in TOOL and AI slots, never an experiment or
+  English slot), about 2 to 3 weeks if I post daily. The review's NEXT REEL line says when a
+  money slot is due; then every idea in the list is an earn-with-AI idea (plus the wild card).
+- Judged by `node ig.mjs review` (T4, kind "topic"): each money reel read at 3 days against our
+  other reels posted in the same weeks: median "times usual", shares and saves per 1,000 views,
+  and follows per 1,000 reach from the screenshots. After 3 money reels, an early stop if they
+  got under half the views of the others. After 6: MORE (2 times the views or more, shares not
+  lower) makes money a lane of 2 reels in every 5; KEEP (1.2 times the views, or 1.5 times the
+  shares) keeps 1 in 5; otherwise it retires for 90 days, then one re-test. A money reel with 10
+  times our usual views gets its sequel like any hit.
+- Follows: money reels come right after English reels in the one screenshot request, so their
+  "Profile activity" is known; the day table shows the account's follows on money-reel days.
+- Money rules (trust is the brand; "Claims" still holds):
+  - No income promise and no invented earnings ("₹50,000 a month"). Prices only as a public
+    page shows them, said as "listed from ₹X", never "you will earn ₹X". Hooks may be bold about
+    the story (the first client, a friend's reaction), not about amounts.
+  - Only legal work a student can start this week with free or free-tier tools. No trading,
+    crypto, betting, "passive income" or "task" apps, MLM, paid courses, or anything that asks
+    the viewer to pay first (that belongs in the SCAM lane).
+  - Each reel names one honest catch (it takes practice, clients come slowly, check the
+    platform's fees).
+  - Series (Claude's default): "AI से कमाई #N", numbered on its own, with the follow line "ऐसे
+    और AI कमाई के तरीकों के लिए follow कर लो।" and the cover badge `--series "AI से कमाई #N"`.
 
 ## Recording websites
 - My rules (2026-10-12): Claude makes every screen recording itself; I do not supply
@@ -587,10 +635,11 @@ When I type "Create reel" with no topic, Claude finds the topic and builds the r
    numbers", weighted as "What drives views and follows" says, tag its feeling, and check three more things: can it be shown from public pages
    without sign-in; is there a way to earn from it; does it work for a student and for someone
    in a first job. When the reel is an experiment slot, at least two of the ideas carry an
-   experiment from the board (the next one in the queue first), each with its one change and
+   experiment from the board (the one the NEXT REEL line names first), each with its one change and
    pass mark. In a bet slot, apply the playbook: boosts add to the score, a proven format may
    be offered while it is under its share of the recent reels, defaults hold unless an idea
-   gives a reason. Every list, in every slot, also has one wild card: an idea that fits no
+   gives a reason. When the NEXT REEL line says a MONEY slot, every idea is an earn-with-AI
+   idea ("Earn with AI reels"). Every list, in every slot, also has one wild card: an idea that fits no
    proven format and no queued experiment (a new kind of reel), scored like the others.
 4. Show me the ideas and wait for my choice (my rule of 2026-10-13; before that Claude
    picked by itself). Present three or four topic ideas, each with its hook line, the story
@@ -630,7 +679,7 @@ brief leaves open a choice that changes the reel and has no sensible default.
 ## Script
 - Hindi by default: Devanagari for Hindi words, Latin script for English technical terms,
   short everyday sentences, one idea per sentence, active voice, present tense.
-- English for the English reels (see "English reels"): very easy US English, Charon voice.
+- English for the English reels (see "English reels"): very easy US English, Orus voice.
   No English reel has been made yet.
 
 ## Shares
@@ -658,7 +707,8 @@ my own numbers: keep them until the share rates in `VIDEOS.md` say otherwise.
   separate takes with strong acting direction sounded weird to me (outro C, first try).
 - `vo.json` is the timing source. Scene changes and on-screen text follow the measured
   sentence times. Duck the score under the voice.
-- Default voice: Orus for Hindi, Charon for English. Say "natural Hindi as spoken in India"
+- Default voice: Orus for Hindi and for English (my choice of 2026-10-20: one voice for the
+  channel; until then English used Charon). Say "natural Hindi as spoken in India"
   in `style`.
 - If a take has a pause of more than 0.3 s inside a sentence, generate that line again.
   `vo.mjs` prints a note when a line has more long pauses than sentence breaks.

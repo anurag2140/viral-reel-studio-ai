@@ -1,0 +1,42 @@
+{
+  "title": "इस बार interview में Priya Ma'am impressed हो गईं",
+  "number": 16,
+  "lane": "TOOL",
+  "setting": "both",
+  "language": "hi",
+  "series": "AI जुगाड़ #3",
+  "experiment": "none: a bet slot and a sequel to the #11 hit (the same job-hunt loss, the win in front of an interviewer, a new tool).",
+  "playbook": ["T1"],
+  "look": "illustrated story, my face and body (shirt at the interview, hoodie at home at night), Priya Ma'am as the interviewer, a drawn phone in Live mode, compact captions",
+  "sendTo": "interview वाला दोस्त",
+  "link": "https://gemini.google/discover/ai-career-coach/",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a short story and lets you in on a useful find. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://gemini.google/discover/ai-career-coach/ (captured 2026-10-21, India): 'Own the hot seat. Transform interview anxiety into confidence. Use Gemini Live to turn your phone into a mock interviewer, creating a natural dialogue that feels like the real thing. Practise answering behavioural interview questions, master the STAR method and get instant feedback on your tone and clarity.' Picture text: 'Let's practice interview questions based on this job description'. Footnote: 'Check responses. Compatibility and availability vary. 18+ for selected features.'",
+    "https://gemini.google/subscriptions/ (captured 2026-10-21, India): 'Free of charge ... ₹0 INR/month with a Google Account'; Gemini app list includes 'Gemini Live'."
+  ],
+  "claims": [
+    "Gemini Live can be a mock interviewer that talks with you: the career coach page.",
+    "Feedback on tone and clarity: the career coach page ('instant feedback on your tone and clarity').",
+    "Questions from a job description: the picture on the same page ('Let's practice interview questions based on this job description').",
+    "Gemini Live is in the free plan in India: the subscriptions page (₹0, list includes Gemini Live). The caption adds '18+, limits apply'.",
+    "Story, not data: what Priya Ma'am says, and the drawn phone screens.",
+    "Not claimed: unlimited use, or that it guarantees a job."
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["इस बार interview में Priya Ma'am impressed हो गईं।", "पिछली बार इसी सवाल पर तुम अटक गए थे।"] },
+    { "id": "trouble", "sentences": ["Tell me about yourself, बस यहीं आवाज़ काँपने लगती है।", "और कल फिर interview है।"] },
+    { "id": "turn", "sentences": ["तभी पता चलता है कि Gemini Live तुम्हारा mock interviewer बन सकता है।", "और यह free plan में है।"] },
+    { "id": "how", "sentences": ["Phone पर Live खोलो और बोलो, मेरा interview लो।", "वो सवाल पूछता है, तुम बोलकर जवाब देते हो।"] },
+    { "id": "magic", "sentences": ["हर जवाब के बाद वो बताता है कि tone और clarity में क्या सुधारना है।"] },
+    { "id": "follow", "sentences": ["ऐसे और AI जुगाड़ के लिए follow कर लो।"] },
+    { "id": "twist", "sentences": ["लेकिन असली जुगाड़ अब है।", "Job description दिखाओ, और वो उसी job के सवाल पूछेगा।"] },
+    { "id": "end", "sentences": ["अगले दिन वही सवाल आया।", "और इस बार जवाब सुनकर Priya Ma'am मुस्कुरा दीं।"] },
+    { "id": "link", "sentences": ["इस tool का link चाहिए?", "Comment में कुछ भी लिख दो।"] },
+    { "id": "ask", "sentences": ["Interview वाले दोस्त को यह भेज दो।"] }
+  ]
+}

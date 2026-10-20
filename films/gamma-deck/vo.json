@@ -1,0 +1,168 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Charon",
+  "bpm": 104,
+  "total": 33.136,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "Your boss thinks you worked all weekend on this deck. It took you one minute.",
+      "sentences": [
+        "Your boss thinks you worked all weekend on this deck.",
+        "It took you one minute."
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 3.746,
+      "pauses": [
+        [
+          2.39,
+          2.6
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "It is Sunday night, and the deck is due at nine tomorrow. All you have is one empty slide.",
+      "sentences": [
+        "It is Sunday night, and the deck is due at nine tomorrow.",
+        "All you have is one empty slide."
+      ],
+      "file": "vo/trouble.wav",
+      "start": 4.038,
+      "duration": 5.471,
+      "pauses": [
+        [
+          1.06,
+          1.26
+        ],
+        [
+          3.3,
+          3.64
+        ]
+      ]
+    },
+    {
+      "id": "turn",
+      "text": "Then Rohan sends you a link to Gamma. It has a free plan.",
+      "sentences": [
+        "Then Rohan sends you a link to Gamma.",
+        "It has a free plan."
+      ],
+      "file": "vo/turn.wav",
+      "start": 9.808,
+      "duration": 2.577,
+      "pauses": [
+        [
+          1.49,
+          1.77
+        ]
+      ]
+    },
+    {
+      "id": "how",
+      "text": "You paste your notes. You click Generate.",
+      "sentences": [
+        "You paste your notes.",
+        "You click Generate."
+      ],
+      "file": "vo/how.wav",
+      "start": 12.692,
+      "duration": 2.201,
+      "pauses": [
+        [
+          0.99,
+          1.18
+        ]
+      ]
+    },
+    {
+      "id": "magic",
+      "text": "Ten slides, with a design and pictures, in about a minute.",
+      "sentences": [
+        "Ten slides, with a design and pictures, in about a minute."
+      ],
+      "file": "vo/magic.wav",
+      "start": 15,
+      "duration": 3.267,
+      "pauses": []
+    },
+    {
+      "id": "follow",
+      "text": "Follow for more AI hacks.",
+      "sentences": [
+        "Follow for more AI hacks."
+      ],
+      "file": "vo/follow.wav",
+      "start": 18.462,
+      "duration": 1.655,
+      "pauses": []
+    },
+    {
+      "id": "twist",
+      "text": "But here is the best part. Click Export, and it is a real PowerPoint file.",
+      "sentences": [
+        "But here is the best part.",
+        "Click Export, and it is a real PowerPoint file."
+      ],
+      "file": "vo/twist.wav",
+      "start": 20.481,
+      "duration": 4.111,
+      "pauses": [
+        [
+          1.1,
+          1.55
+        ],
+        [
+          2.19,
+          2.36
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "On Monday, your boss asks how long it took. You just smile.",
+      "sentences": [
+        "On Monday, your boss asks how long it took.",
+        "You just smile."
+      ],
+      "file": "vo/end.wav",
+      "start": 24.808,
+      "duration": 3.123,
+      "pauses": [
+        [
+          2,
+          2.42
+        ]
+      ]
+    },
+    {
+      "id": "link",
+      "text": "Want the link to this tool? Comment anything.",
+      "sentences": [
+        "Want the link to this tool?",
+        "Comment anything."
+      ],
+      "file": "vo/link.wav",
+      "start": 28.269,
+      "duration": 2.172,
+      "pauses": [
+        [
+          1.17,
+          1.41
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "Send this to the friend who still makes slides by hand.",
+      "sentences": [
+        "Send this to the friend who still makes slides by hand."
+      ],
+      "file": "vo/ask.wav",
+      "start": 30.577,
+      "duration": 2.459,
+      "pauses": []
+    }
+  ]
+}

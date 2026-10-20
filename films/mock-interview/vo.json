@@ -1,0 +1,177 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 37.713,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "इस बार interview में Priya Ma'am impressed हो गईं। पिछली बार इसी सवाल पर तुम अटक गए थे।",
+      "sentences": [
+        "इस बार interview में Priya Ma'am impressed हो गईं।",
+        "पिछली बार इसी सवाल पर तुम अटक गए थे।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 4.318,
+      "pauses": [
+        [
+          2.14,
+          2.6
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "Tell me about yourself, बस यहीं आवाज़ काँपने लगती है। और कल फिर interview है।",
+      "sentences": [
+        "Tell me about yourself, बस यहीं आवाज़ काँपने लगती है।",
+        "और कल फिर interview है।"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 4.615,
+      "duration": 4.154,
+      "pauses": [
+        [
+          2.73,
+          3.15
+        ]
+      ]
+    },
+    {
+      "id": "turn",
+      "text": "तभी पता चलता है कि Gemini Live तुम्हारा mock interviewer बन सकता है। और यह free plan में है।",
+      "sentences": [
+        "तभी पता चलता है कि Gemini Live तुम्हारा mock interviewer बन सकता है।",
+        "और यह free plan में है।"
+      ],
+      "file": "vo/turn.wav",
+      "start": 8.942,
+      "duration": 4.481,
+      "pauses": [
+        [
+          3.17,
+          3.5
+        ]
+      ]
+    },
+    {
+      "id": "how",
+      "text": "Phone पर Live खोलो और बोलो, मेरा interview लो। वो सवाल पूछता है, तुम बोलकर जवाब देते हो।",
+      "sentences": [
+        "Phone पर Live खोलो और बोलो, मेरा interview लो।",
+        "वो सवाल पूछता है, तुम बोलकर जवाब देते हो।"
+      ],
+      "file": "vo/how.wav",
+      "start": 13.558,
+      "duration": 4.355,
+      "pauses": [
+        [
+          1.96,
+          2.33
+        ],
+        [
+          3.12,
+          3.37
+        ]
+      ]
+    },
+    {
+      "id": "magic",
+      "text": "हर जवाब के बाद वो बताता है कि tone और clarity में क्या सुधारना है।",
+      "sentences": [
+        "हर जवाब के बाद वो बताता है कि tone और clarity में क्या सुधारना है।"
+      ],
+      "file": "vo/magic.wav",
+      "start": 18.173,
+      "duration": 3.079,
+      "pauses": [
+        [
+          1.41,
+          1.56
+        ]
+      ]
+    },
+    {
+      "id": "follow",
+      "text": "ऐसे और AI जुगाड़ के लिए follow कर लो।",
+      "sentences": [
+        "ऐसे और AI जुगाड़ के लिए follow कर लो।"
+      ],
+      "file": "vo/follow.wav",
+      "start": 21.635,
+      "duration": 1.983,
+      "pauses": []
+    },
+    {
+      "id": "twist",
+      "text": "लेकिन असली जुगाड़ अब है। Job description दिखाओ, और वो उसी job के सवाल पूछेगा।",
+      "sentences": [
+        "लेकिन असली जुगाड़ अब है।",
+        "Job description दिखाओ, और वो उसी job के सवाल पूछेगा।"
+      ],
+      "file": "vo/twist.wav",
+      "start": 23.942,
+      "duration": 4.992,
+      "pauses": [
+        [
+          1.66,
+          2.02
+        ],
+        [
+          3.12,
+          3.32
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "अगले दिन वही सवाल आया। और इस बार जवाब सुनकर Priya Ma'am मुस्कुरा दीं।",
+      "sentences": [
+        "अगले दिन वही सवाल आया।",
+        "और इस बार जवाब सुनकर Priya Ma'am मुस्कुरा दीं।"
+      ],
+      "file": "vo/end.wav",
+      "start": 29.135,
+      "duration": 3.948,
+      "pauses": [
+        [
+          0.03,
+          0.22
+        ],
+        [
+          1.26,
+          1.55
+        ]
+      ]
+    },
+    {
+      "id": "link",
+      "text": "इस tool का link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "इस tool का link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 33.462,
+      "duration": 2.38,
+      "pauses": [
+        [
+          1.03,
+          1.19
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "Interview वाले दोस्त को यह भेज दो।",
+      "sentences": [
+        "Interview वाले दोस्त को यह भेज दो।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 36.058,
+      "duration": 1.555,
+      "pauses": []
+    }
+  ]
+}

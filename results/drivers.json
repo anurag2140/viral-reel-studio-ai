@@ -1,89 +1,89 @@
 {
-  "fetched": "2026-10-17T19:40:06.094Z",
+  "fetched": "2026-10-20T20:16:02.510Z",
   "order": [
+    "skip",
     "share",
-    "watch",
     "save"
   ],
   "drivers": [
     {
+      "key": "skip",
+      "label": "Skip rate (leave in about 3 s)",
+      "n": 14,
+      "rho": -0.7450549450549451,
+      "rho2": -0.6813186813186813,
+      "sparse": false,
+      "hitLevel": 52.55,
+      "restLevel": 77.55
+    },
+    {
       "key": "share",
       "label": "Share rate (sends per reach)",
-      "n": 11,
-      "rho": 0.8327450831223042,
-      "rho2": 0.7715512784587784,
+      "n": 14,
+      "rho": 0.7351124784090827,
+      "rho2": 0.6576736868967146,
       "sparse": false,
-      "hitLevel": 1.7037037037037037,
+      "hitLevel": 0.9319834418976647,
       "restLevel": 0
-    },
-    {
-      "key": "watch",
-      "label": "Average watch time",
-      "n": 11,
-      "rho": 0.8200476856407694,
-      "rho2": 0.7963562622208845,
-      "sparse": false,
-      "hitLevel": 9.6,
-      "restLevel": 6.449999999999999
-    },
-    {
-      "key": "watchShare",
-      "label": "Share of the reel watched",
-      "n": 11,
-      "rho": 0.7909090909090909,
-      "rho2": 0.7454545454545455,
-      "sparse": false,
-      "hitLevel": 28.990228013029316,
-      "restLevel": 16.85920684063099
     },
     {
       "key": "save",
       "label": "Save rate",
-      "n": 11,
-      "rho": 0.6606437893829143,
-      "rho2": 0.5440156975482285,
+      "n": 14,
+      "rho": 0.6316201742038373,
+      "rho2": 0.5369374399914809,
       "sparse": false,
-      "hitLevel": 2.6666666666666665,
-      "restLevel": 0.27932960893854747
-    },
-    {
-      "key": "skip",
-      "label": "Skip rate (leave in about 3 s)",
-      "n": 11,
-      "rho": -0.6545454545454545,
-      "rho2": -0.5393939393939394,
-      "sparse": false,
-      "hitLevel": 52.3,
-      "restLevel": 78.80000000000001
-    },
-    {
-      "key": "like",
-      "label": "Like rate",
-      "n": 11,
-      "rho": -0.509090909090909,
-      "rho2": -0.38181818181818183,
-      "sparse": false,
-      "hitLevel": 1.7391304347826086,
-      "restLevel": 2.6286701208981
-    },
-    {
-      "key": "repost",
-      "label": "Repost rate",
-      "n": 11,
-      "rho": 0.7515580963521805,
-      "rho2": 0.683349073208448,
-      "sparse": true,
-      "hitLevel": 0.06384837690705021,
-      "restLevel": 0
+      "hitLevel": 2.231229415430128,
+      "restLevel": 0.15772870662460567
     },
     {
       "key": "comment",
       "label": "Comment rate",
-      "n": 11,
-      "rho": 0.5475201096854597,
-      "rho2": 0.5145100586970259,
+      "n": 14,
+      "rho": 0.4840984613913471,
+      "rho2": 0.44292309525697104,
+      "sparse": false,
+      "hitLevel": 0.11633400697725968,
+      "restLevel": 0
+    },
+    {
+      "key": "watchShare",
+      "label": "Share of the reel watched",
+      "n": 14,
+      "rho": 0.4065934065934066,
+      "rho2": 0.34065934065934067,
+      "sparse": false,
+      "hitLevel": 28.4058751613703,
+      "restLevel": 16.340607616602483
+    },
+    {
+      "key": "watch",
+      "label": "Average watch time",
+      "n": 14,
+      "rho": 0.35682905943617244,
+      "rho2": 0.2837476331617129,
+      "sparse": false,
+      "hitLevel": 9.2,
+      "restLevel": 6.05
+    },
+    {
+      "key": "like",
+      "label": "Like rate",
+      "n": 14,
+      "rho": -0.6483516483516484,
+      "rho2": -0.5769230769230769,
+      "sparse": false,
+      "hitLevel": 1.1896567248756376,
+      "restLevel": 2.6164929753409654
+    },
+    {
+      "key": "repost",
+      "label": "Repost rate",
+      "n": 14,
+      "rho": 0.28079894676301925,
+      "rho2": 0.15233743074071704,
       "sparse": true,
-      "hitLevel": 0.09241212447073056,
+      "hitLevel": 0.04780078040198388,
       "restLevel": 0
     }
   ],

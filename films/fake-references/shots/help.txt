@@ -1,0 +1,51 @@
+Search
+About
+Search
+Profiles
+Inclusion
+Metrics
+Publishers
+Libraries
+Overview
+Searching
+Access
+Alerts
+Library
+Export
+Coverage
+Corrections
+Questions
+Search Help
+
+Get the most out of Google Scholar with some helpful tips on searches, email alerts, citation export, and more.
+
+Finding recent papers
+
+Your search results are normally sorted by relevance, not by date. To find newer articles, try the following options in the left sidebar:
+
+click "Since Year" to show only recently published papers, sorted by relevance;
+click "Sort by date" to show just the new additions, sorted by date;
+click the envelope icon to have new results periodically delivered by email.
+
+Locating the full text of an article
+
+Abstracts are freely available for most of the articles. Alas, reading the entire article may require a subscription. Here're a few things to try:
+
+click a library link, e.g., "FindIt@Harvard", to the right of the search result;
+click a link labeled [PDF] to the right of the search result;
+click "All versions" under the search result and check out the alternative sources;
+click "Related articles" or "Cited by" under the search result to explore similar articles.
+
+If you're affiliated with a university, but don't see links such as "FindIt@Harvard", please check with your local library about the best way to access their online subscriptions. You may need to do search from a computer on campus, or to configure your browser to use a library proxy.
+
+Getting better answers
+
+If you're new to the subject, it may be helpful to pick up the terminology from secondary sources. E.g., a Wikipedia article for "overweight" might suggest a Scholar search for "pediatric hyperalimentation".
+
+If the search results are too specific for your needs, check out what they're citing in their "References" sections. Referenced works are often more general in nature.
+
+Similarly, if the search results are too basic for you, click "Cited by" to see newer papers that referenced them. These newer papers will often be more specific.
+
+Explore! There's rarely a single answer to a research question. Click "Related articles" or "Cited by" to see closely related work, or search for author's name and see what else they have written.
+
+Google Privacy & Terms

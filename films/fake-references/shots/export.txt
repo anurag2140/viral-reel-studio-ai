@@ -1,0 +1,38 @@
+Search
+About
+Search
+Profiles
+Inclusion
+Metrics
+Publishers
+Libraries
+Overview
+Searching
+Access
+Alerts
+Library
+Export
+Coverage
+Corrections
+Questions
+Search Help
+
+Citation Export
+
+How can I add the full citation of a result on Google Scholar to my bibliography manager?
+
+Click the "Cite" button under the search result and then select your bibliography manager at the bottom of the popup. We currently support BibTeX, EndNote, RefMan, and RefWorks.
+
+I wrote a program to download lots of search results, but you blocked my computer from accessing Google Scholar. Can you raise the limit?
+
+Err, no, please respect our robots.txt when you access Google Scholar using automated software. As the wearers of crawler's shoes and webmaster's hat, we cannot recommend adherence to web standards highly enough.
+
+How do I get bulk access to records in Google Scholar?
+
+Sorry, we're unable to provide bulk access. You'll need to make an arrangement directly with the source of the data you're interested in. Keep in mind that a lot of the records in Google Scholar come from commercial subscription services.
+
+Can I see more than 1,000 search results?
+
+Sorry, we can only show up to 1,000 results for any particular search query. Try a different query to get more results.
+
+Google Privacy & Terms

@@ -1,0 +1,155 @@
+{
+  "captured": "2026-10-20",
+  "shots": [
+    {
+      "name": "coach",
+      "url": "https://gemini.google/discover/ai-career-coach/",
+      "file": "shots/coach.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "AI CV builder and cover letter generator free of charge | Gemini",
+      "finalUrl": "https://gemini.google/discover/ai-career-coach/",
+      "w": 824,
+      "h": 12452,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Gemini: Your all-in-one AI career coach",
+          "x": 40,
+          "y": 268,
+          "w": 744,
+          "h": 154
+        },
+        {
+          "tag": "h1",
+          "text": "Bye-bye, blank page syndrome",
+          "x": 48,
+          "y": 1648,
+          "w": 728,
+          "h": 128
+        },
+        {
+          "tag": "h2",
+          "text": "Own the hot seat",
+          "x": 48,
+          "y": 3744,
+          "w": 728,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "Explore what's next for you",
+          "x": 48,
+          "y": 5552,
+          "w": 728,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "Frequently asked questions",
+          "x": 40,
+          "y": 7600,
+          "w": 744,
+          "h": 144
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "live",
+      "url": "https://gemini.google/overview/gemini-live/",
+      "file": "shots/live.jpg",
+      "media": {
+        "videos": 1,
+        "playing": 1,
+        "canvases": 0
+      },
+      "title": "Gemini Live – Ask AI a question in any mode that you choose",
+      "finalUrl": "https://gemini.google/overview/gemini-live/",
+      "w": 824,
+      "h": 11858,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Gemini Live has entered the chat.",
+          "x": 40,
+          "y": 504,
+          "w": 744,
+          "h": 192
+        },
+        {
+          "tag": "h2",
+          "text": "Talk beyond text.",
+          "x": 137,
+          "y": 1747,
+          "w": 550,
+          "h": 77
+        },
+        {
+          "tag": "h2",
+          "text": "It’s show and tell.",
+          "x": 48,
+          "y": 2455,
+          "w": 728,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "Your world, connected.",
+          "x": 48,
+          "y": 3871,
+          "w": 728,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "Camera, meet Nano Banana.",
+          "x": 48,
+          "y": 5343,
+          "w": 728,
+          "h": 128
+        },
+        {
+          "tag": "h2",
+          "text": "Frequently asked questions",
+          "x": 40,
+          "y": 6719,
+          "w": 744,
+          "h": 128
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "plans",
+      "url": "https://gemini.google/subscriptions/",
+      "file": "shots/plans.jpg",
+      "media": {
+        "videos": 3,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "Google AI Pro & Ultra — get access to Gemini 4 Argon & more",
+      "finalUrl": "https://gemini.google/subscriptions/",
+      "w": 824,
+      "h": 14000,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Get more out of Gemini",
+          "x": 40,
+          "y": 458,
+          "w": 744,
+          "h": 192
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

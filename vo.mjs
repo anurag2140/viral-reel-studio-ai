@@ -2,7 +2,7 @@
 // Reads <film-dir>/script.json, writes <film-dir>/vo/<id>.wav and <film-dir>/vo.json (line timings).
 //
 // script.json:
-//   { "voice": "Charon",
+//   { "voice": "Orus",
 //     "style": "Calm, confident explainer. Medium pace. Clear stress on the key term.",
 //     "gap": 0.25,
 //     "lines": [ { "id": "hook", "text": "A firewall is a filter.", "style": "optional override", "gap": 0.4 } ] }
@@ -159,7 +159,7 @@ function splitTake(pcm, texts) {
 }
 
 const script = JSON.parse(readFileSync(join(filmDir, 'script.json'), 'utf8').replace(/^﻿/, ''));
-const voice = own ? 'own' : (script.voice ?? 'Charon');
+const voice = own ? 'own' : (script.voice ?? 'Orus');
 const outDir = join(filmDir, 'vo');
 mkdirSync(outDir, { recursive: true });
 let key = null;
@@ -215,7 +215,7 @@ let t = script.start ?? 0;
 for (const line of script.lines) {
   const style = line.style ?? script.style;
   const text = line.text ?? line.sentences.join(' ');
-  const hash = createHash('sha1').update(`${MODEL}|${script.voice ?? 'Charon'}|${style ?? ''}|${text}`).digest('hex').slice(0, 10);
+  const hash = createHash('sha1').update(`${MODEL}|${script.voice ?? 'Orus'}|${style ?? ''}|${text}`).digest('hex').slice(0, 10);
   const file = join(outDir, `${line.id}.wav`);
   const tag = join(outDir, `${line.id}.${hash}`);
 
@@ -224,7 +224,7 @@ for (const line of script.lines) {
   } else if (!(existsSync(file) && existsSync(tag))) {
     // Cached when the same text, style and voice were already rendered.
     key ??= apiKey();
-    const { pcm, rate } = await speak(text, style, script.voice ?? 'Charon', key);
+    const { pcm, rate } = await speak(text, style, script.voice ?? 'Orus', key);
     writeFileSync(file, wav(trim(pcm, rate), rate));
     writeFileSync(tag, '');
     console.log(`tts   ${line.id}`);

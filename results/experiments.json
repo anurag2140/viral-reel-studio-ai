@@ -19,7 +19,97 @@
     "date": "2026-10-16",
     "reel": 12
   },
+  "queueNote": "The order in which experiment slots take reel experiments, most promising first (my request of 2026-10-21: \"reorder the upcoming experiment slots ... so that we can figure out quick what content is getting the maximum positive impact\"). Claude ranked them from outside research and our numbers. The slot goes to the first open one that still needs a try; one with \"needs\" takes it only when that is there. Channel and topic tests (T1 to T4) run on their own reels. A new experiment joins at the place its promise earns, and Claude says where.",
+  "queue": [
+    {
+      "id": "E2",
+      "why": "Funny reels are what people send most, and sends reach non-followers; #15 had 75.8 shares per 1,000 views in its first hours"
+    },
+    {
+      "id": "E6",
+      "why": "People already search for a big launch; a free offer for students is new and useful",
+      "needs": "a big AI launch that matters to students in the last 24 hours"
+    },
+    {
+      "id": "E1",
+      "why": "Before and after works widely on short video and gave us #06; #12 failed on a topic everyone had seen"
+    },
+    {
+      "id": "E7",
+      "why": "A human voice spread videos more than an AI voice in a 2025 study; my face and voice make a real brand",
+      "needs": "my own recording of the script"
+    },
+    {
+      "id": "E3",
+      "why": "Short loops are watched to the end and replayed, but leave little to save"
+    },
+    {
+      "id": "E5",
+      "why": "#13 got 33 views; scam warnings feel heard before"
+    },
+    {
+      "id": "E4",
+      "why": "Comments are only 4th in our ranking, and \"comment the answer\" is close to engagement bait"
+    }
+  ],
   "experiments": [
+    {
+      "id": "E2",
+      "name": "Funny",
+      "kind": "reel",
+      "status": "running",
+      "since": "2026-10-16",
+      "change": "A comedy skit with the cast; the AI trick is the punchline",
+      "pass": [
+        [
+          "sharesPer1k",
+          ">=",
+          8
+        ]
+      ],
+      "tries": [
+        {
+          "reel": 15,
+          "length": 42.8,
+          "note": "Chintu plays the AI that makes up references (the books are bananas); Prof. Sharma catches them; the trick is a title search in quotes on Google Scholar"
+        }
+      ],
+      "outcomes": {
+        "CONFIRM": {
+          "type": "format",
+          "share": 0.2,
+          "text": "A funny skit with the cast, with the AI trick as the punchline (feeling: funny)."
+        },
+        "DISCARD": {
+          "text": "No comedy skits until its re-test."
+        }
+      }
+    },
+    {
+      "id": "E6",
+      "name": "Fast news",
+      "kind": "reel",
+      "status": "queued",
+      "since": "2026-10-16",
+      "change": "An AI launch that matters to students, made within 24 hours",
+      "pass": [
+        [
+          "timesUsual",
+          ">=",
+          3
+        ]
+      ],
+      "tries": [],
+      "outcomes": {
+        "CONFIRM": {
+          "type": "boost",
+          "text": "A big AI launch that matters to students may jump the lane plan: such an idea is offered first, made within 24 hours."
+        },
+        "DISCARD": {
+          "text": "News gets no priority: a news reel waits for its lane."
+        }
+      }
+    },
     {
       "id": "E1",
       "name": "Visible magic",
@@ -57,28 +147,21 @@
       }
     },
     {
-      "id": "E2",
-      "name": "Funny",
-      "kind": "reel",
+      "id": "E7",
+      "name": "My own voice",
+      "kind": "manual",
       "status": "queued",
       "since": "2026-10-16",
-      "change": "A comedy skit with the cast; the AI trick is the punchline",
-      "pass": [
-        [
-          "sharesPer1k",
-          ">=",
-          8
-        ]
-      ],
+      "change": "I record the voice instead of the AI voice (last in the queue: 'maybe later')",
+      "pass": "Followers per 1,000 reach on the reel's days above the T2 level; Claude judges it at the full review",
       "tries": [],
       "outcomes": {
         "CONFIRM": {
-          "type": "format",
-          "share": 0.2,
-          "text": "A funny skit with the cast, with the AI trick as the punchline (feeling: funny)."
+          "type": "default",
+          "text": "My recorded voice is the default (node vo.mjs <dir> --own); a reel may use the synthesized voice with a reason."
         },
         "DISCARD": {
-          "text": "No comedy skits until its re-test."
+          "text": "Keep the synthesized voice."
         }
       }
     },
@@ -114,32 +197,6 @@
       }
     },
     {
-      "id": "E4",
-      "name": "Quiz",
-      "kind": "reel",
-      "status": "queued",
-      "since": "2026-10-16",
-      "change": "The viewer answers a question in the comments",
-      "pass": [
-        [
-          "commentsPer1k",
-          ">=",
-          10
-        ]
-      ],
-      "tries": [],
-      "outcomes": {
-        "CONFIRM": {
-          "type": "format",
-          "share": 0.2,
-          "text": "A reel that ends with a question the viewer answers in the comments (a quiz)."
-        },
-        "DISCARD": {
-          "text": "No quiz endings until its re-test."
-        }
-      }
-    },
-    {
       "id": "E5",
       "name": "My own risk",
       "kind": "reel",
@@ -171,46 +228,28 @@
       }
     },
     {
-      "id": "E6",
-      "name": "Fast news",
+      "id": "E4",
+      "name": "Quiz",
       "kind": "reel",
       "status": "queued",
       "since": "2026-10-16",
-      "change": "An AI launch that matters to students, made within 24 hours",
+      "change": "The viewer answers a question in the comments",
       "pass": [
         [
-          "timesUsual",
+          "commentsPer1k",
           ">=",
-          3
+          10
         ]
       ],
       "tries": [],
       "outcomes": {
         "CONFIRM": {
-          "type": "boost",
-          "text": "A big AI launch that matters to students may jump the lane plan: such an idea is offered first, made within 24 hours."
+          "type": "format",
+          "share": 0.2,
+          "text": "A reel that ends with a question the viewer answers in the comments (a quiz)."
         },
         "DISCARD": {
-          "text": "News gets no priority: a news reel waits for its lane."
-        }
-      }
-    },
-    {
-      "id": "E7",
-      "name": "My own voice",
-      "kind": "manual",
-      "status": "queued",
-      "since": "2026-10-16",
-      "change": "I record the voice instead of the AI voice (last in the queue: 'maybe later')",
-      "pass": "Followers per 1,000 reach on the reel's days above the T2 level; Claude judges it at the full review",
-      "tries": [],
-      "outcomes": {
-        "CONFIRM": {
-          "type": "default",
-          "text": "My recorded voice is the default (node vo.mjs <dir> --own); a reel may use the synthesized voice with a reason."
-        },
-        "DISCARD": {
-          "text": "Keep the synthesized voice."
+          "text": "No quiz endings until its re-test."
         }
       }
     },
@@ -218,7 +257,7 @@
       "id": "T1",
       "name": "Posting time",
       "kind": "postingTime",
-      "status": "running",
+      "status": "proven",
       "since": "2026-10-16",
       "change": "Post at 7 to 8:30 PM India time instead of 10:30 PM to midnight",
       "groups": {
@@ -272,7 +311,7 @@
       "id": "T3",
       "name": "English reels",
       "kind": "english",
-      "status": "queued",
+      "status": "running",
       "since": "2026-10-16",
       "change": "One reel in five in very easy US English, judged by value (tier-1 views x 10 + other views)",
       "needReels": 3,
@@ -290,9 +329,64 @@
         "DISCARD": {
           "text": "No English slot on this account until its re-test. (A separate English account is my choice.)"
         }
+      },
+      "tries": [
+        {
+          "reel": 14,
+          "length": 34.2,
+          "note": "AI Hack #1: Gamma turns notes into a 10-slide deck; office, boss Priya Ma'am; a sequel to #06"
+        }
+      ]
+    },
+    {
+      "id": "T4",
+      "name": "Earn with AI",
+      "kind": "topic",
+      "topic": "money",
+      "status": "running",
+      "since": "2026-10-21",
+      "change": "Reels about real, legal ways for a student or fresher to earn with AI tools (freelance services, local businesses), 6 of them at fixed reel numbers",
+      "slots": [
+        17,
+        20,
+        22,
+        25,
+        26,
+        31
+      ],
+      "needReels": 6,
+      "midReels": 3,
+      "pass": "Median times usual of the money reels against the other reels of the same weeks (read at 3 days each): 2x or more with shares not lower = MORE; 1.2x or more, or 1.5x the shares = KEEP; below = DISCARD; after 3 reels, under 0.5x = early stop",
+      "outcomes": {
+        "MORE": {
+          "type": "slot",
+          "share": 0.4,
+          "text": "Earn-with-AI reels become a lane: 2 reels in every 5 (the money rules in CLAUDE.md hold)."
+        },
+        "KEEP": {
+          "type": "slot",
+          "share": 0.2,
+          "text": "Earn-with-AI reels keep 1 reel in every 5 (the money rules in CLAUDE.md hold)."
+        },
+        "DISCARD": {
+          "text": "No earn-with-AI reels until its re-test."
+        }
       }
     }
   ],
-  "playbook": [],
+  "playbook": [
+    {
+      "id": "T1",
+      "name": "Posting time",
+      "code": "CONFIRM",
+      "type": "default",
+      "text": "Default posting time: 7 to 8:30 PM India time.",
+      "share": null,
+      "date": "2026-10-20",
+      "recheckDate": "2026-12-19",
+      "recheckReel": 35,
+      "numbers": "evening: #06 378.2, #11 17.7, #12 1.1 (median times usual 17.7); late: #07 1.1, #08 2.1, #09 8.1, #10 9.1 (median times usual 5.1)"
+    }
+  ],
   "retired": []
 }

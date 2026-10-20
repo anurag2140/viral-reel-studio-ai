@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#16 AI जुगाड़ #3: Gemini Live से mock interview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #E7EEFF; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// Three places and two pages: Priya Ma'am's interview room (the hook, the next day, the link
+// line), my desk the night before (the shaky answer, the follow line) and my phone in Live mode,
+// where the mock interview happens and the job description comes in. Gemini's own pages fill
+// the frame for "Gemini Live ... mock interviewer", "free plan" and "job description".
+import { S, backOut, bump, camera, captionsCompact, cubicOut, eio, expoOut, key, lerp, person, pointer, prog, pulse, setup, start, webpage } from '/brand/story.js';
+import { CORAL, INK, NAVY, BLUE, desk, followCard, lights, linkLine, paperPlane, show, star, whip, whipIn, whipOut } from '/brand/scenes.js';
+import { cast } from '/brand/cast.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const HOT = 'shots/hotseat.jpg'; // gemini.google/discover/ai-career-coach, 1840 to 2660 css px at 4x
+const FREE = 'shots/free.jpg';   // gemini.google/subscriptions (India), 590 to 1220 css px at 4x
+const FACE = { dir: '/brand/face/', meta: await (await fetch('/brand/face/face.json')).json() };
+const ME_WORK = { face: FACE, skin: FACE.meta.cheek, shade: '#D98A52', outfit: 'shirt' };
+const ME_HOME = { face: FACE, skin: FACE.meta.cheek, shade: '#D98A52', outfit: 'hoodie' };
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"', '600 33px "Anek Devanagari"'], [HOT, FREE, '/logo.png', ...FACE.meta.names.map((n) => `${FACE.dir}${n}.png`)]);
+const pop = (t, at) => 1 - 0.07 * at.reduce((v, a) => v + Math.max(0, bump(t - a)), 0);
+const place = (g, x, y, s = 1, r = 0) => g.setAttribute('transform', `translate(${x} ${y}) rotate(${r}) scale(${s})`);
+const U = [];
+const L = lights(svg);
+const defs = L.defs;
+const YEL = '#FFD23F';
+const GREEN = '#19C37D';
+const line = { stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+const chip = (parent, text, w, size, fill = YEL, ink = NAVY) => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -size * 0.75, width: w, height: size * 1.5, rx: size * 0.36, fill, ...line }, g);
+  S('text', { y: size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, text);
+  return g;
+};
+const tickBadge = (parent, r = 46) => {
+  const g = S('g', {}, parent);
+  S('circle', { r, fill: GREEN, ...line }, g);
+  S('path', { d: `M${-r * 0.44},${r * 0.04} L${-r * 0.12},${r * 0.36} L${r * 0.48},${-r * 0.32}`, fill: 'none', stroke: '#fff', 'stroke-width': r * 0.24, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
+  return g;
+};
+// a speech bubble with a tail; text lines centred
+function bubble(parent, lines, w, size, fill = '#fff', ink = NAVY, tail = 'left') {
+  const g = S('g', {}, parent);
+  const h = lines.length * size * 1.25 + size * 0.9;
+  const tx = tail === 'left' ? -w / 2 + 50 : w / 2 - 80;
+  S('path', { d: `M${-w / 2 + 30},${-h / 2} L${w / 2 - 30},${-h / 2} Q${w / 2},${-h / 2} ${w / 2},${-h / 2 + 30} L${w / 2},${h / 2 - 30} Q${w / 2},${h / 2} ${w / 2 - 30},${h / 2} L${tx + 30},${h / 2} L${tx},${h / 2 + 40} L${tx + 4},${h / 2} L${-w / 2 + 30},${h / 2} Q${-w / 2},${h / 2} ${-w / 2},${h / 2 - 30} L${-w / 2},${-h / 2 + 30} Q${-w / 2},${-h / 2} ${-w / 2 + 30},${-h / 2} Z`, fill, ...line }, g);
+  const texts = lines.map((s, i) => S('text', { y: -h / 2 + size * 1.05 + i * size * 1.25 + size * 0.15, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, s));
+  return { g, texts };
+}
+const handPhone = (parent) => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -40, y: -70, width: 80, height: 140, rx: 16, fill: NAVY, ...line }, g);
+  S('rect', { x: -32, y: -58, width: 64, height: 112, rx: 8, fill: '#BFD0FF' }, g);
+  return g;
+};
+
+// ================= Priya Ma'am's interview room by day =================
+const O = { s: S('g', {}, svg) };
+O.w = S('g', {}, O.s);
+O.cam = camera(O.w);
+O.blur = L.blurOf('mbOffice');
+S('rect', { x: -700, y: -600, width: 2480, height: 3200, fill: '#E7EEFF' }, O.w);
+S('path', { d: 'M-200,-600 L300,-600 L80,1500 L-420,1500 Z', fill: '#F4F7FF', opacity: 0.8 }, O.w);
+S('rect', { x: 600, y: 330, width: 420, height: 380, rx: 16, fill: '#fff', ...line }, O.w);
+S('rect', { x: 618, y: 348, width: 384, height: 344, rx: 8, fill: '#BFE3FF' }, O.w);
+S('rect', { x: 800, y: 348, width: 20, height: 344, fill: '#fff' }, O.w);
+const cloud = S('g', {}, O.w);
+for (const [dx, dy, r] of [[0, 0, 26], [28, -10, 32], [60, 0, 26]]) S('circle', { cx: dx, cy: dy, r, fill: '#fff' }, cloud);
+S('rect', { x: -700, y: 1500, width: 2480, height: 1200, fill: '#C9D4F5' }, O.w);
+S('rect', { x: -700, y: 1500, width: 2480, height: 16, fill: '#AEBBE6' }, O.w);
+S('path', { d: 'M960,1500 L990,1360 L1090,1360 L1120,1500 Z', fill: CORAL, ...line }, O.w);
+for (const [d, f] of [['M1040,1360 C960,1240 940,1150 1010,1090 C1040,1180 1050,1260 1040,1360 Z', '#3EAD7C'], ['M1040,1360 C1110,1230 1150,1160 1120,1080 C1070,1150 1040,1250 1040,1360 Z', '#2A8A5E']]) S('path', { d, fill: f, ...line }, O.w);
+const priya = cast(O.w, 'priya');
+const meO = person(O.w, ME_WORK);
+const oFront = S('g', {}, O.w);
+const impressed = chip(oFront, 'Impressive!', 380, 64, YEL);
+// last time: the same question, and I froze
+const memory = S('g', {}, oFront);
+S('rect', { x: -230, y: -120, width: 460, height: 240, rx: 24, fill: '#D9DEE8', ...line }, memory);
+const memTag = chip(memory, 'पिछली बार', 230, 40, '#fff');
+memTag.setAttribute('transform', 'translate(-100 -118)');
+const memQ = bubble(memory, ['Tell me about', 'yourself?'], 360, 44, '#fff');
+memQ.g.setAttribute('transform', 'translate(0 6)');
+const memCross = S('path', { d: 'M-150,-80 L150,80 M150,-80 L-150,80', stroke: CORAL, 'stroke-width': 22, 'stroke-linecap': 'round' }, memory);
+// the next day: she asks again
+const askAgain = bubble(oFront, ['Tell me about', 'yourself?'], 400, 46, '#fff');
+const sparksO = [[-220, -170, 30], [220, -190, 24], [240, 150, 22], [-230, 130, 26]].map(([x, y, r]) => ({ e: star(oFront, 0, 0, r, YEL), x, y }));
+const plane = paperPlane(oFront, [330, 1150], [700, 760], [1300, 520]);
+const oPhone = handPhone(oFront);
+
+U.push((t) => {
+  const A = t < T.trouble - 0.2;   // the hook
+  const E = t >= T.end - 0.2;      // the next day, the link line, the ask
+  if (!show(O.s, A || E)) return;
+  cloud.setAttribute('transform', `translate(${660 + ((t * 18) % 320)} 440)`);
+  const link = t >= T.link - 0.2;
+  const win = (A && t > T.impressed - 0.05) || (E && !link && t > T.smileWord - 0.05);
+  show(impressed, win);
+  sparksO.forEach((s) => show(s.e, win));
+  show(memory, A && t > T.last - 0.1);
+  show(memCross, A && t > T.atak - 0.05);
+  show(askAgain.g, E && !link && t > T.end + 0.1 && t < T.smileWord - 0.05);
+  show(oPhone, link);
+  plane(t, link ? T.send + 0.2 : 1e9, T.sendWord + 0.3);
+  const winAt = A ? T.impressed : T.smileWord;
+  place(impressed, 800, 560 + 6 * Math.sin(t * 2.5), backOut(prog(t, winAt - 0.05, 0.35)), -5);
+  sparksO.forEach((s, i) => place(s.e, 800 + s.x, 560 + s.y, 0.7 + 0.3 * Math.sin(t * 5 + i * 2), t * 30));
+  if (A) {
+    whip(O.s, O.blur, 0, 0);
+    whipOut(O.s, O.blur, t, T.trouble - 0.2, -1);
+    O.cam(...key(t, [[0, [560, 1000, 1.1]], [T.last, [540, 990, 1.14], (p) => p], [T.trouble, [520, 980, 1.2]]]));
+    priya.pose({
+      x: 820, y: 1640 - 18 * Math.max(0, bump(t - T.impressed)), s: 1.5, tilt: -5 + 2 * Math.sin(t * 2.2),
+      face: 'amazed', pop: pop(t, [T.impressed]),
+      handL: [-60 + 14 * Math.sin(t * 9), -230], handR: [60 - 14 * Math.sin(t * 9), -230],
+    });
+    meO.pose({
+      x: 260, y: 1640, s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.4),
+      face: t < T.last ? 'grin' : t < T.atak ? 'look-left' : 'grin', pop: pop(t, [T.last, T.atak]),
+      handL: [-150, -62], handR: [190, -380], gripR: 'open',
+    });
+    place(memory, 330, 520 + 5 * Math.sin(t * 2), backOut(prog(t, T.last - 0.1, 0.35)) * 0.9, -4);
+    return;
+  }
+  if (t < T.end + 0.25) whipIn(O.s, O.blur, t, T.end - 0.2, 1);
+  else whip(O.s, O.blur, 0, 0);
+  O.cam(...key(t, [[T.end - 0.2, [560, 1000, 1.0]], [T.smile, [580, 990, 1.1], (p) => p], [T.smileWord + 0.2, [560, 980, 1.06]], [T.link - 0.2, [560, 980, 1.08], (p) => p], [T.link + 0.2, [70, 1020, 1.3]], [dur, [70, 1010, 1.34], (p) => p]]));
+  const answering = t > T.same + 0.3 && t < T.smileWord;
+  priya.pose({
+    x: 820, y: 1640 - 18 * Math.max(0, bump(t - T.smileWord)), s: 1.5, tilt: -4 + 2 * Math.sin(t * 2),
+    face: t < T.same + 0.3 ? 'talk' : t < T.smileWord ? 'neutral' : 'grin', pop: pop(t, [T.same + 0.3, T.smileWord]),
+    handL: t > T.smileWord ? [-60 + 14 * Math.sin(t * 9), -230] : [-150, -62], handR: t > T.smileWord ? [60 - 14 * Math.sin(t * 9), -230] : [150, -62],
+  });
+  place(askAgain.g, 800, 600 + 6 * Math.sin(t * 2.5), backOut(prog(t, T.end + 0.1, 0.35)), 3);
+  const offer = link ? eio(prog(t, T.link, 0.3)) * (1 - prog(t, T.send - 0.1, 0.2)) : 0;
+  meO.pose({
+    x: 260, y: 1640 - 24 * Math.max(0, bump(t - T.sendWord)), s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.3),
+    face: !link ? (answering ? 'talk' : t < T.smileWord ? 'look-right' : 'wink') : t < T.comment - 0.1 ? 'talk' : t < T.send ? 'grin' : 'wink',
+    pop: pop(t, [T.same + 0.3, T.smileWord, T.link, T.send]),
+    handL: link ? [lerp(-70, -215, offer), lerp(-200, -360, offer) - 8 * offer * Math.sin(t * 6)] : [-150, -62],
+    handR: answering ? [190, -330 + 30 * Math.sin(t * 5)] : (!link && t > T.smileWord) || (link && t > T.send) ? [160, -470] : [150, -62],
+    gripR: answering ? 'open' : (!link && t > T.smileWord) || (link && t > T.send) ? 'thumb' : 'open',
+  });
+  place(oPhone, 260 + (lerp(-70, -215, offer) - 4) * 1.5, 1640 + (lerp(-200, -360, offer) - 46) * 1.5, 1.3, -8);
+});
+
+// ================= my desk the night before =================
+const D = desk(svg, L, ME_HOME);
+const shaky = bubble(D.props, ['Tell me about', 'yourself...'], 420, 50, '#fff');
+const note = S('g', {}, D.props);
+S('rect', { x: -130, y: -95, width: 260, height: 190, rx: 8, fill: YEL, ...line }, note);
+S('text', { y: -14, 'text-anchor': 'middle', 'font-size': 46, fill: NAVY }, note, 'INTERVIEW');
+S('text', { y: 56, 'text-anchor': 'middle', 'font-size': 60, fill: CORAL }, note, 'कल');
+const dPhone = handPhone(D.props);
+const sparksD = [[-200, -150, 30], [200, -180, 24], [220, 140, 22]].map(([x, y, r]) => ({ e: star(D.props, 0, 0, r, YEL), x, y }));
+
+U.push((t) => {
+  const B = t >= T.trouble - 0.2 && t < T.gemini - 0.25;   // the shaky answer, the note, the phone
+  const F = t >= T.follow - 0.2 && t < T.jd - 0.25;         // the follow line, "असली जुगाड़"
+  if (!show(D.s, B || F)) return;
+  D.tick(t, F ? 1 : 0);
+  show(shaky.g, B && t < T.turn);
+  show(note, B && t > T.iv - 0.1);
+  show(dPhone, B && t > T.turn);
+  sparksD.forEach((s) => show(s.e, F));
+  if (B) {
+    if (t < T.trouble + 0.25) whipIn(D.s, D.blur, t, T.trouble - 0.2, 1);
+    else if (t > T.gemini - 0.55) whipOut(D.s, D.blur, t, T.gemini - 0.25, -1);
+    else whip(D.s, D.blur, 0, 0);
+    D.cam(...key(t, [[T.trouble - 0.2, [540, 1060, 1.05]], [T.kal, [540, 1080, 1.14], (p) => p], [T.turn, [540, 1040, 1.1]], [T.gemini, [540, 1030, 1.16], (p) => p]]));
+    const idea = t > T.turn;
+    D.kid.pose({
+      x: 540, y: 1640, s: 1.5, tilt: t < T.kal ? 3 * Math.sin(t * 11) : -3 + 2 * Math.sin(t * 2),
+      face: idea ? 'look-left' : t < T.kal ? 'worried' : 'sad', pop: pop(t, [T.kaanp, T.kal, T.turn]),
+      handL: idea ? [-170, -380] : [-150, -62], handR: [150, -62],
+    });
+    place(shaky.g, 540, 560, backOut(prog(t, T.trouble + 0.2, 0.35)), -3);
+    shaky.texts.forEach((e, i) => e.setAttribute('transform', `translate(${(t > T.kaanp - 0.3 ? 6 : 2) * Math.sin(t * 37 + i * 2)} ${(t > T.kaanp - 0.3 ? 4 : 1) * Math.sin(t * 29 + i)})`));
+    const n = backOut(prog(t, T.iv - 0.1, 0.25));
+    place(note, 540, 1370, lerp(1.6, 1, Math.min(1, n)) * (n > 0 ? 1 : 0), -5);
+    place(dPhone, 540 - 170 * 1.5 - 4, 1640 - 380 * 1.5 - 70, 1.4 * backOut(prog(t, T.turn, 0.3)), -8);
+    return;
+  }
+  if (t < T.follow + 0.25) whipIn(D.s, D.blur, t, T.follow - 0.2, 1);
+  else if (t > T.jd - 0.55) whipOut(D.s, D.blur, t, T.jd - 0.25, -1);
+  else whip(D.s, D.blur, 0, 0);
+  D.cam(...key(t, [[T.follow - 0.2, [540, 1020, 1.0]], [T.twist, [540, 1030, 1.06], (p) => p], [T.twist + 0.4, [540, 1080, 1.22]], [T.jd, [540, 1090, 1.26], (p) => p]]));
+  const tw = t > T.twist;
+  D.kid.pose({
+    x: 540, y: 1640 - 24 * Math.max(0, bump(t - T.jugaad)), s: 1.5, tilt: tw ? 4 : -3 + 2 * Math.sin(t * 2.2),
+    face: tw ? 'wink' : 'grin', pop: pop(t, [T.twist, T.jugaad]),
+    handL: tw ? [-160, -620] : [-170, -380], gripL: tw ? 'point' : 'thumb', handR: [150, -62],
+  });
+  sparksD.forEach((s, i) => place(s.e, 540 + s.x, 880 + s.y, 0.7 + 0.3 * Math.sin(t * 5 + i * 2), t * 30));
+});
+
+// ================= my phone in Live mode (drawn, not the real app) =================
+const P = { s: S('g', {}, svg) };
+P.w = S('g', {}, P.s);
+P.cam = camera(P.w);
+P.blur = L.blurOf('mbPhone');
+S('rect', { x: -700, y: -700, width: 2480, height: 3320, fill: '#1A1F4B' }, P.w);
+for (const [x, y, r, f] of [[110, 320, 170, '#262C66'], [990, 1460, 230, '#262C66'], [960, 300, 90, '#343E80']]) S('circle', { cx: x, cy: y, r, fill: f }, P.w);
+S('rect', { x: 190, y: 200, width: 700, height: 1200, rx: 84, fill: NAVY, ...line }, P.w);
+S('rect', { x: 222, y: 240, width: 636, height: 1120, rx: 60, fill: '#10142E' }, P.w);
+S('rect', { x: 222, y: 240, width: 636, height: 1120, rx: 60 }, S('clipPath', { id: 'phScr' }, defs));
+const scr = S('g', { 'clip-path': 'url(#phScr)' }, P.w);
+const orbG = S('radialGradient', { id: 'orb', cx: 0.5, cy: 0.45, r: 0.6 }, defs);
+S('stop', { offset: 0, 'stop-color': '#9DB4FF' }, orbG);
+S('stop', { offset: 0.6, 'stop-color': '#4F6BFF' }, orbG);
+S('stop', { offset: 1, 'stop-color': '#7B4DFF' }, orbG);
+const orb = S('circle', { cx: 540, cy: 560, r: 140, fill: 'url(#orb)' }, scr);
+const ring = S('circle', { cx: 540, cy: 560, r: 170, fill: 'none', stroke: '#9DB4FF', 'stroke-width': 6, opacity: 0.5 }, scr);
+S('text', { x: 540, y: 330, 'text-anchor': 'middle', 'font-size': 40, fill: '#fff' }, scr, 'Live');
+// the talk
+const myAsk = bubble(scr, ['मेरा interview लो'], 470, 52, BLUE, '#fff', 'right');
+const aiQ = bubble(scr, ['Tell me about', 'yourself.'], 440, 50, '#fff', NAVY, 'left');
+const wave = S('g', {}, scr);
+S('rect', { x: -170, y: -46, width: 340, height: 92, rx: 46, fill: BLUE }, wave);
+const bars = Array.from({ length: 9 }, (_, i) => S('rect', { x: -130 + i * 30, y: -10, width: 14, height: 20, rx: 7, fill: '#fff' }, wave));
+// the feedback card
+const fb = S('g', {}, scr);
+S('rect', { x: -280, y: -230, width: 560, height: 460, rx: 30, fill: '#fff', ...line, 'stroke-width': 4 }, fb);
+S('text', { x: -240, y: -160, 'font-size': 44, fill: NAVY }, fb, 'Feedback');
+const meters = ['Tone', 'Clarity'].map((name, i) => {
+  const y = -70 + i * 130;
+  S('text', { x: -240, y, 'font-size': 38, fill: NAVY }, fb, name);
+  S('rect', { x: -240, y: y + 22, width: 400, height: 34, rx: 17, fill: '#E6EAF3' }, fb);
+  const fill = S('rect', { x: -240, y: y + 22, width: 0, height: 34, rx: 17, fill: CORAL }, fb);
+  const tk = tickBadge(fb, 28);
+  tk.setAttribute('transform', `translate(210 ${y + 39})`);
+  return { fill, tk };
+});
+S('rect', { x: -240, y: 160, width: 300, height: 16, rx: 8, fill: '#C9CEDA' }, fb);
+// the job description and its questions
+const jdDoc = S('g', {}, scr);
+S('rect', { x: -230, y: -170, width: 460, height: 340, rx: 18, fill: '#fff', ...line, 'stroke-width': 4 }, jdDoc);
+S('rect', { x: -230, y: -170, width: 460, height: 70, rx: 18, fill: YEL, ...line, 'stroke-width': 4 }, jdDoc);
+S('text', { y: -122, 'text-anchor': 'middle', 'font-size': 32, fill: NAVY }, jdDoc, 'JOB DESCRIPTION');
+for (let k = 0; k < 5; k++) S('rect', { x: -190, y: -60 + k * 42, width: [380, 320, 360, 280, 340][k], height: 14, rx: 7, fill: '#C9CEDA' }, jdDoc);
+const QS = [['Why this role?'], ['Tell me about', 'a project.'], ['How do you meet', 'a deadline?']].map((l) => bubble(scr, l, 470, 44, '#fff', NAVY, 'left'));
+
+U.push((t) => {
+  const H = t >= T.how - 0.25 && t < T.follow - 0.2;     // Live: my request, its question, the feedback
+  const J = t >= T.job2 - 0.4 && t < T.end - 0.2;        // the job description, new questions
+  if (!show(P.s, H || J)) return;
+  const speaking = (H && ((t > T.asks && t < T.answer) || (t > T.magic))) || (J && t > T.poochhega - 0.3);
+  const lvl = speaking ? 0.06 * Math.abs(Math.sin(t * 13)) + 0.04 * Math.abs(Math.sin(t * 7)) : 0.02 * Math.sin(t * 2);
+  orb.setAttribute('r', 140 * (1 + lvl));
+  ring.setAttribute('r', 170 + 30 * ((t * 0.8) % 1));
+  ring.setAttribute('opacity', 0.5 * (1 - ((t * 0.8) % 1)));
+  if (H) {
+    if (t < T.how + 0.2) whipIn(P.s, P.blur, t, T.how - 0.25, 1);
+    else if (t > T.follow - 0.5) whipOut(P.s, P.blur, t, T.follow - 0.2, 1);
+    else whip(P.s, P.blur, 0, 0);
+    P.cam(...key(t, [[T.how - 0.25, [540, 820, 1.02]], [T.answer, [540, 860, 1.12], (p) => p], [T.magic + 0.1, [540, 900, 1.22]], [T.follow, [540, 910, 1.28], (p) => p]]));
+    const talk = t < T.magic - 0.1;
+    const o = eio(prog(t, T.magic - 0.15, 0.4));
+    orb.setAttribute('cy', lerp(560, 450, o)); ring.setAttribute('cy', lerp(560, 450, o)); orb.setAttribute('r', 140 * (1 + lvl) * lerp(1, 0.6, o)); ring.setAttribute('r', (170 + 30 * ((t * 0.8) % 1)) * lerp(1, 0.6, o));
+    show(myAsk.g, talk && t > T.bolo - 0.1); show(aiQ.g, talk && t > T.asks - 0.05); show(wave, talk && t > T.answer - 0.1);
+    place(myAsk.g, 610, 820, backOut(prog(t, T.bolo - 0.1, 0.3)));
+    place(aiQ.g, 480, 990, backOut(prog(t, T.asks - 0.05, 0.3)));
+    place(wave, 640, 1160, backOut(prog(t, T.answer - 0.1, 0.3)));
+    bars.forEach((b, i) => { const h = 20 + (t > T.answer && t < T.magic ? 46 * Math.abs(Math.sin(t * 11 + i * 1.3)) : 0); b.setAttribute('height', h); b.setAttribute('y', -h / 2); });
+    show(fb, t > T.magic - 0.1);
+    place(fb, 540, lerp(1600, 880, expoOut(prog(t, T.magic - 0.1, 0.45))));
+    meters.forEach((m, i) => {
+      const at0 = i ? T.clarity : T.tone;
+      const p = eio(prog(t, at0 - 0.1, 0.6));
+      m.fill.setAttribute('width', lerp(120, 360, p));
+      m.fill.setAttribute('fill', p > 0.6 ? GREEN : p > 0.3 ? YEL : CORAL);
+      const k = backOut(prog(t, T.sudhar + 0.1 + i * 0.15, 0.3));
+      show(m.tk, k > 0);
+      m.tk.setAttribute('transform', `translate(210 ${-70 + i * 130 + 39}) scale(${k})`);
+    });
+    [jdDoc, ...QS.map((q) => q.g)].forEach((e) => show(e, false));
+    return;
+  }
+  if (t < T.job2) whipIn(P.s, P.blur, t, T.job2 - 0.4, 1);
+  else if (t > T.end - 0.5) whipOut(P.s, P.blur, t, T.end - 0.2, 1);
+  else whip(P.s, P.blur, 0, 0);
+  P.cam(...key(t, [[T.job2 - 0.4, [540, 860, 1.12]], [T.poochhega, [540, 880, 1.2], (p) => p], [T.end, [540, 900, 1.26], (p) => p]]));
+  [myAsk.g, aiQ.g, wave, fb].forEach((e) => show(e, false));
+  const jIn = expoOut(prog(t, T.job2 - 0.4, 0.4));
+  const qa = T.job2 + 0.3;
+  orb.setAttribute('cy', 450); ring.setAttribute('cy', 450); orb.setAttribute('r', 84 * (1 + lvl)); ring.setAttribute('r', 0.6 * (170 + 30 * ((t * 0.8) % 1)));
+  show(jdDoc, true);
+  const lift = eio(prog(t, qa - 0.2, 0.35));
+  place(jdDoc, lerp(540, 380, lift), lerp(1500, 860, jIn) - 240 * lift, lerp(0.6, 0.9, jIn) * (1 - 0.45 * lift), -3 - 4 * lift);
+  QS.forEach((q, i) => {
+    const p = backOut(prog(t, qa + i * 0.28, 0.3));
+    show(q.g, p > 0);
+    place(q.g, 520 + (i % 2) * 30, 800 + i * 170, p);
+  });
+});
+
+// ================= Gemini's pages =================
+const PX = 1080 / 412; // frame pixels for one css pixel
+const pHot = webpage(stage, HOT, 1648);
+const pFree = webpage(stage, FREE, 1648);
+const ink = (page) => S('svg', { width: 1080, height: 10, style: 'position:absolute;left:0;top:0;overflow:visible' }, page.pins);
+const loop = (layer, cx, cy, rx, ry, rot = -3) => {
+  const e = S('ellipse', { cx: cx * PX, cy: cy * PX, rx: rx * PX, ry: ry * PX, fill: 'none', stroke: CORAL, 'stroke-width': 12, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: `rotate(${rot} ${cx * PX} ${cy * PX})` }, layer);
+  return (p) => { show(e, p > 0); e.setAttribute('stroke-dashoffset', 1 - p); };
+};
+// css px inside each strip
+const inkHot = ink(pHot);
+const ringLive = loop(inkHot, 226, 137, 62, 17, -2);
+const ringMock = loop(inkHot, 214, 166, 84, 17, -1);
+const ringJD = loop(inkHot, 205, 626, 174, 56, -2);
+const inkFree = ink(pFree);
+const ringFree = loop(inkFree, 136, 43, 102, 24, -2);
+const ringLiveFree = loop(inkFree, 135, 566, 80, 18, -1);
+const rise = (t, t0) => 1920 * (1 - expoOut(prog(t, t0, 0.42)));
+const drop = (t, t0) => 1920 * eio(prog(t, t0, 0.34));
+U.push((t) => {
+  // "Gemini Live ... mock interviewer": the career coach page; "job description": its picture
+  const hotA = t >= T.gemini - 0.25 && t < T.free;
+  const hotB = t >= T.jd - 0.25 && t < T.job2 - 0.3;
+  if (hotA) {
+    pHot.set({ rect: [-1080 * eio(prog(t, T.free - 0.3, 0.3)), rise(t, T.gemini - 0.25), 1080, 1920], scroll: 0, slide: 260, zoom: key(t, [[T.gemini, 1.12], [T.free, 1.2]]), fx: 60, fy: 300 });
+    ringLive(eio(prog(t, T.gemini + 0.05, 0.4))); ringMock(eio(prog(t, T.mock - 0.05, 0.4))); ringJD(0);
+  } else if (hotB) {
+    pHot.set({ rect: [1080 * (1 - eio(prog(t, T.jd - 0.25, 0.4))), drop(t, T.job2 - 0.64), 1080, 1920], scroll: key(t, [[T.jd - 0.25, 800], [T.job2, 1000]]), slide: 0, zoom: key(t, [[T.jd, 1.15], [T.job2, 1.22]]), fx: 60, fy: 960 });
+    ringLive(0); ringMock(0); ringJD(eio(prog(t, T.jd + 0.25, 0.45)));
+  } else pHot.hide();
+  if (t >= T.free - 0.2 && t < T.how - 0.1) {
+    pFree.set({ rect: [1080 * (1 - eio(prog(t, T.free - 0.2, 0.4))), drop(t, T.how - 0.34), 1080, 1920], scroll: key(t, [[T.freeWord + 0.05, 0], [T.freeWord + 0.35, 1000]]), slide: 240, zoom: key(t, [[T.free, 1.16], [T.how, 1.22]]), fx: 60, fy: 260 });
+    ringFree(eio(prog(t, T.freeWord - 0.1, 0.35)));
+    ringLiveFree(eio(prog(t, T.freeWord + 0.38, 0.3)));
+  } else pFree.hide();
+});
+
+// ================= captions, the link line, the follow cards, the pointer =================
+const clean = (ws) => ws.map((x) => ({ ...x, word: x.word.replace(/[।,?]+$/, '') }));
+U.push(captionsCompact(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1, whole: i === 0 }))));
+const link = linkLine(stage, 'gemini.google');
+const followMid = followCard(stage, { line: 'AI जुगाड़ series' });
+const followEnd = followCard(stage, { next: 'अगला: AI जुगाड़ #4' });
+const tip = pointer(stage, NAVY, '#fff', 130);
+const TIP = [
+  [T.followWord - 0.45, [1160, 700]], [T.fpress - 0.05, [900, 420], cubicOut], [T.twist - 0.15, [900, 420]],
+  [T.comment + 0.2, [1170, 1460]], [T.post - 0.08, [935, 1250], cubicOut], [T.send - 0.05, [935, 1250]],
+  [T.send + 0.3, [1150, 900]], [T.press - 0.06, [900, 420], cubicOut], [dur, [900, 420]],
+];
+const SHOWN = [[T.followWord - 0.45, T.twist - 0.15], [T.comment + 0.2, T.send - 0.05], [T.send + 0.3, dur + 1]];
+U.push((t) => {
+  link.set(t, { link: T.link, comment: T.comment, post: T.post, away: T.send });
+  followMid.set(t, T.follow + 0.05, T.fpress, T.twist - 0.15);
+  followEnd.set(t, T.send + 0.2, T.press);
+  tip.style.visibility = SHOWN.some(([a, b]) => t >= a && t < b) ? 'visible' : 'hidden';
+  const [x, y] = key(t, TIP);
+  const click = pulse(t, T.fpress + 0.02, 0.07) + pulse(t, T.post + 0.02, 0.07) + pulse(t, T.press + 0.02, 0.07);
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * click})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

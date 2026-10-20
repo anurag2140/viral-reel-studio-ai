@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#15 AI जुगाड़ #2: assignment के पाँचों references नकली</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #FFE3BF; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// A comedy skit in three places and two pages: Prof. Sharma's cabin by day (the hook, the next
+// assignment, the link line), my desk at night from the front, where Chintu plays the AI and
+// hands me five books that are bananas, and over my shoulder, where the title finds nothing and
+// a real reference gets its Cite. Scholar's own help pages fill the frame for "Google Scholar"
+// and "Cite" (its search page showed a bot check to the capture, so the search is drawn).
+import { S, backOut, bump, camera, captionsCompact, cubicOut, eio, expoOut, key, lerp, person, pointer, prog, pulse, setup, start, webpage } from '/brand/story.js';
+import { CORAL, INK, NAVY, BLUE, dayWall, desk, followCard, lights, linkLine, paperPlane, room, show, star, whip, whipIn, whipOut } from '/brand/scenes.js';
+import { cast, monkey } from '/brand/cast.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const TITLE = 'shots/title.jpg'; // scholar help, "Searching" tab, 0 to 600 css px at 4x
+const CITE = 'shots/cite.jpg';   // scholar help, "Citation Export" tab, 0 to 600 css px at 4x
+const FACE = { dir: '/brand/face/', meta: await (await fetch('/brand/face/face.json')).json() };
+const ME = { face: FACE, skin: FACE.meta.cheek, shade: '#D98A52', outfit: 'hoodie' };
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"', '600 33px "Anek Devanagari"'], [TITLE, CITE, '/logo.png', ...FACE.meta.names.map((n) => `${FACE.dir}${n}.png`)]);
+const pop = (t, at) => 1 - 0.07 * at.reduce((v, a) => v + Math.max(0, bump(t - a)), 0);
+const place = (g, x, y, s = 1, r = 0) => g.setAttribute('transform', `translate(${x} ${y}) rotate(${r}) scale(${s})`);
+const U = [];
+const L = lights(svg);
+const defs = L.defs;
+const YEL = '#FFD23F';
+const GREEN = '#19C37D';
+const line = { stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+const chip = (parent, text, w, size, fill = YEL, ink = NAVY) => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -size * 0.75, width: w, height: size * 1.5, rx: size * 0.36, fill, ...line }, g);
+  S('text', { y: size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, text);
+  return g;
+};
+const tickMark = (parent, x, y, r = 22) => S('path', { d: `M${x - r},${y} L${x - r * 0.3},${y + r * 0.7} L${x + r},${y - r * 0.7}`, fill: 'none', stroke: GREEN, 'stroke-width': r * 0.45, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, parent);
+const crossMark = (parent, x, y, r = 20) => S('path', { d: `M${x - r},${y - r} L${x + r},${y + r} M${x + r},${y - r} L${x - r},${y + r}`, stroke: CORAL, 'stroke-width': r * 0.42, 'stroke-linecap': 'round' }, parent);
+const tickBadge = (parent, r = 46) => {
+  const g = S('g', {}, parent);
+  S('circle', { r, fill: GREEN, ...line }, g);
+  S('path', { d: `M${-r * 0.44},${r * 0.04} L${-r * 0.12},${r * 0.36} L${r * 0.48},${-r * 0.32}`, fill: 'none', stroke: '#fff', 'stroke-width': r * 0.24, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
+  return g;
+};
+// the assignment: a page with five references; marks (crosses or ticks) come on one by one
+function assignment(parent, kind) {
+  const g = S('g', {}, parent);
+  S('rect', { x: -150, y: -195, width: 300, height: 390, rx: 12, fill: '#fff', ...line }, g);
+  S('text', { y: -142, 'text-anchor': 'middle', 'font-size': 34, fill: NAVY }, g, 'ASSIGNMENT');
+  S('rect', { x: -120, y: -118, width: 240, height: 10, rx: 5, fill: '#C9CEDA' }, g);
+  S('text', { x: -120, y: -66, 'font-size': 28, fill: '#5B6070' }, g, 'References');
+  const marks = [];
+  for (let k = 0; k < 5; k++) {
+    const y = -26 + k * 44;
+    S('text', { x: -122, y: y + 10, 'font-size': 26, fill: NAVY }, g, `${k + 1}.`);
+    S('rect', { x: -90, y: y - 6, width: [150, 130, 160, 120, 140][k], height: 12, rx: 6, fill: '#C9CEDA' }, g);
+    marks.push(kind === 'cross' ? crossMark(g, 105, y, 16) : tickMark(g, 105, y, 18));
+  }
+  return { g, marks };
+}
+// one of the books Chintu makes up: a cover, and a banana on the back
+const COVERS = [['#2F5BFF', 'Advanced', 'Banana Physics', 'Dr. K. Banana, 2019'], [CORAL, 'History of', 'Everything', 'Prof. Bandar, 2021'], [GREEN, 'Quantum', 'Chai Theory', 'A. Monkey, 2018'], ['#7B4DFF', 'The Secret', 'of Exams', 'Dr. Jungle, 2020'], ['#FF6B4A', 'Tree Jumping', 'for Engineers', 'C. Chintu, 2022']];
+function book(parent, k) {
+  const g = S('g', {}, parent);
+  const front = S('g', {}, g);
+  const [col, a, b, by] = COVERS[k];
+  S('rect', { x: -130, y: -84, width: 260, height: 168, rx: 12, fill: col, ...line }, front);
+  S('rect', { x: -130, y: -84, width: 26, height: 168, fill: '#000', opacity: 0.18 }, front);
+  S('text', { x: -88, y: -30, 'font-size': 30, fill: '#fff' }, front, a);
+  S('text', { x: -88, y: 8, 'font-size': 30, fill: '#fff' }, front, b);
+  S('text', { x: -88, y: 56, 'font-size': 22, fill: '#fff', opacity: 0.9 }, front, by);
+  const back = S('g', {}, g);
+  S('rect', { x: -130, y: -84, width: 260, height: 168, rx: 12, fill: '#FFF4CC', ...line }, back);
+  S('path', { d: 'M-82,-38 Q-40,62 86,30', fill: 'none', stroke: INK, 'stroke-width': 62, 'stroke-linecap': 'round' }, back);
+  S('path', { d: 'M-82,-38 Q-40,62 86,30', fill: 'none', stroke: YEL, 'stroke-width': 50, 'stroke-linecap': 'round' }, back);
+  S('path', { d: 'M-70,-18 Q-34,42 70,22', fill: 'none', stroke: '#E8B400', 'stroke-width': 10, 'stroke-linecap': 'round' }, back);
+  S('path', { d: 'M86,30 L112,20', stroke: '#6B4423', 'stroke-width': 16, 'stroke-linecap': 'round' }, back);
+  S('circle', { cx: -84, cy: -42, r: 9, fill: '#6B4423' }, back);
+  return { g, front, back, flip(p) { const c = Math.cos(Math.PI * p); show(front, c >= 0); show(back, c < 0); front.setAttribute('transform', `scale(${Math.max(0.02, Math.abs(c))} 1)`); back.setAttribute('transform', `scale(${Math.max(0.02, Math.abs(c))} 1)`); } };
+}
+// round glasses for Chintu, the AI that sounds very sure
+function glassesFor(parent) {
+  const g = S('g', {}, parent);
+  for (const m of [-1, 1]) S('circle', { cx: m * 36, cy: -14, r: 27, fill: '#fff', 'fill-opacity': 0.15, stroke: NAVY, 'stroke-width': 7 }, g);
+  S('path', { d: 'M-9,-16 Q0,-24 9,-16', fill: 'none', stroke: NAVY, 'stroke-width': 6 }, g);
+  return (x, y, s, tilt = 0) => g.setAttribute('transform', `translate(${x} ${y}) scale(${s}) translate(0 -290) rotate(${tilt})`);
+}
+
+// ================= Prof. Sharma's cabin by day =================
+const C = { s: S('g', {}, svg) };
+C.w = S('g', {}, C.s);
+C.cam = camera(C.w);
+C.blur = L.blurOf('mbCabin');
+const wallTick = dayWall(C.w);
+S('rect', { x: -500, y: 1500, width: 2080, height: 1200, fill: '#E2C9A0' }, C.w);
+S('rect', { x: -500, y: 1500, width: 2080, height: 16, fill: '#CFAF7E' }, C.w);
+// a bookshelf behind us
+const shelf = S('g', { transform: 'translate(560 760)' }, C.w);
+S('rect', { x: -120, y: -170, width: 240, height: 300, rx: 8, fill: '#B5763E', ...line }, shelf);
+for (const y of [-60, 50]) S('rect', { x: -110, y, width: 220, height: 12, fill: '#8C5A2E' }, shelf);
+[[-100, -150, 26, '#2F5BFF'], [-70, -140, 22, CORAL], [-44, -150, 30, GREEN], [-10, -136, 22, YEL], [16, -150, 28, '#7B4DFF'], [-96, -40, 30, '#FF6B4A'], [-60, -30, 24, NAVY], [-30, -42, 28, '#2FB5FF']].forEach(([x, y, w, f]) => S('rect', { x, y, width: w, height: y < -100 ? 90 : 90, fill: f, stroke: INK, 'stroke-width': 3 }, shelf));
+const sharma = cast(C.w, 'sharma');
+const meC = person(C.w, ME);
+// Chintu at the window at the end, his thumb up
+const chW = monkey(C.w);
+const cFront = S('g', {}, C.w);
+const paperBad = assignment(cFront, 'cross');
+const paperGood = assignment(cFront, 'tick');
+const ring5 = S('ellipse', { cx: -10, cy: 62, rx: 150, ry: 130, fill: 'none', stroke: CORAL, 'stroke-width': 9, pathLength: 1, 'stroke-dasharray': 1, 'stroke-linecap': 'round' }, paperBad.g);
+const good = chip(cFront, 'Very good!', 330, 60, YEL);
+const sparksC = [[-200, -230, 30], [210, -250, 24], [230, 180, 22], [-220, 170, 26]].map(([x, y, r]) => ({ e: star(cFront, 0, 0, r, YEL), x, y }));
+const plane = paperPlane(cFront, [330, 1150], [700, 760], [1300, 520]);
+const cPhone = S('g', {}, cFront);
+S('rect', { x: -40, y: -70, width: 80, height: 140, rx: 16, fill: NAVY, ...line }, cPhone);
+S('rect', { x: -32, y: -58, width: 64, height: 112, rx: 8, fill: '#BFD0FF' }, cPhone);
+
+U.push((t) => {
+  const A = t < T.trouble - 0.2;   // the hook
+  const E = t >= T.end - 0.2;      // the next assignment, the link line, the ask
+  if (!show(C.s, A || E)) return;
+  wallTick(t);
+  const link = t >= T.link - 0.2;
+  show(paperBad.g, A); show(paperGood.g, E && !link);
+  show(good, E && !link && t > T.veryGood - 0.05);
+  show(chW.g, E && t > T.veryGood - 0.3);
+  show(cPhone, link);
+  sparksC.forEach((s) => show(s.e, E && !link && t > T.veryGood));
+  plane(t, link ? T.send + 0.2 : 1e9, T.sendWord + 0.3);
+  // her hand (his) holds the page out between us
+  const sx = 820;
+  const hand = [-175, -430 + 6 * Math.sin(t * 3)];
+  const px = sx + hand[0] * 1.5 - 20;
+  const py = 1640 + hand[1] * 1.5 - 150;
+  if (A) {
+    whip(C.s, C.blur, 0, 0);
+    whipOut(C.s, C.blur, t, T.trouble - 0.2, -1);
+    C.cam(...key(t, [[0, [560, 1000, 1.1]], [T.oneByOne, [580, 990, 1.16], (p) => p], [T.trouble, [600, 980, 1.24]]]));
+    sharma.pose({
+      x: sx, y: 1640, s: 1.5, tilt: -4 + 3 * Math.sin(t * 2.4), face: t < T.caught ? 'angry' : 'angry',
+      pop: pop(t, [T.fake, T.oneByOne]), handL: hand, handR: t > T.oneByOne ? [120, -560] : [150, -62], gripR: 'point',
+    });
+    place(paperBad.g, px, py, 1, -5 + 2 * Math.sin(t * 2));
+    ring5.setAttribute('stroke-dashoffset', 1 - eio(prog(t, 0.2, 0.6)));
+    show(ring5, t < T.oneByOne);
+    paperBad.marks.forEach((m, i) => { const p = backOut(prog(t, T.oneByOne + i * 0.26, 0.2)); show(m, p > 0); m.setAttribute('transform', `translate(105 ${-26 + i * 44}) scale(${p}) translate(-105 ${26 - i * 44})`); });
+    meC.pose({
+      x: 230, y: 1640 + 10 * Math.max(0, bump(t - T.pakad)), s: 1.5, tilt: 3 + 2 * Math.sin(t * 2.6),
+      face: t < T.oneByOne ? 'worried' : 'sad', pop: pop(t, [T.oneByOne, T.pakad]),
+      handL: [-120, -250], handR: [120, -250],
+    });
+    return;
+  }
+  // the next assignment: he reads, ticks come on, "very good"; then the link line and the ask
+  if (t < T.end + 0.25) whipIn(C.s, C.blur, t, T.end - 0.2, 1);
+  else whip(C.s, C.blur, 0, 0);
+  C.cam(...key(t, [[T.end - 0.2, [560, 1000, 1.0]], [T.padhe, [600, 990, 1.12], (p) => p], [T.veryGood - 0.2, [620, 990, 1.14], (p) => p], [T.veryGood + 0.2, [560, 960, 1.04]], [T.link - 0.2, [560, 960, 1.06], (p) => p], [T.link + 0.2, [70, 1020, 1.3]], [dur, [70, 1010, 1.34], (p) => p]]));
+  const vg = t > T.veryGood - 0.05;
+  sharma.pose({
+    x: sx, y: 1640 - 22 * Math.max(0, bump(t - T.veryGood)), s: 1.5, tilt: -4 + 2 * Math.sin(t * 2),
+    face: t < T.padhe ? 'thinking' : vg ? 'grin' : 'neutral', pop: pop(t, [T.padhe, T.veryGood]),
+    handL: hand, handR: vg ? [170, -480] : [150, -62], gripR: vg ? 'thumb' : 'open',
+  });
+  place(paperGood.g, px, py, 1, -5 + 2 * Math.sin(t * 2));
+  paperGood.marks.forEach((m, i) => { const p = backOut(prog(t, T.padhe + i * 0.18, 0.2)); show(m, p > 0); m.setAttribute('transform', `translate(105 ${-26 + i * 44}) scale(${p}) translate(-105 ${26 - i * 44})`); });
+  place(good, 720, 560 + 6 * Math.sin(t * 2.5), backOut(prog(t, T.veryGood - 0.05, 0.35)), -5);
+  sparksC.forEach((s, i) => place(s.e, 720 + s.x, 560 + s.y, 0.7 + 0.3 * Math.sin(t * 5 + i * 2), t * 30));
+  // Chintu pops up in the window with his thumb up
+  const cw = expoOut(prog(t, T.veryGood - 0.3, 0.4));
+  chW.pose({ x: 210, y: lerp(820, 620, cw), s: 0.55, face: 'grin', tilt: 6 * Math.sin(t * 3), handR: [110, -330], handL: [-90, -110] });
+  const offer = link ? eio(prog(t, T.link, 0.3)) * (1 - prog(t, T.send - 0.1, 0.2)) : 0;
+  meC.pose({
+    x: 250, y: 1640 - 24 * Math.max(0, bump(t - T.sendWord)), s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.3),
+    face: !link ? (t < T.veryGood ? 'look-right' : 'wink') : t < T.comment - 0.1 ? 'talk' : t < T.send ? 'grin' : 'wink',
+    pop: pop(t, [T.veryGood, T.link, T.send]),
+    handL: link ? [lerp(-70, -215, offer), lerp(-200, -360, offer) - 8 * offer * Math.sin(t * 6)] : [-150, -62],
+    handR: (!link && vg) || (link && t > T.send) ? [160, -470] : [150, -62], gripR: (!link && vg) || (link && t > T.send) ? 'thumb' : 'open',
+  });
+  place(cPhone, 250 + (lerp(-70, -215, offer) - 4) * 1.5, 1640 + (lerp(-200, -360, offer) - 46) * 1.5, 1.3, -8);
+});
+
+// ================= my desk at night, from the front: Chintu is the AI =================
+const D = desk(svg, L, ME);
+const chL = S('g', {});
+D.kid.g.after(chL); // in front of me, behind the laptop and the desk
+const chintu = monkey(chL);
+const specs = glassesFor(chL);
+const ask = chip(D.props, '5 references दो!', 440, 50, '#fff');
+const books = COVERS.map((_, k) => book(D.props, k));
+const BOOKS = [[160, 560, -8], [400, 450, 5], [650, 440, -5], [900, 540, 7], [960, 780, -6]];
+const stamp = S('g', {}, D.props);
+S('rect', { x: -140, y: -50, width: 280, height: 100, rx: 14, fill: '#fff', stroke: GREEN, 'stroke-width': 10 }, stamp);
+S('text', { y: 22, 'text-anchor': 'middle', 'font-size': 60, fill: GREEN }, stamp, '100% TRUE');
+const sparksD = [[-200, -150, 30], [200, -180, 24], [220, 140, 22]].map(([x, y, r]) => ({ e: star(D.props, 0, 0, r, YEL), x, y }));
+
+U.push((t) => {
+  const B = t >= T.trouble - 0.2 && t < T.how - 0.25;    // the request, the books, the bananas
+  const F = t >= T.follow + 0.15 && t < T.asli - 0.25;    // the follow line, "असली जुगाड़"
+  if (!show(D.s, B || F)) return;
+  D.tick(t, F ? 1 : 0);
+  show(ask, B && t < T.ten);
+  books.forEach((b) => show(b.g, B && t > T.title - 0.05));
+  show(stamp, B && t > T.sach - 0.05);
+  sparksD.forEach((s) => show(s.e, F));
+  if (B) {
+    if (t < T.trouble + 0.25) whipIn(D.s, D.blur, t, T.trouble - 0.2, 1);
+    else if (t > T.how - 0.55) whipOut(D.s, D.blur, t, T.how - 0.25, -1);
+    else whip(D.s, D.blur, 0, 0);
+    D.cam(...key(t, [[T.trouble - 0.2, [560, 1080, 1.05]], [T.ai - 0.1, [560, 1060, 1.1], (p) => p], [T.ai + 0.3, [620, 1040, 1.0]], [T.turn, [620, 1020, 1.04], (p) => p], [T.why, [600, 1000, 1.12]], [T.how, [600, 990, 1.16], (p) => p]]));
+    const facepalm = t > T.sach;
+    D.kid.pose({
+      x: 400, y: 1640, s: 1.5, tilt: facepalm ? 4 * Math.sin(t * 6) : -3 + 2 * Math.sin(t * 2),
+      face: t < T.ai ? 'talk' : t < T.ten ? 'look-right' : t < T.kitaab ? 'grin' : t < T.sach ? 'worried' : 'sad',
+      pop: pop(t, [T.ai, T.ten, T.kitaab, T.sach]),
+      handL: facepalm ? [-60, -540] : [-130, -230], handR: facepalm ? [70, -560] : [130, -230],
+    });
+    place(ask, 600, 600 + 6 * Math.sin(t * 3), backOut(prog(t, T.trouble + 0.25, 0.35)), -4);
+    // Chintu pops up from behind the desk, glasses on, very sure of himself
+    const up = expoOut(prog(t, T.ai - 0.1, 0.45));
+    const cy = lerp(1900, 1440, up) - 30 * Math.max(0, bump(t - T.haazir));
+    const throwing = t > T.title - 0.1 && t < T.haazir;
+    const shrug = t > T.why;
+    chintu.pose({
+      x: 860, y: cy, s: 1.15, tilt: shrug ? 10 * Math.sin(t * 4) : 4 * Math.sin(t * 3),
+      face: t < T.kitaab ? 'grin' : t < T.why ? 'worried' : 'cheeky', tail: t * 3,
+      handL: throwing ? [-120 + 30 * Math.sin(t * 18), -300] : shrug ? [-140, -250] : t > T.haazir ? [-120, -330] : [-90, -110],
+      handR: shrug ? [120, -330] : t > T.haazir ? [120, -330] : [90, -110],
+    });
+    specs(860, cy, 1.15, shrug ? 10 * Math.sin(t * 4) : 4 * Math.sin(t * 3));
+    books.forEach((b, i) => {
+      const p = expoOut(prog(t, T.title + i * 0.16, 0.45));
+      const [x, y, r] = BOOKS[i];
+      place(b.g, lerp(860, x, p), lerp(1080, y, p) + 6 * Math.sin(t * 2 + i), 0.3 + 0.7 * p, r * p + 2 * Math.sin(t * 1.6 + i));
+      b.flip(eio(prog(t, T.kitaab + i * 0.12, 0.35)));
+    });
+    place(stamp, 650, 440, lerp(1.8, 1, Math.min(1, prog(t, T.sach - 0.05, 0.15))) * (t > T.sach - 0.05 ? 1 : 0), -12);
+    return;
+  }
+  if (t < T.follow + 0.6) whipIn(D.s, D.blur, t, T.follow + 0.15, 1);
+  else if (t > T.asli - 0.55) whipOut(D.s, D.blur, t, T.asli - 0.25, -1);
+  else whip(D.s, D.blur, 0, 0);
+  D.cam(...key(t, [[T.follow - 0.2, [560, 1020, 1.0]], [T.twist, [560, 1030, 1.06], (p) => p], [T.twist + 0.4, [520, 1080, 1.22]], [T.asli, [520, 1090, 1.26], (p) => p]]));
+  const tw = t > T.twist;
+  D.kid.pose({
+    x: 400, y: 1640 - 24 * Math.max(0, bump(t - T.jugaad)), s: 1.5, tilt: tw ? 4 : -3 + 2 * Math.sin(t * 2.2),
+    face: tw ? 'wink' : 'grin', pop: pop(t, [T.twist, T.jugaad]),
+    handL: tw ? [-160, -620] : [-170, -380], gripL: tw ? 'point' : 'thumb', handR: [150, -62],
+  });
+  // Chintu, caught, peeks over the desk
+  const cy = 1560 - 40 * Math.max(0, Math.sin(t * 2.2));
+  chintu.pose({ x: 860, y: cy, s: 1.15, face: tw ? 'amazed' : 'worried', tilt: -6, handL: [-80, -200], handR: [80, -200], tail: t * 3 });
+  specs(860, cy, 1.15, -6);
+  sparksD.forEach((s, i) => place(s.e, 400 + s.x, 900 + s.y, 0.7 + 0.3 * Math.sin(t * 5 + i * 2), t * 30));
+});
+
+// ================= over my shoulder: the title finds nothing, a real one gets its Cite =================
+const R = room(svg, L, ME);
+const scr = R.scr; // 728 x 500
+const find = S('g', {}, scr);
+S('rect', { width: 728, height: 500, fill: '#fff' }, find);
+S('rect', { width: 728, height: 64, fill: '#F3F5FA' }, find);
+const lens = S('g', { transform: 'translate(40 32)' }, find);
+S('circle', { r: 13, fill: 'none', stroke: BLUE, 'stroke-width': 6 }, lens);
+S('path', { d: 'M9,9 L20,20', stroke: BLUE, 'stroke-width': 7, 'stroke-linecap': 'round' }, lens);
+S('text', { x: 72, y: 44, 'font-size': 32, fill: NAVY }, find, 'Search');
+S('rect', { x: 40, y: 92, width: 648, height: 78, rx: 39, fill: '#fff', stroke: '#C9CEDA', 'stroke-width': 4 }, find);
+const query = S('text', { x: 74, y: 143, 'font-size': 32, fill: NAVY, 'font-weight': 700 }, find, '');
+const QUERY = '"Advanced Banana Physics"';
+const noRes = S('g', {}, find);
+S('circle', { cx: 364, cy: 300, r: 70, fill: '#FFE2E7', stroke: CORAL, 'stroke-width': 8 }, noRes);
+crossMark(noRes, 364, 300, 32);
+S('text', { x: 364, y: 432, 'text-anchor': 'middle', 'font-size': 44, fill: NAVY }, noRes, 'No results');
+const real = S('g', {}, scr);
+S('rect', { width: 728, height: 500, fill: '#fff' }, real);
+S('rect', { width: 728, height: 64, fill: '#F3F5FA' }, real);
+S('rect', { x: 40, y: 98, width: 420, height: 22, rx: 11, fill: BLUE }, real);
+S('rect', { x: 40, y: 136, width: 300, height: 14, rx: 7, fill: GREEN, opacity: 0.7 }, real);
+for (let k = 0; k < 2; k++) S('rect', { x: 40, y: 168 + k * 28, width: [600, 520][k], height: 12, rx: 6, fill: '#C9CEDA' }, real);
+const citeBtn = S('g', { transform: 'translate(96 262)' }, real);
+S('rect', { x: -56, y: -28, width: 112, height: 56, rx: 14, fill: '#EEF2FF', stroke: BLUE, 'stroke-width': 4 }, citeBtn);
+S('text', { y: 12, 'text-anchor': 'middle', 'font-size': 32, fill: BLUE }, citeBtn, 'Cite');
+for (let k = 0; k < 2; k++) S('rect', { x: 180 + k * 130, y: 254, width: 100, height: 14, rx: 7, fill: '#C9CEDA' }, real);
+const popup = S('g', {}, real);
+S('rect', { x: 60, y: 300, width: 608, height: 180, rx: 20, fill: '#fff', ...line, 'stroke-width': 4 }, popup);
+for (let k = 0; k < 3; k++) S('rect', { x: 92, y: 336 + k * 44, width: [520, 470, 500][k], height: 16, rx: 8, fill: NAVY, opacity: 0.75 }, popup);
+const popTick = tickBadge(real, 34);
+const arrowCur = S('path', { d: 'M0 0 L0 58 L16 44 L28 70 L40 64 L28 39 L50 39Z', fill: NAVY, stroke: '#fff', 'stroke-width': 5, 'stroke-linejoin': 'round' }, scr);
+// in front of the laptop, behind my head: the "नकली" stamp and Chintu, peeking
+const fakeStamp = S('g', {}, R.top);
+S('rect', { x: -200, y: -80, width: 400, height: 160, rx: 20, fill: '#fff', stroke: CORAL, 'stroke-width': 14 }, fakeStamp);
+S('text', { y: 40, 'text-anchor': 'middle', 'font-size': 110, fill: CORAL }, fakeStamp, 'नकली');
+const chR = monkey(R.top);
+const specsR = glassesFor(R.top);
+
+U.push((t) => {
+  const N = t >= T.search - 0.25 && t < T.follow + 0.15;   // the search, nothing found
+  const K = t >= T.ready - 0.6 && t < T.end - 0.2;        // a real result, Cite
+  if (!show(R.s, N || K)) return;
+  R.tick(t, { sink: N ? 0 : 0, jump: K ? Math.max(0, bump(t - T.ready - 0.4)) : 0 });
+  show(find, N); show(real, K);
+  show(fakeStamp, N && t > T.nakli - 0.18);
+  show(chR.g, N && t > T.notFound); specsR(0, 0, 0.001);
+  if (N) {
+    if (t < T.search + 0.2) whipIn(R.s, R.blur, t, T.search - 0.25, 1);
+    else if (t > T.follow - 0.15) whipOut(R.s, R.blur, t, T.follow + 0.15, 1);
+    else whip(R.s, R.blur, 0, 0);
+    R.cam(...key(t, [[T.search - 0.25, [540, 820, 1.32]], [T.notFound, [540, 830, 1.38], (p) => p], [T.nakli - 0.1, [540, 860, 1.2]], [T.follow, [540, 860, 1.16], (p) => p]]));
+    query.textContent = QUERY.slice(0, Math.round(prog(t, T.search - 0.2, 0.55) * QUERY.length));
+    show(noRes, t > T.notFound - 0.05);
+    noRes.setAttribute('transform', `translate(364 300) scale(${backOut(prog(t, T.notFound - 0.05, 0.3))}) translate(-364 -300)`);
+    show(arrowCur, t < T.notFound);
+    const [cx, cy] = key(t, [[T.search, [600, 420]], [T.search + 0.45, [640, 150], cubicOut]]);
+    arrowCur.setAttribute('transform', `translate(${cx} ${cy}) scale(${1 - 0.15 * pulse(t, T.search + 0.55, 0.07)})`);
+    const st = prog(t, T.nakli - 0.18, 0.16);
+    place(fakeStamp, 560, 760, lerp(2, 1, Math.min(1, st)) * (1 + 0.04 * Math.max(0, bump(t - T.nakli - 0.1))), -10);
+    const peek = expoOut(prog(t, T.notFound, 0.4)) * (1 - eio(prog(t, T.nakli + 0.1, 0.35)));
+    chR.pose({ x: 900, y: lerp(1500, 1180, peek), s: 0.85, face: 'worried', tilt: -10, handL: [-80, -230], handR: [80, -230] });
+    specsR(900, lerp(1500, 1180, peek), 0.85, -10);
+    return;
+  }
+  if (t < T.ready - 0.3) whipIn(R.s, R.blur, t, T.ready - 0.6, -1);
+  else if (t > T.end - 0.5) whipOut(R.s, R.blur, t, T.end - 0.2, 1);
+  else whip(R.s, R.blur, 0, 0);
+  R.cam(...key(t, [[T.ready - 0.6, [540, 830, 1.36]], [T.ready + 0.3, [540, 850, 1.4], (p) => p], [T.end, [540, 860, 1.44], (p) => p]]));
+  const pp = backOut(prog(t, T.ready + 0.05, 0.35));
+  show(popup, pp > 0);
+  popup.setAttribute('transform', `translate(364 300) scale(${pp}) translate(-364 -300)`);
+  citeBtn.setAttribute('transform', `translate(96 262) scale(${1 - 0.15 * pulse(t, T.ready - 0.08, 0.07)})`);
+  const tk = backOut(prog(t, T.ready + 0.45, 0.3));
+  show(popTick, tk > 0);
+  place(popTick, 650, 310, tk);
+  show(arrowCur, t < T.ready + 0.3);
+  const [cx, cy] = key(t, [[T.ready - 0.6, [520, 440]], [T.ready - 0.12, [110, 270], cubicOut]]);
+  arrowCur.setAttribute('transform', `translate(${cx} ${cy}) scale(${1 - 0.15 * pulse(t, T.ready - 0.08, 0.07)})`);
+});
+
+// ================= Scholar's own help pages =================
+const PX = 1080 / 412; // frame pixels for one css pixel
+const pTitle = webpage(stage, TITLE, 1648);
+const pCite = webpage(stage, CITE, 1648);
+const ink = (page) => S('svg', { width: 1080, height: 10, style: 'position:absolute;left:0;top:0;overflow:visible' }, page.pins);
+const loop = (layer, cx, cy, rx, ry, rot = -3) => {
+  const e = S('ellipse', { cx: cx * PX, cy: cy * PX, rx: rx * PX, ry: ry * PX, fill: 'none', stroke: CORAL, 'stroke-width': 12, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: `rotate(${rot} ${cx * PX} ${cy * PX})` }, layer);
+  return (p) => { show(e, p > 0); e.setAttribute('stroke-dashoffset', 1 - p); };
+};
+// css px inside each strip
+const inkTitle = ink(pTitle);
+const ringLogo = loop(inkTitle, 110, 33, 104, 24, -2);
+const ringByTitle = loop(inkTitle, 105, 308, 96, 18, -1);
+const ringCite = loop(ink(pCite), 190, 283, 168, 28, -1);
+const rise = (t, t0) => 1920 * (1 - expoOut(prog(t, t0, 0.42)));
+const drop = (t, t0) => 1920 * eio(prog(t, t0, 0.34));
+U.push((t) => {
+  // "Google Scholar ... quotes": the help page, its name, then "How do I search by title?"
+  if (t >= T.how - 0.25 && t < T.search - 0.1) {
+    pTitle.set({ rect: [0, rise(t, T.how - 0.25) + drop(t, T.search - 0.44), 1080, 1920], scroll: 0, slide: 270, zoom: key(t, [[T.how, 1.2], [T.quotes, 1.26], [T.search, 1.3]]), fx: 50, fy: 260 });
+    ringLogo(eio(prog(t, T.scholar + 0.05, 0.4)));
+    ringByTitle(eio(prog(t, T.quotes - 0.1, 0.45)));
+  } else pTitle.hide();
+  // "Cite": the Citation Export help
+  if (t >= T.asli - 0.25 && t < T.ready - 0.5) {
+    pCite.set({ rect: [1080 * (1 - eio(prog(t, T.asli - 0.25, 0.4))), drop(t, T.ready - 0.84), 1080, 1920], scroll: 0, slide: 260, zoom: key(t, [[T.asli, 1.12], [T.ready, 1.16]]), fx: 50, fy: 260 });
+    ringCite(eio(prog(t, T.cite - 0.05, 0.45)));
+  } else pCite.hide();
+});
+
+// ================= captions, the link line, the follow cards, the pointer =================
+const clean = (ws) => ws.map((x) => ({ ...x, word: x.word.replace(/[।,?]+$/, '') }));
+U.push(captionsCompact(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1, whole: i === 0 }))));
+const link = linkLine(stage, 'scholar.google.com');
+const followMid = followCard(stage, { line: 'AI जुगाड़ series' });
+const followEnd = followCard(stage, { next: 'अगला: AI जुगाड़ #3' });
+const tip = pointer(stage, NAVY, '#fff', 130);
+const TIP = [
+  [T.followWord - 0.45, [1160, 700]], [T.fpress - 0.05, [900, 420], cubicOut], [T.twist - 0.15, [900, 420]],
+  [T.comment + 0.2, [1170, 1460]], [T.post - 0.08, [935, 1250], cubicOut], [T.send - 0.05, [935, 1250]],
+  [T.send + 0.3, [1150, 900]], [T.press - 0.06, [900, 420], cubicOut], [dur, [900, 420]],
+];
+const SHOWN = [[T.followWord - 0.45, T.twist - 0.15], [T.comment + 0.2, T.send - 0.05], [T.send + 0.3, dur + 1]];
+U.push((t) => {
+  link.set(t, { link: T.link, comment: T.comment, post: T.post, away: T.send });
+  followMid.set(t, T.follow + 0.05, T.fpress, T.twist - 0.15);
+  followEnd.set(t, T.send + 0.2, T.press);
+  tip.style.visibility = SHOWN.some(([a, b]) => t >= a && t < b) ? 'visible' : 'hidden';
+  const [x, y] = key(t, TIP);
+  const click = pulse(t, T.fpress + 0.02, 0.07) + pulse(t, T.post + 0.02, 0.07) + pulse(t, T.press + 0.02, 0.07);
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * click})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

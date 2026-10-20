@@ -1,0 +1,173 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 41.664,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "तुम्हारे assignment के पाँचों references नकली निकले। और Sharma Sir ने एक-एक करके पकड़ लिए।",
+      "sentences": [
+        "तुम्हारे assignment के पाँचों references नकली निकले।",
+        "और Sharma Sir ने एक-एक करके पकड़ लिए।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 4.985,
+      "pauses": [
+        [
+          0.97,
+          1.15
+        ],
+        [
+          2.99,
+          3.25
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "कल रात तुमने AI से बोला, पाँच references दे दो। दस second में title, author और साल, सब हाज़िर।",
+      "sentences": [
+        "कल रात तुमने AI से बोला, पाँच references दे दो।",
+        "दस second में title, author और साल, सब हाज़िर।"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 5.192,
+      "duration": 6.209,
+      "pauses": [
+        [
+          2.59,
+          2.84
+        ],
+        [
+          3.72,
+          3.87
+        ]
+      ]
+    },
+    {
+      "id": "turn",
+      "text": "पर उनमें से एक भी किताब असल में है ही नहीं। AI को जब पता नहीं होता, तो वो सच जैसा कुछ बना देता है।",
+      "sentences": [
+        "पर उनमें से एक भी किताब असल में है ही नहीं।",
+        "AI को जब पता नहीं होता, तो वो सच जैसा कुछ बना देता है।"
+      ],
+      "file": "vo/turn.wav",
+      "start": 11.538,
+      "duration": 5.467,
+      "pauses": [
+        [
+          2.28,
+          2.51
+        ]
+      ]
+    },
+    {
+      "id": "how",
+      "text": "इसलिए submit से पहले हर title Google Scholar पर quotes में डालकर search करो। नहीं मिला, मतलब नकली।",
+      "sentences": [
+        "इसलिए submit से पहले हर title Google Scholar पर quotes में डालकर search करो।",
+        "नहीं मिला, मतलब नकली।"
+      ],
+      "file": "vo/how.wav",
+      "start": 17.308,
+      "duration": 5.746,
+      "pauses": [
+        [
+          2.73,
+          2.87
+        ],
+        [
+          3.92,
+          4.17
+        ],
+        [
+          4.63,
+          4.92
+        ]
+      ]
+    },
+    {
+      "id": "follow",
+      "text": "ऐसे और AI जुगाड़ के लिए follow कर लो।",
+      "sentences": [
+        "ऐसे और AI जुगाड़ के लिए follow कर लो।"
+      ],
+      "file": "vo/follow.wav",
+      "start": 23.365,
+      "duration": 1.862,
+      "pauses": []
+    },
+    {
+      "id": "twist",
+      "text": "लेकिन असली जुगाड़ अब है। जो असली निकले, उसके नीचे Cite दबाओ, और पूरा reference बना-बनाया मिलेगा।",
+      "sentences": [
+        "लेकिन असली जुगाड़ अब है।",
+        "जो असली निकले, उसके नीचे Cite दबाओ, और पूरा reference बना-बनाया मिलेगा।"
+      ],
+      "file": "vo/twist.wav",
+      "start": 25.385,
+      "duration": 6.663,
+      "pauses": [
+        [
+          1.67,
+          2.04
+        ],
+        [
+          4.17,
+          4.4
+        ],
+        [
+          4.56,
+          4.72
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "अगले assignment पर Sharma Sir ने references पढ़े। और बस इतना बोले कि very good।",
+      "sentences": [
+        "अगले assignment पर Sharma Sir ने references पढ़े।",
+        "और बस इतना बोले कि very good।"
+      ],
+      "file": "vo/end.wav",
+      "start": 32.308,
+      "duration": 4.653,
+      "pauses": [
+        [
+          2.55,
+          2.84
+        ]
+      ]
+    },
+    {
+      "id": "link",
+      "text": "इस tool का link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "इस tool का link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 37.212,
+      "duration": 2.254,
+      "pauses": [
+        [
+          1.08,
+          1.25
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "Assignment वाले group में यह भेज दो।",
+      "sentences": [
+        "Assignment वाले group में यह भेज दो।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 39.808,
+      "duration": 1.756,
+      "pauses": []
+    }
+  ]
+}

@@ -12,3 +12,5 @@ Every experiment added to the queue, confirmed or discarded, newest last (writte
 - 2026-10-16: NEW T1 Posting time added to the queue: Post at 7 to 8:30 PM India time instead of 10:30 PM to midnight
 - 2026-10-16: NEW T2 AI जुगाड़ series added to the queue: Series number on cover and title, a follow line after the first payoff, the next number on the end card
 - 2026-10-16: NEW T3 English reels added to the queue: One reel in five in very easy US English, judged by value (tier-1 views x 10 + other views)
+- 2026-10-20: PROVEN T1 Posting time (CONFIRM, default): Default posting time: 7 to 8:30 PM India time. Numbers: evening: #06 378.2, #11 17.7, #12 1.1 (median times usual 17.7); late: #07 1.1, #08 2.1, #09 8.1, #10 9.1 (median times usual 5.1)
+- 2026-10-20: NEW EXPERIMENT IN THE QUEUE: T4 Earn with AI: Reels about real, legal ways for a student or fresher to earn with AI tools (freelance services, local businesses), 6 of them at fixed reel numbers

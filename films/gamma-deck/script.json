@@ -1,0 +1,42 @@
+{
+  "title": "Your boss thinks you worked all weekend on this deck",
+  "number": 14,
+  "lane": "TOOL",
+  "setting": "office",
+  "language": "en",
+  "series": "AI Hack #1",
+  "experiment": "none: a bet slot and a sequel to the #06 hit (the same promise, a reward in front of someone who matters, with a new tool). First English reel, so the first try of channel test T3; also a series reel for T2 (its own English numbering).",
+  "playbook": [],
+  "look": "illustrated story (brand/story.js, brand/scenes.js), my face and body in the shirt outfit, Priya Ma'am as the boss, Rohan sends the link, compact captions",
+  "sendTo": "the friend who still makes slides by hand",
+  "link": "https://gamma.app/",
+  "voice": "Charon",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural, friendly American English, like a friend who tells you a short story and lets you in on a useful find. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://gamma.app/ (captured 2026-10-18 with --locale en-US): 'Visual storytelling without limits.' 'Gamma is the visual communication platform for presentations, documents, and more, with an expert AI agent'; 'Decks that wow the room. Your story, your style. Clean export to PowerPoint, PDF, and more.'; 'Export to PowerPoint, PDF, and more'.",
+    "https://gamma.app/pricing (captured 2026-10-18 with --locale en-US; prices came in rupees because of the Indian IP, so no price is quoted or shown): plan 'Free', 'No credit card required'; 'Free includes: 400 credits at signup; Create up to 10 slides per prompt; Simple presentations, docs, websites, social, and images; Import from PDF & PPTX; Export to PDF, PPTX, PNG & Google Slides'. 'Remove Gamma branding' is a Plus feature."
+  ],
+  "claims": [
+    "Gamma has a free plan: the pricing page, plan 'Free', 'No credit card required'.",
+    "Ten slides from one prompt: 'Create up to 10 slides per prompt' (Free).",
+    "Design and pictures: 'Simple presentations ... and images' (Free); 'The best image models, built in' (home).",
+    "Export to a real PowerPoint file is free: 'Export to PDF, PPTX, PNG & Google Slides' under 'Free includes'.",
+    "Story, not data: 'about a minute' and 'one minute' (an unverified story claim, allowed by the Claims rules).",
+    "Not claimed: any price, unlimited use (credits run out), or no Gamma branding on the free plan."
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["Your boss thinks you worked all weekend on this deck.", "It took you one minute."] },
+    { "id": "trouble", "sentences": ["It is Sunday night, and the deck is due at nine tomorrow.", "All you have is one empty slide."] },
+    { "id": "turn", "sentences": ["Then Rohan sends you a link to Gamma.", "It has a free plan."] },
+    { "id": "how", "sentences": ["You paste your notes.", "You click Generate."] },
+    { "id": "magic", "sentences": ["Ten slides, with a design and pictures, in about a minute."] },
+    { "id": "follow", "sentences": ["Follow for more AI hacks."] },
+    { "id": "twist", "sentences": ["But here is the best part.", "Click Export, and it is a real PowerPoint file."] },
+    { "id": "end", "sentences": ["On Monday, your boss asks how long it took.", "You just smile."] },
+    { "id": "link", "sentences": ["Want the link to this tool?", "Comment anything."] },
+    { "id": "ask", "sentences": ["Send this to the friend who still makes slides by hand."] }
+  ]
+}

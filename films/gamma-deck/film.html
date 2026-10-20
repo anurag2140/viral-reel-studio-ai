@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>#14 AI Hack #1: your boss thinks you worked all weekend on this deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #E7EEFF; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// Three places and two pages: the meeting room on Monday (the hook, the ending, the link line),
+// my desk on Sunday night seen from the front (the trouble, the follow line, the PowerPoint
+// file) and over my shoulder (the empty slide, Rohan's message, the notes that become ten
+// slides). Gamma's own pages fill the frame for "Gamma", "free plan" and "Export".
+import { S, backOut, bump, camera, captionsCompact, cubicOut, eio, expoOut, key, lerp, person, pointer, prog, pulse, setup, start, webpage } from '/brand/story.js';
+import { CORAL, INK, NAVY, BLUE, desk, followCard, lights, linkLine, paperPlane, room, show, star, whip, whipIn, whipOut } from '/brand/scenes.js';
+import { cast } from '/brand/cast.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const HERO = 'shots/hero.jpg'; // gamma.app (en-US), 0 to 700 css px at 4x
+const FREE = 'shots/free.jpg'; // gamma.app/pricing (en-US): 40-330, 330-452, 620-800 and 800-1150 css px at 4x (the price row left out)
+const FACE = { dir: '/brand/face/', meta: await (await fetch('/brand/face/face.json')).json() };
+const ME_HOME = { face: FACE, skin: FACE.meta.cheek, shade: '#D98A52', outfit: 'hoodie' };
+const ME_WORK = { face: FACE, skin: FACE.meta.cheek, shade: '#D98A52', outfit: 'shirt' };
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"', '600 33px "Anek Devanagari"'], [HERO, FREE, '/logo.png', ...FACE.meta.names.map((n) => `${FACE.dir}${n}.png`)]);
+const pop = (t, at) => 1 - 0.07 * at.reduce((v, a) => v + Math.max(0, bump(t - a)), 0);
+const place = (g, x, y, s = 1, r = 0) => g.setAttribute('transform', `translate(${x} ${y}) rotate(${r}) scale(${s})`);
+const U = [];
+const L = lights(svg);
+const defs = L.defs;
+const YEL = '#FFD23F';
+const GREEN = '#19C37D';
+const ORANGE = '#FF6B4A';
+const line = { stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+const chip = (parent, text, w, size, fill = YEL, ink = NAVY) => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -size * 0.75, width: w, height: size * 1.5, rx: size * 0.36, fill, ...line }, g);
+  S('text', { y: size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, text);
+  return g;
+};
+const tickBadge = (parent, r = 46) => {
+  const g = S('g', {}, parent);
+  S('circle', { r, fill: GREEN, ...line }, g);
+  S('path', { d: `M${-r * 0.44},${r * 0.04} L${-r * 0.12},${r * 0.36} L${r * 0.48},${-r * 0.32}`, fill: 'none', stroke: '#fff', 'stroke-width': r * 0.24, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
+  return g;
+};
+
+// ---------- a designed slide (drawn), and the empty one ----------
+const PAL = [['#2F5BFF', '#7B4DFF'], [ORANGE, '#FFB547'], ['#19C37D', '#2FB5FF'], [CORAL, '#FF9EC4'], [NAVY, '#2F5BFF']];
+PAL.forEach(([a, b], i) => {
+  const g = S('linearGradient', { id: `sl${i}`, x1: 0, y1: 0, x2: 1, y2: 1 }, defs);
+  S('stop', { offset: 0, 'stop-color': a }, g);
+  S('stop', { offset: 1, 'stop-color': b }, g);
+});
+const TITLES = ['Q4 Plan', 'Our Goals', 'New Clients', 'The Team', 'Timeline', 'Results', 'Next Steps', 'Ideas', 'Budget', 'Thank you'];
+function slideArt(parent, w, h, k = 0, ink = true) {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: h * 0.06, fill: `url(#sl${k % PAL.length})`, ...(ink ? { ...line, 'stroke-width': Math.max(3, h * 0.025) } : {}) }, g);
+  // the picture: sun and hills in a white frame, on the right
+  const px = w * 0.2;
+  const pw = w * 0.36;
+  const ph = h * 0.66;
+  S('rect', { x: px - pw / 2, y: -ph / 2, width: pw, height: ph, rx: h * 0.04, fill: '#BFE3FF', stroke: '#fff', 'stroke-width': h * 0.03 }, g);
+  S('circle', { cx: px + pw * 0.18, cy: -ph * 0.18, r: ph * 0.13, fill: YEL }, g);
+  S('path', { d: `M${px - pw / 2 + h * 0.015},${ph * 0.42} Q${px - pw * 0.15},${-ph * 0.05} ${px + pw * 0.1},${ph * 0.25} Q${px + pw * 0.3},${ph * 0.05} ${px + pw / 2 - h * 0.015},${ph * 0.3} L${px + pw / 2 - h * 0.015},${ph / 2 - h * 0.015} L${px - pw / 2 + h * 0.015},${ph / 2 - h * 0.015} Z`, fill: '#3EAD7C' }, g);
+  // the title, two lines of text, a small chart
+  const tx = -w / 2 + w * 0.07;
+  S('text', { x: tx, y: -h * 0.12, 'font-size': h * 0.16, fill: '#fff' }, g, TITLES[k % TITLES.length]);
+  S('rect', { x: tx, y: -h * 0.02, width: w * 0.3, height: h * 0.045, rx: h * 0.022, fill: '#fff', opacity: 0.75 }, g);
+  S('rect', { x: tx, y: h * 0.06, width: w * 0.22, height: h * 0.045, rx: h * 0.022, fill: '#fff', opacity: 0.75 }, g);
+  [0.12, 0.2, 0.16, 0.28].forEach((v, i) => S('rect', { x: tx + i * w * 0.06, y: h * 0.36 - v * h, width: w * 0.04, height: v * h, rx: h * 0.01, fill: '#fff' }, g));
+  return g;
+}
+function blankSlide(parent, w, h) {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -h / 2, width: w, height: h, rx: 10, fill: '#fff', stroke: '#C9CEDA', 'stroke-width': 4 }, g);
+  S('rect', { x: -w * 0.4, y: -h * 0.22, width: w * 0.8, height: h * 0.3, rx: 8, fill: 'none', stroke: '#B4BCD6', 'stroke-width': 4, 'stroke-dasharray': '16 12' }, g);
+  S('text', { y: -h * 0.04, 'text-anchor': 'middle', 'font-size': h * 0.1, fill: '#9AA3BF' }, g, 'Click to add title');
+  const caret = S('rect', { x: w * 0.27, y: -h * 0.13, width: 5, height: h * 0.12, fill: NAVY }, g);
+  return { g, caret };
+}
+// a stopwatch with "1 min" under it
+function stopwatch(parent) {
+  const g = S('g', {}, parent);
+  S('rect', { x: -14, y: -96, width: 28, height: 26, rx: 6, fill: NAVY, ...line, 'stroke-width': 5 }, g);
+  S('circle', { r: 74, fill: '#fff', ...line }, g);
+  const arc = S('circle', { r: 56, fill: 'none', stroke: GREEN, 'stroke-width': 18, pathLength: 1, 'stroke-dasharray': '0 1', transform: 'rotate(-90)' }, g);
+  const hand = S('path', { d: 'M0,8 L0,-52', stroke: NAVY, 'stroke-width': 8, 'stroke-linecap': 'round' }, g);
+  S('circle', { r: 9, fill: NAVY }, g);
+  const tag = chip(g, '1 min', 170, 46, YEL);
+  tag.setAttribute('transform', 'translate(0 128)');
+  return { g, set(p) { arc.setAttribute('stroke-dasharray', `${p} 1`); hand.setAttribute('transform', `rotate(${p * 360})`); } };
+}
+
+// ================= the meeting room on Monday =================
+const O = { s: S('g', {}, svg) };
+O.w = S('g', {}, O.s);
+O.cam = camera(O.w);
+O.blur = L.blurOf('mbOffice');
+S('rect', { x: -700, y: -600, width: 2480, height: 3200, fill: '#E7EEFF' }, O.w);
+S('path', { d: 'M-200,-600 L300,-600 L80,1500 L-420,1500 Z', fill: '#F4F7FF', opacity: 0.8 }, O.w);
+S('rect', { x: -700, y: 1500, width: 2480, height: 1200, fill: '#C9D4F5' }, O.w);
+S('rect', { x: -700, y: 1500, width: 2480, height: 16, fill: '#AEBBE6' }, O.w);
+// a plant in the corner
+S('path', { d: 'M960,1500 L990,1360 L1090,1360 L1120,1500 Z', fill: CORAL, ...line }, O.w);
+for (const [d, f] of [['M1040,1360 C960,1240 940,1150 1010,1090 C1040,1180 1050,1260 1040,1360 Z', '#3EAD7C'], ['M1040,1360 C1110,1230 1150,1160 1120,1080 C1070,1150 1040,1250 1040,1360 Z', '#2A8A5E']]) S('path', { d, fill: f, ...line }, O.w);
+// the big screen on the wall, with my first slide
+const tv = S('g', { transform: 'translate(560 560)' }, O.w);
+S('rect', { x: -350, y: -215, width: 700, height: 430, rx: 22, fill: NAVY, ...line }, tv);
+const tvSlide = slideArt(tv, 650, 366, 0, false);
+S('path', { d: 'M-40,215 L-60,290 M40,215 L60,290', stroke: '#8D97B9', 'stroke-width': 12, 'stroke-linecap': 'round' }, tv);
+const tvShine = S('path', { d: 'M-300,-180 L-200,-180 L-320,170 L-325,170 Z', fill: '#fff', opacity: 0.18 }, tv);
+const priya = cast(O.w, 'priya');
+const meO = person(O.w, ME_WORK);
+const oFront = S('g', {}, O.w);
+const clicker = S('g', {}, oFront);
+S('rect', { x: -16, y: -40, width: 32, height: 80, rx: 12, fill: NAVY, ...line, 'stroke-width': 4 }, clicker);
+S('circle', { cy: -18, r: 7, fill: CORAL }, clicker);
+// the boss's thought: a whole weekend
+const think = S('g', {}, oFront);
+for (const [x, y, r] of [[-120, 120, 12], [-90, 92, 18]]) S('circle', { cx: x, cy: y, r, fill: '#fff', ...line, 'stroke-width': 5 }, think);
+S('path', { d: 'M-110,-40 Q-130,-110 -50,-110 Q-20,-160 50,-130 Q120,-150 130,-80 Q180,-40 130,10 Q120,70 40,60 Q-10,100 -60,60 Q-140,60 -110,-40 Z', fill: '#fff', ...line }, think);
+const cal = S('g', { transform: 'translate(10 -30)' }, think);
+for (const [x, d] of [[-55, 'SAT'], [55, 'SUN']]) {
+  S('rect', { x: x - 46, y: -50, width: 92, height: 104, rx: 10, fill: '#fff', ...line, 'stroke-width': 5 }, cal);
+  S('rect', { x: x - 46, y: -50, width: 92, height: 34, rx: 10, fill: CORAL }, cal);
+  S('text', { x, y: -25, 'text-anchor': 'middle', 'font-size': 26, fill: '#fff' }, cal, d);
+  S('path', { d: `M${x - 22},${18} L${x - 6},${34} L${x + 24},${2}`, fill: 'none', stroke: GREEN, 'stroke-width': 9, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, cal);
+}
+const watchO = stopwatch(oFront);
+// Monday: her question
+const ask = S('g', {}, oFront);
+S('path', { d: 'M-90,-80 L90,-80 Q120,-80 120,-50 L120,50 Q120,80 90,80 L10,80 L-30,130 L-30,80 L-90,80 Q-120,80 -120,50 L-120,-50 Q-120,-80 -90,-80 Z', fill: '#fff', ...line }, ask);
+S('text', { y: 50, 'text-anchor': 'middle', 'font-size': 150, fill: CORAL }, ask, '?');
+const sparksO = [[-330, -250, 30], [330, -240, 24], [350, 200, 22], [-340, 190, 26]].map(([x, y, r]) => ({ e: star(oFront, 0, 0, r, YEL), x, y }));
+const plane = paperPlane(oFront, [330, 1150], [700, 760], [1300, 520]);
+const oPhone = S('g', {}, oFront);
+S('rect', { x: -40, y: -70, width: 80, height: 140, rx: 16, fill: NAVY, ...line }, oPhone);
+S('rect', { x: -32, y: -58, width: 64, height: 112, rx: 8, fill: '#BFD0FF' }, oPhone);
+
+U.push((t) => {
+  const A = t < T.trouble - 0.2;   // the hook
+  const E = t >= T.end - 0.2;      // Monday, the link line, the ask
+  if (!show(O.s, A || E)) return;
+  const link = t >= T.link - 0.2;
+  show(think, A && t > T.weekend - 0.1);
+  show(watchO.g, (A && t > T.minute - 0.15) || (E && !link && t > T.smileWord - 0.1));
+  show(ask, E && !link && t > T.howLong - 0.1);
+  show(clicker, A);
+  show(oPhone, link);
+  tvShine.setAttribute('transform', `translate(${((t * 140) % 900) - 100} 0)`);
+  sparksO.forEach((s, i) => { show(s.e, A || (E && !link)); place(s.e, 560 + s.x, 560 + s.y, 0.7 + 0.3 * Math.sin(t * 5 + i * 2), t * 30); });
+  plane(t, link ? T.send + 0.3 : 1e9, T.hand + 0.1);
+  if (A) {
+    whip(O.s, O.blur, 0, 0);
+    whipOut(O.s, O.blur, t, T.trouble - 0.2, -1);
+    O.cam(...key(t, [[0, [560, 1010, 1.1]], [T.minute, [560, 1000, 1.16], (p) => p], [T.trouble, [560, 990, 1.2]]]));
+    priya.pose({
+      x: 820, y: 1640, s: 1.5, tilt: -5 + 2 * Math.sin(t * 2.2), face: t < T.minute ? 'amazed' : 'grin',
+      pop: pop(t, [T.weekend, T.minute]),
+      handL: [-210, -520 + 8 * Math.sin(t * 5)], gripL: 'point', handR: [140, -330],
+    });
+    meO.pose({
+      x: 270, y: 1640 - 22 * Math.max(0, bump(t - T.minute)), s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.4),
+      face: t < T.minute ? 'grin' : 'wink', pop: pop(t, [T.minute]),
+      handL: [-150, -62], handR: [150, -300], gripR: 'fist',
+    });
+    place(clicker, 270 + 150 * 1.5 + 6, 1640 - 300 * 1.5 - 20, 1.2, 20);
+    place(think, 900, 470 + 6 * Math.sin(t * 2), backOut(prog(t, T.weekend - 0.1, 0.35)), 3);
+    place(watchO.g, 215, 620, backOut(prog(t, T.minute - 0.15, 0.35)), -6);
+    watchO.set(eio(prog(t, T.minute - 0.1, 0.5)));
+    return;
+  }
+  // Monday morning: she asks, I smile; then the link line and the ask, close on me
+  if (t < T.end + 0.25) whipIn(O.s, O.blur, t, T.end - 0.2, 1);
+  else whip(O.s, O.blur, 0, 0);
+  O.cam(...key(t, [[T.end - 0.2, [560, 1000, 1.0]], [T.howLong - 0.2, [600, 1010, 1.08], (p) => p], [T.howLong + 0.2, [600, 1050, 1.22]], [T.smile - 0.1, [600, 1050, 1.25], (p) => p], [T.smile + 0.35, [330, 1040, 1.35]], [T.link - 0.2, [330, 1040, 1.38], (p) => p], [T.link + 0.2, [300, 1020, 1.3]], [dur, [300, 1010, 1.36], (p) => p]]));
+  priya.pose({
+    x: 820, y: 1640, s: 1.5, tilt: -4 + 2 * Math.sin(t * 2),
+    face: t < T.howLong - 0.3 ? 'grin' : t < T.smileWord ? 'talk' : 'amazed', pop: pop(t, [T.howLong - 0.3, T.smileWord]),
+    handL: [-150, -62], handR: t < T.smileWord ? [190, -300] : [150, -62], gripR: 'open',
+  });
+  place(ask, 860, 600 + 6 * Math.sin(t * 2.5), backOut(prog(t, T.howLong - 0.1, 0.35)), 4);
+  const shh = t > T.smileWord - 0.1 && !link;
+  const offer = link ? eio(prog(t, T.link, 0.3)) * (1 - prog(t, T.send - 0.1, 0.2)) : 0;
+  meO.pose({
+    x: 270, y: 1640 - 24 * Math.max(0, bump(t - T.hand)), s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.3),
+    face: !link ? (t < T.smile - 0.1 ? 'look-right' : t < T.smileWord ? 'grin' : 'wink') : t < T.comment - 0.1 ? 'talk' : t < T.send ? 'grin' : 'wink',
+    pop: pop(t, [T.smile - 0.1, T.smileWord, T.link, T.send]),
+    handL: link ? [lerp(-70, -215, offer), lerp(-200, -360, offer) - 8 * offer * Math.sin(t * 6)] : [-150, -62],
+    handR: shh || (link && t > T.send) ? [160, -470] : [150, -62], gripR: shh || (link && t > T.send) ? 'thumb' : 'open',
+  });
+  place(watchO.g, 120, 700, 0.75 * backOut(prog(t, T.smileWord - 0.1, 0.35)), -8);
+  watchO.set(1);
+  place(oPhone, 270 + (lerp(-70, -215, offer) - 4) * 1.5, 1640 + (lerp(-200, -360, offer) - 46) * 1.5, 1.3, -8);
+});
+
+// ================= my desk on Sunday night, from the front =================
+const D = desk(svg, L, ME_HOME);
+const dCal = S('g', {}, D.props);
+S('rect', { x: -80, y: -70, width: 160, height: 150, rx: 14, fill: '#fff', ...line }, dCal);
+S('rect', { x: -80, y: -70, width: 160, height: 46, rx: 14, fill: CORAL }, dCal);
+S('rect', { x: -80, y: -40, width: 160, height: 16, fill: CORAL }, dCal);
+S('text', { y: 50, 'text-anchor': 'middle', 'font-size': 64, fill: NAVY }, dCal, 'SUN');
+const note = S('g', {}, D.props);
+S('rect', { x: -110, y: -90, width: 220, height: 180, rx: 8, fill: YEL, ...line }, note);
+S('text', { y: -14, 'text-anchor': 'middle', 'font-size': 52, fill: NAVY }, note, 'DUE');
+S('text', { y: 54, 'text-anchor': 'middle', 'font-size': 58, fill: CORAL }, note, '9 AM');
+// ten slides that fly out of the laptop while I follow, and the PowerPoint file
+const flyers = TITLES.slice(1, 7).map((_, i) => slideArt(D.behind, 230, 130, i + 1));
+const file = S('g', {}, D.props);
+S('path', { d: 'M-130,-170 L80,-170 L130,-120 L130,170 L-130,170 Z', fill: '#fff', ...line }, file);
+S('path', { d: 'M80,-170 L80,-120 L130,-120', fill: '#E6EAF3', ...line }, file);
+S('rect', { x: -130, y: 40, width: 260, height: 100, fill: ORANGE, ...line }, file);
+S('text', { y: 112, 'text-anchor': 'middle', 'font-size': 64, fill: '#fff' }, file, 'PPTX');
+slideArt(file, 200, 112, 0).setAttribute('transform', 'translate(0 -70)');
+const fileName = chip(D.props, 'Q4-Plan.pptx', 380, 50, '#fff');
+const fileTick = tickBadge(D.props, 50);
+const sparksD = [[-260, -200, 34], [250, -230, 26], [280, 150, 22], [-270, 160, 28]].map(([x, y, r]) => ({ e: star(D.props, 0, 0, r, YEL), x, y }));
+const FLY = [[180, 560, -10], [420, 430, 6], [690, 440, -5], [920, 580, 8], [130, 860, 5], [960, 880, -7]];
+
+U.push((t) => {
+  const B = t >= T.trouble - 0.2 && t < T.empty - 0.2;   // Sunday night
+  const F = t >= T.follow - 0.2 && t < T.exp - 0.25;     // the follow line, "the best part"
+  const P = t >= T.ppt - 0.25 && t < T.end - 0.2;        // the PowerPoint file
+  if (!show(D.s, B || F || P)) return;
+  D.tick(t, F || P ? 1 : 0);
+  show(dCal, B); show(note, B && t > T.nine - 0.1);
+  flyers.forEach((f) => show(f, F));
+  [file, fileName, fileTick].forEach((e) => show(e, P));
+  sparksD.forEach((s) => show(s.e, P));
+  if (B) {
+    if (t < T.trouble + 0.25) whipIn(D.s, D.blur, t, T.trouble - 0.2, 1);
+    else if (t > T.empty - 0.5) whipOut(D.s, D.blur, t, T.empty - 0.2, -1);
+    else whip(D.s, D.blur, 0, 0);
+    D.cam(...key(t, [[T.trouble - 0.2, [540, 1060, 1.0]], [T.empty, [540, 1120, 1.14], (p) => p]]));
+    const panic = t > T.nine;
+    D.kid.pose({
+      x: 540, y: 1640, s: 1.5, tilt: panic ? 4 * Math.sin(t * 9) : -3 + 2 * Math.sin(t * 2),
+      face: t < T.due ? 'thinking' : 'worried', pop: pop(t, [T.due, T.nine]),
+      handL: panic ? [-110, -560] : [-150, -62], handR: panic ? [110, -560] : [150, -62],
+    });
+    place(dCal, 170, 1330 + 4 * Math.sin(t * 2), backOut(prog(t, T.sunday - 0.1, 0.35)), -6);
+    const n = backOut(prog(t, T.nine - 0.1, 0.25));
+    place(note, 540, 1370, lerp(1.6, 1, Math.min(1, n)) * (n > 0 ? 1 : 0), -5);
+    return;
+  }
+  if (F) {
+    if (t < T.follow + 0.25) whipIn(D.s, D.blur, t, T.follow - 0.2, 1);
+    else if (t > T.exp - 0.55) whipOut(D.s, D.blur, t, T.exp - 0.25, -1);
+    else whip(D.s, D.blur, 0, 0);
+    D.cam(...key(t, [[T.follow - 0.2, [540, 1020, 1.0]], [T.twist, [540, 1030, 1.06], (p) => p], [T.twist + 0.4, [540, 1080, 1.22]], [T.exp, [540, 1090, 1.26], (p) => p]]));
+    const tw = t > T.twist;
+    D.kid.pose({
+      x: 540, y: 1640 - 24 * Math.max(0, bump(t - T.best)), s: 1.5, tilt: tw ? 4 : -3 + 2 * Math.sin(t * 2.2),
+      face: tw ? 'wink' : 'grin', pop: pop(t, [T.twist, T.best]),
+      handL: tw ? [-160, -620] : [-170, -380], gripL: tw ? 'point' : 'thumb', handR: [150, -62],
+    });
+    flyers.forEach((f, i) => {
+      const p = expoOut(prog(t, T.follow - 0.1 + i * 0.08, 0.6));
+      const [x, y, r] = FLY[i];
+      place(f, lerp(540, x, p), lerp(1250, y, p) + 8 * Math.sin(t * 2 + i), 0.3 + 0.7 * p, r * p + 2 * Math.sin(t * 1.6 + i));
+    });
+    return;
+  }
+  if (t < T.ppt) whipIn(D.s, D.blur, t, T.ppt - 0.25, 1);
+  else if (t > T.end - 0.5) whipOut(D.s, D.blur, t, T.end - 0.2, 1);
+  else whip(D.s, D.blur, 0, 0);
+  D.cam(...key(t, [[T.ppt - 0.25, [540, 1000, 1.08]], [T.end, [540, 980, 1.14], (p) => p]]));
+  D.kid.pose({
+    x: 460, y: 1640 - 26 * Math.max(0, bump(t - T.ppt - 0.5)), s: 1.5, tilt: 2 * Math.sin(t * 2.4),
+    face: t < T.ppt + 0.5 ? 'talk' : 'grin', pop: pop(t, [T.ppt + 0.5]),
+    handL: [-170, -380], gripL: 'thumb', handR: [200, -520], gripR: 'point',
+  });
+  const f = backOut(prog(t, T.ppt, 0.45));
+  place(file, lerp(540, 820, Math.min(1, expoOut(prog(t, T.ppt, 0.45)))), lerp(1300, 760, Math.min(1, expoOut(prog(t, T.ppt, 0.45)))) + 6 * Math.sin(t * 2.2), 0.3 + 0.7 * f, 4 - 4 * f + 2 * Math.sin(t * 1.7));
+  place(fileName, 840, 1010, backOut(prog(t, T.ppt + 0.3, 0.3)), -3);
+  place(fileTick, 960, 600, backOut(prog(t, T.ppt + 0.5, 0.3)));
+  sparksD.forEach((s, i) => { const p = backOut(prog(t, T.ppt + 0.4 + i * 0.06, 0.3)); place(s.e, 820 + s.x, 760 + s.y, p * (0.8 + 0.3 * Math.sin(t * 6 + i)), t * 40); });
+});
+
+// ================= over my shoulder: the empty slide, Rohan, the notes, ten slides =================
+const R = room(svg, L, ME_HOME);
+const scr = R.scr; // 728 x 500
+// the slide editor: the empty slide, then the slide that is made
+const edit = S('g', {}, scr);
+S('rect', { width: 728, height: 500, fill: '#EEF1F7' }, edit);
+S('rect', { width: 728, height: 54, fill: '#fff' }, edit);
+for (let k = 0; k < 5; k++) S('rect', { x: 24 + k * 56, y: 16, width: 36, height: 22, rx: 6, fill: '#C9CEDA' }, edit);
+for (let k = 0; k < 4; k++) S('rect', { x: 14, y: 76 + k * 66, width: 72, height: 50, rx: 4, fill: k ? '#E2E6F0' : '#fff', stroke: k ? 'none' : BLUE, 'stroke-width': 3 }, edit);
+const blank = blankSlide(edit, 580, 326);
+blank.g.setAttribute('transform', 'translate(410 282)');
+const madeClip = S('rect', { x: -290, y: -163, width: 0, height: 326 }, S('clipPath', { id: 'made' }, defs));
+const madeHold = S('g', { transform: 'translate(410 282)' }, edit);
+slideArt(S('g', { 'clip-path': 'url(#made)' }, madeHold), 580, 326, 0, false);
+const madeSweep = S('rect', { x: -10, y: -170, width: 20, height: 340, fill: '#fff', opacity: 0.85 }, madeHold);
+// the deck maker (drawn, not the real product): notes in, Generate
+const app = S('g', {}, scr);
+S('rect', { width: 728, height: 500, fill: '#F6F7FB' }, app);
+S('rect', { width: 728, height: 64, fill: '#fff' }, app);
+star(app, 40, 32, 18, BLUE);
+S('text', { x: 70, y: 44, 'font-size': 32, fill: NAVY }, app, 'New deck');
+S('rect', { x: 64, y: 92, width: 600, height: 252, rx: 22, fill: '#fff', stroke: '#C9CEDA', 'stroke-width': 4 }, app);
+const placeholder = S('text', { x: 96, y: 150, 'font-size': 32, fill: '#9AA3BF' }, app, 'Paste your notes here');
+const NOTES = ['Q4 plan', '• new clients', '• team goals', '• next steps'];
+const noteLines = S('g', {}, app);
+NOTES.forEach((s, i) => S('text', { x: 96, y: 150 + i * 50, 'font-size': 34, fill: NAVY, 'font-weight': i ? 600 : 800 }, noteLines, s));
+const pasteFlash = S('rect', { x: 64, y: 92, width: 600, height: 252, rx: 22, fill: BLUE, opacity: 0 }, app);
+const gen = S('g', { transform: 'translate(364 420)' }, app);
+S('rect', { x: -150, y: -40, width: 300, height: 80, rx: 40, fill: BLUE }, gen);
+star(gen, -96, 0, 18, '#fff');
+S('text', { x: 16, y: 14, 'text-anchor': 'middle', 'font-size': 38, fill: '#fff' }, gen, 'Generate');
+const arrowCur = S('path', { d: 'M0 0 L0 58 L16 44 L28 70 L40 64 L28 39 L50 39Z', fill: NAVY, stroke: '#fff', 'stroke-width': 5, 'stroke-linejoin': 'round' }, scr);
+// in front of the laptop, behind my head: the slides that burst out, the count, the timer
+const burst = TITLES.slice(1).map((_, i) => slideArt(R.top, 230, 130, i + 1));
+const BURST = [[150, 470, -8], [395, 370, 5], [665, 360, -4], [920, 470, 7], [70, 760, 6], [1000, 760, -6], [250, 300, -6], [830, 250, 5], [540, 250, 3]];
+const count = chip(R.top, '10 slides', 330, 64, YEL);
+const watchR = stopwatch(R.top);
+// in front of me: my phone with Rohan's message
+const rFront = S('g', {}, R.w);
+const phone = S('g', {}, rFront);
+S('rect', { x: -170, y: -300, width: 340, height: 600, rx: 44, fill: NAVY, ...line }, phone);
+S('rect', { x: -148, y: -270, width: 296, height: 540, rx: 28, fill: '#fff' }, phone);
+S('rect', { x: -148, y: -270, width: 296, height: 120, rx: 28, fill: '#F3F5FA' }, phone);
+S('circle', { cx: -84, cy: -210, r: 44 }, S('clipPath', { id: 'rAv' }, defs));
+const av = S('g', { 'clip-path': 'url(#rAv)' }, phone);
+S('circle', { cx: -84, cy: -210, r: 44, fill: '#9DB4F5' }, av);
+const rohanAv = cast(av, 'rohan');
+rohanAv.pose({ x: -84, y: -210 + 440 * 0.3 + 6, s: 0.3, face: 'grin' });
+S('circle', { cx: -84, cy: -210, r: 44, fill: 'none', ...line, 'stroke-width': 5 }, phone);
+S('text', { x: -24, y: -196, 'font-size': 40, fill: NAVY }, phone, 'Rohan');
+const msg = S('g', {}, phone);
+S('rect', { x: -130, y: -110, width: 260, height: 150, rx: 28, fill: '#E7ECFA' }, msg);
+S('text', { x: -106, y: -50, 'font-size': 36, fill: NAVY }, msg, 'Use this for');
+S('text', { x: -106, y: 0, 'font-size': 36, fill: NAVY }, msg, 'your deck!');
+const lnk = S('g', {}, phone);
+S('rect', { x: -130, y: 64, width: 260, height: 96, rx: 28, fill: BLUE }, lnk);
+S('text', { x: 0, y: 126, 'text-anchor': 'middle', 'font-size': 40, fill: '#fff' }, lnk, 'gamma.app');
+
+U.push((t) => {
+  const E = t >= T.empty - 0.2 && t < T.gamma - 0.25;   // the empty slide, then Rohan
+  const H = t >= T.paste - 0.25 && t < T.follow - 0.2;  // the notes, Generate, ten slides
+  if (!show(R.s, E || H)) return;
+  const made = H && t > T.magic - 0.05;
+  R.tick(t, { sink: E ? eio(prog(t, T.emptyWord, 0.6)) * (1 - eio(prog(t, T.rohan - 0.1, 0.3))) : 0, jump: made ? Math.max(0, bump(t - T.magic - 0.2)) : 0 });
+  show(edit, E || made); show(app, H && !made);
+  show(phone, E && t > T.rohan - 0.15);
+  show(arrowCur, H && !made && t > T.notes);
+  burst.forEach((b) => show(b, made));
+  show(count, made && t > T.magic + 1.6);
+  show(watchR.g, made && t > T.design);
+  if (E) {
+    if (t < T.empty + 0.25) whipIn(R.s, R.blur, t, T.empty - 0.2, 1);
+    else whip(R.s, R.blur, 0, 0);
+    R.cam(...key(t, [[T.empty - 0.2, [540, 900, 1.1]], [T.rohan - 0.2, [540, 880, 1.3], (p) => p], [T.rohan + 0.2, [640, 1000, 1.18]], [T.gamma, [650, 1010, 1.22], (p) => p]]));
+    blank.caret.style.display = Math.floor(t * 2.5) % 2 ? 'none' : '';
+    madeClip.setAttribute('width', 0);
+    show(madeSweep, false);
+    const ph = expoOut(prog(t, T.rohan - 0.15, 0.4));
+    place(phone, 800 + 4 * Math.sin(t * 3), lerp(1900, 960, ph), 1.0, lerp(14, 6, ph));
+    show(lnk, t > T.rohan + 0.4);
+    lnk.setAttribute('transform', `translate(0 110) scale(${backOut(prog(t, T.rohan + 0.4, 0.3))}) translate(0 -110)`);
+    return;
+  }
+  if (t < T.paste + 0.2) whipIn(R.s, R.blur, t, T.paste - 0.25, -1);
+  else if (t > T.follow - 0.5) whipOut(R.s, R.blur, t, T.follow - 0.2, 1);
+  else whip(R.s, R.blur, 0, 0);
+  R.cam(...key(t, [[T.paste - 0.25, [540, 850, 1.3]], [T.generate, [540, 860, 1.36], (p) => p], [T.magic - 0.05, [540, 850, 1.36]], [T.magic + 0.7, [540, 840, 1.36], (p) => p], [T.magic + 1.2, [540, 820, 0.98]], [T.follow, [540, 820, 1.02], (p) => p]]));
+  if (!made) {
+    const pasted = t > T.notes - 0.05;
+    show(placeholder, !pasted); show(noteLines, pasted);
+    noteLines.setAttribute('transform', `translate(0 ${pasted ? 12 * (1 - expoOut(prog(t, T.notes - 0.05, 0.3))) : 0})`);
+    pasteFlash.setAttribute('opacity', 0.25 * pulse(t, T.notes, 0.12));
+    gen.setAttribute('transform', `translate(364 420) scale(${(1 - 0.12 * pulse(t, T.generate + 0.2, 0.07)) * (1 + 0.04 * Math.max(0, Math.sin(t * 8)) * (t > T.click ? 1 : 0))})`);
+    const [cx, cy] = key(t, [[T.notes, [640, 470]], [T.generate + 0.1, [400, 425], cubicOut]]);
+    arrowCur.setAttribute('transform', `translate(${cx} ${cy}) scale(${1 - 0.15 * pulse(t, T.generate + 0.2, 0.07)})`);
+    return;
+  }
+  // the empty slide becomes a designed one, then nine more burst out
+  const w = eio(prog(t, T.magic, 0.5));
+  madeClip.setAttribute('width', 580 * w);
+  show(madeSweep, w > 0 && w < 1);
+  madeSweep.setAttribute('x', -290 + 580 * w - 10);
+  burst.forEach((b, i) => {
+    const p = expoOut(prog(t, T.magic + 0.1 + i * 0.16, 0.5));
+    const [x, y, r] = BURST[i];
+    place(b, lerp(540, x, p), lerp(840, y, p) + 7 * Math.sin(t * 2 + i), 0.3 + 0.7 * p, r * p + 2 * Math.sin(t * 1.5 + i));
+  });
+  place(count, 330, 1150, backOut(prog(t, T.magic + 1.6, 0.35)), -4);
+  place(watchR.g, 990, 1050, backOut(prog(t, T.design, 0.35)) * 0.8, 6);
+  watchR.set(Math.min(1, prog(t, T.design, T.aboutMin + 0.2 - T.design)));
+});
+
+// ================= Gamma's pages =================
+const PX = 1080 / 412; // frame pixels for one css pixel
+const pHero = webpage(stage, HERO, 1648);
+const pFree = webpage(stage, FREE, 1648);
+pHero.sheet.parentElement.parentElement.style.background = '#08205A'; // the page's own navy above it, when it slides down
+const ink = (page) => S('svg', { width: 1080, height: 10, style: 'position:absolute;left:0;top:0;overflow:visible' }, page.pins);
+const loop = (layer, cx, cy, rx, ry, rot = -3) => {
+  const e = S('ellipse', { cx: cx * PX, cy: cy * PX, rx: rx * PX, ry: ry * PX, fill: 'none', stroke: CORAL, 'stroke-width': 12, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: `rotate(${rot} ${cx * PX} ${cy * PX})` }, layer);
+  return (p) => { show(e, p > 0); e.setAttribute('stroke-dashoffset', 1 - p); };
+};
+// css px inside each strip
+const ringLogo = loop(ink(pHero), 82, 28, 78, 24, -2);
+const inkFree = ink(pFree);
+const ringFree = loop(inkFree, 92, 357, 62, 30, -3);
+const ringTen = loop(inkFree, 170, 481, 120, 18, -1);
+const ringExport = loop(inkFree, 198, 565, 130, 18, -1);
+const rise = (t, t0) => 1920 * (1 - expoOut(prog(t, t0, 0.42)));
+const drop = (t, t0) => 1920 * eio(prog(t, t0, 0.34));
+U.push((t) => {
+  // "Gamma": the home page with its name; "free plan": the Free plan
+  if (t >= T.gamma - 0.25 && t < T.free + 0.2) {
+    pHero.set({ rect: [-1080 * eio(prog(t, T.free - 0.2, 0.4)), rise(t, T.gamma - 0.25), 1080, 1920], scroll: 0, slide: 290, zoom: key(t, [[T.gamma, 1.08], [T.free - 0.2, 1.16]]), fx: 300, fy: 300 });
+    ringLogo(eio(prog(t, T.gamma + 0.05, 0.35)));
+  } else pHero.hide();
+  const freeOn = t >= T.free - 0.2 && t < T.paste - 0.1;
+  const expOn = t >= T.exp - 0.25 && t < T.ppt - 0.15;
+  if (freeOn) {
+    pFree.set({ rect: [1080 * (1 - eio(prog(t, T.free - 0.2, 0.4))), drop(t, T.paste - 0.34), 1080, 1920], scroll: key(t, [[T.free - 0.2, 300], [T.free + 0.4, 560]]), slide: 0, zoom: key(t, [[T.free, 1.3], [T.paste, 1.4]]), fx: 480, fy: 500 });
+    ringFree(eio(prog(t, T.freeWord - 0.1, 0.35)));
+    ringTen(eio(prog(t, T.freeWord + 0.25, 0.3)));
+    ringExport(0);
+  } else if (expOn) {
+    pFree.set({ rect: [0, rise(t, T.exp - 0.25) + drop(t, T.ppt - 0.45), 1080, 1920], scroll: key(t, [[T.exp - 0.25, 600], [T.exportWord + 0.3, 700]]), slide: 0, zoom: key(t, [[T.exp, 1.45], [T.ppt, 1.55]]), fx: 480, fy: 960 });
+    ringFree(0); ringTen(0);
+    ringExport(eio(prog(t, T.exportWord + 0.1, 0.45)));
+  } else pFree.hide();
+});
+
+// ================= captions, the link line, the follow cards, the pointer =================
+const clean = (ws) => ws.map((x) => ({ ...x, word: x.word.replace(/[.,?!]+$/, '') }));
+U.push(captionsCompact(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1, whole: i === 0 }))));
+const link = linkLine(stage, 'gamma.app');
+const followMid = followCard(stage, { line: 'AI Hack series' });
+const followEnd = followCard(stage, { line: 'AI tools in easy English', next: 'Next: AI Hack #2' });
+const tip = pointer(stage, NAVY, '#fff', 130);
+const FPRESS = T.followWord + 0.5;
+const TIP = [
+  [T.followWord - 0.2, [1160, 700]], [FPRESS - 0.05, [900, 420], cubicOut], [T.twist - 0.15, [900, 420]],
+  [T.comment + 0.2, [1170, 1460]], [T.post - 0.08, [935, 1250], cubicOut], [T.send - 0.05, [935, 1250]],
+  [T.send + 0.3, [1150, 900]], [T.press - 0.06, [900, 420], cubicOut], [dur, [900, 420]],
+];
+const SHOWN = [[T.followWord - 0.2, T.twist - 0.15], [T.comment + 0.2, T.send - 0.05], [T.send + 0.3, dur + 1]];
+U.push((t) => {
+  link.set(t, { link: T.link, comment: T.comment, post: T.post, away: T.send });
+  followMid.set(t, T.follow + 0.05, FPRESS, T.twist - 0.15);
+  followEnd.set(t, T.send + 0.2, T.press);
+  tip.style.visibility = SHOWN.some(([a, b]) => t >= a && t < b) ? 'visible' : 'hidden';
+  const [x, y] = key(t, TIP);
+  const click = pulse(t, FPRESS + 0.02, 0.07) + pulse(t, T.post + 0.02, 0.07) + pulse(t, T.press + 0.02, 0.07);
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * click})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+Search
+About
+Search
+Profiles
+Inclusion
+Metrics
+Publishers
+Libraries
+Overview
+Searching
+Access
+Alerts
+Library
+Export
+Coverage
+Corrections
+Questions
+Search Help
+
+Searching Google Scholar
+
+How do I search by author?
+
+Use the "author:" operator, e.g., author:"d knuth" or author:"donald e knuth".
+
+How do I search by title?
+
+Put the paper's title in quotations: "A History of the China Sea".
+
+How do I sort by date?
+
+You'll often get better results if you search only recent articles, but still sort them by relevance, not by date. E.g., click "Since 2018" in the left sidebar of the search results page.
+
+To see the absolutely newest articles first, click "Sort by date" in the sidebar. If you use this feature a lot, you may also find it useful to setup email alerts to have new results automatically sent to you.
+
+Note: On smaller screens that don't show the sidebar, these options are available in the dropdown menu labelled "Year" right below the search button.
+
+How do I search for court opinions?
+
+Select the "Case law" option on the homepage or in the side drawer on the search results page.
+
+What does the "Related articles" link do?
+
+It finds documents similar to the given search result.
+
+Where is advanced search?
+
+It's in the side drawer. The advanced search window lets you search in the author, title, and publication fields, as well as limit your search results by date.
+
+How do I search by specific jurisdictions?
+
+Select the "Case law" option and do a keyword search over all jurisdictions. Then, click the "Select courts" link in the left sidebar on the search results page.
+
+Tip: To quickly search a frequently used selection of courts, bookmark a search results page with the desired selection.
+
+Google Privacy & Terms

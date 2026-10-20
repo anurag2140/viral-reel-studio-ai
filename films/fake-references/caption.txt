@@ -1,0 +1,13 @@
+TITLE
+AI जुगाड़ #2: तुम्हारे assignment के पाँचों references नकली निकले
+
+DESCRIPTION
+AI को जब जवाब नहीं पता होता, तो वो सच जैसे references बना देता है: title, author, साल, सब।
+Submit से पहले हर title Google Scholar पर quotes में डालकर search करो। नहीं मिला, मतलब नकली।
+जो असली निकले, उसके नीचे Cite दबाओ और पूरा reference बना-बनाया ले लो।
+
+इस tool का link चाहिए? Comment में कुछ भी लिख दो।
+Assignment वाले group में भेजो। ऐसे और AI जुगाड़ के लिए follow करो: @vipulsingh_ai
+
+HASHTAGS
+#AIjugaad #Assignment #GoogleScholar #CollegeLife #AIinHindi

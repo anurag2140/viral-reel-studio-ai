@@ -1,0 +1,14 @@
+TITLE
+AI Hack #1: Your boss thinks you worked all weekend on this deck
+
+DESCRIPTION
+Open Gamma, paste your notes, click Generate. You get a full deck with a design and pictures.
+Try this prompt: "Make a 10-slide presentation from these notes. Clean, modern design with pictures. Notes: [paste your notes]"
+Then click Export and download it as a PowerPoint file.
+The free plan gives you 400 credits at signup and up to 10 slides per prompt, and export to PowerPoint is included.
+
+Want the link to this tool? Comment anything.
+Send this to the friend who still makes slides by hand. Follow @vipulsingh_ai for more AI hacks.
+
+HASHTAGS
+#AIHacks #Gamma #PowerPoint #Presentation #AITools

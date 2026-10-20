@@ -1,0 +1,41 @@
+{
+  "title": "तुम्हारे assignment के पाँचों references नकली निकले",
+  "number": 15,
+  "lane": "AI",
+  "setting": "college",
+  "language": "hi",
+  "series": "AI जुगाड़ #2",
+  "experiment": "E2 Funny: a comedy skit with the cast; Chintu the monkey plays the AI that confidently makes up references, and the trick (search the title on Google Scholar in quotes) is the punchline. Pass mark: shares per 1,000 views 8 or more.",
+  "playbook": [],
+  "look": "illustrated story, my face and body (hoodie), Prof. Sharma as the professor, Chintu as the AI, compact captions",
+  "sendTo": "assignment वाला group",
+  "link": "https://scholar.google.com/",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a funny short story and then lets you in on a useful trick. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://scholar.google.com/intl/en/scholar/help.html#searching (captured 2026-10-20): 'How do I search by title? Put the paper's title in quotations: \"A History of the China Sea\".'",
+    "https://scholar.google.com/intl/en/scholar/help.html#export (captured 2026-10-20): 'How can I add the full citation of a result on Google Scholar to my bibliography manager?' 'Click the \"Cite\" button under the search result and then select your bibliography manager at the bottom of the popup.'",
+    "https://scholar.google.com/ showed a bot check to the capture, so the search page itself is not shown; the search is acted out on a drawn laptop with a plain search box."
+  ],
+  "claims": [
+    "AI chatbots can give references that do not exist: widely reported (for example the 2023 US court case Mata v. Avianca, where a lawyer filed invented cases from ChatGPT). The reel names no chatbot.",
+    "Search a title in quotes on Google Scholar: the help page says so.",
+    "A Cite button under a result gives the full citation: the help page says so.",
+    "Story, not data: the five fake books and their titles are drawn jokes, not claims.",
+    "Not claimed: that Scholar finds every real book, or which citation styles the popup shows."
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["तुम्हारे assignment के पाँचों references नकली निकले।", "और Sharma Sir ने एक-एक करके पकड़ लिए।"] },
+    { "id": "trouble", "sentences": ["कल रात तुमने AI से बोला, पाँच references दे दो।", "दस second में title, author और साल, सब हाज़िर।"] },
+    { "id": "turn", "sentences": ["पर उनमें से एक भी किताब असल में है ही नहीं।", "AI को जब पता नहीं होता, तो वो सच जैसा कुछ बना देता है।"] },
+    { "id": "how", "sentences": ["इसलिए submit से पहले हर title Google Scholar पर quotes में डालकर search करो।", "नहीं मिला, मतलब नकली।"] },
+    { "id": "follow", "sentences": ["ऐसे और AI जुगाड़ के लिए follow कर लो।"] },
+    { "id": "twist", "sentences": ["लेकिन असली जुगाड़ अब है।", "जो असली निकले, उसके नीचे Cite दबाओ, और पूरा reference बना-बनाया मिलेगा।"] },
+    { "id": "end", "sentences": ["अगले assignment पर Sharma Sir ने references पढ़े।", "और बस इतना बोले कि very good।"] },
+    { "id": "link", "sentences": ["इस tool का link चाहिए?", "Comment में कुछ भी लिख दो।"] },
+    { "id": "ask", "sentences": ["Assignment वाले group में यह भेज दो।"] }
+  ]
+}
