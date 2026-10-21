@@ -1,0 +1,45 @@
+{
+  "draft": "E8 Personal proof, angle 1 (2026-10-21). A first draft to show the persona scripting; it becomes films/<name>/script.json when I pick this idea in an experiment slot (the first is #21). The lines marked in 'confirm' are asked before the build.",
+  "title": "B.Com किया, coding नहीं आती, फिर भी मेरा app 500+ phones में है",
+  "lane": "TOOL",
+  "setting": "both",
+  "language": "hi",
+  "experiment": "E8 Personal proof: my real story, told by me, with the real proof on screen.",
+  "look": "illustrated story, my face and body (hoodie), told as me; the real Google Play page of BillBanao as the proof; compact captions",
+  "sendTo": "वो दोस्त जिसे लगता है tech उसके बस की नहीं",
+  "voice": "Orus",
+  "style": "Natural conversational Hindi as spoken in India, like telling a friend your own story: honest, warm and calm, never boastful. English words in Indian English. One even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "My profile (C:\\Users\\ll\\Desktop\\App Ideas\\About Me\\Vipul-Singh-Creator-Profile.md): B.Com, no coding, into AI since 2023, BillBanao (GST invoices and quotations, PDF, WhatsApp sharing) with 500+ downloads on Google Play, my five steps of how I build, and that I am no good at selling.",
+    "To capture before the build: https://play.google.com/store/apps/details?id=com.vipulsingh.billbanao (the downloads count must still say 500+)."
+  ],
+  "frames": {
+    "hook": "Frame 0: my face (grin) holding up a phone with the real Play Store page, '500+ downloads' ringed. All hook words on screen.",
+    "trouble": "Night, a college room: commerce books, a laptop with a red error screen; my face worried.",
+    "turn": "The laptop: I type, the drawn AI answers in blocks of code that build a screen (drawn, inside the laptop scene).",
+    "how": "Three cards drop, one per step, as the voice says them; the camera pushes in on each.",
+    "magic": "Whip to the real Play Store page: scroll from the name to the screenshots; a GST bill turns into a PDF and flies into WhatsApp (drawn phone).",
+    "twist": "Hard cut to quiet: me alone with the phone, an empty 'sales' notebook; face sad, then blink.",
+    "end": "Back to the hook picture, phone up; then the send card."
+  },
+  "lines": [
+    { "id": "hook", "sentences": ["B.Com किया है, coding आज भी नहीं आती।", "फिर भी मेरा बनाया app 500 से ज़्यादा लोगों के phone में है।"] },
+    { "id": "trouble", "sentences": ["Commerce वालों को लगता है, app बनाना सिर्फ engineers का काम है।", "2023 तक मैं भी यही सोचता था।"] },
+    { "id": "turn", "sentences": ["फिर AI आया।", "मैं AI को बताता हूँ क्या बनाना है, और code वो लिखता है।"] },
+    { "id": "how", "sentences": ["तुम्हें coding नहीं, बस तीन चीज़ें चाहिए।", "एक असली problem चुनो, देखो कौन से tools पहले से बने हैं, और AI से उन्हें जोड़कर बनवाओ।"] },
+    { "id": "magic", "sentences": ["ऐसे बना मेरा पहला app, BillBanao: Replit पर नींव, फिर Antigravity और Claude Code से पूरा।", "दुकानदार GST bill बनाता है, और PDF सीधे WhatsApp पर भेज देता है।"] },
+    { "id": "follow", "sentences": ["AI से असली चीज़ें बनाना देखना है, तो follow कर लो।"] },
+    { "id": "twist", "sentences": ["लेकिन एक सच कोई नहीं बताता।", "App बनाना आसान निकला, बेचना मुझे आज भी नहीं आता।"] },
+    { "id": "end", "sentences": ["इसीलिए यह channel है।", "जो बनाता हूँ, यहीं दिखाता हूँ।"] },
+    { "id": "ask", "sentences": ["जिस दोस्त को लगता है tech उसके बस की नहीं, उसे यह भेज दो।"] }
+  ],
+  "confirm": [
+    "trouble: 'Until 2023 I also thought apps were only for engineers' is my guess at your feeling. True, or how did you see it?",
+    "follow: a personal follow line instead of the AI जुगाड़ line, because this reel is about me, not a trick. Fine?"
+  ],
+  "answered": [
+    "2026-10-22: BillBanao was my first mobile app: the base on Replit, pushed to GitHub, then finished with Antigravity and Claude Code (the magic line).",
+    "2026-10-22: the Play Store page still shows 500+ downloads (the capture checks it again before the build)."
+  ],
+  "notCounted": "No link line (not a reel about a tool the viewer can use tonight). No users, sales or money numbers beyond the 500+ downloads."
+}

@@ -1,0 +1,190 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 40.765,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "Junior ने resume के पैसे दिए, और वो तुम्हारी पहली कमाई थी। और आधा काम AI ने किया।",
+      "sentences": [
+        "Junior ने resume के पैसे दिए, और वो तुम्हारी पहली कमाई थी।",
+        "और आधा काम AI ने किया।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 5.478,
+      "pauses": [
+        [
+          1.7,
+          1.99
+        ],
+        [
+          3.25,
+          3.67
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "Ananya को internship के लिए resume चाहिए था। उसने पूछा, तुम बना दोगे?",
+      "sentences": [
+        "Ananya को internship के लिए resume चाहिए था।",
+        "उसने पूछा, तुम बना दोगे?"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 5.769,
+      "duration": 4.236,
+      "pauses": [
+        [
+          2.14,
+          2.39
+        ],
+        [
+          2.93,
+          3.14
+        ]
+      ]
+    },
+    {
+      "id": "turn",
+      "text": "तुमने Gemini में उसकी details डालीं और लिखा, एक page का ATS-friendly resume बनाओ।",
+      "sentences": [
+        "तुमने Gemini में उसकी details डालीं और लिखा, एक page का ATS-friendly resume बनाओ।"
+      ],
+      "file": "vo/turn.wav",
+      "start": 10.385,
+      "duration": 4.285,
+      "pauses": [
+        [
+          2.08,
+          2.26
+        ]
+      ]
+    },
+    {
+      "id": "how",
+      "text": "फिर Canva का एक free template चुना और text उसमें डाल दिया। Resume तैयार।",
+      "sentences": [
+        "फिर Canva का एक free template चुना और text उसमें डाल दिया।",
+        "Resume तैयार।"
+      ],
+      "file": "vo/how.wav",
+      "start": 15,
+      "duration": 3.284,
+      "pauses": [
+        [
+          2.45,
+          2.6
+        ]
+      ]
+    },
+    {
+      "id": "magic",
+      "text": "Ananya ने उसे देखा, और पैसे ख़ुद आगे कर दिए।",
+      "sentences": [
+        "Ananya ने उसे देखा, और पैसे ख़ुद आगे कर दिए।"
+      ],
+      "file": "vo/magic.wav",
+      "start": 18.462,
+      "duration": 2.383,
+      "pauses": [
+        [
+          0.97,
+          1.24
+        ]
+      ]
+    },
+    {
+      "id": "follow",
+      "text": "ऐसे और AI कमाई के तरीकों के लिए follow कर लो।",
+      "sentences": [
+        "ऐसे और AI कमाई के तरीकों के लिए follow कर लो।"
+      ],
+      "file": "vo/follow.wav",
+      "start": 21.058,
+      "duration": 2.435,
+      "pauses": []
+    },
+    {
+      "id": "twist",
+      "text": "लेकिन असली कमाई अब है। Ananya ने तुम्हारा नाम अपने पूरे batch के group में भेज दिया।",
+      "sentences": [
+        "लेकिन असली कमाई अब है।",
+        "Ananya ने तुम्हारा नाम अपने पूरे batch के group में भेज दिया।"
+      ],
+      "file": "vo/twist.wav",
+      "start": 23.654,
+      "duration": 4.695,
+      "pauses": [
+        [
+          1.49,
+          1.67
+        ],
+        [
+          1.75,
+          1.96
+        ]
+      ]
+    },
+    {
+      "id": "catch",
+      "text": "हाँ, शुरू में काम धीरे आता है, और हर resume ध्यान से check करना पड़ता है।",
+      "sentences": [
+        "हाँ, शुरू में काम धीरे आता है, और हर resume ध्यान से check करना पड़ता है।"
+      ],
+      "file": "vo/catch.wav",
+      "start": 28.558,
+      "duration": 4.049,
+      "pauses": [
+        [
+          1.71,
+          1.86
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "पर उस पहली कमाई से तुमने सबको chai पिलाई।",
+      "sentences": [
+        "पर उस पहली कमाई से तुमने सबको chai पिलाई।"
+      ],
+      "file": "vo/end.wav",
+      "start": 32.885,
+      "duration": 2.699,
+      "pauses": []
+    },
+    {
+      "id": "link",
+      "text": "इन tools के link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "इन tools के link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 35.769,
+      "duration": 2.746,
+      "pauses": [
+        [
+          1.16,
+          1.63
+        ],
+        [
+          2,
+          2.15
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "उस दोस्त को भेजो जिसे pocket money चाहिए।",
+      "sentences": [
+        "उस दोस्त को भेजो जिसे pocket money चाहिए।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 38.654,
+      "duration": 2.012,
+      "pauses": []
+    }
+  ]
+}

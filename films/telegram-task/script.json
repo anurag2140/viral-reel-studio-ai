@@ -1,0 +1,43 @@
+{
+  "title": "Video like करने के पैसे मिले, और फिर सारे पैसे डूब गए",
+  "number": 18,
+  "lane": "SCAM",
+  "setting": "college",
+  "language": "hi",
+  "experiment": "E2 Funny, second try (the first was #15): a comedy skit with the cast. Chintu grabs the phone and likes videos at top speed, then presses PAY; every happy member of the VIP group is Mitthu; the ₹150 is the cheese in a mousetrap. The rule and the 1930 helpline are the punchline. Pass mark: shares per 1,000 views 8 or more.",
+  "playbook": [],
+  "look": "illustrated story, my face and body (hoodie), hostel room by day, a big drawn phone with the Telegram-style chats, Chintu (presses the wrong button), Mitthu (the group members who all say yes), a mousetrap on my desk at night, the cybercrime portal page, compact captions, link line, follow card",
+  "sendTo": "वो दोस्त जो pocket money ढूँढ रहा है",
+  "link": "https://cybercrime.gov.in/",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a funny short story that went wrong and then lets you in on what to do. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://cybercrime.gov.in/ (captured 2026-10-21): 'National Cyber Crime Reporting Portal' ... 'Any victim of financial cyber fraud can dial helpline number 1930' ... 'Register a Complaint'. The banner with photos of ministers is left out of the picture.",
+    "https://www.thenewsminute.com/news/govt-blocks-100-websites-involved-in-job-scams-illegal-investments (Dec 2023): task-based part-time job fraud; victims contacted on WhatsApp or Telegram, asked to like videos, paid small amounts first, then asked to deposit larger sums.",
+    "https://validcollege.com/news/awareness/telegram-job-scams-2026-why-students-are-losing-money-online-and-how-to-stay-safe-mxmy (2026): students paid ₹50 to ₹100 at first; red flags: payment before work, Telegram-only contact.",
+    "https://righttoinformation.wiki/telegram-part-time-job-scam-india (2026): 'deposit Rs 1,000 to earn Rs 1,300'; a real job does not ask you to pay to complete prepaid tasks; call 1930 quickly, since early reporting gives the best chance of freezing the receiving account.",
+    "https://ucobank.com/documents/d/guest/security-advisory-beware-of-task-based-job-scams (2023): do not pay 'prepaid task' fees; report at cybercrime.gov.in or 1930."
+  ],
+  "claims": [
+    "The scam pattern (likes for money, small first payouts, a paid VIP or prepaid task, more money demanded, then the group vanishes): as the sources describe it. The amounts in the story (₹50 a like, ₹150, ₹1,000 for ₹1,300, ₹5,000 more) follow the reported pattern; they are the story, not data.",
+    "1930 is the helpline for financial cyber fraud, and complaints go to cybercrime.gov.in: the portal says so.",
+    "Reporting fast helps: said as a better chance, never as a promise that the money comes back.",
+    "Not claimed: that every Telegram job is a scam, or anything about Telegram or YouTube as companies. The chats are drawn and named 'Job Agent' and 'VIP Earning Group'."
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["Video like करने के पैसे मिले, और फिर सारे पैसे डूब गए।", "और शुरू में सब सच लग रहा था।"] },
+    { "id": "trouble", "sentences": ["Telegram पर message आया, बस YouTube videos like करो, हर like के पचास रुपये।", "तुमने तीन like किए, और सच में डेढ़ सौ रुपये आ गए।"] },
+    { "id": "turn", "sentences": ["फिर तुम्हें एक VIP group में जोड़ा गया, जहाँ सब बोल रहे थे, मुझे पैसे मिल गए!"] },
+    { "id": "vip", "sentences": ["VIP task आया, पहले हज़ार रुपये भेजो, तेरह सौ वापस पाओ।"] },
+    { "id": "more", "sentences": ["भेजते ही बोले, task अधूरा है, पाँच हज़ार और भेजो।", "और अगले दिन group ही ग़ायब।"] },
+    { "id": "bait", "sentences": ["वो डेढ़ सौ रुपये चारा थे और चूहा तुम थे।"] },
+    { "id": "rule", "sentences": ["जो job काम से पहले तुमसे पैसे माँगे, वो job नहीं, scam है।"] },
+    { "id": "twist", "sentences": ["लेकिन पैसे चले गए हों, तो तुरंत 1930 पर call करो, या cybercrime.gov.in पर complaint करो।", "जितनी जल्दी report करोगे, पैसे रुकने का chance उतना ज़्यादा।"] },
+    { "id": "end", "sentences": ["अगले दिन फिर वही message आया, और इस बार तुमने सीधा block दबाया।"] },
+    { "id": "link", "sentences": ["Report का link चाहिए?", "Comment में कुछ भी लिख दो।"] },
+    { "id": "ask", "sentences": ["उस दोस्त को भेजो जो pocket money ढूँढ रहा है।"] }
+  ]
+}

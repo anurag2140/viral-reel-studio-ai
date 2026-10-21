@@ -1,0 +1,208 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 48.787,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "Video like करने के पैसे मिले, और फिर सारे पैसे डूब गए। और शुरू में सब सच लग रहा था।",
+      "sentences": [
+        "Video like करने के पैसे मिले, और फिर सारे पैसे डूब गए।",
+        "और शुरू में सब सच लग रहा था।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 5.055,
+      "pauses": [
+        [
+          2.09,
+          2.3
+        ],
+        [
+          3.57,
+          3.79
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "Telegram पर message आया, बस YouTube videos like करो, हर like के पचास रुपये। तुमने तीन like किए, और सच में डेढ़ सौ रुपये आ गए।",
+      "sentences": [
+        "Telegram पर message आया, बस YouTube videos like करो, हर like के पचास रुपये।",
+        "तुमने तीन like किए, और सच में डेढ़ सौ रुपये आ गए।"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 5.192,
+      "duration": 7.205,
+      "pauses": [
+        [
+          1.12,
+          1.29
+        ],
+        [
+          2.64,
+          2.87
+        ],
+        [
+          4.16,
+          4.35
+        ],
+        [
+          5.37,
+          5.62
+        ]
+      ]
+    },
+    {
+      "id": "turn",
+      "text": "फिर तुम्हें एक VIP group में जोड़ा गया, जहाँ सब बोल रहे थे, मुझे पैसे मिल गए!",
+      "sentences": [
+        "फिर तुम्हें एक VIP group में जोड़ा गया, जहाँ सब बोल रहे थे, मुझे पैसे मिल गए!"
+      ],
+      "file": "vo/turn.wav",
+      "start": 12.692,
+      "duration": 3.723,
+      "pauses": [
+        [
+          0.04,
+          0.29
+        ]
+      ]
+    },
+    {
+      "id": "vip",
+      "text": "VIP task आया, पहले हज़ार रुपये भेजो, तेरह सौ वापस पाओ।",
+      "sentences": [
+        "VIP task आया, पहले हज़ार रुपये भेजो, तेरह सौ वापस पाओ।"
+      ],
+      "file": "vo/vip.wav",
+      "start": 16.731,
+      "duration": 3.002,
+      "pauses": [
+        [
+          0.97,
+          1.15
+        ]
+      ]
+    },
+    {
+      "id": "more",
+      "text": "भेजते ही बोले, task अधूरा है, पाँच हज़ार और भेजो। और अगले दिन group ही ग़ायब।",
+      "sentences": [
+        "भेजते ही बोले, task अधूरा है, पाँच हज़ार और भेजो।",
+        "और अगले दिन group ही ग़ायब।"
+      ],
+      "file": "vo/more.wav",
+      "start": 19.904,
+      "duration": 4.474,
+      "pauses": [
+        [
+          2.68,
+          2.94
+        ],
+        [
+          3.49,
+          3.78
+        ]
+      ]
+    },
+    {
+      "id": "bait",
+      "text": "वो डेढ़ सौ रुपये चारा थे और चूहा तुम थे।",
+      "sentences": [
+        "वो डेढ़ सौ रुपये चारा थे और चूहा तुम थे।"
+      ],
+      "file": "vo/bait.wav",
+      "start": 24.519,
+      "duration": 2.683,
+      "pauses": [
+        [
+          0.03,
+          0.19
+        ]
+      ]
+    },
+    {
+      "id": "rule",
+      "text": "जो job काम से पहले तुमसे पैसे माँगे, वो job नहीं, scam है।",
+      "sentences": [
+        "जो job काम से पहले तुमसे पैसे माँगे, वो job नहीं, scam है।"
+      ],
+      "file": "vo/rule.wav",
+      "start": 27.404,
+      "duration": 3.521,
+      "pauses": [
+        [
+          2.24,
+          2.38
+        ]
+      ]
+    },
+    {
+      "id": "twist",
+      "text": "लेकिन पैसे चले गए हों, तो तुरंत 1930 पर call करो, या cybercrime.gov.in पर complaint करो। जितनी जल्दी report करोगे, पैसे रुकने का chance उतना ज़्यादा।",
+      "sentences": [
+        "लेकिन पैसे चले गए हों, तो तुरंत 1930 पर call करो, या cybercrime.gov.in पर complaint करो।",
+        "जितनी जल्दी report करोगे, पैसे रुकने का chance उतना ज़्यादा।"
+      ],
+      "file": "vo/twist.wav",
+      "start": 31.154,
+      "duration": 8.58,
+      "pauses": [
+        [
+          2.87,
+          3.04
+        ],
+        [
+          5.61,
+          5.74
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "अगले दिन फिर वही message आया, और इस बार तुमने सीधा block दबाया।",
+      "sentences": [
+        "अगले दिन फिर वही message आया, और इस बार तुमने सीधा block दबाया।"
+      ],
+      "file": "vo/end.wav",
+      "start": 40.096,
+      "duration": 3.554,
+      "pauses": [
+        [
+          1.45,
+          1.64
+        ]
+      ]
+    },
+    {
+      "id": "link",
+      "text": "Report का link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "Report का link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 43.846,
+      "duration": 2.696,
+      "pauses": [
+        [
+          1.25,
+          1.63
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "उस दोस्त को भेजो जो pocket money ढूँढ रहा है।",
+      "sentences": [
+        "उस दोस्त को भेजो जो pocket money ढूँढ रहा है।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 46.731,
+      "duration": 1.957,
+      "pauses": []
+    }
+  ]
+}

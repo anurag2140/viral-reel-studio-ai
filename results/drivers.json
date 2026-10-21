@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-10-20T20:16:02.510Z",
+  "fetched": "2026-10-21T11:51:37.163Z",
   "order": [
     "skip",
     "share",
@@ -10,11 +10,11 @@
       "key": "skip",
       "label": "Skip rate (leave in about 3 s)",
       "n": 14,
-      "rho": -0.7450549450549451,
-      "rho2": -0.6813186813186813,
+      "rho": -0.7626373626373626,
+      "rho2": -0.7032967032967034,
       "sparse": false,
-      "hitLevel": 52.55,
-      "restLevel": 77.55
+      "hitLevel": 52.5,
+      "restLevel": 77.4
     },
     {
       "key": "share",
@@ -23,7 +23,7 @@
       "rho": 0.7351124784090827,
       "rho2": 0.6576736868967146,
       "sparse": false,
-      "hitLevel": 0.9319834418976647,
+      "hitLevel": 0.9428398877402394,
       "restLevel": 0
     },
     {
@@ -33,8 +33,18 @@
       "rho": 0.6316201742038373,
       "rho2": 0.5369374399914809,
       "sparse": false,
-      "hitLevel": 2.231229415430128,
-      "restLevel": 0.15772870662460567
+      "hitLevel": 2.2831164504354993,
+      "restLevel": 0.15673981191222572
+    },
+    {
+      "key": "watchShare",
+      "label": "Share of the reel watched",
+      "n": 14,
+      "rho": 0.5164835164835165,
+      "rho2": 0.4065934065934066,
+      "sparse": false,
+      "hitLevel": 28.537108757170827,
+      "restLevel": 16.340607616602483
     },
     {
       "key": "comment",
@@ -43,25 +53,15 @@
       "rho": 0.4840984613913471,
       "rho2": 0.44292309525697104,
       "sparse": false,
-      "hitLevel": 0.11633400697725968,
+      "hitLevel": 0.1186767609660599,
       "restLevel": 0
-    },
-    {
-      "key": "watchShare",
-      "label": "Share of the reel watched",
-      "n": 14,
-      "rho": 0.4065934065934066,
-      "rho2": 0.34065934065934067,
-      "sparse": false,
-      "hitLevel": 28.4058751613703,
-      "restLevel": 16.340607616602483
     },
     {
       "key": "watch",
       "label": "Average watch time",
       "n": 14,
-      "rho": 0.35682905943617244,
-      "rho2": 0.2837476331617129,
+      "rho": 0.4096926237970869,
+      "rho2": 0.349863586519782,
       "sparse": false,
       "hitLevel": 9.2,
       "restLevel": 6.05
@@ -73,7 +73,7 @@
       "rho": -0.6483516483516484,
       "rho2": -0.5769230769230769,
       "sparse": false,
-      "hitLevel": 1.1896567248756376,
+      "hitLevel": 1.2022937494600512,
       "restLevel": 2.6164929753409654
     },
     {
@@ -83,7 +83,7 @@
       "rho": 0.28079894676301925,
       "rho2": 0.15233743074071704,
       "sparse": true,
-      "hitLevel": 0.04780078040198388,
+      "hitLevel": 0.0476482063569003,
       "restLevel": 0
     }
   ],

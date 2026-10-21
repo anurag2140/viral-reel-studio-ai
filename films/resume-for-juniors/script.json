@@ -1,0 +1,44 @@
+{
+  "title": "Junior ने resume के पैसे दिए, और वो तुम्हारी पहली कमाई थी",
+  "number": 17,
+  "lane": "TOOL",
+  "topic": "money",
+  "setting": "college",
+  "language": "hi",
+  "series": "AI से कमाई #1",
+  "experiment": "none: a bet slot, the first money reel of channel test T4 (Earn with AI), and a sequel to the #11 hit (resumes, ATS).",
+  "playbook": ["T1"],
+  "look": "illustrated story, my face and body (hoodie), Ananya as the junior, Rohan at the chai stall, a drawn laptop with a resume, compact captions",
+  "sendTo": "वो दोस्त जिसे pocket money चाहिए",
+  "link": "https://gemini.google/discover/ai-career-coach/ and https://www.canva.com/resumes/templates/",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a short story and lets you in on a useful find. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://gemini.google/discover/ai-career-coach/ (captured 2026-10-21, India): 'Bye-bye, blank page syndrome. Stop starting from scratch. With Canvas, Gemini acts as your AI CV builder ... creating professional CV templates ...'; picture text: 'Draft a one-page, ATS-friendly résumé for my job application at...'.",
+    "https://www.canva.com/resumes/templates/ (captured 2026-10-21, India): 'Resume templates. Land your dream job with captivating CVs you can customize to reflect your true potential. Explore Canva's free resume templates and create a polished resume in minutes.'",
+    "https://gemini.google/subscriptions/ (captured 2026-10-21 for #16, India): 'Free of charge ... ₹0 INR/month with a Google Account'.",
+    "https://www.fiverr.com/categories/writing-translation/resume-writing showed a bot check to the capture, so no platform and no price is shown."
+  ],
+  "claims": [
+    "Gemini can draft a resume: the career coach page ('AI CV builder'; the ATS-friendly résumé prompt).",
+    "Canva has free resume templates: its page says so (some templates on Canva are Pro; the voice says 'a free template').",
+    "Money: no amount anywhere, on screen or in the voice; the payment is a drawn hand-over. The honest catch is said aloud: work comes slowly at first, and every resume has to be checked with care.",
+    "Story, not data: Ananya, the batch group and the chai."
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["Junior ने resume के पैसे दिए, और वो तुम्हारी पहली कमाई थी।", "और आधा काम AI ने किया।"] },
+    { "id": "trouble", "sentences": ["Ananya को internship के लिए resume चाहिए था।", "उसने पूछा, तुम बना दोगे?"] },
+    { "id": "turn", "sentences": ["तुमने Gemini में उसकी details डालीं और लिखा, एक page का ATS-friendly resume बनाओ।"] },
+    { "id": "how", "sentences": ["फिर Canva का एक free template चुना और text उसमें डाल दिया।", "Resume तैयार।"] },
+    { "id": "magic", "sentences": ["Ananya ने उसे देखा, और पैसे ख़ुद आगे कर दिए।"] },
+    { "id": "follow", "sentences": ["ऐसे और AI कमाई के तरीकों के लिए follow कर लो।"] },
+    { "id": "twist", "sentences": ["लेकिन असली कमाई अब है।", "Ananya ने तुम्हारा नाम अपने पूरे batch के group में भेज दिया।"] },
+    { "id": "catch", "sentences": ["हाँ, शुरू में काम धीरे आता है, और हर resume ध्यान से check करना पड़ता है।"] },
+    { "id": "end", "sentences": ["पर उस पहली कमाई से तुमने सबको chai पिलाई।"] },
+    { "id": "link", "sentences": ["इन tools के link चाहिए?", "Comment में कुछ भी लिख दो।"] },
+    { "id": "ask", "sentences": ["उस दोस्त को भेजो जिसे pocket money चाहिए।"] }
+  ]
+}

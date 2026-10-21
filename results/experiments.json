@@ -26,6 +26,10 @@
       "why": "Funny reels are what people send most, and sends reach non-followers; #15 had 75.8 shares per 1,000 views in its first hours"
     },
     {
+      "id": "E8",
+      "why": "The follow leak: the account turns 0.8 per 1,000 reach into followers, and people follow a person, not a tool list; most viewers are not from computer science and can see themselves in a B.Com graduate who builds with AI"
+    },
+    {
       "id": "E6",
       "why": "People already search for a big launch; a free offer for students is new and useful",
       "needs": "a big AI launch that matters to students in the last 24 hours"
@@ -72,6 +76,11 @@
           "reel": 15,
           "length": 42.8,
           "note": "Chintu plays the AI that makes up references (the books are bananas); Prof. Sharma catches them; the trick is a title search in quotes on Google Scholar"
+        },
+        {
+          "reel": 18,
+          "length": 49.9,
+          "note": "A SCAM skit about the Telegram task scam: Chintu likes videos with a rubber arm and presses PAY, every happy member of the VIP group is Mitthu, the ₹150 is the cheese in a mousetrap; the rule and the 1930 helpline are the punchline"
         }
       ],
       "outcomes": {
@@ -82,6 +91,42 @@
         },
         "DISCARD": {
           "text": "No comedy skits until its re-test."
+        }
+      }
+    },
+    {
+      "id": "E8",
+      "name": "Personal proof",
+      "kind": "reel",
+      "status": "queued",
+      "since": "2026-10-21",
+      "change": "The reel is my real story, told by me (\"मैं\", my face): a B.Com graduate with no coding who builds apps and tools with AI, with the real proof on screen",
+      "pass": [
+        [
+          "followsPer1k",
+          ">=",
+          2
+        ],
+        [
+          "timesUsual",
+          ">=",
+          1
+        ]
+      ],
+      "angles": [
+        "B.Com, no coding, an app 500+ people use: BillBanao on Google Play (500+ downloads); the honest catch: the app is built, but I am no good at selling it",
+        "Claude runs a real Android phone to make my app promo videos (my service, listed from $39, delivered in 48 hours)",
+        "Legal-IQ, my AI legal tool (selected for the Google GenAI Hackathon, 11 December 2025), reads an offer letter or a rent agreement in Hindi and shows the red flags",
+        "Later: my website writes its own reviews (Armadore, an n8n automation); the free Microsoft certificates I did; once E8 has passed, the builder who cannot sell, finding his first paying users through this channel (only with real progress)"
+      ],
+      "tries": [],
+      "outcomes": {
+        "CONFIRM": {
+          "type": "default",
+          "text": "The main character is me, with my real story and proof where the topic fits (see \"Personal proof reels\" in CLAUDE.md); a reel may stay a plain \"तुम\" story with a reason."
+        },
+        "DISCARD": {
+          "text": "Reels stay \"तुम\" stories; no personal-proof reels until its re-test."
         }
       }
     },
@@ -371,7 +416,14 @@
         "DISCARD": {
           "text": "No earn-with-AI reels until its re-test."
         }
-      }
+      },
+      "tries": [
+        {
+          "reel": 17,
+          "length": 41.9,
+          "note": "AI से कमाई #1: resumes for juniors with Gemini and a free Canva template; a sequel to #11"
+        }
+      ]
     }
   ],
   "playbook": [

@@ -27,8 +27,10 @@ Setting (from #06): college, office or both. See "The channel" in `CLAUDE.md`.
 | 14 | AI Hack #1: Your boss thinks you worked all weekend on this deck (Gamma) | TOOL | office | the first English reel (Charon), illustrated story, my face and body (shirt in the office, hoodie at home on Sunday night), Priya Ma'am as the boss, Rohan sends the link, notes become ten slides, the PowerPoint export as the second payoff, compact captions, follow line after the first payoff, tool link line, follow card with the next number; a sequel to #06 | 2026-10-18 | 34.2 s | `films/gamma-deck` |
 | 15 | AI जुगाड़ #2: तुम्हारे assignment के पाँचों references नकली निकले (AI makes up references; Google Scholar) | AI | college | comedy skit, illustrated story, my face and body (hoodie), Prof. Sharma as the professor, Chintu as the AI in glasses whose five books turn into bananas, Scholar help pages (its search page showed a bot check, so the search is drawn), compact captions, follow line after the first payoff, link line, follow card with the next number; experiment E2 | 2026-10-20 | 42.8 s | `films/fake-references` |
 | 16 | AI जुगाड़ #3: इस बार interview में Priya Ma'am impressed हो गईं (Gemini Live as a mock interviewer) | TOOL | both | illustrated story, my face and body (shirt at the interview, hoodie at home the night before), Priya Ma'am as the interviewer, a drawn phone in Live mode with feedback meters, Gemini's career coach and plans pages, compact captions, follow line after the first payoff, link line, follow card with the next number; a sequel to #11 | 2026-10-21 | 38.8 s | `films/mock-interview` |
+| 17 | AI से कमाई #1: Junior ने resume के पैसे दिए, और वो तुम्हारी पहली कमाई थी (resumes with Gemini and a free Canva template) | TOOL (money, T4) | college | the first money reel: illustrated story, my face and body (hoodie), Ananya as the junior who pays, Rohan at the chai stall, plain draft into a designed resume on the laptop, the batch group filling up, the honest catch (slow at first, check every resume), no amount anywhere, compact captions, follow line "AI कमाई", link line (Gemini + Canva), follow card with the next number; a sequel to #11 | 2026-10-21 | 41.9 s | `films/resume-for-juniors` |
+| 18 | Video like करने के पैसे मिले, और फिर सारे पैसे डूब गए (the Telegram task scam; 1930 and cybercrime.gov.in) | SCAM | college | comedy skit, illustrated story, my face and body (hoodie), hostel room by day, a big drawn phone with generic chats ("Job Agent", "VIP Earning Group"), Chintu's rubber arm likes videos and presses PAY, every group member is Mitthu, the ₹150 as the cheese in a mousetrap (I get mouse ears), the rule with a SCAM stamp, the cybercrime portal (1930, Register a Complaint), the same message blocked the next day, compact captions, link line (cybercrime.gov.in), follow card; experiment E2 (second try) | 2026-10-21 | 49.9 s | `films/telegram-task` |
 
-Next video number: **17**
+Next video number: **19**
 
 ## Results
 
@@ -87,80 +89,79 @@ first reel with the new body; cross-posted to Facebook; only two days old):
 
 Latest Instagram API numbers (copied from `results/latest.md` at the start of every reel; older runs are in `results/history.jsonl`):
 
-Instagram API numbers, fetched 2026-10-20 20:16 UTC (`node ig.mjs report`). @vipulsingh_ai: 115 followers, 17 posts.
+Instagram API numbers, fetched 2026-10-21 11:51 UTC (`node ig.mjs report`). @vipulsingh_ai: 116 followers, 17 posts.
 Views are Instagram views (Facebook views have their own column below). Not in the API: the retention curve, follows and profile visits per reel, and the audience of a reel (age, gender, country).
 "Times usual" = views divided by the median views of the other reels in this table (reels of different ages: the experiment review compares them at 3 days).
 
 | # | Lang | Posted (India) | Days old | Views | Times usual | Reach | Saves | Shares | Saves / 1k views | Shares / 1k views | Likes | Comments | Avg watch |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 15 | HI | 2026-10-20 20:05 Tue | 0.2 | 264 | 0.9 | 202 | 3 | 20 | 11.4 | 75.8 | 4 | 1 | 8.2 s |
-| 13 | HI | 2026-10-19 19:30 Mon | 1.3 | 33 | 0.1 | 19 | 0 | 0 | 0.0 | 0.0 | 3 | 0 | 11.2 s |
-| 14 | EN | 2026-10-18 17:39 Sun | 2.3 | 352 | 1.4 | 288 | 1 | 0 | 2.8 | 0.0 | 6 | 0 | 4.9 s |
-| 12 | HI | 2026-10-17 19:30 Sat | 3.3 | 371 | 1.5 | 317 | 1 | 0 | 2.7 | 0.0 | 4 | 2 | 6 s |
-| 11 | HI | 2026-10-16 20:09 Fri | 4.2 | 3993 | 16 | 3397 | 104 | 53 | 26.0 | 13.3 | 52 | 36 | 10.6 s |
-| 10 | HI | 2026-10-15 22:47 Thu | 5.1 | 1931 | 7.7 | 1646 | 14 | 5 | 7.3 | 2.6 | 28 | 0 | 9.5 s |
-| 09 | HI | 2026-10-14 23:55 Wed | 6.1 | 1679 | 6.7 | 1499 | 21 | 4 | 12.5 | 2.4 | 12 | 2 | 6.8 s |
-| 08 | HI | 2026-10-13 23:00 Tue | 7.1 | 441 | 1.8 | 387 | 0 | 0 | 0.0 | 0.0 | 10 | 0 | 7.5 s |
-| 07 | HI | 2026-10-12 23:06 Mon | 8.1 | 219 | 0.7 | 182 | 1 | 0 | 4.6 | 0.0 | 6 | 2 | 4.7 s |
-| 06 | HI | 2026-10-12 19:37 Mon | 8.3 | 69819 | 279.8 | 60456 | 2646 | 1081 | 37.9 | 15.5 | 513 | 60 | 8.9 s |
-| 05 | HI | 2026-10-11 23:06 Sun | 9.1 | 180 | 0.6 | 151 | 1 | 0 | 5.6 | 0.0 | 4 | 0 | 3.8 s |
-| 04 | HI | 2026-10-11 22:10 Sun | 9.2 | 161 | 0.5 | 133 | 0 | 0 | 0.0 | 0.0 | 4 | 0 | 6 s |
-| 03 | HI | 2026-10-10 23:53 Sat | 10.1 | 170 | 0.6 | 140 | 1 | 0 | 5.9 | 0.0 | 2 | 0 | 6.1 s |
-| 02 | HI | 2026-10-09 13:28 Fri | 11.5 | 215 | 0.7 | 162 | 0 | 0 | 0.0 | 0.0 | 4 | 0 | 6.8 s |
-| 01 | HI | 2026-10-09 00:16 Fri | 12.1 | 235 | 0.8 | 181 | 0 | 1 | 0.0 | 4.3 | 9 | 0 | 7.8 s |
+| 15 | HI | 2026-10-20 20:05 Tue | 0.9 | 1602 | 5.4 | 1452 | 21 | 27 | 13.1 | 16.9 | 14 | 5 | 10.4 s |
+| 13 | HI | 2026-10-19 19:30 Mon | 1.9 | 34 | 0.1 | 20 | 0 | 0 | 0.0 | 0.0 | 3 | 0 | 9.9 s |
+| 14 | EN | 2026-10-18 17:39 Sun | 3 | 353 | 1.2 | 290 | 1 | 0 | 2.8 | 0.0 | 6 | 0 | 4.9 s |
+| 12 | HI | 2026-10-17 19:30 Sat | 3.9 | 372 | 1.3 | 319 | 1 | 0 | 2.7 | 0.0 | 4 | 2 | 6 s |
+| 11 | HI | 2026-10-16 20:09 Fri | 4.9 | 4050 | 13.8 | 3412 | 108 | 54 | 26.7 | 13.3 | 53 | 36 | 10.7 s |
+| 10 | HI | 2026-10-15 22:47 Thu | 5.8 | 1934 | 6.6 | 1650 | 14 | 5 | 7.2 | 2.6 | 29 | 0 | 9.5 s |
+| 09 | HI | 2026-10-14 23:55 Wed | 6.7 | 1680 | 5.7 | 1499 | 21 | 4 | 12.5 | 2.4 | 12 | 2 | 6.8 s |
+| 08 | HI | 2026-10-13 23:00 Tue | 7.8 | 441 | 1.5 | 387 | 0 | 0 | 0.0 | 0.0 | 10 | 0 | 7.5 s |
+| 07 | HI | 2026-10-12 23:06 Mon | 8.8 | 219 | 0.6 | 182 | 1 | 0 | 4.6 | 0.0 | 6 | 2 | 4.7 s |
+| 06 | HI | 2026-10-12 19:37 Mon | 8.9 | 70046 | 237.8 | 60617 | 2655 | 1085 | 37.9 | 15.5 | 516 | 63 | 8.9 s |
+| 05 | HI | 2026-10-11 23:06 Sun | 9.8 | 180 | 0.5 | 151 | 1 | 0 | 5.6 | 0.0 | 4 | 0 | 3.8 s |
+| 04 | HI | 2026-10-11 22:10 Sun | 9.8 | 161 | 0.4 | 133 | 0 | 0 | 0.0 | 0.0 | 4 | 0 | 6 s |
+| 03 | HI | 2026-10-10 23:53 Sat | 10.7 | 170 | 0.5 | 140 | 1 | 0 | 5.9 | 0.0 | 2 | 0 | 6.1 s |
+| 02 | HI | 2026-10-09 13:28 Fri | 12.2 | 218 | 0.6 | 163 | 0 | 0 | 0.0 | 0.0 | 4 | 0 | 6.8 s |
+| 01 | HI | 2026-10-09 00:16 Fri | 12.7 | 236 | 0.7 | 182 | 0 | 1 | 0.0 | 4.2 | 9 | 0 | 7.8 s |
 
 Rates as Instagram shows them (per account reached), and the skip rate (the share of viewers who left within about 3 seconds):
 
 | # | Skip rate | Avg watch | Like rate | Comment rate | Save rate | Share rate | Repost rate | Facebook views |
 |---|---|---|---|---|---|---|---|---|
-| 15 | 41.5% | 8.2 s | 2.0% | 0.5% | 1.5% | 9.9% | 0.0% | 135 |
-| 13 | 75% | 11.2 s | 15.8% | 0.0% | 0.0% | 0.0% | 5.3% | 312 |
-| 14 | 74.4% | 4.9 s | 2.1% | 0.0% | 0.3% | 0.0% | 0.0% | 172 |
-| 12 | 55% | 6 s | 1.3% | 0.6% | 0.3% | 0.0% | 0.0% | 272 |
-| 11 | 52.9% | 10.6 s | 1.5% | 1.1% | 3.1% | 1.6% | 0.0% | 220 |
-| 10 | 53.1% | 9.5 s | 1.7% | 0.0% | 0.9% | 0.3% | 0.1% | 248 |
+| 15 | 42.2% | 10.4 s | 1.0% | 0.3% | 1.4% | 1.9% | 0.0% | 145 |
+| 13 | 76.2% | 9.9 s | 15.0% | 0.0% | 0.0% | 0.0% | 5.0% | 312 |
+| 14 | 74.1% | 4.9 s | 2.1% | 0.0% | 0.3% | 0.0% | 0.0% | 172 |
+| 12 | 54.8% | 6 s | 1.3% | 0.6% | 0.3% | 0.0% | 0.0% | 272 |
+| 11 | 52.8% | 10.7 s | 1.6% | 1.1% | 3.2% | 1.6% | 0.0% | 220 |
+| 10 | 53.1% | 9.5 s | 1.8% | 0.0% | 0.8% | 0.3% | 0.1% | 248 |
 | 09 | 52.2% | 6.8 s | 0.8% | 0.1% | 1.4% | 0.3% | 0.0% | 43 |
 | 08 | 48.3% | 7.5 s | 2.6% | 0.0% | 0.0% | 0.0% | 0.0% | 229 |
 | 07 | 91.1% | 4.7 s | 3.3% | 1.1% | 0.5% | 0.0% | 0.0% | 200 |
-| 06 | 41.9% | 8.9 s | 0.8% | 0.1% | 4.4% | 1.8% | 0.1% | 185 |
+| 06 | 41.9% | 8.9 s | 0.9% | 0.1% | 4.4% | 1.8% | 0.1% | 185 |
 | 05 | 80.8% | 3.8 s | 2.6% | 0.0% | 0.7% | 0.0% | 0.0% | 307 |
 | 04 | 78.6% | 6 s | 3.0% | 0.0% | 0.0% | 0.0% | 0.0% | 220 |
 | 03 | 79.3% | 6.1 s | 1.4% | 0.0% | 0.7% | 0.0% | 0.0% | 217 |
-| 02 | 76.5% | 6.8 s | 2.5% | 0.0% | 0.0% | 0.0% | 0.0% | 235 |
-| 01 | 85.3% | 7.8 s | 5.0% | 0.0% | 0.0% | 0.6% | 0.0% | - |
+| 02 | 76.1% | 6.8 s | 2.5% | 0.0% | 0.0% | 0.0% | 0.0% | 235 |
+| 01 | 84.8% | 7.8 s | 4.9% | 0.0% | 0.0% | 0.5% | 0.0% | - |
 
 Views over time (the readings stored at each "create reel"; Instagram gives only the total so far, so a cell is the reading nearest that age):
 
 | # | About 1 day | About 3 days | About 7 days | Now |
 |---|---|---|---|---|
-| 15 | - | - | - | 264 (0.2 d) |
-| 13 | - | - | - | 33 (1.3 d) |
-| 14 | 344 (1.4 d) | - | - | 352 (2.3 d) |
-| 12 | 302 (0.8 d) | 362 (2.3 d) | - | 371 (3.3 d) |
-| 11 | 3112 (1.1 d) | 3905 (3.3 d) | - | 3993 (4.2 d) |
-| 10 | 1829 (1.0 d) | 1903 (2.7 d) | - | 1931 (5.1 d) |
-| 09 | 1627 (1.2 d) | 1671 (3.0 d) | 1677 (5.1 d) | 1679 (6.1 d) |
-| 08 | - | 434 (3.0 d) | 439 (6.2 d) | 441 (7.1 d) |
-| 07 | - | 210 (3.2 d) | 218 (7.2 d) | 219 (8.1 d) |
-| 06 | - | 66186 (3.4 d) | 69453 (7.3 d) | 69819 (8.3 d) |
-| 05 | - | - | 179 (6.7 d) | 180 (9.1 d) |
-| 04 | - | - | 160 (6.7 d) | 161 (9.2 d) |
-| 03 | - | - | 168 (7.0 d) | 170 (10.1 d) |
-| 02 | - | - | 206 (7.1 d) | 215 (11.5 d) |
-| 01 | - | - | 232 (7.2 d) | 235 (12.1 d) |
+| 15 | - | - | - | 1602 (0.9 d) |
+| 13 | 33 (1.3 d) | - | - | 34 (1.9 d) |
+| 14 | 344 (1.4 d) | 352 (2.4 d) | - | 353 (3 d) |
+| 12 | 302 (0.8 d) | 371 (3.3 d) | - | 372 (3.9 d) |
+| 11 | 3112 (1.1 d) | 3905 (3.3 d) | - | 4050 (4.9 d) |
+| 10 | 1829 (1.0 d) | 1903 (2.7 d) | 1931 (5.2 d) | 1934 (5.8 d) |
+| 09 | 1627 (1.2 d) | 1671 (3.0 d) | 1679 (6.2 d) | 1680 (6.7 d) |
+| 08 | - | 434 (3.0 d) | 441 (7.1 d) | 441 (7.8 d) |
+| 07 | - | 210 (3.2 d) | 218 (7.2 d) | 219 (8.8 d) |
+| 06 | - | 66186 (3.4 d) | 69453 (7.3 d) | 70046 (8.9 d) |
+| 05 | - | - | 179 (6.7 d) | 180 (9.8 d) |
+| 04 | - | - | 160 (6.7 d) | 161 (9.8 d) |
+| 03 | - | - | 168 (7.0 d) | 170 (10.7 d) |
+| 02 | - | - | 206 (7.1 d) | 218 (12.2 d) |
+| 01 | - | - | 232 (7.2 d) | 236 (12.7 d) |
 
-English test (value rule): value = views from tier-1 countries x 10 + all other views. Success: 40% of the top Hindi reel's value (#06: 69819 views, tier-1 2% assumed, value 82386, so 32955). Worth it: at least the median value of the 5 Hindi reels posted nearest in time. Read at 3 days.
-- #14 (EN, 2.3 days): 352 views, tier-1 ?, value ?; nearest Hindi reels' median value 1981; actions (comments, saves, shares) 2.8 per 1k views against 9.8 for those Hindi reels: too early (read at 3 days; then I need its top-countries screenshot).
+English test (value rule): value = views from tier-1 countries x 10 + all other views. Success: 40% of the top Hindi reel's value (#06: 70046 views, tier-1 2% assumed, value 82654, so 33062). Worth it: at least the median value of the 5 Hindi reels posted nearest in time. Read at 3 days.
+- #14 (EN, 3 days): 353 views, tier-1 ?, value ?; nearest Hindi reels' median value 1982; actions (comments, saves, shares) 2.8 per 1k views against 9.8 for those Hindi reels: waiting for its top-countries screenshot (tier-1 share unknown).
 Followers by country: IN 62, US 2, PK 2; tier 1 (US, GB, CA, AU and others): 2 of 66 counted.
 
-HIT: #11 has 16 times our usual views and is 4.2 days old. Recommend a sequel next (CLAUDE.md, "Experiments").
-HIT: #06 has 279.8 times our usual views and is 8.3 days old. Recommend a sequel next (CLAUDE.md, "Experiments").
+HIT: #11 has 13.8 times our usual views and is 4.9 days old. Recommend a sequel next (CLAUDE.md, "Experiments").
+HIT: #06 has 237.8 times our usual views and is 8.9 days old. Recommend a sequel next (CLAUDE.md, "Experiments").
 
 The account day by day (Instagram days end at 12:30 PM India time; the date is the day they end):
 
 | Day | Reach | Profile visits | New followers | Visits / 1k reach | Followers / 1k reach |
 |---|---|---|---|---|---|
-| 2026-10-07 | 1 | 1 | 0 | - | - |
 | 2026-10-08 | 152 | 9 | 0 | 59.2 | 0.0 |
 | 2026-10-09 | 158 | 13 | 0 | 82.3 | 0.0 |
 | 2026-10-10 | 125 | 9 | 0 | 72.0 | 0.0 |
@@ -173,8 +174,20 @@ The account day by day (Instagram days end at 12:30 PM India time; the date is t
 | 2026-10-17 | 2204 | 24 | 7 | 10.9 | 3.2 |
 | 2026-10-18 | 1011 | 12 | 0 | 11.9 | 0.0 |
 | 2026-10-19 | 620 | 8 | 1 | 12.9 | 1.6 |
-| 2026-10-20 | 446 | 8 | 0 | 17.9 | 0.0 |
-| 14 days | 69026 | 247 | 53 | 3.6 | 0.8 |
+| 2026-10-20 | 1779 | 8 | 0 | 4.5 | 0.0 |
+| 2026-10-21 | 143 | 6 | 0 | 42.0 | 0.0 |
+| 14 days | 70501 | 252 | 53 | 3.6 | 0.8 |
+
+What the API added on 2026-10-21, second reading (Claude's reading):
+1. #15 (E2, the first funny reel) is our third-best reel: 1,602 views at 0.9 days (5.4 times
+   usual), 16.9 shares per 1,000 views (pass mark 8), the lowest skip rate since #06 (42.2%) and
+   10.4 s average watch. The funny skit is sent. Read at 3 days.
+2. #13 (SCAM, E5) reached only 20 accounts in 1.9 days: Instagram did not show it to strangers at
+   all, unlike #08 (another SCAM reel, 441 views). Possibly a limit on the post (the "Account
+   status" page shows it), possibly a weak test audience. To check before the next SCAM reel.
+3. #14 (English) is flat at 353 views at 3 days, 74% skip rate. T3 needs its top-countries screenshot.
+4. No new follower on 2026-10-20 or 2026-10-21, even with #15's reach. The series follow line has
+   not moved follows yet (T2: 0.3 per 1,000 since #12).
 
 What the API added on 2026-10-21 (Claude's reading):
 1. #15 (E2, the first funny reel) opened better than anything since #06: 41.5% skip rate and 20
@@ -270,7 +283,9 @@ Lanes in every five reels: TOOL, TOOL, SCAM, TOOL, AI.
 - #14 TOOL, office (made; the first English reel and AI Hack #1; I picked the Gamma deck idea, a sequel to #06, from four, in English).
 - #15 AI, college (made; experiment E2, the first funny reel, and AI जुगाड़ #2; I picked "fake references" from four ideas).
 - #16 TOOL, both (made; a sequel to #11 and AI जुगाड़ #3; I picked "Gemini mock interview" from four ideas). Post it at 7 to 8:30 PM (T1 is now the default).
-- **Next: #17 TOOL** (the first money slot, T4), then #18 SCAM (experiment slot: E2 Funny, its second try) and #19 TOOL (the English slot).
+- #17 TOOL, college (made; the first money reel, T4, and AI से कमाई #1; I picked "resumes for juniors" from four ideas; a sequel to #11).
+- #18 SCAM, college (made; experiment E2, its second try; I picked "Telegram like-and-earn" from four ideas). Post it at 7 to 8:30 PM.
+- **Next: #19 TOOL** (the English slot: English recommended, Hindi offered too), then #20 (a money slot, T4).
 - Review of lanes, settings, hooks, feelings and experiments: after #15 (ten reels in the new
   format).
 
@@ -298,7 +313,8 @@ Reel experiments (the queue, most promising first: the order of 2026-10-21, `que
 
 | # | Experiment | The one change | What we expect, and why | Pass mark | Reel | Result |
 |---|---|---|---|---|---|---|
-| E2 | Funny | A comedy skit with the cast (Chintu presses the wrong button, Mitthu agrees with everything); the AI trick is the punchline | Funny reels get sent; every reel so far was only "useful" | Shares per 1,000 views 8 or more (#09 and #10: 2.4) | #15 (Chintu as the AI makes up five references; the trick is a title search on Google Scholar) | |
+| E2 | Funny | A comedy skit with the cast (Chintu presses the wrong button, Mitthu agrees with everything); the AI trick is the punchline | Funny reels get sent; every reel so far was only "useful" | Shares per 1,000 views 8 or more (#09 and #10: 2.4) | #15 (Chintu as the AI makes up five references; the trick is a title search on Google Scholar); #18 (the Telegram task scam: Chintu likes and pays, the group is all Mitthu, the rule and 1930 are the punchline) | |
+| E8 | Personal proof | The reel is my real story, told by me ("मैं", my face): a B.Com graduate with no coding who builds apps and tools with AI, with the real proof on screen (the Play Store page, the hackathon, the live site). Angles in order: the app with 500+ downloads; Claude runs my phone to make promo videos; Legal-IQ reads an offer letter | People follow a person, not a tool list: the account turns 0.8 per 1,000 reach into followers (14 days to 2026-10-20). Most viewers are not from computer science and can see themselves in it | Follows per 1,000 reach (from its "Profile activity" screenshot) 2.0 or more, and "times usual" 1 or more (it must not cost views) | | 2nd in the queue (added 2026-10-21) |
 | E6 | Fast news | An AI launch that matters to students, made within 24 hours | New things are searched and shown while they are fresh | "Times usual" 3 or more | 2nd in the queue: it takes an experiment slot only when a big launch happened in the last 24 hours; otherwise the next one does |
 | E1 | Visible magic | A tool whose result is a before and after the eye sees in one second (a sketch into a picture, a photo of notes into typed text, a plain slide into a designed one) | #06 was the only reel with such a moment and the only hit | "Times usual" 3 or more and saves per 1,000 views 20 or more | #12 (a selfie becomes a professional photo; the wipe from hoodie to blazer is the moment) | #12 FAIL at 3 days: 1.1 times usual, 2.7 saves per 1,000; a second try is due |
 | E7 | My own voice | I record the voice (`node vo.mjs <dir> --own <recording>`) instead of the AI voice | A real voice makes "तुम" a real person: more trust, more follows | Followers per 1,000 reach on the reel's days above the T2 level | 4th in the queue: it takes the slot when I have recorded the script ("maybe later", my answer of 2026-10-16); otherwise the next one does |
@@ -380,12 +396,13 @@ Each money reel at 3 days (from `node ig.mjs review`, T4), and its follows from 
 
 | # | Title | Series | Posted | Times usual at 3 days | Shares / 1k views | Saves / 1k views | Follows per 1k reach | Result |
 |---|---|---|---|---|---|---|---|---|
+| 17 | Junior ने resume के पैसे दिए, और वो तुम्हारी पहली कमाई थी | AI से कमाई #1 | not yet | | | | | |
 
 ## AI से कमाई series
 
 | Series # | Reel | Title |
 |---|---|---|
-| 1 | | (the first money reel, #17) |
+| 1 | #17 | Junior ने resume के पैसे दिए, और वो तुम्हारी पहली कमाई थी (Gemini + Canva) |
 
 ## AI Hack series (English)
 
@@ -454,6 +471,7 @@ Each idea has its setting: [both] works in a classroom or an office, [college], 
 - [ ] यह photo असली है या AI की? [both]
 - [ ] ChatGPT को ये 4 चीज़ें कभी मत बताओ। [both]
 - [ ] Internship के लिए पैसे माँगे? वह internship नहीं है। (a fake offer and a "registration fee") [college]
+- [x] Video like करने के पैसे, फिर सब डूब गए (#18, the Telegram task scam, funny, with 1930) [college]
 - [x] Job offer आया और training fee माँगी? (#13, with the who.is check) [both]
 
 ### AI: why does it do that

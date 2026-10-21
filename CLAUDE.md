@@ -299,24 +299,23 @@ we will create in future, so that you can build a self improving system".
 
 ### The current ranking
 <!-- drivers:start -->
-Written by `node ig.mjs report` on 2026-10-20; do not edit by hand.
+Written by `node ig.mjs report` on 2026-10-21; do not edit by hand.
 
 Ranked by how closely each metric moves with views across 14 reels a day old or more (rank correlation, 1 = always together, 0 = no link, below 0 = the opposite; rates per account reached). "Hit reels" are our top 4 by views (#06, #11, #10, #09): their level is the target for the next reel.
 
 | Rank | Metric | Link with views | Without the top reel | Hit reels | Other reels | Build it with |
 |---|---|---|---|---|---|---|
-| 1 | Skip rate (leave in about 3 s) | -0.75 | -0.68 | 53% | 78% | frame 0: a big face reacting to the result; the hook a result or a loss; movement by second 3 |
-| 2 | Share rate (sends per reach) | 0.74 | 0.66 | 0.93% | 0.00% | one friend of the viewer's age to send it to, and a moment worth sending |
-| 3 | Save rate | 0.63 | 0.54 | 2.23% | 0.16% | a concrete thing to keep (a prompt, the steps) and a moment to use it |
-| 4 | Comment rate | 0.48 | 0.44 | 0.12% | 0.00% | the link line; a question the viewer can answer |
-| 5 | Share of the reel watched | 0.41 | 0.34 | 28% | 16% | no sentence that does not move the story |
-| 6 | Average watch time | 0.36 | 0.28 | 9.2 s | 6.0 s | something new every 2 to 4 s; every part ends with a reason to stay |
-| 7 | Like rate | -0.65 | -0.58 | 1.19% | 2.62% | - |
+| 1 | Skip rate (leave in about 3 s) | -0.76 | -0.70 | 53% | 77% | frame 0: a big face reacting to the result; the hook a result or a loss; movement by second 3 |
+| 2 | Share rate (sends per reach) | 0.74 | 0.66 | 0.94% | 0.00% | one friend of the viewer's age to send it to, and a moment worth sending |
+| 3 | Save rate | 0.63 | 0.54 | 2.28% | 0.16% | a concrete thing to keep (a prompt, the steps) and a moment to use it |
+| 4 | Share of the reel watched | 0.52 | 0.41 | 29% | 16% | no sentence that does not move the story |
+| 5 | Comment rate | 0.48 | 0.44 | 0.12% | 0.00% | the link line; a question the viewer can answer |
+| 6 | Average watch time | 0.41 | 0.35 | 9.2 s | 6.0 s | something new every 2 to 4 s; every part ends with a reason to stay |
+| 7 | Like rate | -0.65 | -0.58 | 1.20% | 2.62% | - |
 | - | Repost rate | 0.28 | 0.15 | 0.05% | 0.00% | too few reels have it to trust |
 
 Idea score weights now: Q6, Q7 x2 (share rate (sends per reach)); Q9, Q3 x1.5 (average watch time); the other questions x1. (Kept from the last run: the new leader is not clearly ahead yet.)
 What drives follows: waiting for per-reel follows from screenshots (3 of 5 reels: #08 0.0 per 1,000 reach, #07 0.0 per 1,000 reach, #06 0.7 per 1,000 reach). Until then: followers per 1,000 reach, account by day (below).
-RANKING CHANGED: the top metrics were skip, share, watch; now skip, share, save.
 <!-- drivers:end -->
 
 ## Experiments (from 2026-10-16)
@@ -336,7 +335,7 @@ changes".
   in the order of promise (my request of 2026-10-21: "reorder the upcoming experiment slots
   ... so that we can figure out quick what content is getting the maximum positive impact"):
   `queue` in `results/experiments.json`, ranked by Claude from outside research and our
-  numbers. On 2026-10-21: E2 Funny, E6 Fast news, E1 Visible magic, E7 My own voice, E3 Short
+  numbers. On 2026-10-21: E2 Funny, E8 Personal proof (added the same day), E6 Fast news, E1 Visible magic, E7 My own voice, E3 Short
   loop, E5 My own risk, E4 Quiz. The review's NEXT REEL line names the experiment due in each
   experiment slot: the first that still needs a try (a try counts once its reel is made). E6
   takes the slot only when a big launch happened in the last 24 hours, E7 only when I have
@@ -399,7 +398,7 @@ ideas keep coming in automatically, implement it".
     format's share shrinks to fit.
   - slot: a share of the slots (T3, the English slot).
   - default: the normal choice, which a reel may break with a reason (T1 posting time, T2
-    series, E7 my voice).
+    series, E7 my voice, E8 my persona).
 - The playbook guides the two bet slots in every three. Experiment slots (#12, #15, #18 and so
   on) and the wild card ignore it completely, so new kinds of reel always have room.
 - Nothing is permanent. Each playbook entry is re-checked every 60 days or 20 reels: the reels
@@ -577,6 +576,76 @@ you can track whether its really getting enormous view, follows and share".
   - Series (Claude's default): "AI से कमाई #N", numbered on its own, with the follow line "ऐसे
     और AI कमाई के तरीकों के लिए follow कर लो।" and the cover badge `--series "AI से कमाई #N"`.
 
+## Personal proof reels (E8, from 2026-10-21)
+My words: "explore who i am, what i like, what i do, what i passionate about and then out of all
+those things just figure out what will perform well that will help to gain more trust, view,
+followers"; "i dont want to change the system"; "this will be an experiment".
+
+- Source: my profile, `C:\Users\ll\Desktop\App Ideas\About Me\Vipul-Singh-Creator-Profile.md`
+  (outside the project, so it is not on GitHub). Read it before building an E8 reel. Facts about
+  me come only from it or from me. The profile lists @tech_n_vipul; this channel is
+  @vipulsingh_ai (my answer of 2026-10-21).
+- What Claude picked from it (the parts that build trust and reach; the rest is left out):
+  - The identity: a B.Com graduate with no coding who builds real apps and tools by directing
+    AI, self-taught since 2023. Most viewers are not from computer science, so they can see
+    themselves in it, and a person is a reason to follow (bet 8).
+  - The proof, each on a public page Claude can capture: BillBanao on Google Play (500+
+    downloads); Legal-IQ (selected for the Google GenAI Hackathon, 11 December 2025; live site);
+    my app promo video service (my portfolio page: listed from $39, delivered in 48 hours), for
+    which Claude runs a real Android phone; Armadore (reviews written by an n8n automation).
+  - More facts from me (2026-10-22): BillBanao was my first mobile app; I built its base on
+    Replit, pushed it to GitHub, then finished it with Antigravity and Claude Code. Its downloads
+    still showed 500+ that day. FreelanceDocs is being made into a full business suite for
+    freelancers; it is not used as proof until I say it is published (I will tell more then).
+  - The angles, in Claude's order: (1) B.Com, no coding, an app 500+ people use; (2) Claude runs
+    my phone to make promo videos; (3) Legal-IQ reads an offer letter or a rent agreement in
+    Hindi and shows the red flags. Later: a website that writes its own reviews; the free
+    Microsoft certificates I did; and, once E8 has passed, the builder who cannot sell, finding
+    his first paying users through this channel (a journey, told only with real progress). They
+    are also in `angles` of E8 in the register.
+  - Left out: tool and code names as a list (jargon), the certificates as a boast, the travel,
+    car and jewellery sites (off topic), the GST details for shop owners (not this audience),
+    and the client-finding automation (collecting contact details reads as spam).
+- My struggle and my goal (my words of 2026-10-21): "the things in which i am no good is sales".
+  I build SaaS and Android apps with good UI/UX and automation, but they have few paying users;
+  I have never called anyone to use my app, and I know Google Ads a little. I made
+  this account "to tell about my story, my experiece and build an auidence with whom i can build
+  real problem solving apps and saas", an audience that becomes my marketing channel.
+  - The struggle is true and many viewers share it, so it is the honest catch of an E8 reel and
+    makes the win believable ("app बन गया, पर बेचना नहीं आता"). No numbers of users or money
+    unless I give them.
+  - Products follow the audience: the reels bring students, freshers and people who want a side
+    income, so tools for them fit best (Legal-IQ for an offer letter, FreelanceDocs for
+    freelancers). Students try free tools but rarely pay; that is a guess to check, not a fact.
+- Rules:
+  - Only true facts. Exact words: Legal-IQ was "selected", not "won". No earnings, clients or
+    user numbers beyond the profile unless I give them. Hooks may still be bold about the story.
+  - Told by me: "मैं" with my face; it turns to "तुम" when the reel shows what the viewer can do.
+    The proof is the real page, captured like any tool page (`capture.mjs`).
+  - My own products: show them as proof and teach the method; say plainly that they are mine.
+  - Until E8 is decided, personal-proof reels go only in experiment slots, so that the money,
+    English and bet reels stay clean tests.
+- How to script an E8 reel (my request of 2026-10-21: "use these info properly with good
+  scripting"; I said the real persona will build trust and followers):
+  - The story parts stay. Hook: my result and the contrast that makes it surprising (B.Com, no
+    coding, yet a live app), one sentence; frame 0 my face reacting next to the proof (the real
+    page). Trouble: a moment many viewers share. Turn: what I did with AI, in plain words. How:
+    it turns to "तुम", two or three steps the viewer can save (my own "how I build" steps).
+    Second payoff: the honest catch from my struggle (selling), which also says why the channel
+    exists. Ending: back to the hook picture, then one ask.
+  - The viewer stays the hero of the benefit: about a third about me, two thirds about what
+    "तुम" can do. Every "मैंने" leads to a "तुम भी".
+  - Proof, not praise: the page and the number speak. Never "amazing", "expert" or "genius"
+    about me.
+  - Real details beat big words (B.Com, Delhi, 2023, a GST bill). A detail or feeling that is not
+    in the profile goes into the draft's "confirm" list and is asked before the build.
+  - Plain words: no lists of code tools. A tool is named only when the viewer can use it.
+  - The voice speaks as me, in the channel voice (Orus); `style` says "like telling a friend
+    your own story: honest, warm, calm, never boastful". I said on 2026-10-21 that this voice
+    "doesn't sounds like an AI voice", so it stays; if I decide to give my real audio, I will
+    provide it (that is E7).
+  - Drafts live in `films/_drafts/`; the first is `e8-bcom-app.json` (angle 1).
+
 ## Recording websites
 - My rules (2026-10-12): Claude makes every screen recording itself; I do not supply
   recordings. If a tool or any software needs sign-in, do not sign in: record the public
@@ -712,7 +781,8 @@ my own numbers: keep them until the share rates in `VIDEOS.md` say otherwise.
   in `style`.
 - If a take has a pause of more than 0.3 s inside a sentence, generate that line again.
   `vo.mjs` prints a note when a line has more long pauses than sentence breaks.
-- My own voice (experiment E7; on 2026-10-16 I said "maybe later"):
+- My own voice (experiment E7; on 2026-10-16 I said "maybe later"; on 2026-10-21 that the
+  synthesized voice does not sound like AI, so it stays until I provide my real audio):
   `node vo.mjs <dir> --own <file or folder>`. A folder holds one recording per line, named
   after the line id (`hook.m4a`); one file holds the whole script read in order, with about one
   second between lines, and is cut at those pauses. Phone formats work; the recording gets a low
@@ -792,6 +862,9 @@ my own numbers: keep them until the share rates in `VIDEOS.md` say otherwise.
 
 ## Earning
 - Nothing is sold yet; the first goal is reach.
+- The long-term goal (my words of 2026-10-21): the audience becomes the marketing channel for
+  the apps and SaaS I build for it ("Personal proof reels"). Sales is my weak side; the channel
+  does the reaching, and comments that ask for a link are the first, written step of a sale.
 - When a lane clearly works: affiliate links for featured tools, a free prompt pack sent by
   comment keyword, and pitching tool makers with my reel about their tool as the sample.
 - Claude does not post, message anyone, join an affiliate programme or accept terms for me.

@@ -1,0 +1,22 @@
+{
+  "captured": "2026-10-21",
+  "shots": [
+    {
+      "name": "portal",
+      "url": "https://cybercrime.gov.in/",
+      "file": "shots/portal.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "Cybercrime Portal",
+      "finalUrl": "https://cybercrime.gov.in/home",
+      "w": 824,
+      "h": 3028,
+      "headings": [],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "captured": "2026-10-20",
+  "shots": [
+    {
+      "name": "coach",
+      "url": "https://gemini.google/discover/ai-career-coach/",
+      "file": "shots/coach.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "AI CV builder and cover letter generator free of charge | Gemini",
+      "finalUrl": "https://gemini.google/discover/ai-career-coach/",
+      "w": 824,
+      "h": 12452,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Gemini: Your all-in-one AI career coach",
+          "x": 40,
+          "y": 268,
+          "w": 744,
+          "h": 154
+        },
+        {
+          "tag": "h1",
+          "text": "Bye-bye, blank page syndrome",
+          "x": 48,
+          "y": 1648,
+          "w": 728,
+          "h": 128
+        },
+        {
+          "tag": "h2",
+          "text": "Own the hot seat",
+          "x": 48,
+          "y": 3744,
+          "w": 728,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "Explore what's next for you",
+          "x": 48,
+          "y": 5552,
+          "w": 728,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "Frequently asked questions",
+          "x": 40,
+          "y": 7600,
+          "w": 744,
+          "h": 144
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "canva",
+      "url": "https://www.canva.com/resumes/templates/",
+      "file": "shots/canva.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "Free printable resume templates you can customize | Canva",
+      "finalUrl": "https://www.canva.com/resumes/templates/",
+      "w": 824,
+      "h": 14000,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Resume templates",
+          "x": 94,
+          "y": 368,
+          "w": 637,
+          "h": 79
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "fiverr",
+      "url": "https://www.fiverr.com/categories/writing-translation/resume-writing",
+      "file": "shots/fiverr.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "It needs a human touch",
+      "finalUrl": "https://www.fiverr.com/categories/writing-translation/resume-writing",
+      "w": 824,
+      "h": 2078,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "It needs a human touch",
+          "x": 32,
+          "y": 192,
+          "w": 760,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "Quick fixes",
+          "x": 54,
+          "y": 636,
+          "w": 129,
+          "h": 20
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

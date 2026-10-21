@@ -512,16 +512,22 @@ if (cmd === 'check') {
   const numbers = [...new Set(hist.map((h) => h.number))].sort((a, b) => a - b);
   // "times usual" at the reading: against the 72-hour views of the 10 reels before it
   const usualBefore = (n) => median(numbers.filter((m) => m < n).slice(-10).map((m) => reading(m)?.views ?? null));
+  // follows per 1,000 reach from a reel's "Profile activity" screenshot (the API has no follows
+  // per reel); null until I have sent it
+  let shotsOf = {};
+  try { shotsOf = JSON.parse(readFileSync('results/screenshots.json', 'utf8').replace(/^﻿/, '')).reels ?? {}; } catch { /* none yet */ }
   const metricsOf = (n, length) => {
     const r = reading(n);
     if (!r) return null;
     const v = r.views || 0;
     const usual = usualBefore(n);
+    const s = shotsOf[key2(n)];
     return {
       ageH: Math.round(r.ageH), views: r.views, timesUsual: usual ? r.views / usual : null,
       savesPer1k: v ? (1000 * (r.saves ?? 0)) / v : null, sharesPer1k: v ? (1000 * (r.shares ?? 0)) / v : null,
       commentsPer1k: v ? (1000 * (r.comments ?? 0)) / v : null,
       watchShare: length && r.avgWatch != null ? r.avgWatch / length : null,
+      followsPer1k: s?.follows != null && s.reach ? (1000 * s.follows) / s.reach : null,
     };
   };
   // a reel's length: the end of its voice plus about a second (from its vo.json)
@@ -551,6 +557,7 @@ if (cmd === 'check') {
       for (const t of e.tries ?? []) {
         const m = metricsOf(t.reel, t.length ?? lengthOf(t.reel));
         if (!m) { wait++; detail.push(`#${key2(t.reel)}: waiting (${ageOf(t.reel) ?? '?'} days old, read at ${readH / 24} days)`); continue; }
+        if (e.pass.some(([k]) => k === 'followsPer1k') && m.followsPer1k == null) { wait++; detail.push(`#${key2(t.reel)}: waiting for its "Profile activity" screenshot (follows per 1,000 reach)`); continue; }
         const checks = e.pass.map(([k, op, val]) => ({ ok: m[k] != null && OPS[op](m[k], val), txt: `${k} ${fmt(k, m[k])} (needs ${op} ${k === 'watchShare' ? `${Math.round(val * 100)}%` : val})` }));
         const ok = checks.every((c) => c.ok);
         if (ok) pass++; else fail++;

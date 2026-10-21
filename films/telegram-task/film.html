@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#18 SCAM: like करने के पैसे, फिर सारे पैसे डूब गए</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #FFE3BF; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// A comedy skit about the Telegram task scam (E2, second try). Places: my hostel room by day
+// (the hook: an empty wallet; the ending: the same message, blocked; the link line), a big drawn
+// phone (the job message, Chintu's rubber arm liking videos, the VIP group where every happy
+// member is Mitthu, the task, PAY, removed), my desk at night (the ₹150 was the cheese in a
+// mousetrap; the rule with a SCAM stamp), and the cybercrime portal for 1930 and the complaint.
+// The chats are drawn and generic ("Job Agent", "VIP Earning Group"), not a real product's screen.
+import { S, backOut, bump, camera, captionsCompact, cubicOut, eio, expoOut, key, lerp, person, pointer, prog, pulse, setup, start, webpage } from '/brand/story.js';
+import { CORAL, INK, NAVY, BLUE, dayWall, desk, followCard, lights, linkLine, paperPlane, show, star, whip, whipIn, whipOut } from '/brand/scenes.js';
+import { monkey, macaw } from '/brand/cast.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const PORTAL = 'shots/portal4x.jpg'; // cybercrime.gov.in: header 34 to 100 css px, then 204 to 660 (the banner left out), at 4x
+const FACE = { dir: '/brand/face/', meta: await (await fetch('/brand/face/face.json')).json() };
+const ME = { face: FACE, skin: FACE.meta.cheek, shade: '#D98A52', outfit: 'hoodie' };
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"', '600 33px "Anek Devanagari"'], [PORTAL, '/logo.png', ...FACE.meta.names.map((n) => `${FACE.dir}${n}.png`)]);
+const pop = (t, at) => 1 - 0.07 * at.reduce((v, a) => v + Math.max(0, bump(t - a)), 0);
+const place = (g, x, y, s = 1, r = 0) => g.setAttribute('transform', `translate(${x} ${y}) rotate(${r}) scale(${s})`);
+const U = [];
+const L = lights(svg);
+const defs = L.defs;
+const YEL = '#FFD23F';
+const GREEN = '#19C37D';
+const FUR = '#8A5A35';
+const line = { stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+const chip = (parent, text, w, size, fill = YEL, ink = NAVY) => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -size * 0.75, width: w, height: size * 1.5, rx: size * 0.36, fill, ...line }, g);
+  S('text', { y: size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, text);
+  return g;
+};
+const tickPath = (parent, x, y, r, stroke = '#fff') => S('path', { d: `M${x - r},${y} L${x - r * 0.3},${y + r * 0.7} L${x + r},${y - r * 0.7}`, fill: 'none', stroke, 'stroke-width': r * 0.45, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, parent);
+const crossPath = (parent, x, y, r, stroke = CORAL) => S('path', { d: `M${x - r},${y - r} L${x + r},${y + r} M${x + r},${y - r} L${x - r},${y + r}`, stroke, 'stroke-width': r * 0.42, 'stroke-linecap': 'round' }, parent);
+const HEART = 'M0,16 C-30,-6 -22,-30 0,-14 C22,-30 30,-6 0,16 Z';
+function bubble(parent, lines, w, size, fill = '#fff', ink = NAVY) {
+  const g = S('g', {}, parent);
+  const h = lines.length * size * 1.25 + size * 0.9;
+  S('path', { d: `M${-w / 2 + 30},${-h / 2} L${w / 2 - 30},${-h / 2} Q${w / 2},${-h / 2} ${w / 2},${-h / 2 + 30} L${w / 2},${h / 2 - 30} Q${w / 2},${h / 2} ${w / 2 - 30},${h / 2} L${-w / 2 + 80},${h / 2} L${-w / 2 + 50},${h / 2 + 40} L${-w / 2 + 54},${h / 2} L${-w / 2 + 30},${h / 2} Q${-w / 2},${h / 2} ${-w / 2},${h / 2 - 30} L${-w / 2},${-h / 2 + 30} Q${-w / 2},${-h / 2} ${-w / 2 + 30},${-h / 2} Z`, fill, ...line }, g);
+  lines.forEach((s, i) => S('text', { y: -h / 2 + size * 1.05 + i * size * 1.25 + size * 0.15, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, s));
+  return g;
+}
+// a phone in the hand, with a screen that can change
+function handPhone(parent) {
+  const g = S('g', {}, parent);
+  S('rect', { x: -62, y: -110, width: 124, height: 220, rx: 22, fill: NAVY, ...line }, g);
+  const red = S('g', {}, g);
+  S('rect', { x: -50, y: -94, width: 100, height: 188, rx: 12, fill: '#FFE2E7' }, red);
+  S('circle', { cy: -10, r: 30, fill: CORAL }, red);
+  crossPath(red, 0, -10, 14, '#fff');
+  S('rect', { x: -34, y: 40, width: 68, height: 10, rx: 5, fill: CORAL, opacity: 0.6 }, red);
+  const blue = S('g', {}, g);
+  S('rect', { x: -50, y: -94, width: 100, height: 188, rx: 12, fill: '#BFD0FF' }, blue);
+  S('rect', { x: -38, y: -70, width: 76, height: 30, rx: 12, fill: '#fff' }, blue);
+  S('rect', { x: -38, y: -28, width: 60, height: 30, rx: 12, fill: '#fff' }, blue);
+  const btn = S('g', { transform: 'translate(0 56)' }, blue);
+  S('rect', { x: -40, y: -20, width: 80, height: 40, rx: 14, fill: CORAL }, btn);
+  return { g, red, blue, btn };
+}
+// a small Mitthu for the group's avatars: every member is the same parrot
+function parrotFace(parent) {
+  const g = S('g', {}, parent);
+  S('circle', { r: 34, fill: '#E2342C', ...line, 'stroke-width': 4 }, g);
+  S('path', { d: 'M-4,-14 C14,-20 26,-6 24,12 C14,20 0,16 -6,6 Z', fill: '#F8F3EA' }, g);
+  S('circle', { cx: 8, cy: -4, r: 5, fill: '#1A1014' }, g);
+  S('path', { d: 'M18,-12 C38,-16 44,10 32,24 C30,10 24,4 16,4 Z', fill: '#EFE8DA', stroke: INK, 'stroke-width': 3 }, g);
+  return g;
+}
+// a rubber arm: Chintu reaches from his shoulder to a point, however far
+function rubberArm(parent) {
+  const outl = S('path', { fill: 'none', stroke: INK, 'stroke-width': 38, 'stroke-linecap': 'round' }, parent);
+  const fur = S('path', { fill: 'none', stroke: FUR, 'stroke-width': 28, 'stroke-linecap': 'round' }, parent);
+  const hand = S('circle', { r: 24, fill: '#F2CFA3', stroke: INK, 'stroke-width': 4 }, parent);
+  return (on, a, b, wob = 0) => {
+    [outl, fur, hand].forEach((e) => show(e, on));
+    if (!on) return;
+    const mx = (a[0] + b[0]) / 2 + 60 + wob;
+    const my = (a[1] + b[1]) / 2 + 40;
+    const d = `M${a[0]},${a[1]} Q${mx},${my} ${b[0]},${b[1]}`;
+    outl.setAttribute('d', d); fur.setAttribute('d', d);
+    hand.setAttribute('cx', b[0]); hand.setAttribute('cy', b[1]);
+  };
+}
+
+// ================= my hostel room by day =================
+const C = { s: S('g', {}, svg) };
+C.w = S('g', {}, C.s);
+C.cam = camera(C.w);
+C.blur = L.blurOf('mbHostel');
+const wallTick = dayWall(C.w);
+// a poster and a shelf
+const poster = S('g', { transform: 'translate(250 520) rotate(-4)' }, C.w);
+S('rect', { x: -110, y: -140, width: 220, height: 280, rx: 8, fill: '#BFE3FF', ...line }, poster);
+S('circle', { cx: 0, cy: -30, r: 56, fill: YEL, ...line, 'stroke-width': 4 }, poster);
+S('rect', { x: -70, y: 60, width: 140, height: 18, rx: 9, fill: NAVY }, poster);
+S('rect', { x: -50, y: 92, width: 100, height: 12, rx: 6, fill: '#7B8BB8' }, poster);
+S('rect', { x: -700, y: 1500, width: 2480, height: 1200, fill: '#E2C9A0' }, C.w);
+S('rect', { x: -700, y: 1500, width: 2480, height: 16, fill: '#CFAF7E' }, C.w);
+// the bed on the right
+S('rect', { x: 600, y: 1340, width: 760, height: 170, rx: 20, fill: '#8C5A2E', ...line }, C.w);
+S('rect', { x: 610, y: 1260, width: 740, height: 110, rx: 30, fill: '#fff', ...line }, C.w);
+S('path', { d: 'M700,1290 L1350,1280 L1350,1380 L680,1380 Z', fill: '#7B9CFF', ...line }, C.w);
+for (let k = 0; k < 4; k++) S('path', { d: `M${760 + k * 140},1300 l40,60`, stroke: '#5C7DE0', 'stroke-width': 10, 'stroke-linecap': 'round' }, C.w);
+const chintuC = monkey(C.w);
+const meC = person(C.w, ME);
+const cFront = S('g', {}, C.w);
+const myPhone = handPhone(cFront);
+// Chintu's empty wallet and the moth that flies out of it
+const wallet = S('g', {}, cFront);
+S('rect', { x: -80, y: -50, width: 160, height: 100, rx: 18, fill: '#7A4A2A', ...line }, wallet);
+S('rect', { x: -66, y: -36, width: 132, height: 72, rx: 12, fill: 'none', stroke: '#C99257', 'stroke-width': 4, 'stroke-dasharray': '10 8' }, wallet);
+S('path', { d: 'M-80,-4 L80,-4', stroke: '#3D2412', 'stroke-width': 6 }, wallet);
+S('circle', { cx: 50, cy: -4, r: 11, fill: YEL, stroke: INK, 'stroke-width': 3 }, wallet);
+const moth = S('g', {}, cFront);
+const wings = [-1, 1].map((m) => S('ellipse', { cx: m * 20, cy: 0, rx: 22, ry: 14, fill: '#C9C2B6', stroke: INK, 'stroke-width': 3 }, moth));
+S('ellipse', { rx: 7, ry: 16, fill: '#8F877A', stroke: INK, 'stroke-width': 3 }, moth);
+const tears = [0, 1].map(() => S('path', { d: 'M0,-14 Q10,2 0,10 Q-10,2 0,-14 Z', fill: '#6FC3FF', stroke: '#2F8AD8', 'stroke-width': 2 }, cFront));
+const zero = chip(cFront, '₹0', 200, 76, '#fff', CORAL);
+const rewind = S('g', {}, cFront);
+S('rect', { x: -240, y: -52, width: 480, height: 104, rx: 34, fill: NAVY, ...line }, rewind);
+for (const dx of [-170, -126]) S('path', { d: `M${dx + 40},-24 L${dx},0 L${dx + 40},24 Z`, fill: YEL }, rewind);
+S('text', { x: 40, y: 22, 'text-anchor': 'middle', 'font-size': 60, fill: '#fff' }, rewind, '3 दिन पहले');
+// the ending: the same message again, then BLOCKED
+const again = bubble(cFront, ['Part-time job!', 'हर like = ₹50'], 420, 46, '#fff');
+const blocked = S('g', {}, cFront);
+S('rect', { x: -220, y: -64, width: 440, height: 128, rx: 26, fill: '#fff', stroke: CORAL, 'stroke-width': 14 }, blocked);
+S('text', { y: 30, 'text-anchor': 'middle', 'font-size': 84, fill: CORAL }, blocked, 'BLOCKED');
+const sparksC = [[-200, -110, 30], [210, -120, 24], [230, 90, 22], [-220, 90, 26]].map(([x, y, r]) => ({ e: star(cFront, 0, 0, r, YEL), x, y }));
+const plane = paperPlane(cFront, [330, 1150], [700, 760], [1300, 520]);
+
+U.push((t) => {
+  const A = t < T.trouble - 0.2;   // the hook
+  const E = t >= T.end - 0.2;      // the same message, blocked; the link line; the ask
+  if (!show(C.s, A || E)) return;
+  wallTick(t);
+  const link = t >= T.link - 0.2;
+  show(wallet, A); show(moth, A); tears.forEach((e) => show(e, A)); show(zero, A); show(rewind, A && t > T.sach - 0.05);
+  show(again, E && !link && t > T.wahi - 0.1 && t < T.block);
+  show(blocked, E && !link && t >= T.block);
+  sparksC.forEach((s) => show(s.e, E && !link && t > T.block));
+  show(myPhone.red, A); show(myPhone.blue, E);
+  plane(t, link ? T.send + 0.2 : 1e9, T.sendWord + 0.3);
+  if (A) {
+    whip(C.s, C.blur, 0, 0);
+    whipOut(C.s, C.blur, t, T.trouble - 0.2, -1);
+    C.cam(...key(t, [[0, [600, 1010, 1.12]], [T.sach, [600, 1000, 1.2], (p) => p], [T.trouble, [600, 990, 1.26]]]));
+    const hand = [170, -390 + 6 * Math.sin(t * 3)];
+    meC.pose({ x: 300, y: 1640, s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.4), face: t < T.sach ? 'worried' : 'thinking', pop: pop(t, [T.dube, T.sach]), handL: [-150, -62], handR: hand });
+    place(myPhone.g, 300 + hand[0] * 1.5 + 10, 1640 + hand[1] * 1.5 - 70, 1, 8);
+    // Chintu sobs on the bed with the empty wallet
+    const sob = 6 * Math.sin(t * 14);
+    // he holds the wallet up, upside down, and shakes it: only a moth comes out
+    chintuC.pose({ x: 820, y: 1340 + Math.abs(sob), s: 1.1, face: 'worried', tilt: -6 + sob * 0.5, handL: [-50, -250], handR: [110, -320], tail: t * 2 });
+    place(wallet, 820 + 110 * 1.1 + 10, 1340 - 320 * 1.1 - 40 + Math.abs(sob), 1.1, 160 + 10 * Math.sin(t * 12));
+    const mp = (t * 0.45) % 1;
+    place(moth, 900 + 70 * Math.sin(t * 2.6) - 120 * mp, 900 - 260 * mp, 1.8, 10 * Math.sin(t * 5));
+    wings.forEach((w, i) => w.setAttribute('ry', 14 * Math.abs(Math.sin(t * 22 + i))));
+    tears.forEach((e, i) => { const k = (t * 1.6 + i * 0.5) % 1; e.setAttribute('transform', `translate(${820 + (i ? 38 : -38) * 1.1} ${1340 - 320 * 1.1 + 150 * k}) scale(${1.4 - 0.4 * k})`); });
+    place(zero, 820, 800 + 6 * Math.sin(t * 2.5), backOut(prog(t, 0.2, 0.35)) * (1 + 0.06 * Math.max(0, bump(t - T.dube))), -6);
+    place(rewind, 560, 520, backOut(prog(t, T.sach - 0.05, 0.35)), -3);
+    return;
+  }
+  // the next day: the message again; Chintu reaches for it; I block it
+  if (t < T.end + 0.25) whipIn(C.s, C.blur, t, T.end - 0.2, 1);
+  else whip(C.s, C.blur, 0, 0);
+  C.cam(...key(t, [[T.end - 0.2, [600, 1000, 1.04]], [T.block, [600, 990, 1.14], (p) => p], [T.link - 0.2, [580, 980, 1.12], (p) => p], [T.link + 0.2, [70, 1020, 1.3]], [dur, [70, 1010, 1.34], (p) => p]]));
+  const blk = t >= T.block;
+  const reach = !link && t > T.wahi && !blk ? eio(prog(t, T.wahi, 0.4)) : 0;
+  const clap = blk && !link ? Math.abs(Math.sin(t * 9)) : 0;
+  chintuC.pose({
+    x: 760, y: 1340 - 20 * Math.max(0, bump(t - T.block - 0.1)), s: 1.1, tilt: -4 + 3 * Math.sin(t * 2.5),
+    face: blk ? (t < T.block + 0.4 ? 'amazed' : 'grin') : t > T.wahi ? 'grin' : 'neutral', tail: t * 3,
+    handL: blk ? [-20 - 30 * clap, -230] : [lerp(-90, -150, reach), lerp(-110, -260, reach)], handR: blk ? [20 + 30 * clap, -230] : [90, -110],
+  });
+  const offer = link ? eio(prog(t, T.link, 0.3)) * (1 - prog(t, T.send - 0.1, 0.2)) : 0;
+  const hold = link ? [lerp(-70, -215, offer), lerp(-200, -360, offer) - 8 * offer * Math.sin(t * 6)] : [170 - 40 * Math.max(0, bump(t - T.block)), -390 + 6 * Math.sin(t * 3)];
+  meC.pose({
+    x: 300, y: 1640 - 24 * Math.max(0, bump(t - T.sendWord)), s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.3),
+    face: !link ? (t < T.wahi ? 'neutral' : t < T.block ? 'look-right' : 'wink') : t < T.comment - 0.1 ? 'talk' : t < T.send ? 'grin' : 'wink',
+    pop: pop(t, [T.wahi, T.block, T.link, T.send]),
+    handL: link ? hold : blk ? [-170, -440] : [-150, -62], gripL: !link && blk ? 'thumb' : 'open',
+    handR: link ? (t > T.send ? [160, -470] : [150, -62]) : hold, gripR: link && t > T.send ? 'thumb' : 'open',
+  });
+  const hx = link ? hold[0] : hold[0];
+  place(myPhone.g, 300 + hx * 1.5 + (link ? -4 : 10), 1640 + hold[1] * 1.5 - 70, 1, link ? -8 : 8);
+  myPhone.btn.setAttribute('transform', `translate(0 56) scale(${1 - 0.2 * pulse(t, T.block, 0.07)})`);
+  place(again.g ?? again, 640, 640 + 6 * Math.sin(t * 2.5), backOut(prog(t, T.wahi - 0.1, 0.3)), 3);
+  place(blocked, 620, 660, lerp(1.8, 1, Math.min(1, prog(t, T.block, 0.15))) * (1 + 0.04 * Math.max(0, bump(t - T.block - 0.15))), -8);
+  sparksC.forEach((s, i) => place(s.e, 620 + s.x, 660 + s.y, 0.7 + 0.3 * Math.sin(t * 5 + i * 2), t * 30));
+});
+
+// ================= the big phone: the job, the likes, the VIP group, PAY, removed =================
+const P = { s: S('g', {}, svg) };
+P.w = S('g', {}, P.s);
+P.cam = camera(P.w);
+P.blur = L.blurOf('mbPhone');
+S('rect', { x: -700, y: -700, width: 2480, height: 3320, fill: '#DCE6FF' }, P.w);
+for (const [x, y, r, f] of [[110, 320, 170, '#CBD8FF'], [990, 1460, 230, '#CBD8FF'], [960, 300, 90, '#FFE3BF']]) S('circle', { cx: x, cy: y, r, fill: f }, P.w);
+S('rect', { x: 190, y: 200, width: 700, height: 1200, rx: 84, fill: NAVY, ...line }, P.w);
+S('rect', { x: 222, y: 240, width: 636, height: 1120, rx: 60, fill: '#F3F5FA' }, P.w);
+S('rect', { x: 222, y: 240, width: 636, height: 1120, rx: 60 }, S('clipPath', { id: 'phScr' }, defs));
+const pscr = S('g', { 'clip-path': 'url(#phScr)' }, P.w);
+// chat 1: the job agent and three videos
+const chat1 = S('g', {}, pscr);
+S('rect', { x: 222, y: 240, width: 636, height: 1120, fill: '#EEF3FA' }, chat1);
+S('rect', { x: 222, y: 240, width: 636, height: 130, fill: '#fff' }, chat1);
+S('circle', { cx: 300, cy: 305, r: 38, fill: NAVY, ...line, 'stroke-width': 4 }, chat1);
+S('text', { x: 300, y: 318, 'text-anchor': 'middle', 'font-size': 34, fill: '#fff' }, chat1, 'J');
+S('text', { x: 360, y: 300, 'font-size': 40, fill: NAVY }, chat1, 'Job Agent');
+S('text', { x: 360, y: 342, 'font-size': 26, fill: GREEN }, chat1, 'online');
+const offerB = S('g', {}, chat1);
+S('rect', { x: 250, y: 395, width: 520, height: 180, rx: 28, fill: '#fff', ...line, 'stroke-width': 4 }, offerB);
+S('text', { x: 280, y: 450, 'font-size': 38, fill: NAVY }, offerB, 'Part-time job!');
+S('text', { x: 280, y: 500, 'font-size': 36, fill: NAVY }, offerB, 'बस video like करो');
+S('text', { x: 280, y: 550, 'font-size': 36, fill: GREEN }, offerB, 'हर like = ₹50');
+const CARD_Y = [610, 820, 1030];
+const THUMB = ['#FF6B4A', '#7B4DFF', '#2FB5FF'];
+const vids = CARD_Y.map((y, i) => {
+  const g = S('g', {}, chat1);
+  S('rect', { x: 250, y, width: 580, height: 180, rx: 24, fill: '#fff', ...line, 'stroke-width': 4 }, g);
+  S('rect', { x: 268, y: y + 18, width: 230, height: 144, rx: 14, fill: THUMB[i] }, g);
+  S('path', { d: `M${362},${y + 60} L${410},${y + 90} L${362},${y + 120} Z`, fill: '#fff' }, g);
+  S('rect', { x: 518, y: y + 40, width: 120, height: 16, rx: 8, fill: '#C9CEDA' }, g);
+  S('rect', { x: 518, y: y + 72, width: 90, height: 14, rx: 7, fill: '#C9CEDA' }, g);
+  const btn = S('g', {}, g);
+  const ring = S('circle', { r: 46, fill: '#fff', stroke: '#C9CEDA', 'stroke-width': 6 }, btn);
+  const heart = S('path', { d: HEART, fill: 'none', stroke: CORAL, 'stroke-width': 6, transform: 'scale(1.3)' }, btn);
+  const plus = S('text', { 'text-anchor': 'middle', 'font-size': 42, fill: GREEN }, g, '+₹50');
+  return { g, btn, ring, heart, plus, y, at: [712, y + 110] };
+});
+const notif = S('g', {}, pscr);
+S('rect', { x: 240, y: -50, width: 600, height: 100, rx: 30, fill: GREEN, ...line, 'stroke-width': 4 }, notif);
+S('circle', { cx: 300, cy: 0, r: 30, fill: '#fff' }, notif);
+tickPath(notif, 300, 0, 16, GREEN);
+S('text', { x: 350, y: 16, 'font-size': 44, fill: '#fff' }, notif, '₹150 credited');
+// chat 2: the VIP group; every member is Mitthu
+const chat2 = S('g', {}, pscr);
+S('rect', { x: 222, y: 240, width: 636, height: 1120, fill: '#EEF3FA' }, chat2);
+const msgs = S('g', {}, chat2);
+const MEMBERS = [['Rahul', 'मुझे ₹1300 मिल गए!', '#2F5BFF'], ['Neha', 'Thank you sir!', '#E8578A'], ['Amit', 'मुझे भी मिल गए!', GREEN], ['Pooja', 'Best group!', '#7B4DFF']];
+const rows = MEMBERS.map(([who, txt, col], i) => {
+  const g = S('g', {}, msgs);
+  parrotFace(g);
+  const w = 60 + txt.length * 21;
+  S('rect', { x: 46, y: -44, width: w, height: 94, rx: 26, fill: '#fff', ...line, 'stroke-width': 4 }, g);
+  S('text', { x: 70, y: -12, 'font-size': 24, fill: col }, g, who);
+  S('text', { x: 70, y: 30, 'font-size': 34, fill: NAVY }, g, txt);
+  return g;
+});
+const task = S('g', {}, msgs);
+S('rect', { x: 250, y: 950, width: 580, height: 310, rx: 28, fill: '#FFF4CC', ...line, 'stroke-width': 5 }, task);
+S('rect', { x: 250, y: 950, width: 580, height: 70, rx: 28, fill: YEL, ...line, 'stroke-width': 5 }, task);
+S('text', { x: 540, y: 999, 'text-anchor': 'middle', 'font-size': 40, fill: NAVY }, task, 'VIP TASK');
+S('text', { x: 290, y: 1080, 'font-size': 40, fill: NAVY }, task, '₹1,000 भेजो');
+S('text', { x: 290, y: 1135, 'font-size': 40, fill: GREEN }, task, '₹1,300 पाओ');
+const payBtn = S('g', { transform: 'translate(700 1200)' }, task);
+const payBg = S('rect', { x: -96, y: -36, width: 192, height: 72, rx: 24, fill: GREEN, ...line, 'stroke-width': 4 }, payBtn);
+const payTxt = S('text', { y: 16, 'text-anchor': 'middle', 'font-size': 42, fill: '#fff' }, payBtn, 'PAY');
+const more = S('g', {}, msgs);
+S('rect', { x: 250, y: 1300, width: 560, height: 170, rx: 28, fill: '#FFE2E7', stroke: CORAL, 'stroke-width': 6 }, more);
+S('text', { x: 280, y: 1366, 'font-size': 42, fill: CORAL }, more, 'Task अधूरा!');
+S('text', { x: 280, y: 1430, 'font-size': 40, fill: NAVY }, more, '₹5,000 और भेजो');
+S('rect', { x: 222, y: 240, width: 636, height: 130, fill: '#fff' }, chat2);
+S('circle', { cx: 300, cy: 305, r: 38, fill: YEL, ...line, 'stroke-width': 4 }, chat2);
+S('text', { x: 300, y: 316, 'text-anchor': 'middle', 'font-size': 26, fill: NAVY }, chat2, 'VIP');
+S('text', { x: 360, y: 300, 'font-size': 38, fill: NAVY }, chat2, 'VIP Earning Group');
+S('text', { x: 360, y: 342, 'font-size': 26, fill: '#7B8BB8' }, chat2, '2,341 members');
+const gone = S('g', {}, pscr);
+const goneBg = S('rect', { x: 222, y: 240, width: 636, height: 1120, fill: '#2B2F45' }, gone);
+const goneMark = S('g', {}, gone);
+S('circle', { cx: 540, cy: 700, r: 90, fill: CORAL, ...line }, goneMark);
+crossPath(goneMark, 540, 700, 40, '#fff');
+S('text', { x: 540, y: 880, 'text-anchor': 'middle', 'font-size': 46, fill: '#fff' }, goneMark, 'You were removed');
+S('text', { x: 540, y: 940, 'text-anchor': 'middle', 'font-size': 38, fill: '#C9CEDA' }, goneMark, 'Group not found');
+const mitthu = macaw(P.w);
+const bag = S('g', {}, P.w);
+S('path', { d: 'M-50,-10 Q-60,70 0,74 Q60,70 50,-10 Q30,-34 0,-30 Q-30,-34 -50,-10 Z', fill: '#C99257', ...line, 'stroke-width': 5 }, bag);
+S('text', { y: 46, 'text-anchor': 'middle', 'font-size': 52, fill: NAVY }, bag, '₹');
+const chintuP = monkey(P.w);
+const arm = rubberArm(P.w);
+
+U.push((t) => {
+  if (!show(P.s, t >= T.trouble - 0.2 && t < T.bait - 0.25)) return;
+  if (t < T.trouble + 0.25) whipIn(P.s, P.blur, t, T.trouble - 0.2, 1);
+  else if (t > T.bait - 0.55) whipOut(P.s, P.blur, t, T.bait - 0.25, 1);
+  else whip(P.s, P.blur, 0, 0);
+  P.cam(...key(t, [
+    [T.trouble - 0.2, [600, 600, 1.28]], [T.tg + 0.3, [580, 560, 1.42], (p) => p], [T.likeKaro + 0.1, [600, 820, 1.2]], [T.dedh - 0.1, [600, 800, 1.22], (p) => p], [T.dedh + 0.3, [600, 620, 1.26]],
+    [T.turn, [500, 640, 1.28]], [T.mujhe + 0.4, [470, 660, 1.34], (p) => p], [T.task - 0.1, [560, 900, 1.24]], [T.task + 0.4, [560, 1050, 1.3]], [T.pay, [560, 1060, 1.32], (p) => p],
+    [T.adhoora, [560, 900, 1.3]], [T.gayab - 0.1, [560, 880, 1.32], (p) => p], [T.gayab + 0.3, [560, 760, 1.15]], [T.bait, [560, 760, 1.18], (p) => p],
+  ]));
+  const v = t < T.turn - 0.1;  // chat 1, else the group
+  show(chat1, v); show(chat2, !v);
+  // chat 1: the offer, the videos, the three likes, the money
+  const ob = backOut(prog(t, T.tg - 0.05, 0.3));
+  show(offerB, ob > 0);
+  offerB.setAttribute('transform', `translate(510 485) scale(${ob}) translate(-510 -485)`);
+  vids.forEach((c, i) => {
+    const p = backOut(prog(t, T.likeKaro + i * 0.15, 0.3));
+    show(c.g, p > 0);
+    c.g.setAttribute('transform', `translate(540 ${c.y + 90}) scale(${p}) translate(-540 ${-c.y - 90})`);
+    const pressAt = T.likes - 0.1 + i * 0.28;
+    const on = t >= pressAt;
+    c.ring.setAttribute('fill', on ? '#FFE2E7' : '#fff');
+    c.heart.setAttribute('fill', on ? CORAL : 'none');
+    c.btn.setAttribute('transform', `translate(${c.at[0]} ${c.at[1] - 20}) scale(${1 + 0.25 * Math.max(0, bump(t - pressAt))})`);
+    const f = prog(t, pressAt, 0.8);
+    show(c.plus, on && f < 1);
+    c.plus.setAttribute('transform', `translate(${c.at[0] - 90} ${c.at[1] - 40 - 70 * cubicOut(f)})`);
+    c.plus.setAttribute('opacity', 1 - f * f);
+  });
+  const nb = expoOut(prog(t, T.dedh - 0.05, 0.4));
+  show(notif, v && nb > 0);
+  notif.setAttribute('transform', `translate(0 ${lerp(150, 310, nb)}) scale(${1 + 0.03 * Math.max(0, bump(t - T.dedh - 0.2))})`);
+  // the group: members pop in, the task, PAY, the red message, removed
+  rows.forEach((r, i) => { const p = backOut(prog(t, i === 0 ? T.turn + 0.1 : T.sab + (i - 1) * 0.3, 0.3)); show(r, p > 0); place(r, 280, 450 + i * 125, p); });
+  const tk = backOut(prog(t, T.task - 0.05, 0.35));
+  show(task, tk > 0);
+  task.setAttribute('transform', `translate(540 1105) scale(${tk}) translate(-540 -1105)`);
+  const paid = t >= T.pay;
+  payBg.setAttribute('fill', paid ? NAVY : GREEN);
+  payTxt.textContent = paid ? 'PAID' : 'PAY';
+  payBtn.setAttribute('transform', `translate(700 1200) scale(${1 - 0.15 * pulse(t, T.pay, 0.07)})`);
+  show(more, t > T.adhoora - 0.1);
+  const up = eio(prog(t, T.adhoora - 0.15, 0.4));
+  const fall = prog(t, T.gayab, 0.6);
+  msgs.setAttribute('transform', `translate(0 ${-310 * up + 900 * fall * fall}) rotate(${12 * fall} 540 800)`);
+  more.setAttribute('transform', `translate(530 1385) scale(${backOut(prog(t, T.adhoora - 0.1, 0.3))}) translate(-530 -1385)`);
+  const gp = prog(t, T.gayab - 0.05, 0.35);
+  show(gone, gp > 0);
+  goneBg.setAttribute('opacity', 0.94 * gp);
+  goneMark.setAttribute('transform', `translate(540 700) scale(${backOut(prog(t, T.gayab + 0.25, 0.35))}) translate(-540 -700)`);
+  // Mitthu: in the group, then off with the bag
+  const mIn = expoOut(prog(t, T.turn - 0.1, 0.45));
+  const fly = cubicOut(prog(t, T.gayab - 0.1, 0.9));
+  const mOn = t > T.turn - 0.1;
+  show(mitthu.g, mOn); show(bag, mOn && t > T.pay + 0.1);
+  const mx = lerp(120, -260, fly);
+  const my = lerp(1900, 1120, mIn) - 900 * fly;
+  const talking = (t > T.mujhe && t < Q[4].b) || (t > T.adhoora && t < T.paanch + 0.5);
+  mitthu.pose({ x: mx, y: my, s: 1.1, tilt: -6 + 6 * Math.sin(t * 3), flap: fly > 0 ? 0.5 + 0.5 * Math.sin(t * 30) : 0.15 * Math.max(0, Math.sin(t * 4)), talk: talking ? 0.5 + 0.5 * Math.sin(t * 22) : 0, blink: Math.sin(t * 1.3) > 0.97 ? 1 : 0 });
+  place(bag, mx + 20, my + 60 + 6 * Math.sin(t * 5), 1.1, 8 * Math.sin(t * 4));
+  // Chintu on the right edge: a rubber arm for the likes and for PAY
+  const likeIdx = [0, 1, 2].find((i) => Math.abs(t - (T.likes - 0.1 + i * 0.28)) < 0.17);
+  const shoulder = [880 - 52, 1000 - 188];
+  let target = null;
+  if (likeIdx !== undefined) target = vids[likeIdx].at;
+  else if (t > T.likes - 0.35 && t < T.likes + 0.75) target = [800, 900];
+  if (t > T.pay - 0.45 && t < T.pay + 0.2) target = [700, 1200 - 310 * up];
+  const tgt = target ? [lerp(shoulder[0], target[0], t > T.pay - 0.45 && t < T.pay ? eio(prog(t, T.pay - 0.45, 0.4)) : 1), lerp(shoulder[1], target[1], t > T.pay - 0.45 && t < T.pay ? eio(prog(t, T.pay - 0.45, 0.4)) : 1)] : null;
+  arm(!!tgt, shoulder, tgt ?? shoulder, 10 * Math.sin(t * 9));
+  const cheer = t > T.dedh && t < T.turn;
+  const shock = t > T.adhoora;
+  const faint = cubicOut(prog(t, T.gayabW, 0.5));
+  chintuP.pose({
+    x: 880 + 40 * faint, y: 1000 + 120 * faint, s: 1.0, lean: 70 * faint, tilt: 6 * Math.sin(t * 3),
+    face: faint > 0.3 ? 'blink' : shock ? 'worried' : cheer ? 'grin' : t > T.vip ? 'amazed' : 'cheeky', tail: t * 3,
+    handL: tgt ? [-40, -200] : cheer ? [-110, -320] : shock ? [-60, -300] : [-90, -110],
+    handR: cheer ? [110, -320] : shock ? [60, -300] : [90, -110],
+  });
+});
+
+// ================= my desk at night: the cheese in the trap, the rule =================
+const D = desk(svg, L, ME);
+const trap = S('g', {}, D.props);
+// a mousetrap: a wooden board, the spring, the snap bar (lying open to the left) and the bait
+S('rect', { x: -180, y: -30, width: 360, height: 58, rx: 10, fill: '#D9A066', ...line }, trap);
+S('rect', { x: -164, y: -14, width: 328, height: 8, rx: 4, fill: '#B37A44' }, trap);
+const cheese = S('g', { transform: 'translate(90 -62) rotate(-6)' }, trap);
+S('rect', { x: -70, y: -34, width: 140, height: 68, rx: 8, fill: '#8FD6A9', ...line, 'stroke-width': 4 }, cheese);
+S('text', { y: 14, 'text-anchor': 'middle', 'font-size': 36, fill: '#2E7A4E' }, cheese, '₹150');
+const barG = S('g', {}, trap);
+S('path', { d: 'M0,0 L-170,0', stroke: INK, 'stroke-width': 20, 'stroke-linecap': 'round' }, barG);
+S('path', { d: 'M0,0 L-170,0', stroke: '#C9CEDA', 'stroke-width': 10, 'stroke-linecap': 'round' }, barG);
+S('circle', { cy: -36, r: 20, fill: '#9AA3BC', stroke: INK, 'stroke-width': 5 }, trap);
+// mouse ears and whiskers for me
+const ears = S('g', {}, D.props);
+for (const m of [-1, 1]) {
+  S('circle', { cx: m * 150, cy: -170, r: 82, fill: '#9AA3BC', ...line }, ears);
+  S('circle', { cx: m * 150, cy: -170, r: 50, fill: '#FFB3C1' }, ears);
+  for (let k = 0; k < 3; k++) S('path', { d: `M${m * 70},${70 + k * 18} L${m * 175},${46 + k * 30}`, stroke: INK, 'stroke-width': 5, 'stroke-linecap': 'round' }, ears);
+}
+const chintuD = monkey(D.props);
+const job = S('g', {}, D.props);
+S('rect', { x: -270, y: -170, width: 540, height: 340, rx: 24, fill: '#fff', ...line }, job);
+S('rect', { x: -270, y: -170, width: 540, height: 90, rx: 24, fill: NAVY, ...line }, job);
+S('text', { y: -108, 'text-anchor': 'middle', 'font-size': 52, fill: '#fff' }, job, 'JOB OFFER');
+S('text', { x: -220, y: -10, 'font-size': 50, fill: NAVY }, job, 'काम से पहले:');
+S('text', { x: -220, y: 80, 'font-size': 64, fill: CORAL }, job, '₹ भेजो');
+const scamStamp = S('g', {}, D.props);
+S('rect', { x: -210, y: -74, width: 420, height: 148, rx: 20, fill: '#fff', stroke: CORAL, 'stroke-width': 16 }, scamStamp);
+S('text', { y: 40, 'text-anchor': 'middle', 'font-size': 116, fill: CORAL }, scamStamp, 'SCAM');
+
+U.push((t) => {
+  if (!show(D.s, t >= T.bait - 0.25 && t < T.twist - 0.25)) return;
+  D.tick(t);
+  if (t < T.bait + 0.1) whipIn(D.s, D.blur, t, T.bait - 0.25, 1);
+  else if (t > T.twist - 0.55) whipOut(D.s, D.blur, t, T.twist - 0.25, 1);
+  else whip(D.s, D.blur, 0, 0);
+  D.cam(...key(t, [[T.bait - 0.25, [540, 1180, 1.22]], [T.snap, [540, 1150, 1.28], (p) => p], [T.chuha, [540, 1000, 1.08]], [T.rule - 0.1, [540, 990, 1.1], (p) => p], [T.rule + 0.3, [560, 1000, 1.0]], [T.twist, [560, 980, 1.08], (p) => p]]));
+  const R = t >= T.rule - 0.1; // the rule
+  show(trap, !R); show(ears, !R && t > T.chuha - 0.05); show(job, R); show(scamStamp, R && t > T.scam - 0.12);
+  const snapped = t >= T.snap;
+  const reach = eio(prog(t, T.bait, 0.5));
+  const yank = snapped ? Math.max(0, bump(t - T.snap)) : 0;
+  place(trap, 600, 1330, 1, 0);
+  barG.setAttribute('transform', `translate(0 -36) rotate(${180 * eio(prog(t, T.snap - 0.06, 0.1)) + (snapped ? 0 : 3 * Math.sin(t * 14))})`);
+  const shake = snapped ? 6 * Math.sin(t * 40) * Math.exp(-3 * (t - T.snap)) : 0;
+  D.kid.pose({
+    x: 540 + shake, y: 1640 - 20 * yank, s: 1.5, tilt: R ? -3 + 2 * Math.sin(t * 2.2) : snapped ? 6 + shake : -4,
+    face: R ? (t < T.scam - 0.1 ? 'thinking' : 'wink') : snapped ? (t < T.chuha ? 'worried' : 'sad') : 'grin',
+    pop: pop(t, [T.snap, T.chuha, T.scam]),
+    handL: R ? (t > T.nahin ? [-170, -560] : [-150, -62]) : [-150, -62], gripL: R && t > T.nahin ? 'point' : 'open',
+    handR: R ? [150, -62] : [lerp(150, 100, reach), lerp(-62, -240, reach)],
+  });
+  const e = backOut(prog(t, T.chuha - 0.05, 0.3));
+  ears.setAttribute('transform', `translate(${540 + shake} ${1640 - 20 * yank - 660}) scale(${e}) rotate(${4 * Math.sin(t * 6)})`);
+  // Chintu peeks in and laughs at me
+  const peek = expoOut(prog(t, T.chuha - 0.2, 0.4));
+  const faint = cubicOut(prog(t, T.scam, 0.5));
+  chintuD.pose({
+    x: lerp(1250, 930, R ? 1 : peek), y: 1560 + (R ? 0 : 20 * Math.abs(Math.sin(t * 12))), s: 1.0, lean: R ? 70 * faint : 0, tilt: R ? 0 : -8 + 8 * Math.sin(t * 12),
+    face: R ? (faint > 0.3 ? 'blink' : 'worried') : 'grin', tail: t * 3,
+    handL: R ? [-80, -200] : [-140, -300], handR: R ? [80, -200] : [70, -150],
+  });
+  place(job, 540, 560 + 6 * Math.sin(t * 2.2), backOut(prog(t, T.rule - 0.1, 0.35)), -3);
+  const st = prog(t, T.scam - 0.12, 0.14);
+  place(scamStamp, 560, 600, lerp(2, 1, Math.min(1, st)) * (1 + 0.04 * Math.max(0, bump(t - T.scam))), -14);
+});
+
+// ================= the cybercrime portal: 1930 and the complaint =================
+const PX = 1080 / 412; // frame pixels for one css pixel
+const pPortal = webpage(stage, PORTAL, 1648);
+const ink = (page) => S('svg', { width: 1080, height: 10, style: 'position:absolute;left:0;top:0;overflow:visible' }, page.pins);
+const loop = (layer, cx, cy, rx, ry, rot = -3) => {
+  const e = S('ellipse', { cx: cx * PX, cy: cy * PX, rx: rx * PX, ry: ry * PX, fill: 'none', stroke: CORAL, 'stroke-width': 12, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: `rotate(${rot} ${cx * PX} ${cy * PX})` }, layer);
+  return (p) => { show(e, p > 0); e.setAttribute('stroke-dashoffset', 1 - p); };
+};
+// css px inside the joined strip (header 0 to 66, then the page from 204 css at 66)
+const inkP = ink(pPortal);
+const ring1930 = loop(inkP, 165, 430, 30, 17, -4);
+const ringReg = loop(inkP, 102, 486, 92, 24, -2);
+// over the page: a big 1930 card with a stopwatch, for "जितनी जल्दी"
+const over = S('svg', { width: 1080, height: 1920, viewBox: '0 0 1080 1920', style: 'position:absolute;left:0;top:0;pointer-events:none' }, stage);
+const call = S('g', {}, over);
+S('rect', { x: -300, y: -90, width: 600, height: 180, rx: 50, fill: YEL, ...line, 'stroke-width': 8 }, call);
+S('path', { d: 'M-230,-36 q-20,0 -20,20 q0,80 80,80 q20,0 20,-20 l0,-24 l-36,-12 l-12,16 q-30,-12 -40,-40 l16,-12 l-12,-36 Z', fill: NAVY }, call);
+S('text', { x: 50, y: 44, 'text-anchor': 'middle', 'font-size': 130, fill: NAVY }, call, '1930');
+const watch = S('g', {}, over);
+S('circle', { r: 86, fill: '#fff', ...line, 'stroke-width': 8 }, watch);
+S('rect', { x: -18, y: -118, width: 36, height: 30, rx: 8, fill: NAVY }, watch);
+const hand = S('path', { d: 'M0,0 L0,-62', stroke: CORAL, 'stroke-width': 12, 'stroke-linecap': 'round' }, watch);
+S('circle', { r: 12, fill: NAVY }, watch);
+const rise = (t, t0) => 1920 * (1 - expoOut(prog(t, t0, 0.42)));
+U.push((t) => {
+  const on = t >= T.twist - 0.25 && t < T.end - 0.2;
+  show(over, on);
+  if (!on) { pPortal.hide(); return; }
+  const out = eio(prog(t, T.end - 0.45, 0.3));
+  // from the top (the portal's name) down to the 1930 line and the Register button
+  // the portal's name first, then down to the 1930 line and Register; for "जितनी जल्दी" the page
+  // moves up and the 1930 card fills the white space under it
+  const sc = 800 * eio(prog(t, T.twist + 0.2, 0.6)) + 500 * eio(prog(t, T.jaldi - 0.15, 0.5));
+  pPortal.set({ rect: [0, rise(t, T.twist - 0.25) - 1920 * out, 1080, 1920], scroll: sc, slide: 300, zoom: key(t, [[T.twist + 0.2, 1.0], [T.twist + 0.8, 1.18], [T.n1930, 1.3]]), fx: 60, fy: 900 });
+  ring1930(eio(prog(t, T.n1930 - 0.05, 0.35)));
+  ringReg(eio(prog(t, T.complaint - 0.2, 0.45)));
+  const c = backOut(prog(t, T.jaldi + 0.1, 0.35));
+  show(call, c > 0);
+  call.setAttribute('transform', `translate(620 ${1060 - 1920 * out}) rotate(-4) scale(${c * (1 + 0.04 * Math.max(0, bump(t - T.rukne)))})`);
+  const w = backOut(prog(t, T.jaldi + 0.25, 0.35));
+  show(watch, w > 0);
+  watch.setAttribute('transform', `translate(190 ${1050 - 1920 * out}) scale(${w})`);
+  hand.setAttribute('transform', `rotate(${(t - T.jaldi) * 720})`);
+});
+
+// ================= captions, the link line, the follow card, the pointer =================
+const clean = (ws) => ws.map((x) => ({ ...x, word: x.word.replace(/[।,?!]+$/, '') }));
+U.push(captionsCompact(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1, whole: i === 0 }))));
+const link = linkLine(stage, 'cybercrime.gov.in');
+const follow = followCard(stage);
+const tip = pointer(stage, NAVY, '#fff', 130);
+const TIP = [
+  [T.complaint - 0.5, [1150, 1300]], [T.complaint + 0.1, [330, 1110], cubicOut], [T.jaldi - 0.3, [330, 1110]],
+  [T.comment + 0.2, [1170, 1460]], [T.post - 0.08, [935, 1250], cubicOut], [T.send - 0.05, [935, 1250]],
+  [T.send + 0.3, [1150, 900]], [T.press - 0.06, [900, 420], cubicOut], [dur, [900, 420]],
+];
+const SHOWN = [[T.complaint - 0.5, T.jaldi - 0.3], [T.comment + 0.2, T.send - 0.05], [T.send + 0.3, dur + 1]];
+U.push((t) => {
+  link.set(t, { link: T.link, comment: T.comment, post: T.post, away: T.send });
+  follow.set(t, T.send + 0.2, T.press);
+  tip.style.visibility = SHOWN.some(([a, b]) => t >= a && t < b) ? 'visible' : 'hidden';
+  const [x, y] = key(t, TIP);
+  const click = pulse(t, T.complaint + 0.2, 0.07) + pulse(t, T.post + 0.02, 0.07) + pulse(t, T.press + 0.02, 0.07);
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * click})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>
