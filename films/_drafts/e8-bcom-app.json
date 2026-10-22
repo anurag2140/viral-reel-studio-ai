@@ -23,23 +23,70 @@
     "end": "Back to the hook picture, phone up; then the send card."
   },
   "lines": [
-    { "id": "hook", "sentences": ["B.Com किया है, coding आज भी नहीं आती।", "फिर भी मेरा बनाया app 500 से ज़्यादा लोगों के phone में है।"] },
-    { "id": "trouble", "sentences": ["Commerce वालों को लगता है, app बनाना सिर्फ engineers का काम है।", "2023 तक मैं भी यही सोचता था।"] },
-    { "id": "turn", "sentences": ["फिर AI आया।", "मैं AI को बताता हूँ क्या बनाना है, और code वो लिखता है।"] },
-    { "id": "how", "sentences": ["तुम्हें coding नहीं, बस तीन चीज़ें चाहिए।", "एक असली problem चुनो, देखो कौन से tools पहले से बने हैं, और AI से उन्हें जोड़कर बनवाओ।"] },
-    { "id": "magic", "sentences": ["ऐसे बना मेरा पहला app, BillBanao: Replit पर नींव, फिर Antigravity और Claude Code से पूरा।", "दुकानदार GST bill बनाता है, और PDF सीधे WhatsApp पर भेज देता है।"] },
-    { "id": "follow", "sentences": ["AI से असली चीज़ें बनाना देखना है, तो follow कर लो।"] },
-    { "id": "twist", "sentences": ["लेकिन एक सच कोई नहीं बताता।", "App बनाना आसान निकला, बेचना मुझे आज भी नहीं आता।"] },
-    { "id": "end", "sentences": ["इसीलिए यह channel है।", "जो बनाता हूँ, यहीं दिखाता हूँ।"] },
-    { "id": "ask", "sentences": ["जिस दोस्त को लगता है tech उसके बस की नहीं, उसे यह भेज दो।"] }
+    {
+      "id": "hook",
+      "sentences": [
+        "B.Com किया है, coding आज भी नहीं आती।",
+        "फिर भी मेरा बनाया app 500 से ज़्यादा लोगों के phone में है।"
+      ]
+    },
+    {
+      "id": "trouble",
+      "sentences": [
+        "Commerce वालों को लगता है, app बनाना सिर्फ engineers का काम है।",
+        "2023 तक मैं भी यही सोचता था।"
+      ]
+    },
+    {
+      "id": "turn",
+      "sentences": [
+        "फिर AI आया।",
+        "मैं AI को बताता हूँ क्या बनाना है, और code वो लिखता है।"
+      ]
+    },
+    {
+      "id": "how",
+      "sentences": [
+        "तुम्हें coding नहीं, बस तीन चीज़ें चाहिए।",
+        "एक असली problem चुनो, देखो कौन से tools पहले से बने हैं, और AI से उन्हें जोड़कर बनवाओ।"
+      ]
+    },
+    {
+      "id": "magic",
+      "sentences": [
+        "ऐसे बना मेरा पहला app, BillBanao: Replit पर नींव, फिर Antigravity और Claude Code से पूरा।",
+        "दुकानदार GST bill बनाता है, और PDF सीधे WhatsApp पर भेज देता है।"
+      ]
+    },
+    {
+      "id": "twist",
+      "sentences": [
+        "लेकिन एक सच कोई नहीं बताता।",
+        "App बनाना आसान निकला, बेचना मुझे आज भी नहीं आता।"
+      ]
+    },
+    {
+      "id": "end",
+      "sentences": [
+        "इसीलिए यह channel है।",
+        "जो बनाता हूँ, यहीं दिखाता हूँ।"
+      ]
+    },
+    {
+      "id": "ask",
+      "sentences": [
+        "जिस दोस्त को लगता है tech उसके बस की नहीं, उसे यह भेज दो।"
+      ]
+    }
   ],
   "confirm": [
-    "trouble: 'Until 2023 I also thought apps were only for engineers' is my guess at your feeling. True, or how did you see it?",
-    "follow: a personal follow line instead of the AI जुगाड़ line, because this reel is about me, not a trick. Fine?"
+    "trouble: 'Until 2023 I also thought apps were only for engineers' is my guess at your feeling. True, or how did you see it?"
   ],
   "answered": [
     "2026-10-22: BillBanao was my first mobile app: the base on Replit, pushed to GitHub, then finished with Antigravity and Claude Code (the magic line).",
-    "2026-10-22: the Play Store page still shows 500+ downloads (the capture checks it again before the build)."
+    "2026-10-22: the Play Store page still shows 500+ downloads (the capture checks it again before the build).",
+    "2026-10-23: no follow line in the middle (my rule: one call to action, at the ending)."
   ],
-  "notCounted": "No link line (not a reel about a tool the viewer can use tonight). No users, sales or money numbers beyond the 500+ downloads."
+  "notCounted": "No link line (not a reel about a tool the viewer can use tonight). No users, sales or money numbers beyond the 500+ downloads.",
+  "built": "2026-10-23 as #21 in films/billbanao-story (lines trimmed to 34 s; the guessed 2023 feeling left out; no tool names for the code)."
 }

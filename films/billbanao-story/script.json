@@ -1,0 +1,85 @@
+{
+  "title": "B.Com किया, coding नहीं आती, फिर भी मेरा app 500+ phones में है",
+  "number": 21,
+  "lane": "TOOL",
+  "setting": "both",
+  "language": "hi",
+  "experiment": "E8 Personal proof (first try): my real story, told by me (\"मैं\", my face), with the real proof on screen. Everything else stays as in a usual reel.",
+  "playbook": [],
+  "look": "illustrated story told as me, my face and body (hoodie), Rohan as the friend who thinks tech is not for him, Gupta Ji as the shopkeeper who uses the app, a door marked ENGINEERS ONLY, my room at night where a drawn AI writes the code, three step cards, the real Google Play page of BillBanao, my desk at night where \"VIBE CODING\" is stamped, back to the start (\"AI ♥\", REC), compact captions, the asks at the ending: a spoken follow line with the follow card pressed (my request of 2026-10-23 for this reel), then the send line",
+  "sendTo": "वो दोस्त जो tech से डरता है (जिसे लगता है tech उसके बस की नहीं)",
+  "voice": "Orus",
+  "bpm": 100,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like telling a friend your own story: honest, warm and calm, never boastful. English words in Indian English. One even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "My profile (C:\\Users\\ll\\Desktop\\App Ideas\\About Me\\Vipul-Singh-Creator-Profile.md): B.Com, no coding knowledge, building with AI since 2023, BillBanao (quotations and GST invoices, PDF export, WhatsApp sharing) with 500+ downloads on Google Play, my steps of how I build (a real problem, existing tools, AI to build and connect them), and that I am no good at selling (my words of 2026-10-21).",
+    "https://play.google.com/store/apps/details?id=com.vipulsingh.billbanao&hl=en_IN (captured 2026-10-23, India): 'BillBanao: GST Quotation Maker', '500+ Downloads', developer shown as 'BrandBulls Studios'; 'Share Invoices Directly on WhatsApp ... Generate clean PDF quotations and invoices and send them instantly to customers through WhatsApp'; 'convert it into a GST-compliant invoice with a single tap'."
+  ],
+  "claims": [
+    "B.Com, no coding, an app with 500+ downloads: my profile and the Play page (500+ Downloads on 2026-10-23).",
+    "'कहते हैं app बनाना सिर्फ़ engineers का काम है' is what people say, not a claim about my own feelings (the draft's line about 2023 was a guess at my feeling and is left out).",
+    "I tell AI what to build and it writes the code: my profile ('built ... by directing AI tools', 'without writing code myself').",
+    "The steps: my profile ('How I build', steps 1 to 3).",
+    "A shopkeeper makes a GST bill and sends the PDF on WhatsApp: the Play page. Gupta Ji is a drawn user, not a real customer.",
+    "No tool names for the code (my rule: plain words); no link line (the viewer cannot use the app tonight).",
+    "'इसे कहते हैं vibe coding': building by telling AI what to make while it writes the code (my profile: built 'by directing AI tools', 'without writing code myself').",
+    "'मुझे AI में बहुत interest है ...': my words of 2026-10-23 for this ending (the selling catch was cut at my request). My words said 'aapko'; the line says 'तुम्हें' (the channel's tone)."
+  ],
+  "lines": [
+    {
+      "id": "hook",
+      "sentences": [
+        "B.Com किया है, coding आज भी नहीं आती।",
+        "फिर भी मेरा app 500 से ज़्यादा phones में है।"
+      ]
+    },
+    {
+      "id": "trouble",
+      "sentences": [
+        "कहते हैं, app बनाना सिर्फ़ engineers का काम है।"
+      ]
+    },
+    {
+      "id": "turn",
+      "sentences": [
+        "पर मैं AI को बताता हूँ क्या बनाना है, और code वो लिखता है।"
+      ]
+    },
+    {
+      "id": "how",
+      "sentences": [
+        "तुम भी कर सकते हो।",
+        "असली problem चुनो, बने हुए tools ढूँढो, और AI से जोड़कर बनवाओ।"
+      ]
+    },
+    {
+      "id": "magic",
+      "sentences": [
+        "ऐसे बना BillBanao।",
+        "दुकानदार GST bill बनाता है, और PDF सीधे WhatsApp पर।"
+      ]
+    },
+    {
+      "id": "vibe",
+      "sentences": [
+        "इसे कहते हैं vibe coding।"
+      ]
+    },
+    {
+      "id": "end",
+      "sentences": [
+        "मुझे AI में बहुत interest है, ऐसी चीज़ें बनाता रहता हूँ और यहाँ दिखाता हूँ।",
+        "तुम्हें भी interest है, तो follow कर लो।"
+      ]
+    },
+    {
+      "id": "ask",
+      "sentences": [
+        "जो दोस्त tech से डरता है, उसे भेज दो।"
+      ]
+    }
+  ],
+  "length": 34.8
+}

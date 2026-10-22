@@ -27,6 +27,8 @@ export const OUTFITS = {
   tee: { style: 'tee', main: ['#F5BA3A', '#E09E1E'], mid: '#EDAE2E', dark: '#C9881A', print: '#2F5BFF', pants: ['#4E6CB8', '#334D93'], cuff: '#7891D4', shoe: '#FFFFFF', sole: '#2F5BFF', tee: '#EDAE2E', forearm: 'skin' },
   vest: { style: 'vest', main: ['#3A4876', '#283358'], mid: '#DCE8F7', dark: '#1E2742', inner: '#DCE8F7', tie: '#B23A3A', pants: ['#7A5A40', '#5C422E'], cuff: '#7A5A40', shoe: '#5A3A22', sole: '#2A1A10', tee: '#DCE8F7' },
   overshirt: { style: 'overshirt', main: ['#3EAD7C', '#2A8A5E'], mid: '#36A272', dark: '#246F4C', inner: '#F7F6F0', check: '#17543A', pants: ['#4A62A8', '#33478A'], cuff: '#6F86C8', shoe: '#F7F6F0', sole: '#D9452E', tee: '#F7F6F0', forearm: 'skin' },
+  // a cream kurta with a sleeveless Nehru jacket over it (jacket: its two colours)
+  nehru: { style: 'kurta', main: ['#F6EFE0', '#E3D6BE'], mid: '#EFE5D2', dark: '#CDBE9F', trim: '#B8A27A', len: 150, legs: 'slim', pants: ['#FBF7EE', '#E8DFCE'], cuff: '#E8DFCE', shoe: '#6B3F22', sole: '#3A2212', shoeStyle: 'flat', tee: '#EFE5D2', jacket: ['#C08433', '#94601F'], jacketDark: '#704512' },
 };
 
 // The elbow of a two-bone arm; of the two answers, the one that points away from the body.
@@ -163,6 +165,18 @@ export function hero(parent, o = {}) {
       S('path', { d: 'M-104,-296 C-60,-300 -30,-260 10,-160 C40,-90 80,-30 112,-6 L112,40 C70,10 30,-60 -6,-130 C-40,-200 -70,-250 -108,-250 Z', fill: k.dupatta, ...ink }, torso);
       S('path', { d: 'M-90,-280 C-50,-270 -24,-230 8,-160', ...thin, opacity: 0.35 }, torso);
     }
+    if (k.jacket) {
+      // a sleeveless Nehru jacket over the kurta: closed front, a band collar, buttons, a pocket
+      const JACKET = 'M-84,-302 C-106,-262 -108,-150 -108,-30 L-108,24 Q0,40 108,24 L108,-30 C108,-150 106,-262 84,-302 L50,-316 Q0,-292 -50,-316 Z';
+      S('path', { d: JACKET, fill: grad(k.jacket), ...ink }, torso);
+      const jl = S('g', { 'clip-path': clip(JACKET) }, torso);
+      S('path', { d: 'M46,-330 C84,-210 76,-90 64,30 L64,80 L140,80 L140,-330 Z', fill: '#000', opacity: 0.11 }, jl);
+      S('ellipse', { cx: -70, cy: -240, rx: 15, ry: 48, fill: '#fff', opacity: 0.18, transform: 'rotate(8 -70 -240)' }, jl);
+      S('path', { d: 'M-50,-322 Q0,-298 50,-322 L50,-306 Q0,-282 -50,-306 Z', fill: k.jacketDark, ...ink }, torso);
+      S('path', { d: 'M0,-292 L0,32', ...thin, opacity: 0.6 }, torso);
+      for (let y = -262; y <= -40; y += 44) S('circle', { cx: 0, cy: y, r: 6, fill: k.jacketDark, ...ink, 'stroke-width': c.line * 0.7 }, torso);
+      S('path', { d: 'M-90,-226 L-50,-226', ...thin, opacity: 0.7 }, torso);
+    }
   } else if (k.style === 'tee') {
     // a crew neck with a rib, a small print, a plain hem
     S('path', { d: 'M-50,-318 Q0,-256 50,-318', fill: 'none', stroke: c.outline, 'stroke-width': 15, 'stroke-linecap': 'round' }, torso);
@@ -263,8 +277,10 @@ export function hero(parent, o = {}) {
     pose(p = {}) {
       const q = { x: 0, y: 0, s: 1, flip: false, lean: 0, tilt: 0, hx: 0, hy: 0, face: 'neutral', pop: 1, handL: [-152, -62], handR: [152, -62], gripL: 'open', gripR: 'open', backL: false, backR: false, ...p };
       g.setAttribute('transform', `translate(${q.x} ${q.y}) scale(${q.flip ? -q.s : q.s} ${q.s}) rotate(${q.lean})`);
-      // the head turns about the chin; pop (1 = rest) squashes it for a beat when the face changes
-      hd.setAttribute('transform', `translate(${q.hx} ${-440 + q.hy}) rotate(${q.tilt} 0 100) translate(0 112) scale(${2 - q.pop} ${q.pop}) translate(0 -112)`);
+      // the head turns about the chin; pop (1 = rest) squashes it for a beat when the face changes;
+      // headScale (a child's bigger head) grows it from the chin
+      const hs = c.headScale ?? 1;
+      hd.setAttribute('transform', `translate(${q.hx} ${-440 + q.hy}) rotate(${q.tilt} 0 100) translate(0 112) scale(${(2 - q.pop) * hs} ${q.pop * hs}) translate(0 -112)`);
       if (setHead) setHead(q); else setFace(q.face);
       setArm('L', q.handL, q.backL, q.gripL);
       setArm('R', q.handR, q.backR, q.gripR);

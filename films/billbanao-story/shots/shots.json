@@ -1,0 +1,63 @@
+{
+  "captured": "2026-10-22",
+  "shots": [
+    {
+      "name": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.vipulsingh.billbanao&hl=en_IN",
+      "file": "shots/play.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "BillBanao: GST Quotation Maker – Apps on Google Play",
+      "finalUrl": "https://play.google.com/store/apps/details?id=com.vipulsingh.billbanao&hl=en_IN",
+      "w": 824,
+      "h": 5266,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "BillBanao: GST Quotation Maker",
+          "x": 240,
+          "y": 496,
+          "w": 584,
+          "h": 128
+        },
+        {
+          "tag": "h2",
+          "text": "About this app",
+          "x": 48,
+          "y": 1776,
+          "w": 245,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "Data safety",
+          "x": 48,
+          "y": 2416,
+          "w": 190,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "App support",
+          "x": 48,
+          "y": 3304,
+          "w": 211,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "Similar apps",
+          "x": 48,
+          "y": 3400,
+          "w": 201,
+          "h": 48
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

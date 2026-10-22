@@ -1,0 +1,110 @@
+Skip to main content
+Google Business Profile Help
+Sign in
+Help Center
+Community
+Get-Started Guide
+Manage your Business Profile on Google with the Gemini web app
+
+You can now quickly manage your Business Profile on Google conversationally and access your business insights in the Gemini web app. When you connect Google Business Profile with Gemini Apps, Gemini can help you:
+
+Update your Business Profile, such as your business hours, contact info, and action links.
+Engage with customers by drafting replies to reviews and creating posts.
+Analyze and summarize customer feedback from reviews, including synthesizing feedback themes.
+Access your business insights, including performance metrics and search keywords.
+
+ 
+
+What you need
+
+To connect Google Business Profile to Gemini Apps, you must:
+
+Be an owner or manager of only one verified Business Profile on Google. Learn how to verify your business on Google and manage Business Profile roles.
+Be 18 or over.
+Be signed in to the Gemini web app with a personal Google Account that’s associated with your Google Business Profile. For now, this feature isn’t available if you sign in with a work or school Google Account. Learn how to sign in to Gemini Apps.
+Have Keep Activity on. Gemini can't connect to Google Business Profile when this setting is off.
+
+Important: Google Business Profile and business notebooks in Gemini are:
+
+Available wherever the Gemini web app is supported.
+Not available to owners or managers who have access to more than one verified Business Profile.
+Only available in the Gemini web app at gemini.google.com.
+Android phone & tablet Computer More
+Connect Google Business Profile to Gemini Apps
+
+When you connect Google Business Profile to Gemini Apps, you can ask Gemini questions about your Business Profile or ask it to perform actions for you, like updating your business hours.
+
+Go to gemini.google.com.
+Make sure you’re signed in to the same account you use to access your Business Profile on Google.
+Ask Gemini for information about your Business Profile on Google.
+Tip: If Gemini doesn’t use the Google Business Profile app, add @Google Business Profile to your prompt.
+If Google Business Profile isn’t connected, you’ll get the option to connect it.
+Follow the on-screen instructions.
+
+Tip: You can connect and disconnect the Google Business Profile app at any time in your Connected Apps Settings.
+
+Create your business notebook
+
+You can create a business notebook to unlock proactive insights and tailored prompts that help you manage and grow your business with Gemini.
+
+Go to gemini.google.com.
+Make sure you’re signed in to the same account you use to access your Business Profile on Google.
+If you’re eligible, you’ll get an option to create your business notebook. Select Connect.
+Google Business Profile must be connected to Gemini Apps to create your business notebook. If it’s not, you’ll get the option to connect it.
+Tip: If the option to create your business notebook isn’t there, try adding @Google Business Profile to a prompt to have Gemini offer to create it.
+Enter or confirm the website URL for your business.
+Check your business notebook
+On your phone or tablet, go to gemini.google.com.
+At the top, tap Menu .
+Under “Notebooks,” tap your business notebook. It has the same name as your business in Google Business Profile.
+What’s in your business notebook
+Update your Business Profile
+
+You can ask Gemini to update your business information to keep your customers informed. Gemini can help you manage:
+
+Business hours: Modify regular weekly schedules or set special hours for holidays and events.
+Food menus: For food-related businesses, create, update, or delete menus, including sections, dish names, descriptions, and prices.
+Media: Upload new photos using a public URL, or get media that you or customers uploaded.
+Business attributes: Review and modify details like "Outdoor Seating," "Happy Hour," or "Wi-Fi." These options vary by business category.
+Contact information: Review and modify your website URL or social media links.
+Action links: Manage links for online ordering, reservations, or appointments.
+Location details: Get and review the internal technical data and the status of your profile.
+Example prompts
+Engage with customers
+
+You can ask Gemini to help you manage customer reviews and posts for your business. Gemini can help you with:
+
+Customer reviews: Get star ratings and customer reviews, including associated media.
+Review replies: Draft or delete replies to customer feedback.
+Profile posts: Create, schedule, publish, or delete Update, Offer, or Event posts.
+Example prompts
+Access your business insights
+
+You can access your Business Profile insights in Gemini to conveniently understand performance metrics and improve your visibility. Gemini can help you with:
+
+Performance metrics: Analyze impressions, website clicks, direction requests, and bookings.
+Search keywords: Review the specific keywords customers use to find your business.
+Example prompts
+How your data is handled
+
+Learn more about how your data is handled when Gemini works with Connected Apps.
+
+Related resources
+Use & manage Connected Apps in Gemini
+Google Business Profile Help Center
+Gemini Apps Privacy Hub
+Give feedback about this article
+Need more help?
+Try these next steps:
+Post to the help community
+Get answers from community members
+Contact us
+Tell us more and we’ll help you get there
+Help
+Edit your Business Profile
+Manage your business information
+Manage your Business Profile on Google with the Gemini web app
+Manage profiles in bulk & use agency options
+Guidelines for representing your business on Google
+Language
+English‎

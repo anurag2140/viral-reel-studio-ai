@@ -1,0 +1,94 @@
+Skip to main content
+Google Business Profile Help
+Sign in
+Help Center
+Community
+Get-Started Guide
+Verify your business on Google
+
+To edit your business info on Google, such as business name or business hours, and interact with customers, you need to verify your business. When you verify your business on Google, you gain ownership of your Business Profile and can make sure your business info is accurate.
+
+Important: You need a Google Account to sign up for a Business Profile. You can:
+
+Create a new Google Account with a Gmail address or your preferred email address. Learn how to create a Google Account.
+Use an existing Google Account with any email address. Learn how to sign in to your Google Account with another email address.
+
+Tip: If you have a company email address, you can link it to your Google Account. This allows you to easily manage your Business Profile.
+
+Step 1: Find your business
+
+Important: To find your profile, you must sign in to the Google Account associated with it.
+
+To find your profile on Google Search, search for your business's name and city or my business. Learn more ways to find your business on Google.
+
+If you can’t find your business on Google, you may need to add your business:
+
+If your business isn't on Google yet: Add it, then proceed to the next step.
+If you haven’t claimed your business yet: Claim it so you can verify and control how it shows on Google.
+
+Learn how to add or claim your Business Profile on Google.
+
+Step 2: Verify your business
+
+Important: Verification methods are automatically determined by Google and can’t be changed.
+
+To verify your business, try the available options for your Business Profile. The verification options available to you depend on your business type, public info, region, or business hours. In some cases, you may need to verify your business with more than one method.
+
+Tip: If your business is eligible for video verification, we recommend that you use this option. Learn how to verify your business with a video recording.
+
+Phone or text
+Email
+Live video call
+Mail
+Step 3: Wait up to 5 business days to be verified
+
+After you complete the verification steps, Google reviews the info you provided. To help maintain the integrity of your Business Profile, verification reviews take up to 5 business days. On rare occasions, reviews may take longer.
+
+In some cases, Google verifies a profile instantly. This can happen when:
+
+You verify your website with Google Search Console. Learn how to add a website property in Search Console.
+You use bulk verification. Learn how to verify Business Profiles in bulk.
+Step 4: You’re verified
+
+When your business is verified, you’ll get a confirmation email.
+
+If a third party helps you manage your profile, you can add them to your profile after verification:
+
+Learn how to add and remove profile owners and managers.
+Learn how to transfer primary ownership of a Business Profile.
+Learn how to work with third parties.
+Fix verification issues or re-verify your business
+
+In some cases, Google may find issues with your verification. You can either fix these issues or re-verify your business.
+
+“Get verified” button appears on your profile again
+“Review issues” notification
+Give additional info to re-verify
+
+Tip: For more help, ask a question in our community forum.
+
+Related resources
+Manage your business information
+Request ownership of a Business Profile
+Resolve duplicate profiles & ownership issues
+Give feedback about this article
+Related questions from the Community
+These answers come from users who are Product Experts within the Google Business Profile Help Community
+I need business verification code
+how to change verfication method, as theres a delay in postcard delivery?
+View more questions
+Need more help?
+Try these next steps:
+Post to the help community
+Get answers from community members
+Contact us
+Tell us more and we’ll help you get there
+Help
+Get started with Google Business Profile
+Add or claim your Business Profile
+Request ownership of a Business Profile
+Verify your business on Google
+Verify your business with a video recording
+Find your business on Google
+Language
+English‎

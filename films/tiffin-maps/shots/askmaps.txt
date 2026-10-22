@@ -1,0 +1,102 @@
+Skip to main content
+India Blog
+Breadcrumb
+Home
+Product updates
+Explore & communicate
+Ask anything about any place on Maps with Gemini
+
+12 Mar, 2026
+
+|
+
+3 min read
+
+Lalitha Ramani
+
+GM, Google Maps, India
+
+At Google Maps, we continue to fundamentally change what a map can do. Today, we’re bringing together the world’s most comprehensive digital map with our most capable Gemini models to transform local exploration into a simple conversation. Whether you're navigating the daily commute - by road, train, or metro - or planning a weekend out, you can now get helpful information instantly just by asking Maps.
+
+We’re introducing Ask Maps, a new conversational experience that answers complex, real-world questions a map could never answer before. Ask Maps is uniquely helpful - tapping into Maps’ fresh information about the world to show everything you need to know before you go, personalizing responses to you, and making it easy to turn plans into action.​ To provide these helpful tips and insights, Maps analyzes information from over 300 million places, including reviews from our community of more than 500 million contributors globally.
+
+Ask anything about any place
+
+Tap the Ask Maps button and ask things using text or voice like, “I need to go to Connaught Place. Between driving down and taking a metro, what would be the best option at this time? Also, where can I pick up a coffee on the way?” You’ll get clear directions, along with comparison of driving and public transport based on traffic conditions and ETA, as well as convenient places to grab a coffee.
+
+Know before you go
+
+Finding the perfect spot for a specific vibe used to mean hours of research. Now, Ask Maps does the heavy lifting for you. Planning a night out for a big game? Just ask: “What are some places with good veg appetizers where I can watch the live streaming of today’s match?” You can also follow up with: “Which of these would be easiest to park in?” Ask Maps will highlight important insights and insider tips from real people and web content, such as most popular vegetarian appetizers, matchday environment, valet parking availability, and more.
+
+Across a range of complex planning and information needs, Ask Maps is here to help you. For example, if you have family visiting and want to plan the perfect weekend, you can ask: “My parents, who are senior citizens, are coming to visit Mumbai for the first time this weekend. What are the places or experiences I can take them to which they can cover easily?” Ask Maps will provide thoughtful recommendations that take your specific requirements into consideration, such as suggesting locations with minimal walking or senior-priority access.
+
+Personalised for you
+
+Ask Maps personalizes responses based on things like places you've searched for or saved in Maps to help you get the most relevant recommendations. Say you are visiting Bengaluru, you can just ask, “Suggest some highly rated restaurants to try in the area” Ask Maps already knows your preference for vegetarian cuisines and will suggest convenient vegetarian options.
+
+Easily turn plans into actions
+
+Once you have a place in mind, Ask Maps makes it easy to turn plans into action. You can book restaurant reservations, save places to a list, or get directions and start navigating right away.
+
+Along with the U.S., Ask Maps starts rolling out in India in English on Android and iOS, with Hindi launching soon. We look forward to continuing to unlock entirely new possibilities by combining our Gemini models with the world's most comprehensive digital map - we can’t wait to see where it takes you.
+
+Posted in:
+Maps
+Related stories
+Search
+Search to Sip: Google Trends reveal new breakout drinks
+Posted by Google India Team
+Maps
+Ask Maps gets more helpful in India
+Posted by Google India Team
+Maps
+Google Maps in India: Enhancing Every Way You Travel with India-First Features
+Posted by Lalitha Ramani
+Maps
+Google Maps in India: Keeping You Informed with New Safety & Disruption Alerts
+Posted by Lalitha Ramani
+Maps
+Google Maps in India: Supercharged with Gemini
+Posted by Lalitha Ramani
+Maps
+Helping developers in India build more with Google Maps Platform
+
+For nearly a decade, Google Maps Platform has helped developers in India build useful, innovative experiences – powering everything from delivery to travel apps. In Indi…
+
+Posted by Tina Weyand
+Privacy
+Terms
+Help
+More of Google
+Google Products
+About the Blog
+Global (English)
+Africa (English)
+Australia (English)
+Brasil (Português)
+Canada (English)
+Canada (Français)
+Česko (Čeština)
+Deutschland (Deutsch)
+España (Español)
+France (Français)
+Greece (Ελληνικά)
+India (English)
+Indonesia (Bahasa Indonesia)
+Ireland (English)
+Italia (Italiano)
+日本 (日本語)
+대한민국 (한국어)
+Latinoamérica (Español)
+Malaysia (English)
+الشرق الأوسط وشمال أفريقيا (اللغة العربية)
+MENA (English)
+Nederlands (Nederland)
+New Zealand (English)
+Polska (Polski)
+Portugal (Português)
+România (Română)
+Sverige (Svenska)
+ประเทศไทย (ไทย)
+Türkiye (Türkçe)
+台灣 (中文)

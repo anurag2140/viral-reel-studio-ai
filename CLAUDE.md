@@ -53,7 +53,37 @@
 - Banned defaults: centered title on gradient, everything fading in,
   corner labels and frame borders, glow on UI chrome, generic particle bursts.
 - One display face, one UI face. Colours come only from the brand palette, each with its job.
-- Every 2 to 4 seconds something new must happen on screen.
+- Every 2 to 4 seconds something new must happen on screen: one new thing at a time (see
+  "Visual clarity").
+
+## Visual clarity (from 2026-10-23)
+My words: "sometime i feel there are too much visual elements in the videos"; then "i am just
+expecting from you to make reel visually engaging so that people watch the complete video".
+Claude compared frames every 2.5 s: #06 (the hit) has one big face and one prop per frame and
+one ring on the page; #16 and #20 put up to three people, a sign, props, a card and the
+caption in one frame, captions over page text, and blur or empty frames between scenes.
+- One focus per moment: in every frame the eye knows in one second where to look (a face that
+  reacts, one prop, or the one line of the page the voice says). A new thing comes in when the
+  last one leaves or steps back. Engagement comes from change over time, not from more at once.
+- At most two people in a frame; a third only for the moment the story needs that person.
+- Besides the caption, at most one piece of text on screen (a sign, a bubble or a card), and
+  none while a page with text fills the frame.
+- Captions stay readable: over a busy picture or a page, the caption gets its soft backing
+  (`backing: true` on the item in `captionsCompact`, a pill only as big as the words); a
+  caption never sits on page text.
+- Tool pages: zoom to the line the voice says, one ring; a paragraph of small text never fills
+  the frame.
+- Transitions: one move per scene change; no frame that is only blur or only background for
+  more than about 0.3 s.
+- Varied rhythm (my "yes" of 2026-10-23, on Claude's recommendation; the evidence is indirect:
+  film research, Cutting et al. 2010, and how editors work, not a study of reels). A shot is the
+  time between two cuts or scene moves. Plan each shot's length by its job, inside the voice
+  timing: quick shots for the hook and the surprises (the magic moment, the "लेकिन"), a longer
+  hold where the viewer reads or takes in a result (the ringed line on the page, the payoff,
+  the end card). Never three shots of about the same length in a row. The voice still sets the
+  overall timing; the rhythm decides where the cuts fall inside it. Average watch time and the
+  share of the reel watched in the report show over time whether reels hold people longer.
+- The contact-sheet loop scores "clarity" and "rhythm" (see "Loop before you show me anything").
 
 ## Look for new reels: illustrated story (from 2026-10-12)
 - After #06 in Sticker Pop I said that look suited my earlier videos and does not match the
@@ -84,6 +114,18 @@
   - `cast(parent, 'ananya')` Ananya: classmate, friend, junior. Pink kurti, ponytail.
   - `cast(parent, 'sharma')` Prof. Sharma: professor, teacher, father, senior interviewer.
     Sweater vest, tie, glasses, moustache.
+  Four more on 2026-10-23 (my request: "create 4 more characters"; Claude picked the roles the
+  coming reels need: a client for the money reels, HR for the career reels, a mentor, a kid):
+  - `cast(parent, 'gupta')` Gupta Ji: shopkeeper, small-business owner, client, landlord (money
+    reels, my BillBanao story). Cream kurta, mustard Nehru jacket, big moustache, grey temples, a
+    pen behind the ear.
+  - `cast(parent, 'neha')` Neha: HR, recruiter, team lead, client (office: offer letters,
+    interviews). Lavender shirt with an ID card, long open hair.
+  - `cast(parent, 'jassi')` Jassi: senior, mentor, a freelancer who has done it (a senior shows a
+    junior a trick). Blue turban, full beard, teal T-shirt.
+  - `cast(parent, 'golu')` Golu: younger brother, cousin, school kid (family scenes, funny
+    skits). School shirt with an ID card, spiky hair; a child, so pose him at about 0.8 of the
+    adults' scale (his head is drawn a little bigger).
   - `monkey(parent)` Chintu: mischief, copies others, presses the wrong button.
   - `macaw(parent)` Mitthu: repeats what it hears, says yes to everything.
   Pick the cast member whose role fits; do not reuse the same supporting character in two
@@ -196,6 +238,11 @@ consider the reel length as your constraint the main priority should be great vi
 - Under 15% of the reel without voice, `"grid": 0.5`, `"gap": 0.1`.
 - The follow ask is part of the film, in its last 1.5 to 2 seconds. Nothing is stitched on:
   only 1 to 4% of viewers reached the 6 to 9 second outros.
+- One call to action, at the ending only (my rule of 2026-10-23): the voice asks to send the reel
+  to one person, and the follow card's Follow button is pressed with its click sound. No follow
+  line, card or ask anywhere before the ending, in any reel (series, money or personal): the one
+  after the first payoff "is breaking the story continuation flow", and viewers left right after
+  it. The tool link line stays where it is, just before the ending.
 - Tool link line (my rule of 2026-10-12, for every reel about a tool): at the ending, before
   any ask, the Hindi voice says that whoever wants the tool's link should comment anything.
   Default words: "इस tool का link चाहिए? Comment में कुछ भी लिख दो।" On screen: the link is
@@ -269,6 +316,9 @@ men, in India, and 87 to 99.9% of them did not follow me: every reel is seen by 
    diagram. Wins in front of a teacher, a boss, an interviewer or friends travel best.
 5. Reach comes from saves and shares, not from holding viewers alone. #08 held its opening
    almost as well as #06 and still stopped at 650 views with no saves or shares.
+   (2026-10-23: confirmed again. #16 had the best opening yet, 41.4% skip, and was saved but
+   hardly sent, 2.3 shares per 1,000; it stopped near 1,300 views while #15, sent 17.7 per 1,000,
+   kept growing. A save alone does not push a reel; a send does.)
    - Save = "I will need this later" (before the next presentation, exam, interview). So the
      reel gives a concrete, usable thing with a clear moment to use it.
    - Share = "this makes me look helpful or smart to a friend". So there is one specific person
@@ -362,7 +412,6 @@ Ranked by how closely each metric moves with views across 17 reels a day old or 
 
 Idea score weights now: Q6, Q7 x2 (share rate (sends per reach)); Q5, Q4 x1.5 (save rate); the other questions x1.
 What drives follows: waiting for per-reel follows from screenshots (3 of 5 reels: #08 0.0 per 1,000 reach, #07 0.0 per 1,000 reach, #06 0.7 per 1,000 reach). Until then: followers per 1,000 reach, account by day (below).
-RANKING CHANGED: the top metrics were share, skip, save; now share, save, skip.
 <!-- drivers:end -->
 
 ## Experiments (from 2026-10-16)
@@ -516,13 +565,13 @@ Retired (an experiment may come back once, for a re-test, after its date):
   - The post title starts with "AI जुगाड़ #N:"; the cover gets the badge with
     `node render.mjs <dir> --cover 0.6 --series "AI जुगाड़ #N"` (`--series-at x,y` moves it when
     it covers something; it stays inside y 240 to 1680, the part the profile grid shows).
-  - Right after the first payoff, before the "लेकिन" of the second payoff, one short follow
-    line: "ऐसे और AI जुगाड़ के लिए follow कर लो।" The follow card drops in for it and leaves
-    again: `followCard(stage, { line: 'AI जुगाड़ series' })` and `set(t, at, press, away)`.
-    The open "लेकिन" carries the viewer past the ask. (About 20% of viewers are still there,
-    against about 9% at the end.)
-  - The ending keeps its one ask (send or save). Its follow card shows the next number with
-    `followCard(stage, { next: 'अगला: AI जुगाड़ #N+1' })`, in silence.
+  - No follow line in the middle (my rule of 2026-10-23: "it is breaking the story continuation
+    flow", and viewers left the reel just after it). From #20 on, no reel has a follow ask before
+    its ending; #12 to #19 had one after the first payoff.
+  - The ending carries the only ask (my rule of 2026-10-23): the voice asks to send the reel to
+    one person; the follow card shows the next number, `followCard(stage, { next: 'अगला: AI जुगाड़
+    #N+1' })`, and the pointer presses its Follow button with the click sound (`tick` and
+    `ding` at the press), no voice on it.
 - This is a channel test (T2 on the board): followers per 1,000 reach in the report's day
   table, before (#06 to #10: 0.6 in the 14 days to 2026-10-16) and after three series reels.
 
@@ -627,8 +676,8 @@ you can track whether its really getting enormous view, follows and share".
     the viewer to pay first (that is a scam, and scam reels are stopped).
   - Each reel names one honest catch (it takes practice, clients come slowly, check the
     platform's fees).
-  - Series (Claude's default): "AI से कमाई #N", numbered on its own, with the follow line "ऐसे
-    और AI कमाई के तरीकों के लिए follow कर लो।" and the cover badge `--series "AI से कमाई #N"`.
+  - Series (Claude's default): "AI से कमाई #N", numbered on its own, with the cover badge
+    `--series "AI से कमाई #N"`; no follow line in the middle, only the ending ask.
 
 ## Personal proof reels (E8, from 2026-10-21)
 My words: "explore who i am, what i like, what i do, what i passionate about and then out of all
@@ -778,7 +827,8 @@ When I type "Create reel" with no topic, Claude finds the topic and builds the r
 5. Capture the pages, check the claims against them, write the script.
 6. Voice, score, film, contact-sheet loop, render, cover (with the series badge when the reel is
    in the AI जुगाड़ series).
-7. Deliver the video, `cover.png`, the caption and what I should check, and update `VIDEOS.md`:
+7. Deliver the video, `cover.png`, the caption, when to post it ("Posting times" in `VIDEOS.md`:
+   7 to 8:30 PM, or 1:30 to 2:30 PM for a second reel that day) and what I should check, and update `VIDEOS.md`:
    the Made table, the series number, and the board (what this reel tests and its pass mark);
    add the try to `results/experiments.json` (with the reel's length). In `script.json`, list
    the playbook entries the reel used (`"playbook": ["E1"]`, for their re-checks), and mark a
@@ -928,7 +978,9 @@ my own numbers: keep them until the share rates in `VIDEOS.md` say otherwise.
 ## Loop before you show me anything
 1. Render one frame per beat as a contact sheet and LOOK at it.
 2. Score it 1-10 on: hook and first frame, story (see Story and hook), readability at phone
-   size, motion quality, variety, brand accuracy, sound sync, and the top metrics of "What
+   size, clarity (in each frame: where to look and the caption readable within one second; see
+   "Visual clarity"), rhythm (the list of shot lengths from the timeline: quick for surprises,
+   longer for reading, never three alike in a row), motion quality, variety, brand accuracy, sound sync, and the top metrics of "What
    drives views and follows" (their "Build it with": the send moment, the first 3 seconds, a
    new thing every 2 to 4 s, a thing to keep).
 3. Fix the 3 worst problems. Repeat until every score is 8+.

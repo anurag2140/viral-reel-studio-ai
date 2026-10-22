@@ -1,0 +1,84 @@
+Skip to main content
+Google Maps Help
+Sign in
+Help Center
+Community
+Announcements
+Ask questions in Google Maps
+
+You can ask questions and get an AI-powered response, with the ability to go deeper through follow-up questions and helpful links to the web, from Ask Maps. This AI-powered tool helps you find the best places to go and provides specific details about your destination.
+
+Android phone & tablet Computer More
+Ask questions
+On your Android phone or tablet, open the Google Maps app .
+Under the search bar, tap Ask Maps.
+At the prompt, ask a question in either of these ways:
+Enter a question.
+Tap Microphone .
+Tap Send .
+You can continue to ask follow-up questions.
+Examples of what to ask
+“Any fun things to do this weekend within a 15-minute drive?”
+”I need to pick up my friend from the airport. What's the fastest way to get there? When should I leave if I need to be there by 6:00 PM? Where can I get flowers on the way?”
+”My phone is about to run out of battery. Where can I buy a charger? Are there any charging stations available at no charge without having to order a coffee?”
+Find conversations in your chat history
+On your Android phone or tablet, open the Google Maps app .
+Under the search bar, tap Ask Maps.
+To find a list of your past conversations, tap History .
+To load a past conversation, tap it.
+You can also go to your History page to view the Ask Maps threads saved to your account.
+Delete conversations from your chat history
+On your Android phone or tablet, open the Google Maps app .
+Under the search bar, tap Ask Maps.
+Tap History .
+Next to the conversation you want to delete, tap Delete .
+Important: You can only delete the full conversation, not just a part of it.
+You can also go to your History page to delete the Ask Maps threads saved to your account.
+Verify Ask Maps responses
+
+AI-powered answers can sometimes be incorrect. Be sure to double-check responses:
+
+Check important information in more than one place. Click the links for AI sources.
+To get the best answers, ask multiple versions of your question. Try to ask for different opinions or more details.
+If something doesn’t look right, send feedback to Google. Your feedback helps Google improve AI-powered features for everyone.
+Give feedback about Ask Maps responses
+
+If you get an AI-powered answer that you feel is unsafe, not helpful, inaccurate, or bad for any other reason, you can let us know by submitting feedback. Your feedback will help this experience improve.
+
+Below the answer:
+If the answer is helpful, tap Thumbs-up .
+If the answer needs improvement, tap Thumbs-down .
+If you tap Thumbs-down , select a reason.
+Enter any additional feedback.
+Tap Submit.
+Report a problem
+Under the response, tap Thumbs-down .
+Select a reason for the feedback.
+In the text box, describe the issue in detail.
+Tap Submit.
+
+Tip: To leave positive feedback or suggest features, tap Thumbs-up  and fill out the form.
+
+Related resources
+How AI-powered features use your data in Google Maps
+Give feedback about this article
+Was this helpful?
+YesNo
+Need more help?
+Try these next steps:
+Post to the help community
+Get answers from community members
+Help
+Get started with Google Maps
+Download areas & navigate offline in Google Maps
+Find & improve your location’s accuracy in Google Maps
+Add, edit, or delete Google Maps reviews & ratings
+Manage your Google Maps Timeline
+Discover helpful features in Google Maps
+Contribute to Google Maps & earn points
+Share your real-time location with others in Google Maps
+Get directions & show routes in Google Maps
+Ask questions in Google Maps
+Taking actions within Ask Maps with third-parties
+Language
+English‎

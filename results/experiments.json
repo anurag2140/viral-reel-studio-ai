@@ -90,7 +90,7 @@
       "id": "E8",
       "name": "Personal proof",
       "kind": "reel",
-      "status": "queued",
+      "status": "running",
       "since": "2026-10-21",
       "change": "The reel is my real story, told by me (\"मैं\", my face): a B.Com graduate with no coding who builds apps and tools with AI, with the real proof on screen",
       "pass": [
@@ -111,7 +111,13 @@
         "Legal-IQ, my AI legal tool (selected for the Google GenAI Hackathon, 11 December 2025), reads an offer letter or a rent agreement in Hindi and shows the red flags",
         "Later: my website writes its own reviews (Armadore, an n8n automation); the free Microsoft certificates I did; once E8 has passed, the builder who cannot sell, finding his first paying users through this channel (only with real progress)"
       ],
-      "tries": [],
+      "tries": [
+        {
+          "reel": 21,
+          "length": 34.8,
+          "note": "angle 1: B.Com, no coding, BillBanao with 500+ downloads on Google Play; ends on vibe coding and a spoken follow ask (my request), not on the selling catch"
+        }
+      ],
       "outcomes": {
         "CONFIRM": {
           "type": "default",
@@ -329,7 +335,7 @@
       "kind": "series",
       "status": "running",
       "since": "2026-10-16",
-      "change": "Series number on cover and title, a follow line after the first payoff, the next number on the end card",
+      "change": "Series number on cover and title, the next number on the end card (until #19 also a follow line after the first payoff, dropped on 2026-10-23 by my rule: one call to action, at the ending)",
       "series": "AI जुगाड़",
       "needReels": 3,
       "baseline": 0.6,
@@ -337,7 +343,7 @@
       "outcomes": {
         "CONFIRM": {
           "type": "default",
-          "text": "TOOL reels and AI reels with a trick are in the AI जुगाड़ series by default (number in the title, cover badge, follow line after the first payoff, the next number on the end card)."
+          "text": "TOOL reels and AI reels with a trick are in the AI जुगाड़ series by default (number in the title, cover badge, the next number on the end card; no follow line in the middle)."
         },
         "DISCARD": {
           "text": "Drop the AI जुगाड़ series until its re-test; Claude proposes another reason to follow as a new experiment."
@@ -414,6 +420,11 @@
           "reel": 17,
           "length": 41.9,
           "note": "AI से कमाई #1: resumes for juniors with Gemini and a free Canva template; a sequel to #11"
+        },
+        {
+          "reel": 20,
+          "length": 32.4,
+          "note": "AI से कमाई #2: a free Google Business Profile for Meera Aunty's tiffin, review replies with Gemini, Ask Maps as the second payoff"
         }
       ]
     }

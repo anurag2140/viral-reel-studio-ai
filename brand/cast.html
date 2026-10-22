@@ -12,7 +12,7 @@
 </style>
 </head>
 <body>
-<svg id="sheet" viewBox="0 0 2400 2560" width="2400" height="2560"></svg>
+<svg id="sheet" viewBox="0 0 2400 4250" width="2400" height="4250"></svg>
 <script type="module">
 // The supporting cast on one page: each person in two poses, the monkey and the macaw in three.
 // Render it with: node sheet.mjs brand/cast.html brand/cast-sheet.png
@@ -22,9 +22,9 @@ const NS = 'http://www.w3.org/2000/svg';
 const S = (tag, attrs = {}, parent, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; parent.appendChild(e); return e; };
 const svg = document.getElementById('sheet');
 await document.fonts.ready;
-S('rect', { width: 2400, height: 2560, fill: '#F6EEDF' }, svg);
+S('rect', { width: 2400, height: 4250, fill: '#F6EEDF' }, svg);
 S('text', { x: 60, y: 76, 'font-size': 46, 'font-weight': 800, fill: '#2A1A12' }, svg, 'Supporting cast (brand/cast.js)');
-S('text', { x: 60, y: 118, 'font-size': 28, 'font-weight': 500, fill: '#6B5A4C' }, svg, 'Five people and two animals. Rows 1 and 2: each person in two poses. Row 3: Chintu the monkey and Mitthu the macaw.');
+S('text', { x: 60, y: 118, 'font-size': 28, 'font-weight': 500, fill: '#6B5A4C' }, svg, 'Nine people and two animals. Rows 1 to 4: each person in two poses (rows 3 and 4: the four added on 2026-10-23). Row 5: Chintu the monkey and Mitthu the macaw.');
 const shadow = (x, y, w = 120) => S('ellipse', { cx: x, cy: y, rx: w, ry: 18, fill: '#2A1A12', opacity: 0.12 }, svg);
 
 const PEOPLE = [
@@ -34,17 +34,27 @@ const PEOPLE = [
   ['ananya', { face: 'talk', handL: [-290, -200], handR: [290, -200], sway: 8 }, { face: 'amazed', handL: [-80, -330], handR: [80, -330], sway: -10 }],
   ['sharma', { face: 'talk', handR: [222, -296], gripR: 'point' }, { face: 'smirk', handL: [-112, -96], handR: [112, -96], gripL: 'fist', gripR: 'fist', tilt: -3 }],
 ];
-PEOPLE.forEach(([name, a, b], i) => {
+// the four added on 2026-10-23; Golu is a child, so he stands at 0.8 of the adults
+const MORE = [
+  ['gupta', { face: 'grin', handL: [-112, -96], handR: [112, -96], gripL: 'fist', gripR: 'fist' }, { face: 'amazed', handL: [-150, -560], handR: [150, -560] }],
+  ['neha', { face: 'talk', handR: [222, -296], gripR: 'point' }, { face: 'smirk', handL: [-60, -200], handR: [60, -200], tilt: 3 }],
+  ['jassi', { face: 'grin', handR: [176, -318], gripR: 'thumb', tilt: 3 }, { face: 'wink', handL: [-150, -62], handR: [196, -430], tilt: -3 }],
+  ['golu', { face: 'grin', handL: [-150, -560], handR: [150, -560] }, { face: 'worried', handL: [-80, -330], handR: [80, -330] }],
+];
+const rowOf = (list, y0) => list.forEach(([name, a, b], i) => {
   const x = 250 + i * 470;
+  const s = name === 'golu' ? 0.56 : 0.7;
   for (const [row, pose] of [[0, a], [1, b]]) {
-    const y = 640 + row * 820;
+    const y = y0 + row * 820;
     shadow(x, y + 250);
-    cast(svg, name).pose({ x, y, s: 0.7, ...pose });
+    cast(svg, name).pose({ x, y: y + 250 - 350 * s, s, ...pose });
   }
-  S('text', { x, y: 640 + 820 + 316, 'text-anchor': 'middle', 'font-size': 36, 'font-weight': 800, fill: '#2A1A12' }, svg, CAST[name].name);
-  S('text', { x, y: 640 + 820 + 356, 'text-anchor': 'middle', 'font-size': 24, 'font-weight': 500, fill: '#6B5A4C' }, svg, CAST[name].role);
+  S('text', { x, y: y0 + 820 + 316, 'text-anchor': 'middle', 'font-size': 36, 'font-weight': 800, fill: '#2A1A12' }, svg, CAST[name].name);
+  S('text', { x, y: y0 + 820 + 356, 'text-anchor': 'middle', 'font-size': 24, 'font-weight': 500, fill: '#6B5A4C' }, svg, CAST[name].role.replace(/ \(pose .*\)/, ''));
 });
-const y3 = 2240;
+rowOf(PEOPLE, 640);
+rowOf(MORE, 2330);
+const y3 = 3930;
 [[{ face: 'cheeky' }], [{ face: 'grin', handL: [-160, -400], handR: [160, -400], crouch: 0.6, tail: 1.5 }], [{ face: 'amazed', handL: [-70, -120], handR: [126, -392], tail: 3, tilt: -8 }]].forEach(([pose], i) => {
   const x = 230 + i * 330;
   shadow(x, y3, 100);

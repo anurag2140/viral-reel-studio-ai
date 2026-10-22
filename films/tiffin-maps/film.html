@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#20 AI से कमाई #2: Aunty का tiffin Google Maps पर</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #FFE3BF; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// The second money reel (T4). Places: Meera Aunty's tiffin counter at her door by day (the hook,
+// famous food, the orders and the payment, and the ending with Gupta Ji), a big
+// drawn phone (the map where she is missing, the profile filling up, Ask Maps with her in the
+// answer), my desk at night (the honest catch). Google's Business Profile page, the Gemini help
+// page and the Ask Maps post fill the frame for the tools. No amount of money and no rating
+// number appear anywhere.
+import { S, backOut, bump, camera, captionsCompact, cubicOut, eio, expoOut, key, lerp, person, pointer, prog, pulse, setup, start, webpage } from '/brand/story.js';
+import { CORAL, INK, NAVY, BLUE, desk, followCard, lights, linkLine, paperPlane, show, star, whip, whipIn, whipOut } from '/brand/scenes.js';
+import { cast } from '/brand/cast.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const GBP = 'shots/gbphero.jpg'; // business.google.com/in/business-profile, 0 to 640 css px at 4x
+const GEM = 'shots/gemlist.jpg'; // support.google.com/business/answer/17142585, 90 to 600 css px at 4x
+const ASK = 'shots/askhero.jpg'; // the Ask Maps post on the India blog, 0 to 780 css px at 4x
+const FACE = { dir: '/brand/face/', meta: await (await fetch('/brand/face/face.json')).json() };
+const ME = { face: FACE, skin: FACE.meta.cheek, shade: '#D98A52', outfit: 'hoodie' };
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"', '600 33px "Anek Devanagari"'], [GBP, GEM, ASK, '/logo.png', ...FACE.meta.names.map((n) => `${FACE.dir}${n}.png`)]);
+const pop = (t, at) => 1 - 0.07 * at.reduce((v, a) => v + Math.max(0, bump(t - a)), 0);
+const place = (g, x, y, s = 1, r = 0) => g.setAttribute('transform', `translate(${x} ${y}) rotate(${r}) scale(${s})`);
+const U = [];
+const L = lights(svg);
+const defs = L.defs;
+const YEL = '#FFD23F';
+const GREEN = '#19C37D';
+const PIN = '#EA4335';
+const line = { stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+const chip = (parent, text, w, size, fill = YEL, ink = NAVY) => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -size * 0.75, width: w, height: size * 1.5, rx: size * 0.36, fill, ...line }, g);
+  S('text', { y: size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, text);
+  return g;
+};
+function bubble(parent, lines, w, size, fill = '#fff', ink = NAVY, tail = 'left') {
+  const g = S('g', {}, parent);
+  const h = lines.length * size * 1.25 + size * 0.9;
+  const tx = tail === 'left' ? -w / 2 + 50 : w / 2 - 80;
+  S('path', { d: `M${-w / 2 + 30},${-h / 2} L${w / 2 - 30},${-h / 2} Q${w / 2},${-h / 2} ${w / 2},${-h / 2 + 30} L${w / 2},${h / 2 - 30} Q${w / 2},${h / 2} ${w / 2 - 30},${h / 2} L${tx + 30},${h / 2} L${tx},${h / 2 + 40} L${tx + 4},${h / 2} L${-w / 2 + 30},${h / 2} Q${-w / 2},${h / 2} ${-w / 2},${h / 2 - 30} L${-w / 2},${-h / 2 + 30} Q${-w / 2},${-h / 2} ${-w / 2 + 30},${-h / 2} Z`, fill, ...line }, g);
+  lines.forEach((s, i) => S('text', { y: -h / 2 + size * 1.05 + i * size * 1.25 + size * 0.15, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, s));
+  return g;
+}
+// a banknote with no number on it
+const note = (parent) => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -90, y: -46, width: 180, height: 92, rx: 10, fill: '#8FD6A9', ...line, 'stroke-width': 5 }, g);
+  S('circle', { r: 28, fill: '#C9F0D6', stroke: '#3E9A63', 'stroke-width': 4 }, g);
+  S('text', { y: 14, 'text-anchor': 'middle', 'font-size': 40, fill: '#2E7A4E' }, g, '₹');
+  return g;
+};
+// a steel tiffin carrier, three tiers
+const tiffin = (parent) => {
+  const g = S('g', {}, parent);
+  S('path', { d: 'M-34,-118 Q0,-170 34,-118', fill: 'none', stroke: '#8D97B9', 'stroke-width': 12, 'stroke-linecap': 'round' }, g);
+  S('rect', { x: -10, y: -130, width: 20, height: 140, rx: 6, fill: '#AEB7CC', stroke: INK, 'stroke-width': 4 }, g);
+  for (let k = 0; k < 3; k++) {
+    S('rect', { x: -58, y: -112 + k * 40, width: 116, height: 40, rx: 12, fill: k % 2 ? '#C9D1DE' : '#DDE3EC', stroke: INK, 'stroke-width': 5 }, g);
+    S('rect', { x: -46, y: -104 + k * 40, width: 18, height: 24, rx: 6, fill: '#fff', opacity: 0.8 }, g);
+  }
+  return g;
+};
+// a map pin
+const pinIcon = (parent, fill = PIN, r = 34) => {
+  const g = S('g', {}, parent);
+  S('path', { d: `M0,0 C${-r * 0.3},${-r * 0.9} ${-r},${-r * 1.3} ${-r},${-r * 2} A${r},${r} 0 1 1 ${r},${-r * 2} C${r},${-r * 1.3} ${r * 0.3},${-r * 0.9} 0,0 Z`, fill, ...line, 'stroke-width': 5 }, g);
+  S('circle', { cy: -r * 2, r: r * 0.38, fill: '#fff' }, g);
+  return g;
+};
+const stars5 = (parent, x, y, r = 16) => { for (let i = 0; i < 5; i++) star(parent, x + i * r * 2.3, y, r, '#FBBC04'); };
+// a small house; grey for a shop that is not on the map
+const house = (parent, roof = '#FF6B4A', wall = '#FFE3BF') => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -44, y: -46, width: 88, height: 70, fill: wall, ...line, 'stroke-width': 5 }, g);
+  S('path', { d: 'M-60,-40 L0,-92 L60,-40 Z', fill: roof, ...line, 'stroke-width': 5 }, g);
+  S('rect', { x: -14, y: -16, width: 28, height: 40, fill: NAVY }, g);
+  return g;
+};
+// the card of her place on the map (the hook): a bit of map, her pin, her name and stars
+function placeCard(parent) {
+  const g = S('g', {}, parent);
+  S('rect', { x: -230, y: -170, width: 460, height: 340, rx: 34, fill: '#fff', ...line }, g);
+  S('rect', { x: -230, y: -170, width: 460, height: 180, rx: 34 }, S('clipPath', { id: 'pcMap' }, defs));
+  const m = S('g', { 'clip-path': 'url(#pcMap)' }, g);
+  S('rect', { x: -230, y: -170, width: 460, height: 180, fill: '#E3F1DC' }, m);
+  S('path', { d: 'M-240,-40 L240,-110 M-60,-180 L-10,20 M120,-180 L160,20', stroke: '#fff', 'stroke-width': 22 }, m);
+  S('circle', { cx: 150, cy: -20, r: 50, fill: '#C8E6B5' }, m);
+  S('path', { d: 'M-230,10 L230,10', stroke: INK, 'stroke-width': 6 }, g);
+  const pin = pinIcon(g, PIN, 30);
+  S('text', { x: -200, y: 78, 'font-size': 52, fill: NAVY }, g, 'मीरा टिफ़िन');
+  stars5(g, -186, 128, 17);
+  const open = chip(g, 'Open', 120, 30, GREEN, '#fff');
+  place(open, 140, 122, 1, 0);
+  return { g, pin };
+}
+
+// ================= Meera Aunty's tiffin counter, by day =================
+const C = { s: S('g', {}, svg) };
+C.w = S('g', {}, C.s);
+C.cam = camera(C.w);
+C.blur = L.blurOf('mbCounter');
+S('rect', { x: -700, y: -600, width: 2480, height: 3200, fill: '#FFE3BF' }, C.w);
+S('path', { d: 'M560,-600 L1100,-600 L840,1500 L300,1500 Z', fill: '#FFF1DC', opacity: 0.7 }, C.w);
+// her door with a marigold toran
+S('rect', { x: -40, y: 420, width: 330, height: 1090, rx: 10, fill: '#8A5534', ...line }, C.w);
+S('rect', { x: -10, y: 460, width: 270, height: 1050, rx: 6, fill: '#A86E48' }, C.w);
+const toran = S('g', {}, C.w);
+for (let k = 0; k < 14; k++) S('circle', { cx: -60 + k * 30, cy: 420 + 22 * Math.sin((k / 13) * Math.PI), r: 17, fill: k % 2 ? '#FF9F1C' : YEL, stroke: INK, 'stroke-width': 3 }, toran);
+// the sign above the counter
+const sign = S('g', { transform: 'translate(820 470)' }, C.w);
+S('path', { d: 'M-150,-110 L-150,-60 M150,-110 L150,-60', stroke: INK, 'stroke-width': 6 }, sign);
+S('rect', { x: -230, y: -64, width: 460, height: 128, rx: 22, fill: YEL, ...line }, sign);
+S('text', { y: 30, 'text-anchor': 'middle', 'font-size': 76, fill: NAVY }, sign, 'मीरा टिफ़िन');
+S('rect', { x: -700, y: 1500, width: 2480, height: 1200, fill: '#E2C9A0' }, C.w);
+S('rect', { x: -700, y: 1500, width: 2480, height: 16, fill: '#CFAF7E' }, C.w);
+const aunty = cast(C.w, 'meera');
+const meC = person(C.w, ME);
+// the counter in front of her, with tiffins on it
+const counter = S('g', {}, C.w);
+S('rect', { x: 540, y: 1250, width: 640, height: 270, fill: '#B5763E', ...line }, counter);
+S('rect', { x: 520, y: 1230, width: 680, height: 40, rx: 10, fill: '#8A5534', ...line }, counter);
+const tiffins = [720, 960, 1100].map((x) => ({ g: tiffin(counter), x }));
+const steam = [0, 1, 2].map(() => S('path', { d: 'M0,0 q-12,-20 0,-40 q12,-20 0,-40', fill: 'none', stroke: '#fff', 'stroke-width': 8, 'stroke-linecap': 'round', opacity: 0.75 }, counter));
+const gupta = cast(C.w, 'gupta');
+const cFront = S('g', {}, C.w);
+const card = placeCard(cFront);
+const money = note(cFront);
+const firstEarn = chip(cFront, 'पहली कमाई!', 360, 62, YEL);
+const hearts = [0, 1, 2].map(() => { const g = S('g', {}, cFront); S('path', { d: 'M0,26 C-46,-6 -34,-44 0,-22 C34,-44 46,-6 0,26 Z', fill: '#FF4D6D', ...line, 'stroke-width': 4 }, g); return g; });
+const orders = ['नया order', 'नया order', 'नया order'].map((s) => chip(cFront, s, 300, 44, '#fff', NAVY));
+const orderPins = orders.map((o) => { const p = pinIcon(o, PIN, 14); place(p, -110, 20); return p; });
+const guptaB = bubble(cFront, ['मेरी दुकान भी?'], 400, 50, '#fff', NAVY, 'right');
+const sparks = [[-200, -150, 30], [200, -170, 24], [220, 140, 22], [-210, 120, 26]].map(([x, y, r]) => ({ e: star(cFront, 0, 0, r, YEL), x, y }));
+const plane = paperPlane(cFront, [330, 1150], [700, 760], [1300, 520]);
+
+U.push((t) => {
+  const A = t < T.maps2 - 0.26;                                   // the hook, then famous food
+  const M = t >= T.magic - 0.26 && t < T.twist - 0.25;            // orders, she pays
+  const E = t >= T.link - 0.26;                                    // the ending
+  if (!show(C.s, A || M || E)) return;
+  const hook = t < T.trouble - 0.15;
+  plane(t, E ? T.send + 0.2 : 1e9, E ? T.sendWord + 0.4 : 1e9 + 1);
+  steam.forEach((e) => show(e, A && !hook));
+  steam.forEach((e, i) => e.setAttribute('transform', `translate(${1070 + i * 30 + 6 * Math.sin(t * 3 + i)} ${1080 - 30 * ((t * 0.9 + i * 0.33) % 1)})`));
+  show(card.g, hook);
+  show(sign, !hook && !(M && t < T.paise + 0.4));
+  show(firstEarn, hook && t > T.kamai - 0.05);
+  show(money, hook || (M && t > T.paise - 0.4));
+  hearts.forEach((h) => show(h, A && !hook && t > T.famous - 0.1));
+  orders.forEach((o) => show(o, M && t < T.paise + 0.4));
+  show(guptaB, E && t > T.link + 0.5 && t < T.send);
+  show(gupta.g, E);
+  sparks.forEach((s) => show(s.e, (hook && t > T.kamai) || (M && t > T.paise)));
+  tiffins.forEach((f, i) => place(f.g, f.x, 1232 - (M ? 400 * eio(prog(t, T.orders + 0.15 + i * 0.22, 0.35)) : 0), 1, 0));
+  tiffins.forEach((f, i) => show(f.g, !(M && t > T.orders + 0.5 + i * 0.22)));
+  const herHand = [-175, -330 + 6 * Math.sin(t * 3)];
+  if (A) {
+    if (t > T.maps2 - 0.56) whipOut(C.s, C.blur, t, T.maps2 - 0.26, -1);
+    else whip(C.s, C.blur, 0, 0);
+    if (hook) {
+      C.cam(...key(t, [[0, [560, 1000, 1.1]], [T.kamai, [560, 990, 1.16], (p) => p], [T.trouble, [560, 980, 1.2]]]));
+      aunty.pose({ x: 840, y: 1640, s: 1.5, tilt: -4 + 2 * Math.sin(t * 2.2), face: 'amazed', pop: pop(t, [T.maps, T.kamai]), handL: herHand, handR: [130, -380] });
+      meC.pose({ x: 250, y: 1640 - 20 * Math.max(0, bump(t - T.kamai)), s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.4), face: 'grin', pop: pop(t, [T.kamai]), handL: [-150, -62], handR: [220, -320], gripR: 'open' });
+      place(money, 840 + herHand[0] * 1.5 - 30, 1640 + herHand[1] * 1.5 - 20, 1.05, -12 + 3 * Math.sin(t * 4));
+      const pc = 1;
+      place(card.g, 560, 560 + 8 * Math.sin(t * 2.2), pc * (1 + 0.04 * Math.max(0, bump(t - T.maps))), -3 + 1.5 * Math.sin(t * 1.7));
+      place(card.pin, 0, -40 - 30 * Math.max(0, bump(t - T.maps)), 1 + 0.15 * Math.max(0, bump(t - T.maps)), 0);
+      place(firstEarn, 560, 300 + 6 * Math.sin(t * 2.5), backOut(prog(t, T.kamai - 0.05, 0.35)), -4);
+      sparks.forEach((s, i) => place(s.e, 560 + s.x * 1.2, 560 + s.y, 0.7 + 0.3 * Math.sin(t * 5 + i * 2), t * 30));
+      return;
+    }
+    // her food is famous: she lifts a tiffin, the neighbourhood loves it
+    C.cam(...key(t, [[T.trouble - 0.15, [700, 1040, 1.3]], [T.maps2, [760, 1060, 1.42], (p) => p]]));
+    aunty.pose({ x: 840, y: 1640, s: 1.5, tilt: -3 + 2 * Math.sin(t * 2.6), face: 'grin', pop: pop(t, [T.famous]), handL: [-150, -400], handR: [130, -300] });
+    meC.pose({ x: 250, y: 1640, s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.4), face: 'look-right', pop: pop(t, [T.famous]), handL: [-150, -62], handR: [170, -470], gripR: 'thumb' });
+    hearts.forEach((h, i) => { const p = backOut(prog(t, T.famous - 0.1 + i * 0.15, 0.3)); place(h, 620 + i * 170, 760 - 40 * (i % 2) - 12 * (t - T.famous),p * (1 + 0.08 * Math.sin(t * 6 + i)), -10 + i * 10); });
+    return;
+  }
+  if (M) {
+    if (t < T.magic + 0.2) whipIn(C.s, C.blur, t, T.magic - 0.26, 1);
+    else if (t > T.twist - 0.55) whipOut(C.s, C.blur, t, T.twist - 0.25, -1);
+    else whip(C.s, C.blur, 0, 0);
+    C.cam(...key(t, [[T.magic - 0.26, [640, 1000, 1.08]], [T.paise, [560, 990, 1.14], (p) => p], [T.twist, [480, 1000, 1.22], (p) => p]]));
+    const pay = eio(prog(t, T.paise - 0.35, 0.5));
+    const got = t > T.paise + 0.4; // the note is in my hand
+    aunty.pose({ x: 840, y: 1640, s: 1.5, tilt: -4 + 2 * Math.sin(t * 2.2), face: t < T.paise ? 'amazed' : 'grin', pop: pop(t, [T.orders, T.paise]), handL: [lerp(-120, -175, pay), lerp(-300, -330, pay)], handR: [130, -380] });
+    meC.pose({
+      x: 250, y: 1640 - 22 * Math.max(0, bump(t - T.paise)), s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.4),
+      face: got ? 'wink' : t < T.paise ? 'look-right' : 'grin', pop: pop(t, [T.paise]),
+      handL: got ? [-170, -380] : [-150, -62], gripL: got ? 'thumb' : 'open', handR: [220, -320], gripR: 'open',
+    });
+    orders.forEach((o, i) => place(o, 760 - i * 20, 640 - i * 120 + 5 * Math.sin(t * 3 + i), backOut(prog(t, T.orders + i * 0.22, 0.3)), -4 + 4 * i));
+    const mx = lerp(840 - 175 * 1.5 - 30, 250 + 220 * 1.5 + 10, pay);
+    place(money, mx, 1640 - 330 * 1.5 - 20 - 40 * Math.sin(Math.PI * pay), 1.05, -12 + 12 * pay + 3 * Math.sin(t * 4));
+    sparks.forEach((s, i) => place(s.e, mx + s.x * 0.8, 1120 + s.y * 0.8, 0.7 + 0.3 * Math.sin(t * 5 + i * 2), t * 30));
+    return;
+  }
+  // the ending: the link held out, Gupta Ji walks in, the ask
+  if (t < T.link + 0.2) whipIn(C.s, C.blur, t, T.link - 0.26, 1);
+  else whip(C.s, C.blur, 0, 0);
+  C.cam(...key(t, [[T.link - 0.26, [620, 1080, 0.98]], [T.link + 0.3, [600, 1090, 1.0], (p) => p], [dur, [580, 1100, 1.04], (p) => p]]));
+  const offer = eio(prog(t, T.link, 0.3)) * (1 - prog(t, T.send - 0.1, 0.2));
+  aunty.pose({ x: 700, y: 1640, s: 1.5, tilt: -3 + 2 * Math.sin(t * 2.2), face: t > T.link + 0.6 ? 'look-right' : 'grin', pop: pop(t, [T.link + 0.6]), handL: [-150, -62], handR: [130, -300] });
+  const walk = eio(prog(t, T.link + 0.1, 0.7));
+  gupta.pose({ x: lerp(1400, 1030, walk), y: 1640 - 14 * Math.abs(Math.sin(t * 9)) * (1 - walk), s: 1.45, tilt: -4 + 2 * Math.sin(t * 2.6), face: t < T.send ? 'talk' : 'grin', pop: pop(t, [T.link + 0.8]), handL: [-170, -380], handR: [150, -62] });
+  place(guptaB, 900, 600 + 5 * Math.sin(t * 2.5), backOut(prog(t, T.link + 0.5, 0.3)), 3);
+  meC.pose({
+    x: 250, y: 1640 - 24 * Math.max(0, bump(t - T.sendWord)), s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.3),
+    face: t < T.comment - 0.1 ? 'talk' : t < T.send ? 'grin' : 'wink', pop: pop(t, [T.link, T.send]),
+    handL: [lerp(-70, -215, offer), lerp(-200, -360, offer) - 8 * offer * Math.sin(t * 6)],
+    handR: t > T.send ? [160, -470] : [190, -330], gripR: t > T.send ? 'thumb' : 'open',
+  });
+});
+
+// ================= the big phone: the map, the profile, Ask Maps =================
+const P = { s: S('g', {}, svg) };
+P.w = S('g', {}, P.s);
+P.cam = camera(P.w);
+P.blur = L.blurOf('mbPhone');
+S('rect', { x: -700, y: -700, width: 2480, height: 3320, fill: '#DCE6FF' }, P.w);
+for (const [x, y, r, f] of [[110, 320, 170, '#CBD8FF'], [990, 1460, 230, '#CBD8FF'], [960, 300, 90, '#FFE3BF']]) S('circle', { cx: x, cy: y, r, fill: f }, P.w);
+S('rect', { x: 190, y: 200, width: 700, height: 1200, rx: 84, fill: NAVY, ...line }, P.w);
+S('rect', { x: 222, y: 240, width: 636, height: 1120, rx: 60, fill: '#F3F5FA' }, P.w);
+S('rect', { x: 0, y: 0, width: 636, height: 1120, rx: 60 }, S('clipPath', { id: 'phScr' }, defs));
+const scr = S('g', { 'clip-path': 'url(#phScr)', transform: 'translate(222 240)' }, P.w);
+const pFront = S('g', {}, P.w);
+
+// (a) the map: other tiffins have pins, her house has none
+const vMap = S('g', {}, scr);
+S('rect', { width: 636, height: 1120, fill: '#E9F2E2' }, vMap);
+for (const [x, y, w, h] of [[30, 200, 220, 160], [330, 180, 260, 200], [40, 470, 200, 240], [360, 470, 240, 150], [60, 840, 220, 200], [380, 730, 220, 300]]) S('rect', { x, y, width: w, height: h, rx: 18, fill: '#F7F2E7' }, vMap);
+S('path', { d: 'M-20,420 L660,400 M290,140 L300,1140 M-20,780 L660,700', stroke: '#fff', 'stroke-width': 34 }, vMap);
+S('path', { d: 'M-20,1020 Q300,940 660,1060', stroke: '#9FD3F5', 'stroke-width': 40, fill: 'none' }, vMap);
+S('circle', { cx: 520, cy: 560, r: 60, fill: '#C8E6B5' }, vMap);
+const search = S('g', { transform: 'translate(318 100)' }, vMap);
+S('rect', { x: -290, y: -50, width: 580, height: 100, rx: 50, fill: '#fff', ...line, 'stroke-width': 4 }, search);
+S('circle', { cx: -236, cy: -6, r: 16, fill: 'none', stroke: '#5B6070', 'stroke-width': 6 }, search);
+S('path', { d: 'M-224,6 L-212,18', stroke: '#5B6070', 'stroke-width': 6, 'stroke-linecap': 'round' }, search);
+const searchTxt = S('text', { x: -190, y: 13, 'font-size': 38, fill: NAVY }, search, '');
+const others = [[150, 330, 'Tiffin Point'], [470, 330, 'Dabba Express'], [170, 640, 'Cloud Kitchen']].map(([x, y, name]) => {
+  const g = S('g', {}, vMap);
+  pinIcon(g, PIN, 26);
+  const l = S('g', { transform: 'translate(0 22)' }, g);
+  S('rect', { x: -100, y: 0, width: 200, height: 44, rx: 22, fill: '#fff', stroke: INK, 'stroke-width': 3 }, l);
+  S('text', { y: 32, 'text-anchor': 'middle', 'font-size': 26, fill: NAVY }, l, name);
+  return { g, x, y };
+});
+const herHouse = house(vMap);
+place(herHouse, 480, 880, 1.3);
+const missRing = S('circle', { cx: 480, cy: 860, r: 110, fill: 'none', stroke: CORAL, 'stroke-width': 10, 'stroke-dasharray': '24 16' }, vMap);
+const qMark = chip(vMap, '?', 90, 70, CORAL, '#fff');
+
+// (b) the profile: cover, name, stars, timing, photos
+const vProf = S('g', {}, scr);
+S('rect', { width: 636, height: 1120, fill: '#fff' }, vProf);
+S('rect', { width: 636, height: 330, fill: '#FFB86B' }, vProf);
+const coverT = tiffin(vProf);
+place(coverT, 318, 290, 1.7);
+S('rect', { y: 310, width: 636, height: 820, rx: 40, fill: '#fff' }, vProf);
+S('text', { x: 40, y: 400, 'font-size': 58, fill: NAVY }, vProf, 'मीरा टिफ़िन');
+stars5(vProf, 52, 448, 17);
+S('text', { x: 40, y: 506, 'font-size': 30, fill: '#5B6070' }, vProf, 'घर का खाना · Tiffin');
+const timing = S('g', {}, vProf);
+S('rect', { x: 0, y: -32, width: 270, height: 64, rx: 32, fill: '#E6F6EE', stroke: GREEN, 'stroke-width': 4 }, timing);
+S('text', { x: 135, y: 12, 'text-anchor': 'middle', 'font-size': 32, fill: '#137A4C' }, timing, 'Open 12–3 PM');
+const food = (k) => {
+  const g = S('g', {}, vProf);
+  S('rect', { x: -135, y: -95, width: 270, height: 190, rx: 22, fill: ['#FFE3BF', '#FFF4D6', '#E8F5E1', '#FFE0E0'][k], stroke: INK, 'stroke-width': 4 }, g);
+  S('ellipse', { cx: 0, cy: 10, rx: 80, ry: 52, fill: '#fff', stroke: INK, 'stroke-width': 4 }, g);
+  S('ellipse', { cx: 0, cy: 4, rx: 60, ry: 36, fill: ['#F2B134', '#D9A066', '#6FBF4A', '#E85D3F'][k] }, g);
+  if (k === 1) for (const dx of [-24, 0, 24]) S('circle', { cx: dx, cy: 2, r: 20, fill: '#E9C08A', stroke: '#B07A3A', 'stroke-width': 3 }, g);
+  return g;
+};
+const photos = [0, 1, 2, 3].map((k) => ({ g: food(k), x: 168 + (k % 2) * 300, y: 720 + Math.floor(k / 2) * 220 }));
+
+// (c) Ask Maps: the question, her place in the answer, a shop that is not on Maps
+const vAsk = S('g', {}, scr);
+S('rect', { width: 636, height: 1120, fill: '#F3F5FA' }, vAsk);
+S('rect', { width: 636, height: 130, fill: '#fff' }, vAsk);
+star(vAsk, 70, 70, 26, BLUE);
+star(vAsk, 96, 46, 12, YEL);
+S('text', { x: 124, y: 86, 'font-size': 44, fill: NAVY }, vAsk, 'Ask Maps');
+const qb = S('g', { transform: 'translate(610 220)' }, vAsk);
+S('rect', { x: -470, y: -46, width: 470, height: 92, rx: 30, fill: BLUE }, qb);
+const qTxt = S('text', { x: -446, y: 12, 'font-size': 32, fill: '#fff' }, qb, '');
+const ans = S('g', { transform: 'translate(318 420)' }, vAsk);
+S('rect', { x: -290, y: -110, width: 580, height: 220, rx: 30, fill: '#fff', stroke: YEL, 'stroke-width': 10 }, ans);
+const ansPin = pinIcon(ans, PIN, 30);
+place(ansPin, -216, 40);
+S('text', { x: -150, y: -20, 'font-size': 50, fill: NAVY }, ans, 'मीरा टिफ़िन');
+stars5(ans, -138, 30, 15);
+S('text', { x: -150, y: 86, 'font-size': 28, fill: '#5B6070' }, ans, 'घर का खाना · पास में');
+const ghost = S('g', { transform: 'translate(318 720)' }, vAsk);
+S('rect', { x: -290, y: -110, width: 580, height: 220, rx: 30, fill: '#E6E8EF', stroke: '#9AA0B4', 'stroke-width': 5, 'stroke-dasharray': '22 14' }, ghost);
+const gh = house(ghost, '#B4BCD6', '#E6E8EF');
+place(gh, -190, 30, 1.1);
+S('text', { x: -100, y: 16, 'font-size': 40, fill: '#7A8094' }, ghost, 'Maps पर नहीं');
+const cross = S('g', {}, pFront);
+S('path', { d: 'M-90,-90 L90,90 M90,-90 L-90,90', stroke: CORAL, 'stroke-width': 30, 'stroke-linecap': 'round' }, cross);
+
+U.push((t) => {
+  const vm = t >= T.maps2 - 0.26 && t < T.turn - 0.25;
+  const vp = t >= T.how - 0.26 && t < T.reviews - 0.25;
+  const va = t >= T.khana - 0.26 && t < T.catch - 0.26;
+  if (!show(P.s, vm || vp || va)) return;
+  show(vMap, vm); show(vProf, vp); show(vAsk, va); show(cross, va && t > T.jawab - 0.05);
+  const [t0, t1] = vm ? [T.maps2 - 0.26, T.turn - 0.25] : vp ? [T.how - 0.26, T.reviews - 0.25] : [T.khana - 0.26, T.catch - 0.26];
+  if (t < t0 + 0.42) whipIn(P.s, P.blur, t, t0, 1);
+  else if (t > t1 - 0.3) whipOut(P.s, P.blur, t, t1, -1);
+  else whip(P.s, P.blur, 0, 0);
+  if (vm) {
+    P.cam(...key(t, [[t0, [540, 800, 1.04]], [T.nahi, [600, 960, 1.2], (p) => p], [t1, [640, 1080, 1.34], (p) => p]]));
+    searchTxt.textContent = 'tiffin near me'.slice(0, Math.round(prog(t, t0 + 0.05, 0.45) * 14));
+    others.forEach((o, i) => { const p = backOut(prog(t, T.maps2 + 0.05 + i * 0.16, 0.3)); show(o.g, p > 0); place(o.g, o.x, o.y - 40 * (1 - Math.min(1, p)), p); });
+    const q = backOut(prog(t, T.nahi - 0.05, 0.3));
+    show(qMark, q > 0); place(qMark, 560, 740 + 6 * Math.sin(t * 4), q, 8 * Math.sin(t * 5));
+    show(missRing, t > T.nahi - 0.1); missRing.setAttribute('stroke-dashoffset', -t * 60);
+    return;
+  }
+  if (vp) {
+    P.cam(...key(t, [[t0, [540, 760, 1.1]], [T.photos, [540, 820, 1.16], (p) => p], [t1, [540, 900, 1.22], (p) => p]]));
+    const tm = backOut(prog(t, T.how + 0.02, 0.3));
+    show(timing, tm > 0); place(timing, 40, 580, tm);
+    photos.forEach((ph, i) => { const p = backOut(prog(t, T.photos + i * 0.14, 0.3)); show(ph.g, p > 0); place(ph.g, ph.x, ph.y, p, (i % 2 ? 3 : -3) * (1 - Math.min(1, p))); });
+    return;
+  }
+  P.cam(...key(t, [[t0, [540, 640, 1.16]], [T.kahan + 0.2, [540, 700, 1.22], (p) => p], [T.notOn, [540, 860, 1.16]], [t1, [540, 900, 1.2], (p) => p]]));
+  qTxt.textContent = 'Home-style food near me?'.slice(0, Math.round(prog(t, t0 + 0.1, 0.55) * 24));
+  const a = backOut(prog(t, T.kahan + 0.15, 0.35));
+  show(ans, a > 0); place(ans, 318, 420, a * (1 + 0.03 * Math.sin(t * 6)));
+  place(ansPin, -216, 40 - 18 * Math.max(0, bump(t - T.kahan - 0.3)), 1, 0);
+  const g = backOut(prog(t, T.notOn, 0.35));
+  show(ghost, g > 0); place(ghost, 318, 720, g);
+  place(cross, 222 + 318 - 190, 240 + 720 + 30, backOut(prog(t, T.jawab - 0.05, 0.25)), -6);
+});
+
+// ================= my desk at night: the honest catch =================
+const D = desk(svg, L, ME);
+const days = ['MON', 'TUE', 'WED', 'THU', 'FRI'].map((d) => {
+  const g = S('g', {}, D.props);
+  S('rect', { x: -90, y: -80, width: 180, height: 170, rx: 14, fill: '#fff', ...line }, g);
+  S('rect', { x: -90, y: -80, width: 180, height: 50, rx: 14, fill: CORAL }, g);
+  S('rect', { x: -90, y: -46, width: 180, height: 16, fill: CORAL }, g);
+  S('text', { y: 50, 'text-anchor': 'middle', 'font-size': 56, fill: NAVY }, g, d);
+  return g;
+});
+const verifyChip = chip(D.props, 'Verify…', 270, 50, '#fff', NAVY);
+const freeChip = chip(D.props, 'FREE', 230, 70, GREEN, '#fff');
+const work = note(D.props);
+const workStars = [[-110, -70, 22], [110, -80, 18], [120, 60, 16]].map(([x, y, r]) => ({ e: star(D.props, 0, 0, r, YEL), x, y }));
+
+U.push((t) => {
+  if (!show(D.s, t >= T.catch - 0.26 && t < T.link - 0.26)) return;
+  D.tick(t, 0);
+  if (t < T.catch + 0.2) whipIn(D.s, D.blur, t, T.catch - 0.26, 1);
+  else if (t > T.link - 0.56) whipOut(D.s, D.blur, t, T.link - 0.26, -1);
+  else whip(D.s, D.blur, 0, 0);
+  D.cam(...key(t, [[T.catch - 0.26, [540, 1040, 1.04]], [T.free2, [540, 1060, 1.12], (p) => p], [T.link, [540, 1070, 1.18], (p) => p]]));
+  const m = t > T.mehnat - 0.1;
+  D.kid.pose({ x: 540, y: 1640 - 18 * Math.max(0, bump(t - T.mehnat)), s: 1.5, tilt: -3 + 2 * Math.sin(t * 2), face: t < T.free2 ? 'thinking' : m ? 'grin' : 'neutral', pop: pop(t, [T.din, T.free2, T.mehnat]), handL: [-120, -230], handR: m ? [190, -420] : [120, -230], gripR: m ? 'open' : 'fist' });
+  const n = Math.max(0, Math.min(4, Math.floor((t - T.din + 0.15) / 0.22)));
+  days.forEach((d, i) => { show(d, i === n); place(d, 270, 560, 1 + 0.05 * Math.max(0, bump(t - T.din + 0.15 - i * 0.22)), -5); });
+  place(verifyChip, 270, 730, backOut(prog(t, T.catch, 0.3)), -3);
+  const f = backOut(prog(t, T.free2 - 0.05, 0.3));
+  show(freeChip, f > 0); place(freeChip, 800, 720 + 5 * Math.sin(t * 3), f * (1 + 0.08 * Math.max(0, bump(t - T.free2))), 6);
+  const w = backOut(prog(t, T.mehnat - 0.1, 0.3));
+  show(work, w > 0); place(work, 540 + 190 * 1.5 + 10, 1640 - 420 * 1.5 - 20, w * 1.05, -8 + 3 * Math.sin(t * 4));
+  workStars.forEach((s, i) => { show(s.e, w > 0); place(s.e, 540 + 190 * 1.5 + 10 + s.x, 1640 - 420 * 1.5 - 20 + s.y, 0.7 + 0.3 * Math.sin(t * 5 + i * 2), t * 30); });
+});
+
+// ================= the real pages: Business Profile, Gemini, Ask Maps =================
+const PX = 1080 / 412; // a css pixel of the page on the 1080 frame
+const pGbp = webpage(stage, GBP, 1648);
+const pGem = webpage(stage, GEM, 1648);
+const pAsk = webpage(stage, ASK, 1648);
+const ink = (page) => S('svg', { width: 1080, height: 10, style: 'position:absolute;left:0;top:0;overflow:visible' }, page.pins);
+const loop = (layer, cx, cy, rx, ry, rot = -3) => {
+  const e = S('ellipse', { cx: cx * PX, cy: cy * PX, rx: rx * PX, ry: ry * PX, fill: 'none', stroke: CORAL, 'stroke-width': 12, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: `rotate(${rot} ${cx * PX} ${cy * PX})` }, layer);
+  return (p) => { show(e, p > 0); e.setAttribute('stroke-dashoffset', 1 - p); };
+};
+const under = (layer, x0, x1, y) => {
+  const e = S('path', { d: `M${x0 * PX},${y * PX} Q${((x0 + x1) / 2) * PX},${(y + 4) * PX} ${x1 * PX},${(y - 2) * PX}`, fill: 'none', stroke: CORAL, 'stroke-width': 12, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1 }, layer);
+  return (p) => { show(e, p > 0); e.setAttribute('stroke-dashoffset', 1 - p); };
+};
+const inkGbp = ink(pGbp);
+const ringFree = loop(inkGbp, 331, 207, 46, 27, -4);
+const lineProfile = under(inkGbp, 76, 338, 276);
+const ringReplies = loop(ink(pGem), 212, 346, 192, 34, -1.5);
+const ringAsk = loop(ink(pAsk), 135, 631, 52, 22, -3);
+const rise = (t, t0) => 1920 * (1 - expoOut(prog(t, t0, 0.42)));
+U.push((t) => {
+  if (t >= T.turn - 0.25 && t < T.how - 0.26) {
+    pGbp.set({ rect: [-1080 * eio(prog(t, T.how - 0.56, 0.3)), rise(t, T.turn - 0.25), 1080, 1920], slide: 170, zoom: key(t, [[T.turn, 1.04], [T.how, 1.16]]), fx: 540, fy: 750 });
+    ringFree(eio(prog(t, T.free - 0.05, 0.35)));
+    lineProfile(eio(prog(t, T.profile - 0.05, 0.4)));
+  } else pGbp.hide();
+  if (t >= T.reviews - 0.25 && t < T.magic - 0.26) {
+    pGem.set({ rect: [1080 * (1 - eio(prog(t, T.reviews - 0.25, 0.35))), 1920 * eio(prog(t, T.magic - 0.6, 0.34)), 1080, 1920], slide: 240, zoom: key(t, [[T.reviews, 1.04], [T.gemini + 0.3, 1.08]]), fx: 300, fy: 1150 });
+    ringReplies(eio(prog(t, T.reviews - 0.05, 0.45)));
+  } else pGem.hide();
+  if (t >= T.twist - 0.25 && t < T.khana - 0.26) {
+    pAsk.set({ rect: [-1080 * eio(prog(t, T.khana - 0.56, 0.3)), rise(t, T.twist - 0.25), 1080, 1920], scroll: key(t, [[T.ai - 0.35, 0], [T.ai + 0.15, 1450]]), slide: 180, zoom: key(t, [[T.twist, 1.0], [T.ai - 0.1, 1.0], [T.ai + 0.35, 2.4], [T.khana, 2.6]]), fx: 354, fy: 884 });
+    ringAsk(eio(prog(t, T.ai + 0.1, 0.35)));
+  } else pAsk.hide();
+});
+
+// ================= captions, the link line, the follow card, the pointer =================
+const clean = (ws) => ws.map((x) => ({ ...x, word: x.word.replace(/[।,?:]+$/, '') }));
+U.push(captionsCompact(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1, whole: i === 0 }))));
+const link = linkLine(stage, 'Business Profile + Gemini');
+const followEnd = followCard(stage, { next: 'अगला: AI से कमाई #3' });
+const tip = pointer(stage, NAVY, '#fff', 130);
+const TIP = [
+  [T.comment + 0.2, [1170, 1460]], [T.post - 0.08, [935, 1250], cubicOut], [T.send - 0.05, [935, 1250]],
+  [T.send + 0.3, [1150, 900]], [T.press - 0.06, [900, 420], cubicOut], [dur, [900, 420]],
+];
+const SHOWN = [[T.comment + 0.2, T.send - 0.05], [T.send + 0.3, dur + 1]];
+U.push((t) => {
+  link.set(t, { link: T.link, comment: T.comment, post: T.post, away: T.send });
+  followEnd.set(t, T.send + 0.2, T.press);
+  tip.style.visibility = SHOWN.some(([a, b]) => t >= a && t < b) ? 'visible' : 'hidden';
+  const [x, y] = key(t, TIP);
+  const click = pulse(t, T.post + 0.02, 0.07) + pulse(t, T.press + 0.02, 0.07);
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * click})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

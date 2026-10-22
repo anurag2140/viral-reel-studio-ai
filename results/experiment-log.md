@@ -18,3 +18,4 @@ Every experiment added to the queue, confirmed or discarded, newest last (writte
 - 2026-10-23: STOPPED BY ME E5 My own risk (for good): No scam reels: the SCAM lane is stopped (my decision of 2026-10-23). Numbers: scam reels #08 441 views, #13 36 (shown to 21 people), #18 136; no saves or shares in any of them
 - 2026-10-23: STOPPED BY ME E3 Short loop (for good): Reels are 30 to 35 seconds unless I ask for a longer one (my rule of 2026-10-23); a short loop comes back only if I ask. Numbers: never tried
 - 2026-10-23: STOPPED BY ME T3 English reels (for good): No English reels: every reel is in Hindi (my decision of 2026-10-23). Numbers: #14: 354 views, 74% left in the first 3 seconds, 2.8 actions per 1,000 views against 9.8 for the Hindi reels of the same days
+- 2026-10-23: CHANGED BY ME T2 AI जुगाड़ series: no follow line after the first payoff from #20 on (it broke the story and viewers left after it); the only ask is at the ending.

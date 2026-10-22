@@ -1,0 +1,179 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 100,
+  "total": 33.719,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "B.Com किया है, coding आज भी नहीं आती। फिर भी मेरा app 500 से ज़्यादा phones में है।",
+      "sentences": [
+        "B.Com किया है, coding आज भी नहीं आती।",
+        "फिर भी मेरा app 500 से ज़्यादा phones में है।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 5.053,
+      "pauses": [
+        [
+          0.85,
+          1.03
+        ],
+        [
+          2.12,
+          2.77
+        ],
+        [
+          3.55,
+          3.76
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "कहते हैं, app बनाना सिर्फ़ engineers का काम है।",
+      "sentences": [
+        "कहते हैं, app बनाना सिर्फ़ engineers का काम है।"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 5.4,
+      "duration": 2.238,
+      "pauses": []
+    },
+    {
+      "id": "turn",
+      "text": "पर मैं AI को बताता हूँ क्या बनाना है, और code वो लिखता है।",
+      "sentences": [
+        "पर मैं AI को बताता हूँ क्या बनाना है, और code वो लिखता है।"
+      ],
+      "file": "vo/turn.wav",
+      "start": 7.8,
+      "duration": 3.732,
+      "pauses": [
+        [
+          2.03,
+          2.36
+        ]
+      ]
+    },
+    {
+      "id": "how",
+      "text": "तुम भी कर सकते हो। असली problem चुनो, बने हुए tools ढूँढो, और AI से जोड़कर बनवाओ।",
+      "sentences": [
+        "तुम भी कर सकते हो।",
+        "असली problem चुनो, बने हुए tools ढूँढो, और AI से जोड़कर बनवाओ।"
+      ],
+      "file": "vo/how.wav",
+      "start": 11.7,
+      "duration": 5.506,
+      "pauses": [
+        [
+          0.02,
+          0.28
+        ],
+        [
+          1.05,
+          1.46
+        ],
+        [
+          2.34,
+          2.61
+        ],
+        [
+          3.8,
+          4.14
+        ],
+        [
+          4.28,
+          4.42
+        ]
+      ]
+    },
+    {
+      "id": "magic",
+      "text": "ऐसे बना BillBanao। दुकानदार GST bill बनाता है, और PDF सीधे WhatsApp पर।",
+      "sentences": [
+        "ऐसे बना BillBanao।",
+        "दुकानदार GST bill बनाता है, और PDF सीधे WhatsApp पर।"
+      ],
+      "file": "vo/magic.wav",
+      "start": 17.4,
+      "duration": 4.956,
+      "pauses": [
+        [
+          1.14,
+          1.42
+        ],
+        [
+          1.44,
+          1.71
+        ],
+        [
+          3.12,
+          3.46
+        ]
+      ]
+    },
+    {
+      "id": "vibe",
+      "text": "इसे कहते हैं vibe coding।",
+      "sentences": [
+        "इसे कहते हैं vibe coding।"
+      ],
+      "file": "vo/vibe.wav",
+      "start": 22.5,
+      "duration": 1.778,
+      "pauses": [
+        [
+          0.02,
+          0.23
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "मुझे AI में बहुत interest है, ऐसी चीज़ें बनाता रहता हूँ और यहाँ दिखाता हूँ। तुम्हें भी interest है, तो follow कर लो।",
+      "sentences": [
+        "मुझे AI में बहुत interest है, ऐसी चीज़ें बनाता रहता हूँ और यहाँ दिखाता हूँ।",
+        "तुम्हें भी interest है, तो follow कर लो।"
+      ],
+      "file": "vo/end.wav",
+      "start": 24.6,
+      "duration": 5.967,
+      "pauses": [
+        [
+          0.02,
+          0.23
+        ],
+        [
+          1.79,
+          2.25
+        ],
+        [
+          4.04,
+          4.66
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "जो दोस्त tech से डरता है, उसे भेज दो।",
+      "sentences": [
+        "जो दोस्त tech से डरता है, उसे भेज दो।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 30.9,
+      "duration": 2.719,
+      "pauses": [
+        [
+          0.02,
+          0.29
+        ],
+        [
+          1.82,
+          1.97
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "title": "Aunty का tiffin Google Maps पर आया, और पहली कमाई तुम्हारी हुई",
+  "number": 20,
+  "lane": "TOOL",
+  "topic": "money",
+  "setting": "both",
+  "language": "hi",
+  "series": "AI से कमाई #2",
+  "experiment": "none: a bet slot, the second money reel of channel test T4 (Earn with AI).",
+  "playbook": [
+    "T1"
+  ],
+  "look": "illustrated story by day, my face and body (hoodie), Meera Aunty at her tiffin counter, Gupta Ji walks in at the end with a bubble (no spoken line: cut to keep the reel at 35 s), a drawn map where she has no pin, a drawn phone where the profile fills up, a drawn Ask Maps answer with her in it and a shop that is not on Maps, my desk at night (verify takes days, FREE, pay for your work), Google's Business Profile page, the Gemini help page and the Ask Maps post, compact captions, no follow line in the middle (my request: it broke the story), link line, follow card with the next number at the end",
+  "sendTo": "वो दोस्त जिसके घर की दुकान है",
+  "link": "https://business.google.com/in/business-profile/ and https://gemini.google.com",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a short story and lets you in on a useful find. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://business.google.com/in/business-profile/ (captured 2026-10-22, India): 'Stand out on Google with a free Business Profile. Take control of how your free Business Profile appears on Google Search and Maps. Personalise your profile with photos, manage customer reviews ...'; 'Get a free Business Profile in 3 simple steps ... Personalise: Add your hours, photos ...'.",
+    "https://support.google.com/business/answer/17142585?hl=en (captured 2026-10-22): 'When you connect Google Business Profile with Gemini Apps, Gemini can help you: ... Engage with customers by drafting replies to reviews and creating posts.' Needs: owner or manager of only one verified profile, 18 or over, the Gemini web app.",
+    "https://blog.google/intl/en-in/products/explore-communicate/ask-anything-about-any-place-on-maps-with-gemini/ (captured 2026-10-22, 12 Mar 2026): 'We're introducing Ask Maps, a new conversational experience that answers complex, real-world questions ... Maps analyzes information from over 300 million places, including reviews ...'; 'Ask Maps starts rolling out in India in English on Android and iOS, with Hindi launching soon.'",
+    "https://support.google.com/business/answer/7107242?hl=en (captured 2026-10-22): 'verification reviews take up to 5 business days. On rare occasions, reviews may take longer.'"
+  ],
+  "claims": [
+    "The Business Profile is free: Google's page says 'free Business Profile' (hero and the 3 steps).",
+    "Hours and photos go into the profile: the page ('Add your hours, photos').",
+    "Gemini drafts replies to reviews: the help page. It works on the owner's own verified profile in the Gemini web app, so in the story it is done on Aunty's phone, with her account.",
+    "People ask Maps' AI in plain words: the Ask Maps post (in English in India; Hindi 'launching soon'), so the drawn question on the phone is in English.",
+    "'A shop that is not on Maps will not come up in its answers': Ask Maps answers from Maps' places; a place that is not on Maps is not among them.",
+    "Verification takes some days: the help page ('up to 5 business days').",
+    "Money: no amount anywhere, on screen or in the voice; the payment is a drawn hand-over. The honest catch is said aloud: verification takes days, and the profile itself is free, so you charge only for your work.",
+    "Story, not data: Meera Aunty, her tiffin, the orders, Gupta Ji. Stars on the drawn profile have no number."
+  ],
+  "lines": [
+    {
+      "id": "hook",
+      "sentences": [
+        "Aunty का tiffin Google Maps पर आया, और पहली कमाई तुम्हारी हुई।"
+      ]
+    },
+    {
+      "id": "trouble",
+      "sentences": [
+        "Aunty का खाना famous, पर Maps पर वो थीं ही नहीं।"
+      ]
+    },
+    {
+      "id": "turn",
+      "sentences": [
+        "तुमने उनके phone पर free Business Profile बनाया।"
+      ]
+    },
+    {
+      "id": "how",
+      "sentences": [
+        "Timing, photos डालीं, और reviews के जवाब Gemini से लिखवाए।"
+      ]
+    },
+    {
+      "id": "magic",
+      "sentences": [
+        "नए orders आए, और Aunty ने पैसे ख़ुद आगे कर दिए।"
+      ]
+    },
+    {
+      "id": "twist",
+      "sentences": [
+        "लेकिन अब लोग Maps के AI से पूछते हैं, पास में घर का खाना कहाँ?",
+        "जो Maps पर नहीं, वो जवाब में नहीं।"
+      ]
+    },
+    {
+      "id": "catch",
+      "sentences": [
+        "Verify में कुछ दिन लगते हैं, और profile free है, तो पैसे सिर्फ़ मेहनत के।"
+      ]
+    },
+    {
+      "id": "link",
+      "sentences": [
+        "इन tools के link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ]
+    },
+    {
+      "id": "ask",
+      "sentences": [
+        "उस दोस्त को भेजो जिसके घर की दुकान है।"
+      ]
+    }
+  ],
+  "length": 32.4
+}

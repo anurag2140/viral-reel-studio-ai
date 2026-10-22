@@ -1,0 +1,347 @@
+{
+  "captured": "2026-10-22",
+  "shots": [
+    {
+      "name": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.vipulsingh.billbanao&hl=en_IN",
+      "file": "shots/play.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "BillBanao: GST Quotation Maker – Apps on Google Play",
+      "finalUrl": "https://play.google.com/store/apps/details?id=com.vipulsingh.billbanao&hl=en_IN",
+      "w": 824,
+      "h": 5266,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "BillBanao: GST Quotation Maker",
+          "x": 240,
+          "y": 496,
+          "w": 584,
+          "h": 128
+        },
+        {
+          "tag": "h2",
+          "text": "About this app",
+          "x": 48,
+          "y": 1776,
+          "w": 245,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "Data safety",
+          "x": 48,
+          "y": 2416,
+          "w": 190,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "App support",
+          "x": 48,
+          "y": 3304,
+          "w": 211,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "Similar apps",
+          "x": 48,
+          "y": 3400,
+          "w": 201,
+          "h": 48
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "legaliq",
+      "url": "https://legal-iq-final.vercel.app/",
+      "file": "shots/legaliq.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "LegalIQ.app - Legal Docs Analyzer",
+      "finalUrl": "https://legal-iq-final.vercel.app/",
+      "w": 824,
+      "h": 14000,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "LegalIQ.app",
+          "x": 128,
+          "y": 20,
+          "w": 280,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "Menu",
+          "x": -480,
+          "y": 36,
+          "w": 100,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "FREE AI LEGAL ASSISTANT FOR EVERYONE",
+          "x": 32,
+          "y": 226,
+          "w": 760,
+          "h": 144
+        },
+        {
+          "tag": "h2",
+          "text": "Features That Empower Everyone",
+          "x": 32,
+          "y": 2542,
+          "w": 760,
+          "h": 144
+        },
+        {
+          "tag": "h3",
+          "text": "Digitize Any Document with OCR",
+          "x": 82,
+          "y": 3168,
+          "w": 660,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Communicate in Your Language",
+          "x": 82,
+          "y": 3772,
+          "w": 660,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Accessible Anywhere, on Any Device",
+          "x": 82,
+          "y": 4376,
+          "w": 660,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Research in Seconds, Not Hours",
+          "x": 82,
+          "y": 4980,
+          "w": 660,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "How It Works: 3 Simple Steps",
+          "x": 32,
+          "y": 5590,
+          "w": 760,
+          "h": 144
+        },
+        {
+          "tag": "h3",
+          "text": "1. Upload or Paste",
+          "x": 32,
+          "y": 6030,
+          "w": 760,
+          "h": 56
+        },
+        {
+          "tag": "h3",
+          "text": "2. Click Analyze",
+          "x": 32,
+          "y": 6462,
+          "w": 760,
+          "h": 56
+        },
+        {
+          "tag": "h3",
+          "text": "3. Get Clarity",
+          "x": 32,
+          "y": 6894,
+          "w": 760,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "Meet Your AI Legal Team",
+          "x": 32,
+          "y": 7366,
+          "w": 760,
+          "h": 72
+        },
+        {
+          "tag": "h3",
+          "text": "Chat with LegalIQ",
+          "x": 210,
+          "y": 7836,
+          "w": 344,
+          "h": 56
+        },
+        {
+          "tag": "h3",
+          "text": "Talk to Vani Mitra",
+          "x": 210,
+          "y": 8944,
+          "w": 336,
+          "h": 56
+        },
+        {
+          "tag": "h3",
+          "text": "Legal Guardian Check",
+          "x": 210,
+          "y": 10100,
+          "w": 427,
+          "h": 56
+        },
+        {
+          "tag": "h3",
+          "text": "AI Legal Support (Legal Mitra)",
+          "x": 210,
+          "y": 11236,
+          "w": 532,
+          "h": 112
+        },
+        {
+          "tag": "h2",
+          "text": "Legal Clarity for Every Walk of Life",
+          "x": 32,
+          "y": 12550,
+          "w": 760,
+          "h": 144
+        },
+        {
+          "tag": "h3",
+          "text": "Renters & Tenants",
+          "x": 194,
+          "y": 13196,
+          "w": 319,
+          "h": 56
+        },
+        {
+          "tag": "h3",
+          "text": "Employees",
+          "x": 194,
+          "y": 13712,
+          "w": 193,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "Legal Mitra",
+          "x": 119,
+          "y": 80,
+          "w": 186,
+          "h": 53
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    },
+    {
+      "name": "promo",
+      "url": "https://vipul-singh.netlify.app/",
+      "file": "shots/promo.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "App Promo Videos for iOS & Android Apps | Vipul Singh",
+      "finalUrl": "https://vipul-singh.netlify.app/",
+      "w": 824,
+      "h": 14000,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Hi, I'm Vipul Singh. I create videos to showcase your app.",
+          "x": 37,
+          "y": 218,
+          "w": 745,
+          "h": 258
+        },
+        {
+          "tag": "h2",
+          "text": "One app. Two videos. See the difference.",
+          "x": 41,
+          "y": 4037,
+          "w": 742,
+          "h": 136
+        },
+        {
+          "tag": "h3",
+          "text": "Promo video",
+          "x": 41,
+          "y": 4775,
+          "w": 742,
+          "h": 63
+        },
+        {
+          "tag": "h3",
+          "text": "Intro video",
+          "x": 41,
+          "y": 7122,
+          "w": 742,
+          "h": 63
+        },
+        {
+          "tag": "h2",
+          "text": "A motion-graphics app showcase.",
+          "x": 41,
+          "y": 9563,
+          "w": 742,
+          "h": 121
+        },
+        {
+          "tag": "h2",
+          "text": "Most apps lose users before they even install.",
+          "x": 41,
+          "y": 11161,
+          "w": 720,
+          "h": 203
+        },
+        {
+          "tag": "h3",
+          "text": "Your store listing doesn't explain the app.",
+          "x": 41,
+          "y": 11762,
+          "w": 742,
+          "h": 90
+        },
+        {
+          "tag": "h3",
+          "text": "Your ads have no strong video.",
+          "x": 41,
+          "y": 12019,
+          "w": 742,
+          "h": 45
+        },
+        {
+          "tag": "h3",
+          "text": "Making a video yourself takes weeks.",
+          "x": 41,
+          "y": 12328,
+          "w": 742,
+          "h": 45
+        },
+        {
+          "tag": "h2",
+          "text": "The first thing visitors can watch is often left empty.",
+          "x": 41,
+          "y": 12845,
+          "w": 742,
+          "h": 121
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

@@ -1,4 +1,5 @@
-// The supporting cast of the story reels (2026-10-15): five people and two animals.
+// The supporting cast of the story reels (2026-10-15): five people and two animals; four more
+// people on 2026-10-23 (Gupta Ji, Neha, Jassi, Golu).
 // People share the body of body.js (same skeleton, hands and pose values as the main
 // character) and have drawn heads; pose({ face: 'grin' }) works for them too, and any drawn
 // value (eye, brow, smile, open, look, ...) can be set on top of the preset.
@@ -49,6 +50,31 @@ export const CAST = {
     skin: '#D69C72', shade: '#B87E56',
     head: { hair: '#CFC8C2', style: 'bald', moustache: true, glasses: 'rect' },
   },
+  // four more (2026-10-23): a client for the money reels, HR for the career reels, a mentor, a kid
+  gupta: {
+    name: 'Gupta Ji', role: 'shopkeeper, client, landlord', outfit: 'nehru',
+    skin: '#C68A5E', shade: '#A86E44',
+    head: { hair: '#1E1614', grey: '#BDB5B0', style: 'side', moustache: 'big', pen: true },
+  },
+  neha: {
+    name: 'Neha', role: 'HR, recruiter, team lead (office)', outfit: 'shirt',
+    skin: '#B97A52', shade: '#9C603A',
+    colours: { main: ['#E7DDF8', '#C9B8EC'], mid: '#D8CAF2', dark: '#B4A0E0', pants: ['#34343F', '#22222B'], cuff: '#34343F', shoe: '#2A2A33', sole: '#121218', shoeStyle: 'flat' },
+    head: { hair: '#1A1216', style: 'long', lips: '#9E3048', lashes: true, earrings: 'stud' },
+  },
+  jassi: {
+    name: 'Jassi', role: 'senior, mentor, freelancer', outfit: 'tee',
+    skin: '#D9A07A', shade: '#BC825C',
+    colours: { main: ['#2BB3A3', '#1E8E82'], mid: '#26A396', dark: '#1A7A6F', print: '#FFD166', pants: ['#3B3F4A', '#292C35'], cuff: '#4A4F5C', sole: '#FF8A50' },
+    head: { hair: '#1C1416', style: 'turban', turban: '#24408E', turbanDark: '#172C66', beard: true, moustache: true },
+  },
+  golu: {
+    // a child: pose him at about 0.8 of the adults' scale
+    name: 'Golu', role: 'younger brother, school kid', outfit: 'shirt',
+    skin: '#E7AA7E', shade: '#C98C60', headScale: 1.16,
+    colours: { main: ['#FFFFFF', '#E4E9F2'], mid: '#F2F5FA', dark: '#C9D2E2', pants: ['#2C3A6E', '#1F2A54'], cuff: '#2C3A6E', shoe: '#1E1E24', sole: '#0E0E12' },
+    head: { hair: '#2A1C16', style: 'spiky' },
+  },
 };
 
 // Expressions by name; a pose may override any value.
@@ -84,6 +110,10 @@ function drawnHead(h) {
       S('path', { d: 'M-34,-170 Q0,-186 34,-170 M-40,-148 Q0,-164 40,-148', fill: 'none', stroke: '#fff', 'stroke-width': 4, opacity: 0.18 }, back);
     }
     if (h.style === 'curly') for (const [x, y, r] of [[-104, -36, 32], [-94, -86, 40], [-62, -132, 44], [-12, -152, 46], [42, -144, 44], [86, -106, 40], [104, -50, 32]]) S('circle', { cx: x, cy: y, r, fill: h.hair, ...hairInk }, back);
+    if (h.style === 'long') {
+      S('path', { d: 'M-122,-20 C-134,-124 -84,-172 0,-172 C84,-172 134,-124 122,-20 Z', fill: h.hair, ...hairInk }, back);
+      for (const m of [-1, 1]) S('path', { d: `M${m * 120},-40 C${m * 132},40 ${m * 130},130 ${m * 120},206 C${m * 104},214 ${m * 86},212 ${m * 72},202 C${m * 80},130 ${m * 86},60 ${m * 90},-10 Z`, fill: h.hair, ...hairInk }, back);
+    }
     if (h.style === 'ponytail') {
       sway = S('g', {}, back);
       S('path', { d: 'M30,-138 C112,-152 154,-92 144,-12 C138,52 156,104 132,146 C110,104 104,60 108,10 C112,-50 90,-96 30,-110 Z', fill: h.hair, ...hairInk }, sway);
@@ -138,11 +168,14 @@ function drawnHead(h) {
     const browR = S('path', { d: browD, fill: 'none', stroke: browC, 'stroke-width': browW, 'stroke-linecap': 'round', transform: 'scale(-1 1)' }, hd);
     // ---- nose, moustache, mouth ----
     S('path', { d: 'M-6,16 q14,18 -2,28', fill: 'none', stroke: kit.shade, 'stroke-width': 6, 'stroke-linecap': 'round' }, hd);
+    // a full beard round the jaw, under the mouth
+    if (h.beard) S('path', { d: 'M-102,-10 C-104,70 -60,138 0,142 C60,138 104,70 102,-10 C96,30 84,52 66,58 C50,46 24,40 0,46 C-24,40 -50,46 -66,58 C-84,52 -96,30 -102,-10 Z', fill: h.hair, ...ink, 'stroke-width': 2.5 }, hd);
     const lipC = h.lips ?? '#7A2233';
     const lips = S('path', { fill: 'none', stroke: lipC, 'stroke-width': 7, 'stroke-linecap': 'round' }, hd);
     const gape = S('path', { fill: '#7A2233', stroke: OUT, 'stroke-width': 2.5 }, hd);
     const teeth = S('path', { fill: '#fff' }, hd);
-    if (h.moustache) S('path', { d: 'M-40,52 C-24,38 -8,42 0,48 C8,42 24,38 40,52 C28,62 10,58 0,54 C-10,58 -28,62 -40,52 Z', fill: h.hair, ...ink, 'stroke-width': 2.5 }, hd);
+    if (h.moustache === 'big') S('path', { d: 'M-54,52 C-36,30 -10,36 0,44 C10,36 36,30 54,52 C60,62 52,72 42,66 C28,58 10,58 0,56 C-10,58 -28,58 -42,66 C-52,72 -60,62 -54,52 Z', fill: h.hair, ...ink, 'stroke-width': 2.5 }, hd);
+    else if (h.moustache) S('path', { d: 'M-40,52 C-24,38 -8,42 0,48 C8,42 24,38 40,52 C28,62 10,58 0,54 C-10,58 -28,62 -40,52 Z', fill: h.hair, ...ink, 'stroke-width': 2.5 }, hd);
     // ---- in front: hair, glasses, bindi, earrings ----
     if (h.style === 'bob') {
       S('path', { d: 'M-104,-28 C-114,-120 -62,-158 4,-156 C72,-154 114,-114 104,-28 C94,-74 68,-102 30,-106 C0,-82 -52,-62 -104,-28 Z', fill: h.hair, ...hairInk }, hd);
@@ -160,6 +193,35 @@ function drawnHead(h) {
       S('path', { d: 'M-30,-138 Q-20,-150 -8,-140 M8,-142 Q18,-152 28,-140', fill: 'none', stroke: kit.shade, 'stroke-width': 3, opacity: 0.6 }, hd);
     }
     if (h.style === 'ponytail') S('path', { d: 'M-102,-28 C-112,-120 -50,-160 10,-154 C76,-150 112,-108 102,-28 C96,-86 60,-116 -30,-112 C-60,-96 -86,-64 -102,-28 Z', fill: h.hair, ...hairInk }, hd);
+    if (h.style === 'long') {
+      S('path', { d: 'M-104,-26 C-114,-120 -56,-158 0,-152 C56,-158 114,-120 104,-26 C98,-84 58,-118 4,-120 L0,-108 L-4,-120 C-58,-118 -98,-84 -104,-26 Z', fill: h.hair, ...hairInk }, hd);
+      S('path', { d: 'M-60,-142 C-30,-152 10,-150 40,-140', fill: 'none', stroke: '#fff', 'stroke-width': 6, opacity: 0.16, 'stroke-linecap': 'round' }, hd);
+    }
+    if (h.style === 'side') {
+      S('path', { d: 'M-104,-24 C-112,-118 -60,-158 2,-156 C66,-156 112,-118 104,-24 C98,-70 78,-100 40,-110 C10,-104 -30,-108 -60,-100 C-84,-82 -98,-58 -104,-24 Z', fill: h.hair, ...hairInk }, hd);
+      S('path', { d: 'M-42,-150 C-50,-136 -56,-120 -60,-102', fill: 'none', stroke: '#fff', 'stroke-width': 4, opacity: 0.3, 'stroke-linecap': 'round' }, hd);
+      if (h.grey) for (const m of [-1, 1]) S('path', { d: `M${m * 104},-26 C${m * 108},-60 ${m * 102},-84 ${m * 90},-98 C${m * 92},-70 ${m * 94},-48 ${m * 96},-14 Z`, fill: h.grey, ...ink, 'stroke-width': 2 }, hd);
+    }
+    if (h.style === 'spiky') S('path', { d: 'M-104,-26 C-110,-96 -84,-140 -50,-150 L-66,-186 L-22,-160 L-6,-200 L18,-160 L58,-184 L50,-146 C86,-134 110,-100 104,-26 C96,-72 66,-104 22,-108 C-10,-100 -60,-84 -104,-26 Z', fill: h.hair, ...hairInk }, hd);
+    if (h.style === 'turban') {
+      // a turban with its point over the forehead and folds that run up to it
+      const T = 'M-112,-26 C-126,-128 -72,-194 0,-198 C72,-194 126,-128 112,-26 C82,-44 36,-70 0,-98 C-36,-70 -82,-44 -112,-26 Z';
+      S('path', { d: T, fill: h.turban, ...ink }, hd);
+      const folds = S('g', { 'clip-path': clip(T) }, hd);
+      for (const y of [-64, -104, -144]) {
+        const d = `M-130,${y + 18} C-80,${y - 16} -36,${y - 40} 0,${y - 52} C36,${y - 40} 80,${y - 16} 130,${y + 18}`;
+        S('path', { d, fill: 'none', stroke: h.turbanDark, 'stroke-width': 8, 'stroke-linecap': 'round' }, folds);
+        S('path', { d, fill: 'none', stroke: '#fff', 'stroke-width': 4, opacity: 0.2, transform: 'translate(0 9)', 'stroke-linecap': 'round' }, folds);
+      }
+      S('ellipse', { cx: -50, cy: -160, rx: 34, ry: 12, fill: '#fff', opacity: 0.18, transform: 'rotate(-24 -50 -160)' }, folds);
+    }
+    // a pen behind the right ear
+    if (h.pen) {
+      const pen = S('g', { transform: 'translate(108 -34) rotate(-62)' }, hd);
+      S('rect', { x: -42, y: -6, width: 84, height: 12, rx: 5, fill: '#2F5BFF', ...ink, 'stroke-width': 2.5 }, pen);
+      S('path', { d: 'M42,-6 L58,0 L42,6 Z', fill: '#F4E6C8', ...ink, 'stroke-width': 2 }, pen);
+      S('rect', { x: -42, y: -6, width: 16, height: 12, rx: 4, fill: '#1A2E80' }, pen);
+    }
     if (h.glasses === 'round') {
       for (const m of [-1, 1]) S('circle', { cx: m * 40, cy: -6, r: 31, fill: '#fff', 'fill-opacity': 0.12, stroke: '#3A2A44', 'stroke-width': 5 }, hd);
       S('path', { d: 'M-10,-10 Q0,-16 10,-10 M-71,-10 L-98,-14 M71,-10 L98,-14', fill: 'none', stroke: '#3A2A44', 'stroke-width': 5 }, hd);
@@ -204,7 +266,7 @@ export function cast(parent, name, o = {}) {
   const shade = o.shade ?? spec.shade;
   const head = drawnHead({ ...spec.head, ...(o.head ?? {}) });
   return hero(parent, {
-    skin, shade, outfit: o.outfit ?? spec.outfit, colours: o.colours,
+    skin, shade, outfit: o.outfit ?? spec.outfit, colours: o.colours ?? spec.colours, headScale: o.headScale ?? spec.headScale,
     headFn: (hd, kit) => head(hd, { ...kit, skin, shade }),
   });
 }

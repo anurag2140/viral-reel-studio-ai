@@ -1,0 +1,146 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 31.273,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "Aunty का tiffin Google Maps पर आया, और पहली कमाई तुम्हारी हुई।",
+      "sentences": [
+        "Aunty का tiffin Google Maps पर आया, और पहली कमाई तुम्हारी हुई।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 3.576,
+      "pauses": [
+        [
+          1.95,
+          2.14
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "Aunty का खाना famous, पर Maps पर वो थीं ही नहीं।",
+      "sentences": [
+        "Aunty का खाना famous, पर Maps पर वो थीं ही नहीं।"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 3.75,
+      "duration": 3.499,
+      "pauses": [
+        [
+          0.04,
+          0.18
+        ],
+        [
+          1.81,
+          2.05
+        ]
+      ]
+    },
+    {
+      "id": "turn",
+      "text": "तुमने उनके phone पर free Business Profile बनाया।",
+      "sentences": [
+        "तुमने उनके phone पर free Business Profile बनाया।"
+      ],
+      "file": "vo/turn.wav",
+      "start": 7.5,
+      "duration": 2.134,
+      "pauses": []
+    },
+    {
+      "id": "how",
+      "text": "Timing, photos डालीं, और reviews के जवाब Gemini से लिखवाए।",
+      "sentences": [
+        "Timing, photos डालीं, और reviews के जवाब Gemini से लिखवाए।"
+      ],
+      "file": "vo/how.wav",
+      "start": 9.808,
+      "duration": 3.736,
+      "pauses": []
+    },
+    {
+      "id": "magic",
+      "text": "नए orders आए, और Aunty ने पैसे ख़ुद आगे कर दिए।",
+      "sentences": [
+        "नए orders आए, और Aunty ने पैसे ख़ुद आगे कर दिए।"
+      ],
+      "file": "vo/magic.wav",
+      "start": 13.846,
+      "duration": 2.609,
+      "pauses": []
+    },
+    {
+      "id": "twist",
+      "text": "लेकिन अब लोग Maps के AI से पूछते हैं, पास में घर का खाना कहाँ? जो Maps पर नहीं, वो जवाब में नहीं।",
+      "sentences": [
+        "लेकिन अब लोग Maps के AI से पूछते हैं, पास में घर का खाना कहाँ?",
+        "जो Maps पर नहीं, वो जवाब में नहीं।"
+      ],
+      "file": "vo/twist.wav",
+      "start": 16.731,
+      "duration": 5.171,
+      "pauses": [
+        [
+          3.1,
+          3.42
+        ],
+        [
+          4.25,
+          4.48
+        ]
+      ]
+    },
+    {
+      "id": "catch",
+      "text": "Verify में कुछ दिन लगते हैं, और profile free है, तो पैसे सिर्फ़ मेहनत के।",
+      "sentences": [
+        "Verify में कुछ दिन लगते हैं, और profile free है, तो पैसे सिर्फ़ मेहनत के।"
+      ],
+      "file": "vo/catch.wav",
+      "start": 22.212,
+      "duration": 3.74,
+      "pauses": [
+        [
+          2.15,
+          2.38
+        ]
+      ]
+    },
+    {
+      "id": "link",
+      "text": "इन tools के link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "इन tools के link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 26.25,
+      "duration": 2.519,
+      "pauses": [
+        [
+          0.04,
+          0.28
+        ],
+        [
+          1.17,
+          1.49
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "उस दोस्त को भेजो जिसके घर की दुकान है।",
+      "sentences": [
+        "उस दोस्त को भेजो जिसके घर की दुकान है।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 29.135,
+      "duration": 2.038,
+      "pauses": []
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "captured": "2026-10-22",
+  "shots": [
+    {
+      "name": "verify",
+      "url": "https://support.google.com/business/answer/7107242?hl=en",
+      "file": "shots/verify.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "Verify your business on Google - Google Business Profile Help",
+      "finalUrl": "https://support.google.com/business/answer/7107242?hl=en",
+      "w": 824,
+      "h": 8536,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Verify your business on Google",
+          "x": 48,
+          "y": 244,
+          "w": 728,
+          "h": 128
+        },
+        {
+          "tag": "h2",
+          "text": "Step 1: Find your business",
+          "x": 48,
+          "y": 1348,
+          "w": 728,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "Step 2: Verify your business",
+          "x": 48,
+          "y": 2316,
+          "w": 728,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "Step 3: Wait up to 5 business days to be verified",
+          "x": 48,
+          "y": 3548,
+          "w": 728,
+          "h": 128
+        },
+        {
+          "tag": "h2",
+          "text": "Step 4: You’re verified",
+          "x": 48,
+          "y": 4388,
+          "w": 728,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "Fix verification issues or re-verify your business",
+          "x": 48,
+          "y": 5028,
+          "w": 728,
+          "h": 128
+        },
+        {
+          "tag": "h2",
+          "text": "Related resources",
+          "x": 48,
+          "y": 5842,
+          "w": 728,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "Related questions from the Community",
+          "x": 32,
+          "y": 6380,
+          "w": 760,
+          "h": 48
+        },
+        {
+          "tag": "h2",
+          "text": "Need more help?",
+          "x": 16,
+          "y": 6928,
+          "w": 792,
+          "h": 48
+        },
+        {
+          "tag": "h3",
+          "text": "Try these next steps:",
+          "x": 16,
+          "y": 6976,
+          "w": 792,
+          "h": 40
+        },
+        {
+          "tag": "h2",
+          "text": "Help",
+          "x": 72,
+          "y": 7610,
+          "w": 611,
+          "h": 80
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

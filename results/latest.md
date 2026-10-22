@@ -1,30 +1,30 @@
-Instagram API numbers, fetched 2026-10-22 19:43 UTC (`node ig.mjs report`). @vipulsingh_ai: 118 followers, 20 posts.
+Instagram API numbers, fetched 2026-10-22 21:52 UTC (`node ig.mjs report`). @vipulsingh_ai: 117 followers, 20 posts.
 Views are Instagram views (Facebook views have their own column below). Not in the API: the retention curve, follows and profile visits per reel, and the audience of a reel (age, gender, country).
 "Times usual" = views divided by the median views of the other reels in this table (reels of different ages: the experiment review compares them at 3 days).
 
 | # | Lang | Posted (India) | Days old | Views | Times usual | Reach | Saves | Shares | Saves / 1k views | Shares / 1k views | Likes | Comments | Avg watch |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 19 | HI | 2026-10-22 20:00 Thu | 0.2 | 318 | 0.8 | 270 | 4 | 0 | 12.6 | 0.0 | 6 | 0 | 6.9 s |
-| 16 | HI | 2026-10-21 20:00 Wed | 1.2 | 1292 | 3.6 | 1205 | 12 | 3 | 9.3 | 2.3 | 13 | 0 | 8.1 s |
-| 18 | HI | 2026-10-21 19:30 Wed | 1.2 | 136 | 0.3 | 118 | 0 | 0 | 0.0 | 0.0 | 5 | 0 | 5.6 s |
-| 15 | HI | 2026-10-20 20:05 Tue | 2.2 | 1694 | 4.7 | 1539 | 21 | 30 | 12.4 | 17.7 | 16 | 5 | 10.4 s |
-| 13 | HI | 2026-10-19 19:30 Mon | 3.2 | 36 | 0.1 | 21 | 0 | 0 | 0.0 | 0.0 | 3 | 0 | 9.4 s |
-| 14 | EN | 2026-10-18 17:39 Sun | 4.3 | 354 | 0.9 | 290 | 1 | 0 | 2.8 | 0.0 | 6 | 0 | 4.9 s |
-| 12 | HI | 2026-10-17 19:30 Sat | 5.2 | 373 | 0.9 | 319 | 1 | 0 | 2.7 | 0.0 | 4 | 2 | 6 s |
-| 11 | HI | 2026-10-16 20:09 Fri | 6.2 | 4117 | 11.3 | 3444 | 109 | 55 | 26.5 | 13.4 | 54 | 36 | 10.7 s |
-| 10 | HI | 2026-10-15 22:47 Thu | 7.1 | 1942 | 5.3 | 1657 | 14 | 5 | 7.2 | 2.6 | 29 | 0 | 9.4 s |
+| 19 | HI | 2026-10-22 20:00 Thu | 0.3 | 343 | 0.8 | 301 | 4 | 0 | 11.7 | 0.0 | 7 | 0 | 7.5 s |
+| 16 | HI | 2026-10-21 20:00 Wed | 1.3 | 1292 | 3.6 | 1205 | 12 | 3 | 9.3 | 2.3 | 13 | 0 | 8.1 s |
+| 18 | HI | 2026-10-21 19:30 Wed | 1.3 | 136 | 0.3 | 118 | 0 | 0 | 0.0 | 0.0 | 5 | 0 | 5.6 s |
+| 15 | HI | 2026-10-20 20:05 Tue | 2.3 | 1694 | 4.7 | 1539 | 21 | 30 | 12.4 | 17.7 | 16 | 5 | 10.4 s |
+| 13 | HI | 2026-10-19 19:30 Mon | 3.3 | 36 | 0.1 | 21 | 0 | 0 | 0.0 | 0.0 | 3 | 0 | 9.4 s |
+| 14 | EN | 2026-10-18 17:39 Sun | 4.4 | 354 | 0.9 | 290 | 1 | 0 | 2.8 | 0.0 | 6 | 0 | 4.9 s |
+| 12 | HI | 2026-10-17 19:30 Sat | 5.3 | 373 | 0.9 | 319 | 1 | 0 | 2.7 | 0.0 | 4 | 2 | 6 s |
+| 11 | HI | 2026-10-16 20:09 Fri | 6.3 | 4117 | 11.3 | 3444 | 109 | 55 | 26.5 | 13.4 | 54 | 36 | 10.7 s |
+| 10 | HI | 2026-10-15 22:47 Thu | 7.2 | 1942 | 5.3 | 1657 | 14 | 5 | 7.2 | 2.6 | 29 | 0 | 9.4 s |
 | 09 | HI | 2026-10-14 23:55 Wed | 8.1 | 1686 | 4.6 | 1499 | 21 | 34 | 12.5 | 20.2 | 13 | 2 | 6.8 s |
-| 08 | HI | 2026-10-13 23:00 Tue | 9.1 | 441 | 1.2 | 387 | 0 | 0 | 0.0 | 0.0 | 10 | 0 | 7.5 s |
-| 07 | HI | 2026-10-12 23:06 Mon | 10.1 | 219 | 0.5 | 182 | 1 | 0 | 4.6 | 0.0 | 6 | 2 | 4.7 s |
-| 06 | HI | 2026-10-12 19:37 Mon | 10.2 | 71116 | 195.6 | 61513 | 2706 | 1111 | 38.1 | 15.6 | 527 | 63 | 8.9 s |
-| 05 | HI | 2026-10-11 23:06 Sun | 11.1 | 181 | 0.4 | 152 | 1 | 0 | 5.5 | 0.0 | 4 | 0 | 3.8 s |
-| 04 | HI | 2026-10-11 22:10 Sun | 11.1 | 164 | 0.4 | 134 | 0 | 0 | 0.0 | 0.0 | 4 | 0 | 6 s |
+| 08 | HI | 2026-10-13 23:00 Tue | 9.2 | 441 | 1.2 | 387 | 0 | 0 | 0.0 | 0.0 | 10 | 0 | 7.5 s |
+| 07 | HI | 2026-10-12 23:06 Mon | 10.2 | 219 | 0.5 | 182 | 1 | 0 | 4.6 | 0.0 | 6 | 2 | 4.7 s |
+| 06 | HI | 2026-10-12 19:37 Mon | 10.3 | 71133 | 195.7 | 61513 | 2706 | 1113 | 38.0 | 15.6 | 527 | 63 | 8.9 s |
+| 05 | HI | 2026-10-11 23:06 Sun | 11.2 | 181 | 0.4 | 152 | 1 | 0 | 5.5 | 0.0 | 4 | 0 | 3.8 s |
+| 04 | HI | 2026-10-11 22:10 Sun | 11.2 | 164 | 0.4 | 134 | 0 | 0 | 0.0 | 0.0 | 4 | 0 | 6 s |
 
 Rates as Instagram shows them (per account reached), and the skip rate (the share of viewers who left within about 3 seconds):
 
 | # | Skip rate | Avg watch | Like rate | Comment rate | Save rate | Share rate | Repost rate | Facebook views |
 |---|---|---|---|---|---|---|---|---|
-| 19 | 59.9% | 6.9 s | 2.2% | 0.0% | 1.5% | 0.0% | 0.0% | 0 |
+| 19 | 60.8% | 7.5 s | 2.3% | 0.0% | 1.3% | 0.0% | 0.0% | 0 |
 | 16 | 41.4% | 8.1 s | 1.1% | 0.0% | 1.0% | 0.2% | 0.0% | 203 |
 | 18 | 66.7% | 5.6 s | 4.2% | 0.0% | 0.0% | 0.0% | 0.0% | 191 |
 | 15 | 42% | 10.4 s | 1.0% | 0.3% | 1.4% | 1.9% | 0.0% | 145 |
@@ -57,33 +57,32 @@ Ranked by how closely each metric moves with views across 17 reels a day old or 
 
 Idea score weights now: Q6, Q7 x2 (share rate (sends per reach)); Q5, Q4 x1.5 (save rate); the other questions x1.
 What drives follows: waiting for per-reel follows from screenshots (3 of 5 reels: #08 0.0 per 1,000 reach, #07 0.0 per 1,000 reach, #06 0.7 per 1,000 reach). Until then: followers per 1,000 reach, account by day (below).
-RANKING CHANGED: the top metrics were share, skip, save; now share, save, skip.
 
 Views over time (the readings stored at each "create reel"; Instagram gives only the total so far, so a cell is the reading nearest that age):
 
 | # | About 1 day | About 3 days | About 7 days | Now |
 |---|---|---|---|---|
-| 19 | - | - | - | 318 (0.2 d) |
-| 16 | - | - | - | 1292 (1.2 d) |
-| 18 | - | - | - | 136 (1.2 d) |
-| 15 | 1602 (0.9 d) | - | - | 1694 (2.2 d) |
-| 13 | 33 (1.3 d) | 35 (2.2 d) | - | 36 (3.2 d) |
-| 14 | 344 (1.4 d) | 353 (3.0 d) | - | 354 (4.3 d) |
-| 12 | 302 (0.8 d) | 371 (3.3 d) | - | 373 (5.2 d) |
-| 11 | 3112 (1.1 d) | 3905 (3.3 d) | 4075 (5.2 d) | 4117 (6.2 d) |
-| 10 | 1829 (1.0 d) | 1903 (2.7 d) | 1936 (6.1 d) | 1942 (7.1 d) |
+| 19 | - | - | - | 343 (0.3 d) |
+| 16 | 1292 (1.2 d) | - | - | 1292 (1.3 d) |
+| 18 | 136 (1.2 d) | - | - | 136 (1.3 d) |
+| 15 | 1602 (0.9 d) | 1694 (2.2 d) | - | 1694 (2.3 d) |
+| 13 | 33 (1.3 d) | 36 (3.2 d) | - | 36 (3.3 d) |
+| 14 | 344 (1.4 d) | 353 (3.0 d) | - | 354 (4.4 d) |
+| 12 | 302 (0.8 d) | 371 (3.3 d) | 373 (5.3 d) | 373 (5.3 d) |
+| 11 | 3112 (1.1 d) | 3905 (3.3 d) | 4117 (6.2 d) | 4117 (6.3 d) |
+| 10 | 1829 (1.0 d) | 1903 (2.7 d) | 1942 (7.1 d) | 1942 (7.2 d) |
 | 09 | 1627 (1.2 d) | 1671 (3.0 d) | 1680 (7.1 d) | 1686 (8.1 d) |
-| 08 | - | 434 (3.0 d) | 441 (7.1 d) | 441 (9.1 d) |
-| 07 | - | 210 (3.2 d) | 218 (7.2 d) | 219 (10.1 d) |
-| 06 | - | 66186 (3.4 d) | 69453 (7.3 d) | 71116 (10.2 d) |
-| 05 | - | - | 179 (6.7 d) | 181 (11.1 d) |
-| 04 | - | - | 160 (6.7 d) | 164 (11.1 d) |
+| 08 | - | 434 (3.0 d) | 441 (7.1 d) | 441 (9.2 d) |
+| 07 | - | 210 (3.2 d) | 218 (7.2 d) | 219 (10.2 d) |
+| 06 | - | 66186 (3.4 d) | 69453 (7.3 d) | 71133 (10.3 d) |
+| 05 | - | - | 179 (6.7 d) | 181 (11.2 d) |
+| 04 | - | - | 160 (6.7 d) | 164 (11.2 d) |
 
-English test (value rule): value = views from tier-1 countries x 10 + all other views. Success: 40% of the top Hindi reel's value (#06: 71116 views, tier-1 2% assumed, value 83917, so 33567). Worth it: at least the median value of the 5 Hindi reels posted nearest in time. Read at 3 days.
-- #14 (EN, 4.3 days): 354 views, tier-1 ?, value ?; nearest Hindi reels' median value 1989; actions (comments, saves, shares) 2.8 per 1k views against 9.8 for those Hindi reels: waiting for its top-countries screenshot (tier-1 share unknown).
+English test (value rule): value = views from tier-1 countries x 10 + all other views. Success: 40% of the top Hindi reel's value (#06: 71133 views, tier-1 2% assumed, value 83937, so 33575). Worth it: at least the median value of the 5 Hindi reels posted nearest in time. Read at 3 days.
+- #14 (EN, 4.4 days): 354 views, tier-1 ?, value ?; nearest Hindi reels' median value 1989; actions (comments, saves, shares) 2.8 per 1k views against 9.8 for those Hindi reels: waiting for its top-countries screenshot (tier-1 share unknown).
 Followers by country: IN 110, PK 2, US 2, BD 1, AE 1; tier 1 (US, GB, CA, AU and others): 2 of 116 counted.
 
-HIT: #11 has 11.3 times our usual views and is 6.2 days old. Recommend a sequel next (CLAUDE.md, "Experiments").
+HIT: #11 has 11.3 times our usual views and is 6.3 days old. Recommend a sequel next (CLAUDE.md, "Experiments").
 
 The account day by day (Instagram days end at 12:30 PM India time; the date is the day they end):
 
@@ -101,6 +100,6 @@ The account day by day (Instagram days end at 12:30 PM India time; the date is t
 | 2026-10-18 | 1011 | 12 | 0 | 11.9 | 0.0 |
 | 2026-10-19 | 620 | 8 | 1 | 12.9 | 1.6 |
 | 2026-10-20 | 1779 | 8 | 2 | 4.5 | 1.1 |
-| 2026-10-21 | 1923 | 11 | 0 | 5.7 | 0.0 |
-| 2026-10-22 | 762 | 12 | 0 | 15.7 | 0.0 |
-| 14 days | 72891 | 260 | 55 | 3.6 | 0.8 |
+| 2026-10-21 | 1923 | 11 | 2 | 5.7 | 1.0 |
+| 2026-10-22 | 811 | 13 | 0 | 16.0 | 0.0 |
+| 14 days | 72940 | 261 | 57 | 3.6 | 0.8 |

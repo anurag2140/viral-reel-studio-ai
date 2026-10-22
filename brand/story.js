@@ -228,10 +228,12 @@ export function person(parent, o = {}) {
 // ---------- compact captions (from 2026-10-15) ----------
 // I said the band captions hid too much of the picture. These show a few words at a time on
 // one line, with no band: white type with a dark outline, the spoken word in yellow.
-// items: [{ words: [{ word, t }], a, b, whole }]; whole: true shows the whole sentence at once
-// (the hook, so that it is readable on frame 0), on at most two lines.
+// items: [{ words: [{ word, t }], a, b, whole, backing }]; whole: true shows the whole sentence at
+// once (the hook, so that it is readable on frame 0), on at most two lines. backing: true (on an
+// item, or for all in o) puts a soft dark pill behind the words, for a busy picture or a page
+// (2026-10-23: clear captions; the pill is only as big as the line, not a band).
 export function captionsCompact(root, items, o = {}) {
-  const c = { bottom: 1490, size: 66, maxChars: 18, ink: '#0F1230', mark: '#FFD23F', font: '"Anek Devanagari"', ...o };
+  const c = { bottom: 1490, size: 66, maxChars: 18, ink: '#0F1230', mark: '#FFD23F', back: 'rgba(15,18,48,0.62)', backing: false, font: '"Anek Devanagari"', ...o };
   const edge = [[-4, -4], [4, -4], [-4, 4], [4, 4], [0, -5], [0, 5], [-5, 0], [5, 0], [0, 9], [-3, 9], [3, 9]].map(([x, y]) => `${x}px ${y}px 0 ${c.ink}`).join(',');
   const chunks = [];
   for (const it of items) {
@@ -251,7 +253,8 @@ export function captionsCompact(root, items, o = {}) {
       const a = i === 0 ? it.a : ws[0].t - 0.05;
       const b = i < groups.length - 1 ? groups[i + 1][0].t - 0.05 : it.b;
       const box = H('div', `position:absolute;left:70px;width:940px;bottom:${1920 - c.bottom}px;text-align:center;text-wrap:balance;font:800 ${c.size}px/1.18 ${c.font};font-stretch:90%;color:#fff;text-shadow:${edge};transform-origin:50% 100%;visibility:hidden`, root);
-      const spans = ws.map((w) => ({ e: H('span', 'display:inline-block;margin:0 .14em;transform-origin:50% 70%', box, w.word), t: w.t }));
+      const line = (it.backing ?? c.backing) ? H('span', `background:${c.back};padding:.06em .3em .02em;border-radius:22px;-webkit-box-decoration-break:clone;box-decoration-break:clone`, box) : box;
+      const spans = ws.map((w) => ({ e: H('span', 'display:inline-block;margin:0 .14em;transform-origin:50% 70%', line, w.word), t: w.t }));
       chunks.push({ box, spans, a, b, first: it.a <= 0 && i === 0 });
     });
   }

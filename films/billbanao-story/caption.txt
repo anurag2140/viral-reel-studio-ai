@@ -1,0 +1,12 @@
+TITLE
+B.Com किया, coding नहीं आती, फिर भी मेरा app 500+ phones में है
+
+DESCRIPTION
+मैं AI को बताता हूँ क्या बनाना है, और code वो लिखता है। ऐसे बना मेरा app BillBanao: दुकानदार GST bill बनाता है, और PDF सीधे WhatsApp पर।
+तुम भी कर सकते हो: एक असली problem चुनो, बने हुए tools ढूँढो, और AI से जोड़कर बनवाओ। इसे कहते हैं vibe coding।
+मुझे AI में बहुत interest है, ऐसी चीज़ें बनाता रहता हूँ और यहाँ दिखाता हूँ। तुम्हें भी interest है, तो follow कर लो: @vipulsingh_ai
+
+जो दोस्त tech से डरता है, उसे भेज दो।
+
+HASHTAGS
+#VibeCoding #BComStudent #AIinHindi #NoCode #BuildWithAI
