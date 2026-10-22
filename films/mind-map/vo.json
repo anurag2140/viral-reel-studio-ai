@@ -1,0 +1,186 @@
+{
+  "model": "google/gemini-3.8-flash-tts",
+  "voice": "Orus",
+  "bpm": 104,
+  "total": 40.943,
+  "lines": [
+    {
+      "id": "hook",
+      "text": "चालीस page की report, और meeting में जवाब सिर्फ़ तुम्हें पता था। जबकि तुमने वो report पढ़ी भी नहीं थी।",
+      "sentences": [
+        "चालीस page की report, और meeting में जवाब सिर्फ़ तुम्हें पता था।",
+        "जबकि तुमने वो report पढ़ी भी नहीं थी।"
+      ],
+      "file": "vo/hook.wav",
+      "start": 0,
+      "duration": 4.924,
+      "pauses": [
+        [
+          1.19,
+          1.43
+        ],
+        [
+          3.07,
+          3.31
+        ]
+      ]
+    },
+    {
+      "id": "trouble",
+      "text": "रात दस बजे Priya Ma'am का mail आया, कल सुबह meeting है, ये पूरी report पढ़ कर आना। और पहले page पर ही तुम्हारी आँखें बंद होने लगीं।",
+      "sentences": [
+        "रात दस बजे Priya Ma'am का mail आया, कल सुबह meeting है, ये पूरी report पढ़ कर आना।",
+        "और पहले page पर ही तुम्हारी आँखें बंद होने लगीं।"
+      ],
+      "file": "vo/trouble.wav",
+      "start": 5.192,
+      "duration": 7.086,
+      "pauses": [
+        [
+          1.87,
+          2.11
+        ],
+        [
+          4.26,
+          4.67
+        ],
+        [
+          5.73,
+          5.9
+        ]
+      ]
+    },
+    {
+      "id": "turn",
+      "text": "तब तुमने वो PDF Gemini Notebook में डाल दी।",
+      "sentences": [
+        "तब तुमने वो PDF Gemini Notebook में डाल दी।"
+      ],
+      "file": "vo/turn.wav",
+      "start": 12.404,
+      "duration": 2.022,
+      "pauses": []
+    },
+    {
+      "id": "how",
+      "text": "Chat में Mind Map वाला button दबाया, और पूरी report एक map बन गई। हर बड़ा topic एक branch, और हर branch में उसके छोटे points।",
+      "sentences": [
+        "Chat में Mind Map वाला button दबाया, और पूरी report एक map बन गई।",
+        "हर बड़ा topic एक branch, और हर branch में उसके छोटे points।"
+      ],
+      "file": "vo/how.wav",
+      "start": 14.712,
+      "duration": 7.029,
+      "pauses": [
+        [
+          1.84,
+          2.13
+        ],
+        [
+          2.27,
+          2.4
+        ],
+        [
+          3.6,
+          3.97
+        ]
+      ]
+    },
+    {
+      "id": "magic",
+      "text": "पाँच minute में तुम्हें पूरी report समझ आ गई।",
+      "sentences": [
+        "पाँच minute में तुम्हें पूरी report समझ आ गई।"
+      ],
+      "file": "vo/magic.wav",
+      "start": 21.923,
+      "duration": 1.975,
+      "pauses": []
+    },
+    {
+      "id": "follow",
+      "text": "ऐसे और AI जुगाड़ के लिए follow कर लो।",
+      "sentences": [
+        "ऐसे और AI जुगाड़ के लिए follow कर लो।"
+      ],
+      "file": "vo/follow.wav",
+      "start": 24.231,
+      "duration": 1.859,
+      "pauses": []
+    },
+    {
+      "id": "twist",
+      "text": "लेकिन असली जुगाड़ अब है। Map की किसी भी branch पर click करो, और उसी topic पर सवाल पूछ लो।",
+      "sentences": [
+        "लेकिन असली जुगाड़ अब है।",
+        "Map की किसी भी branch पर click करो, और उसी topic पर सवाल पूछ लो।"
+      ],
+      "file": "vo/twist.wav",
+      "start": 26.25,
+      "duration": 5.114,
+      "pauses": [
+        [
+          1.29,
+          1.77
+        ],
+        [
+          3.32,
+          3.61
+        ]
+      ]
+    },
+    {
+      "id": "end",
+      "text": "Meeting के बाद Rohan ने पूछा, भाई, तूने ये पूरी report कब पढ़ी?",
+      "sentences": [
+        "Meeting के बाद Rohan ने पूछा, भाई, तूने ये पूरी report कब पढ़ी?"
+      ],
+      "file": "vo/end.wav",
+      "start": 31.731,
+      "duration": 3.773,
+      "pauses": [
+        [
+          1.73,
+          1.92
+        ]
+      ]
+    },
+    {
+      "id": "link",
+      "text": "इस tool का link चाहिए? Comment में कुछ भी लिख दो।",
+      "sentences": [
+        "इस tool का link चाहिए?",
+        "Comment में कुछ भी लिख दो।"
+      ],
+      "file": "vo/link.wav",
+      "start": 35.769,
+      "duration": 2.42,
+      "pauses": [
+        [
+          1.23,
+          1.48
+        ]
+      ]
+    },
+    {
+      "id": "ask",
+      "text": "उस दोस्त को भेजो जिसकी कल meeting या exam है।",
+      "sentences": [
+        "उस दोस्त को भेजो जिसकी कल meeting या exam है।"
+      ],
+      "file": "vo/ask.wav",
+      "start": 38.365,
+      "duration": 2.478,
+      "pauses": [
+        [
+          0.03,
+          0.28
+        ],
+        [
+          1.11,
+          1.24
+        ]
+      ]
+    }
+  ]
+}

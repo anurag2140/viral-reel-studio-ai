@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<title>#19 AI जुगाड़ #4: चालीस page की report, एक mind map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wdth,wght@75..125,400..800&display=block" rel="stylesheet">
+<style>
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { width: 1080px; height: 1920px; position: relative; overflow: hidden; transform-origin: 0 0; background: #FFE3BF; font-family: "Anek Devanagari"; }
+  #scene { position: absolute; left: 0; top: 0; }
+  #scene text { font-family: "Anek Devanagari"; font-weight: 800; }
+</style>
+</head>
+<body>
+<div id="stage"><svg id="scene" viewBox="0 0 1080 1920" width="1080" height="1920"></svg></div>
+<script type="module">
+// AI जुगाड़ #4, a sequel to #06 in the office. Places: the meeting room by day (the hook: Priya
+// Ma'am amazed, a mind map on the wall screen, Rohan with the thick report; the ending: Rohan's
+// question, the link line), my desk at night (the mail, the 40-page report, the yawn; then five
+// minutes later, the follow line), my laptop over the shoulder (a drawn notebook window where the
+// report grows into a mind map, and later a branch is clicked). Gemini Notebook's own pages fill
+// the frame for the tool, the Mind Map chip and "select nodes to ask questions".
+import { S, backOut, bump, camera, captionsCompact, cubicOut, eio, expoOut, key, lerp, person, pointer, prog, pulse, setup, start, webpage } from '/brand/story.js';
+import { CORAL, INK, NAVY, BLUE, dayWall, desk, followCard, lights, linkLine, paperPlane, room, show, star, whip, whipIn, whipOut } from '/brand/scenes.js';
+import { cast } from '/brand/cast.js';
+import { build } from './timeline.js';
+
+const stage = document.getElementById('stage');
+const svg = document.getElementById('scene');
+const vo = await (await fetch('vo.json')).json();
+const { dur, Q, T } = build(vo);
+const HOW = 'shots/how.jpg';     // notebook.google, "How it works", 740 to 1360 css px at 4x
+const STEPS = 'shots/steps.jpg'; // Mind Maps help, "Generate a Mind Map", 770 to 1110 css px at 4x
+const NODES = 'shots/nodes.jpg'; // Mind Maps help, "Select nodes to ask questions", 1390 to 1560 css px at 4x
+const FACE = { dir: '/brand/face/', meta: await (await fetch('/brand/face/face.json')).json() };
+const ME = { face: FACE, skin: FACE.meta.cheek, shade: '#D98A52', outfit: 'shirt' };
+await setup(['800 100px "Anek Devanagari"', '700 40px "Anek Devanagari"', '600 33px "Anek Devanagari"'], [HOW, STEPS, NODES, '/logo.png', ...FACE.meta.names.map((n) => `${FACE.dir}${n}.png`)]);
+const pop = (t, at) => 1 - 0.07 * at.reduce((v, a) => v + Math.max(0, bump(t - a)), 0);
+const place = (g, x, y, s = 1, r = 0) => g.setAttribute('transform', `translate(${x} ${y}) rotate(${r}) scale(${s})`);
+const U = [];
+const L = lights(svg);
+const defs = L.defs;
+const YEL = '#FFD23F';
+const GREEN = '#19C37D';
+const PURPLE = '#7B4DFF';
+const line = { stroke: INK, 'stroke-width': 6, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+const chip = (parent, text, w, size, fill = YEL, ink = NAVY) => {
+  const g = S('g', {}, parent);
+  S('rect', { x: -w / 2, y: -size * 0.75, width: w, height: size * 1.5, rx: size * 0.36, fill, ...line }, g);
+  S('text', { y: size * 0.36, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, text);
+  return g;
+};
+const tickBadge = (parent, r = 46) => {
+  const g = S('g', {}, parent);
+  S('circle', { r, fill: GREEN, ...line }, g);
+  S('path', { d: `M${-r * 0.44},${r * 0.04} L${-r * 0.12},${r * 0.36} L${r * 0.48},${-r * 0.32}`, fill: 'none', stroke: '#fff', 'stroke-width': r * 0.24, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
+  return g;
+};
+function bubble(parent, lines, w, size, fill = '#fff', ink = NAVY, tail = 'left') {
+  const g = S('g', {}, parent);
+  const h = lines.length * size * 1.25 + size * 0.9;
+  const tx = tail === 'left' ? -w / 2 + 50 : w / 2 - 80;
+  S('path', { d: `M${-w / 2 + 30},${-h / 2} L${w / 2 - 30},${-h / 2} Q${w / 2},${-h / 2} ${w / 2},${-h / 2 + 30} L${w / 2},${h / 2 - 30} Q${w / 2},${h / 2} ${w / 2 - 30},${h / 2} L${tx + 30},${h / 2} L${tx},${h / 2 + 40} L${tx + 4},${h / 2} L${-w / 2 + 30},${h / 2} Q${-w / 2},${h / 2} ${-w / 2},${h / 2 - 30} L${-w / 2},${-h / 2 + 30} Q${-w / 2},${-h / 2} ${-w / 2 + 30},${-h / 2} Z`, fill, ...line }, g);
+  lines.forEach((s, i) => S('text', { y: -h / 2 + size * 1.05 + i * size * 1.25 + size * 0.15, 'text-anchor': 'middle', 'font-size': size, fill: ink }, g, s));
+  return g;
+}
+// the 40-page report: a thick stack of paper
+function report(parent) {
+  const g = S('g', {}, parent);
+  for (let k = 5; k >= 0; k--) S('rect', { x: -110 + k * 4, y: -140 + k * 7, width: 220, height: 280, rx: 8, fill: k ? '#F3EFE6' : '#fff', stroke: INK, 'stroke-width': 4 }, g);
+  S('rect', { x: -110, y: -140, width: 220, height: 64, rx: 8, fill: NAVY }, g);
+  S('text', { y: -96, 'text-anchor': 'middle', 'font-size': 38, fill: '#fff' }, g, 'REPORT');
+  for (let k = 0; k < 6; k++) S('rect', { x: -84, y: -50 + k * 30, width: [168, 140, 160, 120, 150, 100][k], height: 12, rx: 6, fill: '#C9CEDA' }, g);
+  const tag = chip(g, '40 pages', 190, 36, YEL);
+  tag.setAttribute('transform', 'translate(60 120) rotate(-6)');
+  return g;
+}
+// a mind map: a centre, five branches, two points on each; set(branches 0..1, points 0..1)
+const BR = [['Sales', '#2F5BFF', -270, -150], ['Cost', CORAL, 270, -150], ['Risk', PURPLE, -300, 70], ['Team', GREEN, 300, 70], ['Plan', '#FF8A00', 0, 210]];
+function mindMap(parent) {
+  const g = S('g', {}, parent);
+  const links = S('g', {}, g);
+  const nodes = BR.map(([label, col, x, y], i) => {
+    const ln = S('path', { d: `M0,0 Q${x * 0.5},${y * 0.1} ${x},${y}`, fill: 'none', stroke: col, 'stroke-width': 10, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1 }, links);
+    const leaves = [-1, 1].map((m) => {
+      const lx = x + (x === 0 ? m * 170 : Math.sign(x) * 150);
+      const ly = y + (x === 0 ? 70 : m * 70);
+      const lg = S('g', {}, g);
+      S('path', { d: `M${x},${y} L${lx},${ly}`, stroke: col, 'stroke-width': 5, 'stroke-linecap': 'round', opacity: 0.7 }, lg);
+      S('rect', { x: lx - 60, y: ly - 20, width: 120, height: 40, rx: 20, fill: '#fff', stroke: col, 'stroke-width': 4 }, lg);
+      S('rect', { x: lx - 40, y: ly - 5, width: 80, height: 10, rx: 5, fill: '#C9CEDA' }, lg);
+      return { g: lg, x: lx, y: ly };
+    });
+    const node = S('g', {}, g);
+    S('rect', { x: -86, y: -34, width: 172, height: 68, rx: 34, fill: col, ...line, 'stroke-width': 5 }, node);
+    S('text', { y: 13, 'text-anchor': 'middle', 'font-size': 38, fill: '#fff' }, node, label);
+    return { ln, node, leaves, x, y, i };
+  });
+  const centre = S('g', {}, g);
+  S('rect', { x: -110, y: -46, width: 220, height: 92, rx: 24, fill: NAVY, ...line, 'stroke-width': 5 }, centre);
+  S('text', { y: 16, 'text-anchor': 'middle', 'font-size': 46, fill: '#fff' }, centre, 'Report');
+  return {
+    g, nodes,
+    set(pb, pl, hot = -1, t = 0) {
+      nodes.forEach((n, i) => {
+        const p = Math.min(1, Math.max(0, pb * 5 - i));
+        n.ln.setAttribute('stroke-dashoffset', 1 - eio(p));
+        const s = backOut(Math.min(1, Math.max(0, p * 1.4 - 0.4)));
+        show(n.node, s > 0);
+        const hs = i === hot ? 1 + 0.12 * Math.abs(Math.sin(t * 6)) : 1;
+        n.node.setAttribute('transform', `translate(${n.x} ${n.y}) scale(${s * hs})`);
+        n.leaves.forEach((lf, k) => {
+          const q = backOut(Math.min(1, Math.max(0, pl * 10 - i * 2 - k)));
+          show(lf.g, q > 0);
+          lf.g.setAttribute('transform', `translate(${lf.x} ${lf.y}) scale(${q}) translate(${-lf.x} ${-lf.y})`);
+        });
+      });
+    },
+  };
+}
+
+// ================= the meeting room by day =================
+const C = { s: S('g', {}, svg) };
+C.w = S('g', {}, C.s);
+C.cam = camera(C.w);
+C.blur = L.blurOf('mbMeet');
+const wallTick = dayWall(C.w);
+// the wall screen with the mind map
+const screen = S('g', { transform: 'translate(560 600)' }, C.w);
+S('rect', { x: -300, y: -190, width: 600, height: 380, rx: 22, fill: NAVY, ...line }, screen);
+S('rect', { x: -280, y: -170, width: 560, height: 340, rx: 12, fill: '#F3F5FA' }, screen);
+const wallMap = mindMap(screen);
+wallMap.g.setAttribute('transform', 'scale(0.62)');
+S('rect', { x: -30, y: 190, width: 60, height: 70, fill: '#8088B8' }, screen);
+const rohan = cast(C.w, 'rohan');
+const rohanReport = report(C.w);
+const meC = person(C.w, ME);
+const priya = cast(C.w, 'priya');
+// the table in front of us
+S('rect', { x: -700, y: 1430, width: 2480, height: 120, fill: '#B5763E', ...line }, C.w);
+S('rect', { x: -700, y: 1550, width: 2480, height: 1200, fill: '#E2C9A0' }, C.w);
+S('rect', { x: -700, y: 1430, width: 2480, height: 18, fill: '#D69A5C' }, C.w);
+const cFront = S('g', {}, C.w);
+const zero = S('g', {}, cFront);
+S('rect', { x: -170, y: -50, width: 340, height: 100, rx: 30, fill: '#fff', ...line }, zero);
+S('text', { x: -20, y: 18, 'text-anchor': 'middle', 'font-size': 50, fill: NAVY }, zero, 'पढ़े:');
+S('text', { x: 90, y: 20, 'text-anchor': 'middle', 'font-size': 60, fill: CORAL }, zero, '0/40');
+const askB = bubble(cFront, ['भाई, तूने ये', 'कब पढ़ी?'], 360, 46, '#fff');
+const sparksC = [[-200, -110, 30], [210, -120, 24], [230, 90, 22], [-220, 90, 26]].map(([x, y, r]) => ({ e: star(cFront, 0, 0, r, YEL), x, y }));
+const cPhone = S('g', {}, cFront);
+S('rect', { x: -40, y: -70, width: 80, height: 140, rx: 16, fill: NAVY, ...line }, cPhone);
+S('rect', { x: -32, y: -58, width: 64, height: 112, rx: 8, fill: '#BFD0FF' }, cPhone);
+const plane = paperPlane(cFront, [330, 1150], [700, 760], [1300, 520]);
+
+U.push((t) => {
+  const A = t < T.trouble - 0.2;   // the hook
+  const E = t >= T.end - 0.2;      // the meeting again, the link line, the ask
+  if (!show(C.s, A || E)) return;
+  wallTick(t);
+  const link = t >= T.link - 0.2;
+  show(zero, A && t > T.nahin - 0.1);
+  show(rohan.g, E); show(rohanReport, E); // the hook keeps two faces: Priya Ma'am and me
+  show(askB.g ?? askB, E && !link && t > T.kab - 0.6);
+  sparksC.forEach((s) => show(s.e, A && t > T.jawab));
+  show(cPhone, link);
+  plane(t, link ? T.send + 0.2 : 1e9, T.sendWord + 0.3);
+  wallMap.set(1, 1, 2, t);
+  if (A) {
+    whip(C.s, C.blur, 0, 0);
+    whipOut(C.s, C.blur, t, T.trouble - 0.2, -1);
+    C.cam(...key(t, [[0, [560, 1010, 1.08]], [T.jabki, [560, 1000, 1.14], (p) => p], [T.trouble, [540, 990, 1.2]]]));
+    priya.pose({ x: 850, y: 1640, s: 1.5, tilt: -4 + 2 * Math.sin(t * 2.2), face: 'amazed', pop: pop(t, [T.jawab]), handL: [-120, -250], handR: [170, -470], gripR: 'thumb' });
+    meC.pose({ x: 240, y: 1640 - 20 * Math.max(0, bump(t - T.jawab)), s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.4), face: t < T.jabki ? 'grin' : 'wink', pop: pop(t, [T.jawab, T.jabki]), handL: [-150, -62], handR: [190, -470], gripR: 'point' });
+    place(zero, 300, 640 + 6 * Math.sin(t * 2.5), backOut(prog(t, T.nahin - 0.1, 0.35)), -4);
+    sparksC.forEach((s, i) => place(s.e, 850 + s.x * 0.8, 820 + s.y * 0.8, 0.7 + 0.3 * Math.sin(t * 5 + i * 2), t * 30));
+    return;
+  }
+  // the next morning: Priya Ma'am pleased; Rohan asks; then the link line and the ask
+  if (t < T.end + 0.25) whipIn(C.s, C.blur, t, T.end - 0.2, 1);
+  else whip(C.s, C.blur, 0, 0);
+  C.cam(...key(t, [[T.end - 0.2, [560, 1000, 1.04]], [T.kab, [600, 990, 1.12], (p) => p], [T.link - 0.2, [580, 990, 1.12], (p) => p], [T.link + 0.2, [70, 1020, 1.3]], [dur, [70, 1010, 1.34], (p) => p]]));
+  priya.pose({ x: 850, y: 1640, s: 1.5, tilt: -3 + 2 * Math.sin(t * 2.2), face: 'grin', handL: [-150, -62], handR: [170, -470], gripR: 'thumb' });
+  const lean = eio(prog(t, T.rohan - 0.3, 0.4));
+  rohan.pose({ x: lerp(560, 600, lean), y: 1560, s: 1.1, tilt: 6 * lean, face: t > T.rohan ? 'amazed' : 'neutral', pop: pop(t, [T.rohan]), handL: [-110, -260], handR: [110, -260] });
+  place(rohanReport, lerp(560, 600, lean), 1560 - 260 * 1.1 - 10, 0.75, -4);
+  place(askB.g ?? askB, 690, 640 + 6 * Math.sin(t * 2.5), backOut(prog(t, T.kab - 0.6, 0.3)), 3);
+  const offer = link ? eio(prog(t, T.link, 0.3)) * (1 - prog(t, T.send - 0.1, 0.2)) : 0;
+  meC.pose({
+    x: 240, y: 1640 - 24 * Math.max(0, bump(t - T.sendWord)), s: 1.5, tilt: 4 + 2 * Math.sin(t * 2.3),
+    face: !link ? (t < T.kab ? 'grin' : 'wink') : t < T.comment - 0.1 ? 'talk' : t < T.send ? 'grin' : 'wink',
+    pop: pop(t, [T.kab, T.link, T.send]),
+    handL: link ? [lerp(-70, -215, offer), lerp(-200, -360, offer) - 8 * offer * Math.sin(t * 6)] : [-150, -62],
+    handR: (!link && t > T.kab) || (link && t > T.send) ? [160, -470] : [150, -62], gripR: (!link && t > T.kab) || (link && t > T.send) ? 'thumb' : 'open',
+  });
+  place(cPhone, 240 + (lerp(-70, -215, offer) - 4) * 1.5, 1640 + (lerp(-200, -360, offer) - 46) * 1.5, 1.3, -8);
+});
+
+// ================= my desk at night: the mail, the report, the yawn; five minutes later =================
+const D = desk(svg, L, ME);
+const mailCard = S('g', {}, D.props);
+S('rect', { x: -300, y: -110, width: 600, height: 220, rx: 30, fill: '#fff', ...line }, mailCard);
+S('rect', { x: -260, y: -70, width: 80, height: 60, rx: 8, fill: CORAL }, mailCard);
+S('path', { d: 'M-260,-70 L-220,-34 L-180,-70', fill: 'none', stroke: '#fff', 'stroke-width': 6, 'stroke-linejoin': 'round' }, mailCard);
+S('text', { x: -160, y: -26, 'font-size': 42, fill: NAVY }, mailCard, "Priya Ma'am");
+S('text', { x: -260, y: 40, 'font-size': 38, fill: NAVY }, mailCard, 'कल 10 बजे meeting.');
+S('text', { x: -260, y: 88, 'font-size': 38, fill: CORAL }, mailCard, 'Report पढ़ कर आना!');
+const deskReport = report(D.props);
+const zs = [0, 1, 2].map((i) => S('text', { 'font-size': 60 + i * 14, fill: '#BFD0FF', 'text-anchor': 'middle' }, D.props, 'Z'));
+const clockChip = chip(D.props, '10:05 PM', 300, 56, YEL);
+const mapCard = S('g', {}, D.props);
+S('rect', { x: -230, y: -170, width: 460, height: 340, rx: 20, fill: '#fff', ...line }, mapCard);
+const cardMap = mindMap(mapCard);
+cardMap.g.setAttribute('transform', 'scale(0.62)');
+const cardTick = tickBadge(D.props, 44);
+const sparksD = [[-200, -150, 30], [200, -180, 24], [220, 140, 22]].map(([x, y, r]) => ({ e: star(D.props, 0, 0, r, YEL), x, y }));
+
+U.push((t) => {
+  const B = t >= T.trouble - 0.2 && t < T.turn - 0.25;    // the mail, the report, the yawn
+  const F = t >= T.magic - 0.2 && t < T.click - 0.25;     // five minutes later, the follow line, "असली जुगाड़"
+  if (!show(D.s, B || F)) return;
+  D.tick(t, F ? 1 : 0);
+  show(mailCard, B && t > T.mail - 0.1 && t < T.aankh);
+  show(deskReport, (B && t > T.report - 0.1) || (F && t < T.samajh));
+  zs.forEach((z) => show(z, B && t > T.band));
+  show(clockChip, F); show(mapCard, F && t > T.samajh - 0.3); show(cardTick, F && t > T.samajh);
+  sparksD.forEach((s) => show(s.e, F && t > T.samajh));
+  if (B) {
+    if (t < T.trouble + 0.25) whipIn(D.s, D.blur, t, T.trouble - 0.2, 1);
+    else if (t > T.turn - 0.55) whipOut(D.s, D.blur, t, T.turn - 0.25, -1);
+    else whip(D.s, D.blur, 0, 0);
+    D.cam(...key(t, [[T.trouble - 0.2, [560, 1060, 1.05]], [T.report, [560, 1040, 1.1], (p) => p], [T.aankh, [540, 1000, 1.18]], [T.turn, [540, 990, 1.24], (p) => p]]));
+    const sleepy = prog(t, T.band, 0.8);
+    D.kid.pose({
+      x: 540, y: 1640 + 30 * sleepy, s: 1.5, tilt: -3 + 2 * Math.sin(t * 2) + 14 * sleepy,
+      face: t < T.report ? 'talk' : t < T.aankh ? 'worried' : t < T.band ? 'yawn' : 'blink',
+      pop: pop(t, [T.mail, T.report, T.aankh]),
+      // a yawn with a big stretch, then the arms drop and the head nods
+      handL: t > T.aankh && t < T.band + 0.2 ? [-210, -600] : [-150, -62], handR: t > T.aankh && t < T.band + 0.2 ? [210, -600] : [150, -62],
+      gripL: 'fist', gripR: 'fist',
+    });
+    place(mailCard, 540, 560 + 6 * Math.sin(t * 2.4), backOut(prog(t, T.mail - 0.1, 0.35)), -3);
+    const drop = expoOut(prog(t, T.report - 0.1, 0.3));
+    place(deskReport, 820, lerp(-300, 1170, drop) + 10 * Math.max(0, bump(t - T.report - 0.15)), 0.9, -6);
+    zs.forEach((z, i) => { const k = (t * 0.8 + i * 0.33) % 1; z.setAttribute('transform', `translate(${700 + 60 * i + 30 * k} ${800 - 200 * k})`); z.setAttribute('opacity', 1 - k); });
+    return;
+  }
+  if (t < T.magic + 0.25) whipIn(D.s, D.blur, t, T.magic - 0.2, 1);
+  else if (t > T.click - 0.55) whipOut(D.s, D.blur, t, T.click - 0.25, 1);
+  else whip(D.s, D.blur, 0, 0);
+  D.cam(...key(t, [[T.magic - 0.2, [540, 1020, 1.05]], [T.samajh, [540, 1000, 1.1], (p) => p], [T.follow, [540, 1030, 1.0]], [T.twist, [540, 1040, 1.06], (p) => p], [T.twist + 0.4, [520, 1080, 1.2]], [T.click, [520, 1090, 1.24], (p) => p]]));
+  const fol = t > T.follow - 0.1 && t < T.twist;
+  const tw = t > T.twist;
+  D.kid.pose({
+    x: 540, y: 1640 - 24 * Math.max(0, bump(t - T.samajh)), s: 1.5, tilt: tw ? 4 : -3 + 2 * Math.sin(t * 2.2),
+    face: tw ? 'wink' : t < T.samajh ? 'thinking' : 'grin', pop: pop(t, [T.paanch, T.samajh, T.twist]),
+    handL: tw ? [-160, -620] : fol ? [-170, -380] : [-150, -62], gripL: tw ? 'point' : fol ? 'thumb' : 'open',
+    handR: !fol && !tw && t > T.samajh ? [170, -470] : [150, -62], gripR: !fol && !tw && t > T.samajh ? 'thumb' : 'open',
+  });
+  // the clock jumps to 10:05; the stack folds into one map
+  const cj = backOut(prog(t, T.paanch - 0.1, 0.3));
+  place(clockChip, 800, 560 + 5 * Math.sin(t * 2.5), cj * (1 + 0.08 * Math.max(0, bump(t - T.paanch))), 4);
+  const fold = eio(prog(t, T.samajh - 0.5, 0.4));
+  place(deskReport, lerp(820, 540, fold), lerp(1170, 640, fold), 0.9 * (1 - 0.8 * fold), -6 + 6 * fold);
+  const mc = backOut(prog(t, T.samajh - 0.3, 0.4));
+  // the map card floats above me; for the follow card it moves down beside my head
+  const low = eio(prog(t, T.follow - 0.3, 0.4));
+  const [mx, my, ms] = [lerp(330, 220, low), lerp(580, 980, low), lerp(0.85, 0.66, low)];
+  place(mapCard, mx, my + 6 * Math.sin(t * 2.2), mc * ms, -4);
+  cardMap.set(1, 1);
+  place(cardTick, mx + 210 * ms, my - 160 * ms, backOut(prog(t, T.samajh, 0.3)) * ms);
+  sparksD.forEach((s, i) => place(s.e, mx + s.x * ms, my + s.y * ms, 0.7 + 0.3 * Math.sin(t * 5 + i * 2), t * 30));
+});
+
+// ================= my laptop, over the shoulder: the report becomes a map; a branch is clicked =================
+const R = room(svg, L, ME);
+const scr = R.scr; // 728 x 500
+S('rect', { width: 728, height: 500, fill: '#F3F5FA' }, scr);
+S('rect', { width: 728, height: 56, fill: '#fff' }, scr);
+S('circle', { cx: 32, cy: 28, r: 16, fill: BLUE }, scr);
+S('text', { x: 58, y: 40, 'font-size': 30, fill: NAVY }, scr, 'Notebook');
+const side = S('g', {}, scr);
+S('rect', { x: 0, y: 56, width: 170, height: 444, fill: '#fff' }, side);
+S('text', { x: 16, y: 96, 'font-size': 22, fill: '#7B8BB8' }, side, 'Sources');
+S('rect', { x: 14, y: 112, width: 142, height: 48, rx: 10, fill: '#FFE2E7', stroke: CORAL, 'stroke-width': 3 }, side);
+S('text', { x: 28, y: 145, 'font-size': 22, fill: CORAL }, side, 'report.pdf');
+const lapMap = mindMap(scr);
+const lapChip = S('g', {}, scr);
+S('rect', { x: 200, y: 438, width: 170, height: 46, rx: 23, fill: '#EEF2FF', stroke: BLUE, 'stroke-width': 3 }, lapChip);
+S('text', { x: 285, y: 470, 'text-anchor': 'middle', 'font-size': 24, fill: BLUE }, lapChip, 'Mind Map');
+const answer = S('g', {}, scr);
+S('rect', { x: 470, y: 300, width: 240, height: 180, rx: 20, fill: '#fff', ...line, 'stroke-width': 3 }, answer);
+S('text', { x: 490, y: 336, 'font-size': 24, fill: PURPLE }, answer, 'Risk:');
+for (let k = 0; k < 4; k++) S('rect', { x: 490, y: 356 + k * 28, width: [190, 160, 180, 120][k], height: 12, rx: 6, fill: NAVY, opacity: 0.7 }, answer);
+const cursor = S('path', { d: 'M0 0 L0 58 L16 44 L28 70 L40 64 L28 39 L50 39Z', fill: NAVY, stroke: '#fff', 'stroke-width': 5, 'stroke-linejoin': 'round' }, scr);
+
+U.push((t) => {
+  const M = t >= T.lap - 0.3 && t < T.magic - 0.2;          // the map grows
+  const K = t >= T.nodeClick - 0.6 && t < T.end - 0.2;      // a branch is clicked, the answer
+  if (!show(R.s, M || K)) return;
+  R.tick(t, { jump: M ? Math.max(0, bump(t - T.points)) : K ? Math.max(0, bump(t - T.nodeClick - 0.3)) : 0 });
+  if (M) {
+    if (t < T.lap) whipIn(R.s, R.blur, t, T.lap - 0.3, 1);
+    else if (t > T.magic - 0.5) whipOut(R.s, R.blur, t, T.magic - 0.2, 1);
+    else whip(R.s, R.blur, 0, 0);
+    R.cam(...key(t, [[T.lap - 0.3, [580, 840, 1.38]], [T.branch, [600, 835, 1.5], (p) => p], [T.magic, [600, 840, 1.56], (p) => p]]));
+  } else {
+    if (t < T.nodeClick - 0.3) whipIn(R.s, R.blur, t, T.nodeClick - 0.6, -1);
+    else if (t > T.end - 0.5) whipOut(R.s, R.blur, t, T.end - 0.2, 1);
+    else whip(R.s, R.blur, 0, 0);
+    R.cam(...key(t, [[T.nodeClick - 0.6, [540, 840, 1.4]], [T.end, [540, 850, 1.48], (p) => p]]));
+  }
+  // the map sits right of the sources panel; it grows branch by branch, then the points come
+  const pb = M ? prog(t, T.map - 0.2, 1.0) : 1;
+  const pl = M ? prog(t, T.branch + 0.2, T.points - T.branch) : 1;
+  lapMap.set(pb, pl, K && t > T.nodeClick ? 2 : -1, t);
+  lapMap.g.setAttribute('transform', `translate(${K ? 330 : 450} 245) scale(${K ? 0.42 : 0.5})`);
+  show(lapChip, M && t < T.map + 0.3);
+  lapChip.setAttribute('transform', `translate(285 461) scale(${1 - 0.15 * pulse(t, T.lap - 0.05, 0.07)}) translate(-285 -461)`);
+  const ap = backOut(prog(t, T.nodeClick + 0.25, 0.35));
+  show(answer, K && ap > 0);
+  answer.setAttribute('transform', `translate(590 390) scale(${ap}) translate(-590 -390)`);
+  // the cursor: the chip, then the Risk branch
+  show(cursor, (M && t < T.map + 0.3) || (K && t < T.nodeClick + 0.5));
+  const [cx, cy] = M ? key(t, [[T.lap - 0.3, [520, 300]], [T.lap - 0.1, [290, 462], cubicOut]]) : key(t, [[T.nodeClick - 0.6, [420, 420]], [T.nodeClick - 0.08, [330 - 300 * 0.42 + 10, 245 + 70 * 0.42 + 6], cubicOut]]);
+  cursor.setAttribute('transform', `translate(${cx} ${cy}) scale(${1 - 0.15 * (M ? pulse(t, T.lap - 0.05, 0.07) : pulse(t, T.nodeClick, 0.07))})`);
+});
+
+// ================= Gemini Notebook's own pages =================
+const PX = 1080 / 412; // frame pixels for one css pixel
+const pHow = webpage(stage, HOW, 1648);
+const pSteps = webpage(stage, STEPS, 1648);
+const pNodes = webpage(stage, NODES, 1648);
+const ink = (page) => S('svg', { width: 1080, height: 10, style: 'position:absolute;left:0;top:0;overflow:visible' }, page.pins);
+const loop = (layer, cx, cy, rx, ry, rot = -3) => {
+  const e = S('ellipse', { cx: cx * PX, cy: cy * PX, rx: rx * PX, ry: ry * PX, fill: 'none', stroke: CORAL, 'stroke-width': 12, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, transform: `rotate(${rot} ${cx * PX} ${cy * PX})` }, layer);
+  return (p) => { show(e, p > 0); e.setAttribute('stroke-dashoffset', 1 - p); };
+};
+// css px inside each strip
+const inkHow = ink(pHow);
+const ringPdf = loop(inkHow, 313, 330, 66, 40, -3);
+const ringBook = loop(inkHow, 205, 544, 156, 42, -2);
+const ringChip = loop(ink(pSteps), 245, 171, 46, 16, -3);
+const ringNodes = loop(ink(pNodes), 160, 42, 128, 16, -1);
+const rise = (t, t0) => 1920 * (1 - expoOut(prog(t, t0, 0.42)));
+const drop = (t, t0) => 1920 * eio(prog(t, t0, 0.34));
+U.push((t) => {
+  // "PDF ... Gemini Notebook": the home page's "How it works"
+  if (t >= T.turn - 0.25 && t < T.how - 0.1) {
+    pHow.set({ rect: [0, rise(t, T.turn - 0.25), 1080, 1920], scroll: 650 * eio(prog(t, T.gemini - 0.3, 0.5)), slide: 250, zoom: key(t, [[T.turn, 1.0], [T.how, 1.06]]), fx: 540, fy: 900 });
+    ringPdf(eio(prog(t, T.pdf - 0.05, 0.35)));
+    ringBook(eio(prog(t, T.gemini + 0.2, 0.4)));
+  } else pHow.hide();
+  // "Mind Map वाला button": the help page's steps
+  if (t >= T.how - 0.1 && t < T.lap - 0.3) {
+    pSteps.set({ rect: [1080 * (1 - eio(prog(t, T.how - 0.1, 0.3))), drop(t, T.lap - 0.64), 1080, 1920], scroll: 0, slide: 420, zoom: key(t, [[T.how, 1.12], [T.lap, 1.2]]), fx: 100, fy: 600 });
+    ringChip(eio(prog(t, T.mindMap - 0.05, 0.35)));
+  } else pSteps.hide();
+  // "किसी भी branch पर click": select nodes to ask questions
+  if (t >= T.click - 0.25 && t < T.nodeClick - 0.6) {
+    pNodes.set({ rect: [0, rise(t, T.click - 0.25) + drop(t, T.nodeClick - 0.94), 1080, 1920], scroll: 0, slide: 640, zoom: key(t, [[T.click, 1.25], [T.nodeClick, 1.32]]), fx: 100, fy: 700 });
+    ringNodes(eio(prog(t, T.clickW - 0.05, 0.4)));
+  } else pNodes.hide();
+});
+
+// ================= captions, the link line, the follow cards, the pointer =================
+const clean = (ws) => ws.map((x) => ({ ...x, word: x.word.replace(/[।,?!]+$/, '') }));
+U.push(captionsCompact(stage, Q.map((s, i) => ({ words: clean(s.words), a: i ? s.a : 0, b: i < Q.length - 1 ? Q[i + 1].a - 0.03 : dur + 1, whole: i === 0 }))));
+const link = linkLine(stage, 'Gemini Notebook');
+const followMid = followCard(stage, { line: 'AI जुगाड़ series' });
+const followEnd = followCard(stage, { next: 'अगला: AI जुगाड़ #5' });
+const tip = pointer(stage, NAVY, '#fff', 130);
+const TIP = [
+  [T.mindMap - 0.5, [1150, 1300]], [T.dabaya - 0.1, [720, 890], cubicOut], [T.lap - 0.3, [720, 890]],
+  [T.followWord - 0.45, [1160, 700]], [T.fpress - 0.05, [900, 420], cubicOut], [T.twist - 0.15, [900, 420]],
+  [T.comment + 0.2, [1170, 1460]], [T.post - 0.08, [935, 1250], cubicOut], [T.send - 0.05, [935, 1250]],
+  [T.send + 0.3, [1150, 900]], [T.press - 0.06, [900, 420], cubicOut], [dur, [900, 420]],
+];
+const SHOWN = [[T.mindMap - 0.5, T.lap - 0.3], [T.followWord - 0.45, T.twist - 0.15], [T.comment + 0.2, T.send - 0.05], [T.send + 0.3, dur + 1]];
+U.push((t) => {
+  link.set(t, { link: T.link, comment: T.comment, post: T.post, away: T.send });
+  followMid.set(t, T.follow + 0.05, T.fpress, T.twist - 0.15);
+  followEnd.set(t, T.send + 0.2, T.press);
+  tip.style.visibility = SHOWN.some(([a, b]) => t >= a && t < b) ? 'visible' : 'hidden';
+  const [x, y] = key(t, TIP);
+  const click = pulse(t, T.dabaya + 0.02, 0.07) + pulse(t, T.fpress + 0.02, 0.07) + pulse(t, T.post + 0.02, 0.07) + pulse(t, T.press + 0.02, 0.07);
+  tip.style.transform = `translate(${x + 5 * Math.sin(t * 3)}px,${y + 4 * Math.sin(t * 2.2)}px) scale(${1 - 0.14 * click})`;
+});
+
+start(stage, U, dur);
+</script>
+</body>
+</html>

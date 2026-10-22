@@ -1,0 +1,43 @@
+{
+  "title": "चालीस page की report, और meeting में जवाब सिर्फ़ तुम्हें पता था",
+  "number": 19,
+  "lane": "TOOL",
+  "setting": "office",
+  "language": "hi",
+  "series": "AI जुगाड़ #4",
+  "experiment": "none: a bet slot and a sequel to the #06 hit (a long text becomes a diagram, and someone important is impressed). The English slot was offered; I picked Hindi.",
+  "playbook": ["T1"],
+  "look": "illustrated story, my face and body in the shirt outfit, Priya Ma'am as the boss, Rohan as the colleague, the meeting room by day, my desk and laptop at night, a drawn 40-page report that becomes a mind map on the laptop, Gemini Notebook's home and Mind Maps help pages, compact captions, follow line after the first payoff, link line, follow card with the next number",
+  "sendTo": "वो दोस्त जिसकी कल meeting या exam है",
+  "link": "https://notebook.google/ (it was notebooklm.google; the help page is https://support.google.com/notebooklm/answer/16212283)",
+  "voice": "Orus",
+  "bpm": 104,
+  "grid": 0.5,
+  "gap": 0.1,
+  "style": "Natural conversational Hindi as spoken in India, like a friend who tells you a short story about work and lets you in on a useful trick. English words in Indian English. Confident, clear and brisk, one even tone for the whole story, with only a short breath between sentences. No acting, no exaggeration.",
+  "sources": [
+    "https://notebook.google/ (notebooklm.google redirects there; captured 2026-10-22): 'Gemini Notebook exists so you can use your notes more efficiently. Ask about anything. The responses you get will always be grounded in the information you provide.' The picture shows sources (a PDF among them) flowing into one notebook.",
+    "https://support.google.com/notebooklm/answer/16212283 (redirects to support.google.com/gemininotebook; captured 2026-10-22): 'Use Mind Maps in Gemini Notebook'; 'Mind Maps in Gemini Notebook visually summarize your uploaded sources, showing main topics and related ideas as a branching diagram.'; 'Generate a Mind Map ... create a new notebook and upload sources. In the chat, select the Mind Map chip.'; 'Select nodes to ask questions: Directly select a node in the Mind Map to ask questions in the Gemini Notebook chat about that specific topic.'; 'Important: The Gemini Notebook mobile app does not support this feature at this time.'; 'Gemini Notebook can be inaccurate; please double check its responses.'; 'Usage limits apply to Mind Map creation.'",
+    "https://notebook.google/plans (captured 2026-10-22): the standard plan 'For personal projects' with 'Try Gemini Notebook' and 'Up to 50 [sources] per notebook'; the other plans say 'Upgrade'. The page does not say 'free', so the reel says nothing about the price."
+  ],
+  "claims": [
+    "Upload a PDF to a notebook, then the Mind Map chip in the chat: the help page says so.",
+    "Main topics and related ideas as a branching diagram: the help page says so.",
+    "Select a branch (node) and ask about that topic in the chat: the help page says so.",
+    "Laptop, not phone: the mobile app does not support Mind Maps, so the reel shows a laptop and the caption says so.",
+    "Not claimed: that it is free, or how long it takes. 'पाँच minute में समझ आ गई' and the meeting are the story.",
+    "The laptop shows a drawn notebook window and a drawn mind map (acting the step out inside the drawn scene); the real product is shown only on its own pages."
+  ],
+  "lines": [
+    { "id": "hook", "sentences": ["चालीस page की report, और meeting में जवाब सिर्फ़ तुम्हें पता था।", "जबकि तुमने वो report पढ़ी भी नहीं थी।"] },
+    { "id": "trouble", "sentences": ["रात दस बजे Priya Ma'am का mail आया, कल सुबह meeting है, ये पूरी report पढ़ कर आना।", "और पहले page पर ही तुम्हारी आँखें बंद होने लगीं।"] },
+    { "id": "turn", "sentences": ["तब तुमने वो PDF Gemini Notebook में डाल दी।"] },
+    { "id": "how", "sentences": ["Chat में Mind Map वाला button दबाया, और पूरी report एक map बन गई।", "हर बड़ा topic एक branch, और हर branch में उसके छोटे points।"] },
+    { "id": "magic", "sentences": ["पाँच minute में तुम्हें पूरी report समझ आ गई।"] },
+    { "id": "follow", "sentences": ["ऐसे और AI जुगाड़ के लिए follow कर लो।"] },
+    { "id": "twist", "sentences": ["लेकिन असली जुगाड़ अब है।", "Map की किसी भी branch पर click करो, और उसी topic पर सवाल पूछ लो।"] },
+    { "id": "end", "sentences": ["Meeting के बाद Rohan ने पूछा, भाई, तूने ये पूरी report कब पढ़ी?"] },
+    { "id": "link", "sentences": ["इस tool का link चाहिए?", "Comment में कुछ भी लिख दो।"] },
+    { "id": "ask", "sentences": ["उस दोस्त को भेजो जिसकी कल meeting या exam है।"] }
+  ]
+}

@@ -1,0 +1,13 @@
+TITLE
+AI जुगाड़ #4: चालीस page की report, और meeting में जवाब सिर्फ़ तुम्हें पता था
+
+DESCRIPTION
+Gemini Notebook (पहले इसका नाम NotebookLM था) में अपनी PDF डालो, फिर chat में Mind Map वाला button दबाओ।
+पूरी report एक map बन जाती है: हर बड़ा topic एक branch, और हर branch में उसके छोटे points।
+किसी भी branch पर click करो और उसी topic पर सवाल पूछो। Laptop पर करना: phone app में Mind Map अभी नहीं है। और ज़रूरी जवाब एक बार report में check कर लेना।
+
+इस tool का link चाहिए? Comment में कुछ भी लिख दो।
+उस दोस्त को भेजो जिसकी कल meeting या exam है। ऐसे और AI जुगाड़ के लिए follow करो: @vipulsingh_ai
+
+HASHTAGS
+#AIjugaad #GeminiNotebook #MindMap #OfficeLife #AIinHindi

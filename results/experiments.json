@@ -44,14 +44,6 @@
       "needs": "my own recording of the script"
     },
     {
-      "id": "E3",
-      "why": "Short loops are watched to the end and replayed, but leave little to save"
-    },
-    {
-      "id": "E5",
-      "why": "#13 got 33 views; scam warnings feel heard before"
-    },
-    {
       "id": "E4",
       "why": "Comments are only 4th in our ranking, and \"comment the answer\" is close to engagement bait"
     }
@@ -214,7 +206,7 @@
       "id": "E3",
       "name": "Short loop",
       "kind": "reel",
-      "status": "queued",
+      "status": "retired",
       "since": "2026-10-16",
       "change": "Under 15 seconds, the end runs into the start, no follow card",
       "pass": [
@@ -245,7 +237,7 @@
       "id": "E5",
       "name": "My own risk",
       "kind": "reel",
-      "status": "running",
+      "status": "retired",
       "since": "2026-10-16",
       "change": "A SCAM reel about the viewer's own risk, sent to a friend, not to parents",
       "pass": [
@@ -356,7 +348,7 @@
       "id": "T3",
       "name": "English reels",
       "kind": "english",
-      "status": "running",
+      "status": "retired",
       "since": "2026-10-16",
       "change": "One reel in five in very easy US English, judged by value (tier-1 views x 10 + other views)",
       "needReels": 3,
@@ -440,5 +432,33 @@
       "numbers": "evening: #06 378.2, #11 17.7, #12 1.1 (median times usual 17.7); late: #07 1.1, #08 2.1, #09 8.1, #10 9.1 (median times usual 5.1)"
     }
   ],
-  "retired": []
+  "retired": [
+    {
+      "id": "E5",
+      "name": "My own risk",
+      "date": "2026-10-23",
+      "until": null,
+      "text": "No scam reels: the SCAM lane is stopped (my decision of 2026-10-23).",
+      "numbers": "scam reels #08 441 views, #13 36 (shown to 21 people), #18 136; no saves or shares in any of them",
+      "why": "Stopped by me on 2026-10-23 after the review of what worked"
+    },
+    {
+      "id": "E3",
+      "name": "Short loop",
+      "date": "2026-10-23",
+      "until": null,
+      "text": "Reels are 30 to 35 seconds unless I ask for a longer one (my rule of 2026-10-23); a short loop comes back only if I ask.",
+      "numbers": "never tried",
+      "why": "Stopped by me on 2026-10-23 after the review of what worked"
+    },
+    {
+      "id": "T3",
+      "name": "English reels",
+      "date": "2026-10-23",
+      "until": null,
+      "text": "No English reels: every reel is in Hindi (my decision of 2026-10-23).",
+      "numbers": "#14: 354 views, 74% left in the first 3 seconds, 2.8 actions per 1,000 views against 9.8 for the Hindi reels of the same days",
+      "why": "Stopped by me on 2026-10-23 after the review of what worked"
+    }
+  ]
 }

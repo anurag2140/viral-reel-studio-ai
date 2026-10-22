@@ -1,0 +1,95 @@
+{
+  "captured": "2026-10-21",
+  "shots": [
+    {
+      "name": "help",
+      "url": "https://support.google.com/notebooklm/answer/16212283?hl=en",
+      "file": "shots/help.jpg",
+      "media": {
+        "videos": 0,
+        "playing": 0,
+        "canvases": 0
+      },
+      "title": "Use Mind Maps in Gemini Notebook - Gemini Notebook Help",
+      "finalUrl": "https://support.google.com/gemininotebook/answer/16212283?hl=en",
+      "w": 824,
+      "h": 7746,
+      "headings": [
+        {
+          "tag": "h1",
+          "text": "Use Mind Maps in Gemini Notebook",
+          "x": 48,
+          "y": 146,
+          "w": 728,
+          "h": 128
+        },
+        {
+          "tag": "h2",
+          "text": "When to use Mind Maps",
+          "x": 48,
+          "y": 714,
+          "w": 728,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "Generate a Mind Map",
+          "x": 48,
+          "y": 1554,
+          "w": 728,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "How to Interact with a Mind Map",
+          "x": 48,
+          "y": 2378,
+          "w": 728,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "How to save & share a Mind Map",
+          "x": 48,
+          "y": 3266,
+          "w": 728,
+          "h": 64
+        },
+        {
+          "tag": "h3",
+          "text": "Mind Map usage limits",
+          "x": 48,
+          "y": 3986,
+          "w": 728,
+          "h": 56
+        },
+        {
+          "tag": "h2",
+          "text": "Provide feedback",
+          "x": 48,
+          "y": 4218,
+          "w": 728,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "Related resources",
+          "x": 48,
+          "y": 4778,
+          "w": 728,
+          "h": 64
+        },
+        {
+          "tag": "h2",
+          "text": "Help",
+          "x": 72,
+          "y": 5396,
+          "w": 680,
+          "h": 80
+        }
+      ],
+      "signin": false,
+      "blocked": false
+    }
+  ]
+}

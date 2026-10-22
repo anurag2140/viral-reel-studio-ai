@@ -1,0 +1,158 @@
+menu
+Gemini Notebook Plans
+Power users, teams, and organizations, upgrade for the most capable AI research and thinking partner.
+Unlock higher limits and better models
+Gemini Notebook
+
+For personal projects
+
+Try Gemini Notebook
+Usage Limits
+check_circle
+Standard limits for chat and generation of Slides, Audio Overviews and other artifacts
+Gemini Models
+check_circle
+Access to Google's Gemini models
+New Features
+check_circle
+Standard access
+Sources
+check_circle
+Up to 50 per notebook
+Gemini Notebook in Google AI Plus
+
+For active learning and deep dives
+
+Upgrade
+Usage Limits
+check_circle
+Double the usage limits vs. standard plan1
+Gemini Models
+check_circle
+Access to Google's Gemini models
+New Features
+check_circle
+Early access
+Sources
+check_circle
+Up to 100 per notebook
+Gemini Notebook in Google AI Pro
+
+For daily research and workflows
+
+Upgrade
+Usage Limits
+check_circle
+Four times higher usage limits vs. standard plan1
+Gemini Models
+check_circle
+Higher access to Google's Gemini models
+New Features
+check_circle
+Priority access
+Sources
+check_circle
+Up to 300 per notebook
+Gemini Notebook in Google AI Ultra
+
+For the most complex projects and power users
+
+Upgrade
+Usage Limits
+check_circle
+5-20X higher usage limits vs. Pro plan1
+Gemini Models
+check_circle
+Highest access to Google's Gemini models
+New Features
+check_circle
+Priority access
+Sources
+check_circle
+Up to 600 per notebook
+
+Google AI Plus, Pro and Ultra plans are only available in specific regions.
+
+1. For more details on Usage Limits, visit our Help Center.
+
+Gemini Notebook for organizations and schools
+storefront
+Business
+via Google Workspace
+school
+Education
+via Google Workspace for Education
+account_balance
+Enterprise
+via Google Cloud
+Trusted by teams at
+How Gemini Notebook can work for you and your organization
+school
+Learning
+
+From reading to engaging study aids
+
+Upload your own class materials.
+
+Gemini Notebook can turn all your content into an Audio Overview so you can listen to class material recaps, or generate Flashcards to study right before your big exam.
+
+search_insights
+Research
+
+From finding information to uncovering insights
+
+Upload your research documents, or find new information through Source Discovery or Deep Research right in Gemini Notebook.
+
+Gemini Notebook accelerates your lit review by synthesizing hundreds of sources, and easily generates Reports to help you connect the dots.
+
+support_agent
+Customer Support
+
+From help center docs to self-serve quick answers
+
+Add help center articles, product documentation, and release notes.
+
+Gemini Notebook can help you quickly source the answers to customer questions. You can create a public notebook, and share it directly with others so they can find quick answers to their top questions. Public sharing is only enabled for consumer accounts.
+
+handshake
+Sales
+
+From researching to prepping and pitching
+
+Upload product specs, competitor analysis, and call transcripts.
+
+Gemini Notebook can turn your research into an Audio Overview you can listen to on your way to a meeting, or generate Slides for your next pitch deck, helping you close deals faster.
+
+local_library
+Training & Onboarding
+
+From manuals to engaging and interactive learning
+
+Add your existing training manuals, SOPs, and onboarding videos.
+
+Gemini Notebook transforms dry documentation into engaging Video Overviews that explains complex internal processes visually.
+
+campaign
+Marketing
+
+From writing blog posts to creating visual assets
+
+Add your blog posts, reports and webinars.
+
+Gemini Notebook acts as your creative studio, turning long-form content into Infographics for social media or Video Overviews for campaigns.
+
+We value your privacy and never use your organization's data to train Gemini Notebook
+As an organization or school, your data will stay private to you. When you use Gemini Notebook as an individual, your data is not used for training unless you share feedback, see more details here.
+Want to learn more?
+
+Here are some answers to common questions.
+
+Is Gemini Notebook the same product as NotebookLM?
+expand_more
+What makes Gemini Notebook different from other AI-powered note-taking apps?
+expand_more
+I have more questions, where do I go?
+expand_more
+How do I report a result in Gemini Notebook that I believe creates a safety concern or is inappropriate?
+expand_more
+Privacy & Terms

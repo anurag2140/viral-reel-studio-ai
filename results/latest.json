@@ -1,12 +1,81 @@
 {
-  "fetched": "2026-10-21T11:51:37.163Z",
+  "fetched": "2026-10-22T19:43:46.473Z",
   "account": {
     "username": "vipulsingh_ai",
-    "followers_count": 116,
-    "media_count": 17,
+    "followers_count": 118,
+    "media_count": 20,
     "id": "17841443178542314"
   },
   "reels": [
+    {
+      "number": 19,
+      "film": "mind-map",
+      "language": "hi",
+      "title": "AI जुगाड़ #4: चालीस page की report, और meeting में जवाब सिर्",
+      "posted": "2026-10-22 20:00",
+      "day": "Thu",
+      "permalink": "https://www.instagram.com/reel/DezM4xzRy1E/",
+      "age": 0.2,
+      "views": 318,
+      "reach": 270,
+      "saves": 4,
+      "shares": 0,
+      "likes": 6,
+      "comments": 0,
+      "avgWatch": 6.9,
+      "savesPer1k": "12.6",
+      "sharesPer1k": "0.0",
+      "skipRate": 59.9,
+      "reposts": 0,
+      "fbViews": 0,
+      "timesUsual": 0.8
+    },
+    {
+      "number": 16,
+      "film": "mock-interview",
+      "language": "hi",
+      "title": "AI जुगाड़ 3: इस बार interview में Priya Ma'am impressed हो ग",
+      "posted": "2026-10-21 20:00",
+      "day": "Wed",
+      "permalink": "https://www.instagram.com/reel/DewoHaJx0Ff/",
+      "age": 1.2,
+      "views": 1292,
+      "reach": 1205,
+      "saves": 12,
+      "shares": 3,
+      "likes": 13,
+      "comments": 0,
+      "avgWatch": 8.1,
+      "savesPer1k": "9.3",
+      "sharesPer1k": "2.3",
+      "skipRate": 41.4,
+      "reposts": 0,
+      "fbViews": 203,
+      "timesUsual": 3.6
+    },
+    {
+      "number": 18,
+      "film": "telegram-task",
+      "language": "hi",
+      "title": "Video like करने के पैसे मिले, और फिर सारे पैसे डूब गए",
+      "posted": "2026-10-21 19:30",
+      "day": "Wed",
+      "permalink": "https://www.instagram.com/reel/Dewkt0lRQWf/",
+      "age": 1.2,
+      "views": 136,
+      "reach": 118,
+      "saves": 0,
+      "shares": 0,
+      "likes": 5,
+      "comments": 0,
+      "avgWatch": 5.6,
+      "savesPer1k": "0.0",
+      "sharesPer1k": "0.0",
+      "skipRate": 66.7,
+      "reposts": 0,
+      "fbViews": 191,
+      "timesUsual": 0.3
+    },
     {
       "number": 15,
       "film": "fake-references",
@@ -15,20 +84,20 @@
       "posted": "2026-10-20 20:05",
       "day": "Tue",
       "permalink": "https://www.instagram.com/reel/DeuD3szRHdb/",
-      "age": 0.9,
-      "views": 1602,
-      "reach": 1452,
+      "age": 2.2,
+      "views": 1694,
+      "reach": 1539,
       "saves": 21,
-      "shares": 27,
-      "likes": 14,
+      "shares": 30,
+      "likes": 16,
       "comments": 5,
       "avgWatch": 10.4,
-      "savesPer1k": "13.1",
-      "sharesPer1k": "16.9",
-      "skipRate": 42.2,
+      "savesPer1k": "12.4",
+      "sharesPer1k": "17.7",
+      "skipRate": 42,
       "reposts": 0,
       "fbViews": 145,
-      "timesUsual": 5.4
+      "timesUsual": 4.7
     },
     {
       "number": 13,
@@ -38,19 +107,19 @@
       "posted": "2026-10-19 19:30",
       "day": "Mon",
       "permalink": "https://www.instagram.com/reel/Deo2UW8x4mN/",
-      "age": 1.9,
-      "views": 34,
-      "reach": 20,
+      "age": 3.2,
+      "views": 36,
+      "reach": 21,
       "saves": 0,
       "shares": 0,
       "likes": 3,
       "comments": 0,
-      "avgWatch": 9.9,
+      "avgWatch": 9.4,
       "savesPer1k": "0.0",
       "sharesPer1k": "0.0",
-      "skipRate": 76.2,
+      "skipRate": 69.6,
       "reposts": 1,
-      "fbViews": 312,
+      "fbViews": 313,
       "timesUsual": 0.1
     },
     {
@@ -61,8 +130,8 @@
       "posted": "2026-10-18 17:39",
       "day": "Sun",
       "permalink": "https://www.instagram.com/reel/DeopdVpP-Cr/",
-      "age": 3,
-      "views": 353,
+      "age": 4.3,
+      "views": 354,
       "reach": 290,
       "saves": 1,
       "shares": 0,
@@ -71,10 +140,10 @@
       "avgWatch": 4.9,
       "savesPer1k": "2.8",
       "sharesPer1k": "0.0",
-      "skipRate": 74.1,
+      "skipRate": 74.2,
       "reposts": 0,
       "fbViews": 172,
-      "timesUsual": 1.2
+      "timesUsual": 0.9
     },
     {
       "number": 12,
@@ -84,8 +153,8 @@
       "posted": "2026-10-17 19:30",
       "day": "Sat",
       "permalink": "https://www.instagram.com/reel/DemReZhRdLG/",
-      "age": 3.9,
-      "views": 372,
+      "age": 5.2,
+      "views": 373,
       "reach": 319,
       "saves": 1,
       "shares": 0,
@@ -94,10 +163,10 @@
       "avgWatch": 6,
       "savesPer1k": "2.7",
       "sharesPer1k": "0.0",
-      "skipRate": 54.8,
+      "skipRate": 54.9,
       "reposts": 0,
       "fbViews": 272,
-      "timesUsual": 1.3
+      "timesUsual": 0.9
     },
     {
       "number": 11,
@@ -107,20 +176,20 @@
       "posted": "2026-10-16 20:09",
       "day": "Fri",
       "permalink": "https://www.instagram.com/reel/Dejw8PgPmwH/",
-      "age": 4.9,
-      "views": 4050,
-      "reach": 3412,
-      "saves": 108,
-      "shares": 54,
-      "likes": 53,
+      "age": 6.2,
+      "views": 4117,
+      "reach": 3444,
+      "saves": 109,
+      "shares": 55,
+      "likes": 54,
       "comments": 36,
       "avgWatch": 10.7,
-      "savesPer1k": "26.7",
-      "sharesPer1k": "13.3",
-      "skipRate": 52.8,
+      "savesPer1k": "26.5",
+      "sharesPer1k": "13.4",
+      "skipRate": 52.6,
       "reposts": 1,
       "fbViews": 220,
-      "timesUsual": 13.8
+      "timesUsual": 11.3
     },
     {
       "number": 10,
@@ -130,20 +199,20 @@
       "posted": "2026-10-15 22:47",
       "day": "Thu",
       "permalink": "https://www.instagram.com/reel/DeheHvsPwku/",
-      "age": 5.8,
-      "views": 1934,
-      "reach": 1650,
+      "age": 7.1,
+      "views": 1942,
+      "reach": 1657,
       "saves": 14,
       "shares": 5,
       "likes": 29,
       "comments": 0,
-      "avgWatch": 9.5,
+      "avgWatch": 9.4,
       "savesPer1k": "7.2",
       "sharesPer1k": "2.6",
-      "skipRate": 53.1,
+      "skipRate": 53.3,
       "reposts": 2,
       "fbViews": 248,
-      "timesUsual": 6.6
+      "timesUsual": 5.3
     },
     {
       "number": 9,
@@ -153,20 +222,20 @@
       "posted": "2026-10-14 23:55",
       "day": "Wed",
       "permalink": "https://www.instagram.com/reel/DefBYBSxnd_/",
-      "age": 6.7,
-      "views": 1680,
+      "age": 8.1,
+      "views": 1686,
       "reach": 1499,
       "saves": 21,
-      "shares": 4,
-      "likes": 12,
+      "shares": 34,
+      "likes": 13,
       "comments": 2,
       "avgWatch": 6.8,
       "savesPer1k": "12.5",
-      "sharesPer1k": "2.4",
-      "skipRate": 52.2,
+      "sharesPer1k": "20.2",
+      "skipRate": 52.3,
       "reposts": 0,
       "fbViews": 43,
-      "timesUsual": 5.7
+      "timesUsual": 4.6
     },
     {
       "number": 8,
@@ -176,7 +245,7 @@
       "posted": "2026-10-13 23:00",
       "day": "Tue",
       "permalink": "https://www.instagram.com/reel/DecWTasxvK2/",
-      "age": 7.8,
+      "age": 9.1,
       "views": 441,
       "reach": 387,
       "saves": 0,
@@ -189,7 +258,7 @@
       "skipRate": 48.3,
       "reposts": 0,
       "fbViews": 229,
-      "timesUsual": 1.5
+      "timesUsual": 1.2
     },
     {
       "number": 7,
@@ -199,7 +268,7 @@
       "posted": "2026-10-12 23:06",
       "day": "Mon",
       "permalink": "https://www.instagram.com/reel/DeZyGj6PjMY/",
-      "age": 8.8,
+      "age": 10.1,
       "views": 219,
       "reach": 182,
       "saves": 1,
@@ -212,7 +281,7 @@
       "skipRate": 91.1,
       "reposts": 0,
       "fbViews": 200,
-      "timesUsual": 0.6
+      "timesUsual": 0.5
     },
     {
       "number": 6,
@@ -222,20 +291,20 @@
       "posted": "2026-10-12 19:37",
       "day": "Mon",
       "permalink": "https://www.instagram.com/reel/DeZaKsTP9mc/",
-      "age": 8.9,
-      "views": 70046,
-      "reach": 60617,
-      "saves": 2655,
-      "shares": 1085,
-      "likes": 516,
+      "age": 10.2,
+      "views": 71116,
+      "reach": 61513,
+      "saves": 2706,
+      "shares": 1111,
+      "likes": 527,
       "comments": 63,
       "avgWatch": 8.9,
-      "savesPer1k": "37.9",
-      "sharesPer1k": "15.5",
+      "savesPer1k": "38.1",
+      "sharesPer1k": "15.6",
       "skipRate": 41.9,
-      "reposts": 40,
+      "reposts": 41,
       "fbViews": 185,
-      "timesUsual": 237.8
+      "timesUsual": 195.6
     },
     {
       "number": 5,
@@ -245,20 +314,20 @@
       "posted": "2026-10-11 23:06",
       "day": "Sun",
       "permalink": "https://www.instagram.com/reel/DeXNYy4RMh4/",
-      "age": 9.8,
-      "views": 180,
-      "reach": 151,
+      "age": 11.1,
+      "views": 181,
+      "reach": 152,
       "saves": 1,
       "shares": 0,
       "likes": 4,
       "comments": 0,
       "avgWatch": 3.8,
-      "savesPer1k": "5.6",
+      "savesPer1k": "5.5",
       "sharesPer1k": "0.0",
-      "skipRate": 80.8,
+      "skipRate": 80.9,
       "reposts": 0,
       "fbViews": 307,
-      "timesUsual": 0.5
+      "timesUsual": 0.4
     },
     {
       "number": 4,
@@ -268,9 +337,9 @@
       "posted": "2026-10-11 22:10",
       "day": "Sun",
       "permalink": "https://www.instagram.com/reel/DeXHEJixnnp/",
-      "age": 9.8,
-      "views": 161,
-      "reach": 133,
+      "age": 11.1,
+      "views": 164,
+      "reach": 134,
       "saves": 0,
       "shares": 0,
       "likes": 4,
@@ -278,88 +347,13 @@
       "avgWatch": 6,
       "savesPer1k": "0.0",
       "sharesPer1k": "0.0",
-      "skipRate": 78.6,
+      "skipRate": 78.7,
       "reposts": 0,
       "fbViews": 220,
       "timesUsual": 0.4
-    },
-    {
-      "number": 3,
-      "film": "neural-network",
-      "language": "hi",
-      "title": "Neural network दिमाग़ की copy नहीं है। तो फिर वह है क्या?",
-      "posted": "2026-10-10 23:53",
-      "day": "Sat",
-      "permalink": "https://www.instagram.com/reel/DeUt9RqPq3c/",
-      "age": 10.7,
-      "views": 170,
-      "reach": 140,
-      "saves": 1,
-      "shares": 0,
-      "likes": 2,
-      "comments": 0,
-      "avgWatch": 6.1,
-      "savesPer1k": "5.9",
-      "sharesPer1k": "0.0",
-      "skipRate": 79.3,
-      "reposts": 0,
-      "fbViews": 217,
-      "timesUsual": 0.5
-    },
-    {
-      "number": 2,
-      "film": "machine-learns",
-      "language": "hi",
-      "title": "ChatGPT को किसी ने rules नहीं सिखाए। तो machine सीखती कैसे ह",
-      "posted": "2026-10-09 13:28",
-      "day": "Fri",
-      "permalink": "https://www.instagram.com/reel/DeRBhY5vPkA/",
-      "age": 12.2,
-      "views": 218,
-      "reach": 163,
-      "saves": 0,
-      "shares": 0,
-      "likes": 4,
-      "comments": 0,
-      "avgWatch": 6.8,
-      "savesPer1k": "0.0",
-      "sharesPer1k": "0.0",
-      "skipRate": 76.1,
-      "reposts": 0,
-      "fbViews": 235,
-      "timesUsual": 0.6
-    },
-    {
-      "number": 1,
-      "film": "ai-ml-dl-genai",
-      "language": "hi",
-      "title": "AI, ML, Deep Learning और GenAI में फ़र्क़ क्या है? 40 second",
-      "posted": "2026-10-09 00:16",
-      "day": "Fri",
-      "permalink": "https://www.instagram.com/reel/DePmpzKTXcQ/",
-      "age": 12.7,
-      "views": 236,
-      "reach": 182,
-      "saves": 0,
-      "shares": 1,
-      "likes": 9,
-      "comments": 0,
-      "avgWatch": 7.8,
-      "savesPer1k": "0.0",
-      "sharesPer1k": "4.2",
-      "skipRate": 84.8,
-      "reposts": 0,
-      "fbViews": null,
-      "timesUsual": 0.7
     }
   ],
   "days": [
-    {
-      "date": "2026-10-08",
-      "reach": 152,
-      "visits": 9,
-      "follows": 0
-    },
     {
       "date": "2026-10-09",
       "reach": 158,
@@ -430,20 +424,22 @@
       "date": "2026-10-20",
       "reach": 1779,
       "visits": 8,
-      "follows": 0
+      "follows": 2
     },
     {
       "date": "2026-10-21",
-      "reach": 143,
-      "visits": 6,
+      "reach": 1923,
+      "visits": 11,
+      "follows": 0
+    },
+    {
+      "date": "2026-10-22",
+      "reach": 762,
+      "visits": 12,
       "follows": 0
     }
   ],
   "followsByDay": [
-    {
-      "date": "2026-10-08",
-      "follows": 0
-    },
     {
       "date": "2026-10-09",
       "follows": 0
@@ -490,10 +486,14 @@
     },
     {
       "date": "2026-10-20",
-      "follows": 0
+      "follows": 2
     },
     {
       "date": "2026-10-21",
+      "follows": 0
+    },
+    {
+      "date": "2026-10-22",
       "follows": 0
     }
   ],
@@ -501,8 +501,8 @@
     "weight": 10,
     "top": {
       "number": 6,
-      "views": 70046,
-      "value": 82654,
+      "views": 71116,
+      "value": 83917,
       "tier1": 0.02,
       "recorded": false
     },
@@ -510,14 +510,14 @@
     "reels": [
       {
         "number": 14,
-        "age": 3,
-        "views": 353,
+        "age": 4.3,
+        "views": 354,
         "tier1": null,
         "value": null,
         "ofTop": null,
-        "weekValue": 1982,
-        "actions": 2.8328611898016995,
-        "hindiActions": 9.824198552223372,
+        "weekValue": 1989,
+        "actions": 2.824858757062147,
+        "hindiActions": 9.783728115345005,
         "verdict": "waiting for its top-countries screenshot (tier-1 share unknown)"
       }
     ]
@@ -525,15 +525,23 @@
   "countries": [
     {
       "country": "IN",
-      "followers": 62
+      "followers": 110
+    },
+    {
+      "country": "PK",
+      "followers": 2
     },
     {
       "country": "US",
       "followers": 2
     },
     {
-      "country": "PK",
-      "followers": 2
+      "country": "BD",
+      "followers": 1
+    },
+    {
+      "country": "AE",
+      "followers": 1
     }
   ]
 }

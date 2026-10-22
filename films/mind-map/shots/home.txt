@@ -1,0 +1,58 @@
+menu
+Turn your files into Slide Decks
+Try Gemini Notebook
+How it works
+Gemini Notebook exists so you can use your notes more efficiently. Ask about anything. The responses you get will always be grounded in the information you provide.
+Audio Overviews
+
+Hear a summary of your sources read aloud with interactive Audio Overviews.
+
+Explore featured public notebooks
+
+If you don't know where to start, try out one of these public notebooks. Ask questions, generate summaries, and get inspired to create your own.
+
+Secrets of the Super Agers
+17 sources
+How To Build A Life, from The Atlantic
+46 sources
+William Shakespeare: The Complete Works
+45 sources
+Earnings Reports For Top 50 Corporations
+267 sources
+“Blew Our Minds.”
+HardFork
+“It’s one of the most compelling and completely flabbergasting demonstrations of AI’s potential yet.”
+WSJ
+“A beautiful way to walk through information space.”
+The Verge
+“A glimpse into AI’s future in the workplace.”
+Barron’s
+We value your privacy and never use your organization's data to train Gemini Notebook
+As an organization or school, your data will stay private to you. When you use Gemini Notebook as an individual, your data is not used for training unless you share feedback. See more details here.
+Want to learn more?
+
+Here are some answers to common questions.
+
+Is Gemini Notebook the same product as NotebookLM?
+expand_more
+What makes Gemini Notebook different from other AI-powered note-taking apps?
+expand_more
+How will the integration with Gemini AI improve Gemini Notebook?
+expand_more
+What are the main advantages of Gemini Notebook compared to other AI learning apps?
+expand_more
+Can I use Gemini Notebook for creative projects like making a podcast?
+expand_more
+What are the most effective ways to integrate Gemini Notebook into a daily productivity workflow?
+expand_more
+Is my data privacy at risk with Gemini Notebook?
+expand_more
+Who has access to the notes and data I store in Gemini Notebook?
+expand_more
+What is Google's policy on data retention for my deleted notebooks in Gemini Notebook?
+expand_more
+How do I report a result in Gemini Notebook that I believe creates a safety concern or is inappropriate?
+expand_more
+If I find a bug or have a feature idea, how can I submit my feedback?
+expand_more
+Privacy & Terms

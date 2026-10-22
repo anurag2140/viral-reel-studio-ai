@@ -796,13 +796,11 @@ if (cmd === 'check') {
     writeFileSync('VIDEOS.md', videos);
   }
 
-  // the next reel: its lane (TOOL, TOOL, SCAM, TOOL, AI from #11), slot and language slot
+  // the next reel: its lane and slot. Lanes from #11: TOOL, TOOL, SCAM, TOOL, AI; from 2026-10-23
+  // the SCAM place is an AI reel (my decision: scam reels and English reels are stopped)
   const next = lastNum + 1;
-  const lane = ['TOOL', 'TOOL', 'SCAM', 'TOOL', 'AI'][(((next - 11) % 5) + 5) % 5];
+  const lane = ['TOOL', 'TOOL', 'AI', 'TOOL', 'AI'][(((next - 11) % 5) + 5) % 5];
   const expSlot = next >= 12 && (next - 12) % 3 === 0;
-  // an English slot that falls on an experiment slot (#24, #39, ...) goes to the experiment, in
-  // Hindi, so the experiment changes one thing only
-  const enSlot = next >= 14 && (next - 14) % 5 === 0 && !expSlot;
   // a running topic test whose planned reel numbers include the next reel
   const topicSlot = X.experiments.find((e) => e.kind === 'topic' && e.status === 'running' && (e.slots ?? []).includes(next));
   // The experiment queue, most promising first (my request of 2026-10-21, to learn fast what
@@ -830,14 +828,14 @@ if (cmd === 'check') {
   const stale = rows.filter((r) => r.code === 'STALE');
   // One screenshot request after each delivered reel (my rule of 2026-10-18: reels perform after
   // 1 to 2 days, so earlier insights are incomplete; never ask for more than one reel). The reel:
-  // 48 hours old or more, from #06 on, without screenshots in results/screenshots.json; English
-  // reels first (their tier-1 share), then experiment tries, then hits, then the newest.
+  // 48 hours old or more, from #06 on, without screenshots in results/screenshots.json;
+  // experiment tries first, then hits, then the newest (English reels stopped on 2026-10-23).
   const SHOTS = 'results/screenshots.json';
   const got = existsSync(SHOTS) ? JSON.parse(readFileSync(SHOTS, 'utf8').replace(/^﻿/, '')).reels ?? {} : {};
   const tried = new Set(X.experiments.flatMap((e) => (e.tries ?? []).map((t) => t.reel)));
   // reels of a running topic test (T4, money) count like experiment tries
   for (const f of films) if (f.topic && X.experiments.some((e) => e.kind === 'topic' && e.topic === f.topic && e.status === 'running')) tried.add(f.number);
-  const prio = (r) => (r.language === 'en' ? 4 : tried.has(r.number) ? 3 : r.timesUsual >= 10 ? 2 : 1);
+  const prio = (r) => (tried.has(r.number) ? 3 : r.timesUsual >= 10 ? 2 : 1);
   const ask = latest.reels.filter((r) => r.number != null && r.number >= 6 && r.age >= 2 && !got[key2(r.number)])
     .sort((a, b) => prio(b) - prio(a) || b.number - a.number)[0];
   const askLine = ask
@@ -847,7 +845,7 @@ if (cmd === 'check') {
     `Experiment review, ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC (\`node ig.mjs review\`), from the report of ${latest.fetched.slice(0, 16).replace('T', ' ')} UTC${age > 6 ? ' (over 6 hours old: run the report first)' : ''}.`,
     `Rules: a try is read at ${readH / 24} days; ${R.passesToConfirm} passes put an experiment in the playbook (a boost, a format share or a default, never a must), ${R.failsToDiscard} fails retire it for ${R.retireDays} days (then one re-test); proven entries are re-checked every ${R.recheckDays} days or ${R.recheckReels} reels; formats fill at most ${R.playbookMaxShare * 100}% of the reels.`,
     '',
-    `NEXT REEL #${key2(next)}: ${topicSlot ? `a ${topicSlot.topic.toUpperCase()} slot (${topicSlot.id} ${topicSlot.name}: every idea is an earn-with-AI reel, "topic": "${topicSlot.topic}" in script.json)` : `${lane} lane`}; ${expSlot ? `an EXPERIMENT slot (the playbook does not apply; due: ${dueLine})` : 'a bet slot (the playbook guides it)'}; ${enSlot ? 'the ENGLISH slot (offer English and Hindi)' : 'Hindi'}. Every idea list has one wild card that fits no proven format and no queued experiment.`,
+    `NEXT REEL #${key2(next)}: ${topicSlot ? `a ${topicSlot.topic.toUpperCase()} slot (${topicSlot.id} ${topicSlot.name}: every idea is an earn-with-AI reel, "topic": "${topicSlot.topic}" in script.json)` : `${lane} lane`}; ${expSlot ? `an EXPERIMENT slot (the playbook does not apply; due: ${dueLine})` : 'a bet slot (the playbook guides it)'}; Hindi, 30 to 35 seconds. Every idea list has one wild card that fits no proven format and no queued experiment.`,
     queueLine,
     '',
     ...(news.length ? ['CHANGES TO THE WORKFLOW TODAY (tell me first):', ...news.map((n) => `- ${n}`), ''] : apply ? ['No change to the workflow today.', ''] : []),

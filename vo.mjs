@@ -252,3 +252,7 @@ for (const line of script.lines) {
 const anyOwn = script.lines.some((l) => existsSync(join(outDir, `${l.id}.own`)));
 writeFileSync(join(filmDir, 'vo.json'), JSON.stringify({ model: anyOwn ? 'own recording' : MODEL, voice: anyOwn ? 'own' : voice, bpm: script.bpm, total: +t.toFixed(3), lines }, null, 2));
 console.log(`vo.json: ${lines.length} lines, ${t.toFixed(2)}s`);
+// Reel length (my rule of 2026-10-23): 30 to 35 seconds unless I ask for a longer reel
+// ("long": true in script.json). The reel runs about a second past the last line.
+const reel = t + 1;
+if (!script.long && (reel < 30 || reel > 35)) console.log(`  LENGTH: the reel would run about ${reel.toFixed(1)} s, outside the 30 to 35 s target: ${reel > 35 ? 'cut sentences' : 'add a beat'} and take the voice again`);
